@@ -1,26 +1,75 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+//Default react app imports
+import React, { Component } from "react";
+//import logo from "./logo.svg";
+import "./App.css";
+
+//Library imports
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+//import jwt_decode from "jwt-decode";
+
+//Local imports
+import store from "./store/store"; //Importa o store criado nesse arquivo.
+
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Landing from "./components/layout/Landing";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import Dashboard from "./components/profile/Dashboard";
+import Profile from "./components/profile/Profile";
+import ProfileEditUser from "./components/profile/ProfileEditUser";
+import ProfileEditPerson from "./components/profile/ProfileEditPerson";
+
+// //Check for token
+// if (localStorage.jwtToken) {
+//   //Set auth token header auth
+//   setAuthToken(localStorage.jwtToken);
+//   //decode token
+//   const decoded = jwt_decode(localStorage.jwtToken);
+//   //dispath action to set user on store
+//   store.dispatch(setCurrentUser(decoded));
+
+//   //check for expired token
+//   const currentTime = Date.now() / 1000;
+//   if (decoded.exp < currentTime) {
+//     //clear current profile
+//     store.dispatch(clearCurrentProfile());
+
+//     //logout user
+//     store.dispatch(logoutUser());
+
+//     //redirect to login page
+//     window.location.href = "/login";
+//   }
+// }
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/profile" component={Profile} />
+            <Route
+              exact
+              path="/profile/edit-user"
+              component={ProfileEditUser}
+            />
+            <Route
+              exact
+              path="/profile/edit-person"
+              component={ProfileEditPerson}
+            />
+            <Footer />
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
