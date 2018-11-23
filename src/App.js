@@ -1,15 +1,18 @@
 //Default react app imports
-import React, { Component } from "react";
 //import logo from "./logo.svg";
+import React, { Component } from "react";
 import "./App.css";
 
 //Library imports
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-//import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 //Local imports
 import store from "./store/store"; //Importa o store criado nesse arquivo.
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { clearCurrentProfile } from "./actions/profileActions";
 
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -21,28 +24,30 @@ import Profile from "./components/profile/Profile";
 import ProfileEditUser from "./components/profile/ProfileEditUser";
 import ProfileEditPerson from "./components/profile/ProfileEditPerson";
 
-// //Check for token
-// if (localStorage.jwtToken) {
-//   //Set auth token header auth
-//   setAuthToken(localStorage.jwtToken);
-//   //decode token
-//   const decoded = jwt_decode(localStorage.jwtToken);
-//   //dispath action to set user on store
-//   store.dispatch(setCurrentUser(decoded));
+//Check for token
+if (localStorage.jwtToken) {
+  //Set auth token header auth
+  setAuthToken(localStorage.jwtToken);
 
-//   //check for expired token
-//   const currentTime = Date.now() / 1000;
-//   if (decoded.exp < currentTime) {
-//     //clear current profile
-//     store.dispatch(clearCurrentProfile());
+  //decode token
+  const decoded = jwt_decode(localStorage.jwtToken);
 
-//     //logout user
-//     store.dispatch(logoutUser());
+  //dispath action to set user and profile on store
+  store.dispatch(setCurrentUser(decoded));
 
-//     //redirect to login page
-//     window.location.href = "/login";
-//   }
-// }
+  //check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    //clear current profile
+    store.dispatch(clearCurrentProfile());
+
+    //logout user
+    store.dispatch(logoutUser());
+
+    //redirect to login page
+    window.location.href = "/login";
+  }
+}
 
 class App extends Component {
   render() {

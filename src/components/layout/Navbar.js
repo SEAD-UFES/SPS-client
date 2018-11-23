@@ -2,18 +2,43 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { logoutUser } from "../../actions/authActions";
-//import { clearCurrentProfile } from "../../actions/profileActions";
+import {
+  getCurrentProfile,
+  clearCurrentProfile
+} from "../../actions/profileActions";
+import avatar from "../../img/none.png";
 
 class Navbar extends Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      if (this.props.profile.profile === null) {
+        this.props.getCurrentProfile();
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      if (
+        nextProps.profile.loading === false &&
+        nextProps.profile.profile === null
+      ) {
+        this.props.getCurrentProfile();
+      }
+    }
+  }
+
   onLogoutClick(e) {
     e.preventDefault();
-    //this.props.clearCurrentProfile();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
+    const { loading, profile } = this.props.profile;
 
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
@@ -30,13 +55,8 @@ class Navbar extends Component {
       </ul>
     );
 
-    const authLinks = (
+    const authLinks = !(profile === null || loading) ? (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="/feed">
-            Post Feed
-          </Link>
-        </li>
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
             Dashboard
@@ -50,15 +70,17 @@ class Navbar extends Component {
           >
             <img
               className="rounded-circle"
-              src={user.avatar}
-              alt={user.name}
+              src={avatar}
+              alt={profile.person.name}
               style={{ width: "25px", marginRight: "5px" }}
-              title="You must have a Gravatar connected to your email to display a image"
+              title={profile.person.name}
             />{" "}
             Logout
           </button>
         </li>
       </ul>
+    ) : (
+      <span className="text-white">Erro!</span>
     );
 
     return (
@@ -102,16 +124,20 @@ class Navbar extends Component {
 
 // "logoutUser" and "auth" are required to the Register component
 Navbar.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  clearCurrentProfile: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  auth: state.auth //last auth because the auth on root reducer?
+  auth: state.auth, //last auth because the auth on root reducer?
+  profile: state.profile
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, getCurrentProfile, clearCurrentProfile }
 )(Navbar);

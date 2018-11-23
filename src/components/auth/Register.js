@@ -42,7 +42,11 @@ class Register extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      let errors = nextProps.errors.devMessage;
+      errors.email = nextProps.errors.devMessage.login;
+      delete errors.login;
+
+      this.setState({ errors: errors });
     }
   }
 

@@ -20,15 +20,19 @@ export const registerUser = (userData, history) => dispatch => {
 //Login
 export const loginUser = userData => dispatch => {
   axios
-    .post("/api/users/login", userData)
+    .post("/v1/auth", userData)
     .then(res => {
-      const { token } = res.data;
+      const { access_token } = res.data;
+
       //Set token on local storage
-      localStorage.setItem("jwtToken", token);
+      localStorage.setItem("jwtToken", access_token);
+
       //set token for axios to send requests with (Autorization = token) header
-      setAuthToken(token);
+      setAuthToken(access_token);
+
       //decode token to get user data && dispatch action to set user
-      const decoded = jwt_decode(token);
+      const decoded = jwt_decode(access_token);
+
       dispatch(setCurrentUser(decoded));
     })
     .catch(err =>
@@ -51,8 +55,10 @@ export const setCurrentUser = decoded => {
 export const logoutUser = () => dispatch => {
   //remove token from local storage
   localStorage.removeItem("jwtToken");
+
   //Remove auth header from axios future requets
   setAuthToken(false);
+
   //set current user to {}
   dispatch(setCurrentUser({}));
 };
