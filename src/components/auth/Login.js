@@ -76,7 +76,31 @@ class Login extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    //validação do campo login
+    let errors = this.state.errors;
+    let valResult = { error: "", isValid: true };
+    switch (e.target.name) {
+      case "login":
+        valResult = { error: "", isValid: true };
+        break;
+      case "password":
+        valResult = { error: "", isValid: true };
+        break;
+      default:
+        break;
+    }
+
+    if (!valResult.isValid) {
+      errors = { ...errors, login: valResult.error };
+    } else {
+      delete errors.login;
+    }
+
+    //Atualizando os estados do campos e dos erros
+    this.setState({
+      [e.target.name]: e.target.value,
+      errors: errors
+    });
   }
 
   onSubmit(e) {

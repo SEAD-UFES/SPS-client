@@ -3,32 +3,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-// import {
-//   getCurrentProfile , deleteAccount
-// } from "../../actions/profileActions";
+import { getCurrentProfile } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
-//import ProfileActions from "./ProfileActions";
 
 class Dashboard extends Component {
   componentDidMount() {
-    //this.props.getCurrentProfile();
-  }
-
-  onDeleteClick(e) {
-    e.preventDefault();
-    console.log("delete");
-    //this.props.deleteAccount();
+    this.props.getCurrentProfile();
   }
 
   render() {
-    //const { user } = this.props.auth;
-    //const { profile, loading } = this.props.profile;
+    const { profile, loading } = this.props.profile;
 
-    const { user } = { user: { name: "Fernando" } };
-    const { profile, loading } = {
-      profile: { handle: "fernando" },
-      loading: false
-    };
+    //const { user } = { user: { name: "Fernando" } };
+    // const { profile, loading } = {
+    //   profile: { handle: "fernando" },
+    //   loading: false
+    // };
 
     let dashboardContent;
     if (profile === null || loading) {
@@ -39,7 +29,7 @@ class Dashboard extends Component {
         dashboardContent = (
           <div>
             <p className="lead text-muted">
-              Bem-vindo <Link to={"/profile"}>{user.name}</Link>
+              Bem-vindo <Link to={"/profile"}>{profile.person.name}</Link>
             </p>
           </div>
         );
@@ -47,8 +37,8 @@ class Dashboard extends Component {
         //User login in but dont have a profile
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Bem-vindo {user.name}</p>
-            <p>You have no yet setup a profile, please add some info</p>
+            <p className="lead text-muted">Bem-vindo</p>
+            <p>Erro estranho...</p>
             <Link to="/create-profile" className="btn btn-lg btn-info">
               Create Profile
             </Link>
@@ -86,7 +76,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    //getCurrentProfile
-    //deleteAccount
+    getCurrentProfile
   }
 )(Dashboard);

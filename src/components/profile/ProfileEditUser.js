@@ -1,14 +1,21 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-
 import {
   validateEmailRequired,
   validatePassword,
   validatePasswordCheck,
-  validateProfileEditUserForm
+  validateProfileEditUserForm,
+  isEmpty
 } from "../../validation";
+import {
+  getCurrentProfile,
+  updateProfileUser
+} from "../../actions/profileActions";
+import { clearErrors } from "../../actions/errorActions";
 
 class ProfileEditUser extends Component {
   constructor(props) {
@@ -24,6 +31,35 @@ class ProfileEditUser extends Component {
     this.onChange = this.onChange.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.clearErrors();
+    this.props.getCurrentProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    //tratando errors do servidor
+    if (nextProps.errors) {
+      let errors = { ...this.props.errors };
+      if (nextProps.errors.code === "users-06") {
+        errors.email = nextProps.errors.userMessage;
+      }
+
+      this.setState({ errors: errors });
+    }
+
+    //(Preenchendo / Atualizando) dados do formulario
+    if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+
+      const login = !isEmpty(profile.user.login) ? profile.user.login : "";
+
+      //Set state
+      this.setState({
+        email: login
+      });
+    }
   }
 
   onChange(e) {
@@ -122,16 +158,24 @@ class ProfileEditUser extends Component {
     };
     const valProfileUserEdit = validateProfileEditUserForm(userData);
 
+    //Executar o resultado da validação
     if (!valProfileUserEdit.isValid) {
       this.setState({ errors: valProfileUserEdit.errors });
     } else {
       let updateUserData = {
-        email: this.state.email
+        login: this.state.email
       };
       if (this.state.changePassword) {
         updateUserData.password = this.state.password;
       }
-      console.log(updateUserData);
+
+      const profile = this.props.profile.profile;
+
+      this.props.updateProfileUser(
+        profile.user.id,
+        updateUserData,
+        this.props.history
+      );
     }
   }
 
@@ -208,4 +252,20 @@ class ProfileEditUser extends Component {
   }
 }
 
-export default ProfileEditUser;
+ProfileEditUser.propTypes = {
+  clearErrors: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  updateProfileUser: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { getCurrentProfile, updateProfileUser, clearErrors }
+)(withRouter(ProfileEditUser));

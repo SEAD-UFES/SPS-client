@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
@@ -7,10 +10,12 @@ import {
   validateName,
   validateSurname,
   validateDate,
-  validateCpfRequired
+  validateCpfRequired,
+  isEmpty
 } from "../../validation";
+import { getCurrentProfile } from "../../actions/profileActions";
 
-class ProfileEditUser extends Component {
+class ProfileEditPerson extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,16 +25,48 @@ class ProfileEditUser extends Component {
       cpf: "",
       nationality: "",
       rgNumber: "",
-      rgExpeditor: "",
-      color: "",
+      rgDispatcher: "",
+      ethnicity: "",
       gender: "",
-      civilState: "",
+      civilStatus: "",
       errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    //tratando errors do servidor
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+
+    //(Preenchendo / Atualizando) dados do formulario
+    if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+
+      const data = new Date(profile.person.birthdate);
+      console.log(data.toString());
+
+      const data2 = moment(profile.person.birthdate);
+      console.log(data2._d);
+
+      // const birthdate = !isEmpty(profile.person.birthdate)
+      //   ? moment(profile.user.birthdate).format("YYYY-MM-DD")
+      //   : "";
+
+      this.setState({
+        name: profile.person.name,
+        surname: profile.person.surname,
+        cpf: profile.person.cpf
+      });
+    }
   }
 
   onChange(e) {
@@ -73,14 +110,14 @@ class ProfileEditUser extends Component {
     const personData = {
       name: this.state.name,
       surname: this.state.surname,
-      birthdate: this.state.birthdate,
+      birthdate: moment(this.state.birthdate),
       cpf: this.state.cpf,
       nationality: this.state.nationality,
       rgNumber: this.state.rgNumber,
-      rgExpeditor: this.state.rgExpeditor,
-      color: this.state.color,
+      rgDispatcher: this.state.rgDispatcher,
+      ethnicity: this.state.ethnicity,
       gender: this.state.gender,
-      civilState: this.state.civilState
+      civilStatus: this.state.civilStatus
     };
 
     console.log(personData);
@@ -199,9 +236,9 @@ class ProfileEditUser extends Component {
                       placeholder="Expeditor do RG"
                       type="text"
                       name="rgExpeditor"
-                      value={this.state.rgExpeditor}
+                      value={this.state.rgDispatcher}
                       onChange={this.onChange}
-                      error={errors.rgExpeditor}
+                      error={errors.rgDispatcher}
                     />
                   </div>
                 </div>
@@ -209,10 +246,10 @@ class ProfileEditUser extends Component {
                 <SelectListGroup
                   placeholder="Escolha cor/etnia"
                   name="color"
-                  value={this.state.color}
+                  value={this.state.ethnicity}
                   options={colorOptions}
                   onChange={this.onChange}
-                  error={errors.color}
+                  error={errors.ethnicity}
                 />
 
                 <SelectListGroup
@@ -227,10 +264,10 @@ class ProfileEditUser extends Component {
                 <SelectListGroup
                   placeholder="Escolha cor/etnia"
                   name="civilState"
-                  value={this.state.civilState}
+                  value={this.state.civilStatus}
                   options={civilStateOptions}
                   onChange={this.onChange}
-                  error={errors.civilState}
+                  error={errors.civilStatus}
                 />
 
                 <input
@@ -247,4 +284,17 @@ class ProfileEditUser extends Component {
   }
 }
 
-export default ProfileEditUser;
+ProfileEditPerson.propsTypes = {
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { getCurrentProfile }
+)(ProfileEditPerson);

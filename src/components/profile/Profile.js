@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-//import { getCurrentProfile, deleteAccount } from "../../actions/profileActions";
+import { getCurrentProfile } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 //import ProfileActions from "./ProfileActions";
 
 class Dashboard extends Component {
   componentDidMount() {
-    //this.props.getCurrentProfile();
+    this.props.getCurrentProfile();
   }
 
   onDeleteClick(e) {
@@ -19,31 +19,31 @@ class Dashboard extends Component {
   }
 
   render() {
-    //const { user } = this.props.auth;
-    //const { profile, loading } = this.props.profile;
+    const { user } = this.props.auth;
+    const { profile, loading } = this.props.profile;
 
-    const { user } = { user: { name: "Fernando", surname: "Annecchini" } };
-    const { profile, loading } = {
-      profile: {
-        user: {
-          email: "fernando.void@gmail.com",
-          active: true
-        },
-        person: {
-          name: "Fernando",
-          surname: "Annecchini",
-          birthdate: "07/11/1980",
-          cpf: "088.402.807-07",
-          nationality: "Brasileiro",
-          rgNumber: "1.688.122",
-          rgExpeditor: "SSP-ES",
-          color: "Pardo",
-          gender: "Masculino",
-          civilState: "Casado"
-        }
-      },
-      loading: false
-    };
+    // const { user } = { user: { name: "Fernando", surname: "Annecchini" } };
+    // const { profile, loading } = {
+    //   profile: {
+    //     user: {
+    //       email: "fernando.void@gmail.com",
+    //       active: true
+    //     },
+    //     person: {
+    //       name: "Fernando",
+    //       surname: "Annecchini",
+    //       birthdate: "07/11/1980",
+    //       cpf: "088.402.807-07",
+    //       nationality: "Brasileiro",
+    //       rgNumber: "1.688.122",
+    //       rgExpeditor: "SSP-ES",
+    //       color: "Pardo",
+    //       gender: "Masculino",
+    //       civilState: "Casado"
+    //     }
+    //   },
+    //   loading: false
+    // };
 
     let dashboardContent;
     if (profile === null || loading) {
@@ -74,123 +74,136 @@ class Dashboard extends Component {
               <h4 className="mb-2">Dados de usuário</h4>
 
               <div className="row">
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <p>
                     <strong>Login/Email:</strong>
                   </p>
                 </div>
-                <div className="col-md-10">
-                  <p>{profile.user.email}</p>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Status:</strong>
-                  </p>
-                </div>
-                <div className="col-md-10">
-                  <p>{profile.user.active ? "Conta Ativa" : "Conta inativa"}</p>
+                <div className="col-md-9">
+                  <p>{profile.user.login}</p>
                 </div>
               </div>
             </div>
 
             {/* <!-- Person Data --> */}
             <div>
-              <h4 className="mb-2">Dados de pessoais</h4>
+              <h4 className="mb-3">Dados de pessoais</h4>
 
               <div className="row">
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <p>
-                    <strong>Nome/Sobrenome:</strong>
+                    <strong>Nome / Sobrenome:</strong>
                   </p>
                 </div>
-                <div className="col-md-10">
+                <div className="col-md-9">
                   <p>
                     {profile.person.name} {profile.person.surname}
                   </p>
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Data de Nascimento:</strong>
-                  </p>
+              {profile.person.birthdate ? (
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>
+                      <strong>Data de Nascimento:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-9">
+                    <p>{profile.person.birthdate}</p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <p>{profile.person.birthdate}</p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
 
               <div className="row">
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <p>
                     <strong>CPF:</strong>
                   </p>
                 </div>
-                <div className="col-md-10">
+                <div className="col-md-9">
                   <p>{profile.person.cpf}</p>
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Nacionalidade:</strong>
-                  </p>
+              {profile.person.birthdate ? (
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>
+                      <strong>Nacionalidade:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-9">
+                    <p>{profile.person.nacionality}</p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <p>{profile.person.nationality}</p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
 
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>RG(Número/Expeditor):</strong>
-                  </p>
+              {profile.person.rgNumber ? (
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>
+                      <strong>RG(Número/Expeditor):</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-9">
+                    <p>
+                      {profile.person.rgNumber} - {profile.person.rgDispatcher}
+                    </p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <p>
-                    {profile.person.rgNumber} - {profile.person.rgExpeditor}
-                  </p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
 
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Cor:</strong>
-                  </p>
+              {profile.person.ethnicity ? (
+                <div className="row">
+                  <div className="col-md-2">
+                    <p>
+                      <strong>Cor:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-10">
+                    <p>{profile.person.ethnicity}</p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <p>{profile.person.color}</p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
 
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Sexo:</strong>
-                  </p>
+              {profile.person.gender ? (
+                <div className="row">
+                  <div className="col-md-2">
+                    <p>
+                      <strong>Sexo:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-10">
+                    <p>{profile.person.gender}</p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <p>{profile.person.gender}</p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
 
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Estado Civil:</strong>
-                  </p>
+              {profile.person.civilStatus ? (
+                <div className="row">
+                  <div className="col-md-2">
+                    <p>
+                      <strong>Estado Civil:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-10">
+                    <p>{profile.person.civilStatus}</p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <p>{profile.person.civilState}</p>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         );
@@ -198,11 +211,8 @@ class Dashboard extends Component {
         //User login in but dont have a profile
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Bem-vindo {user.name}</p>
-            <p>You have no yet setup a profile, please add some info</p>
-            <Link to="/create-profile" className="btn btn-lg btn-info">
-              Create Profile
-            </Link>
+            <p className="lead text-muted">Bem-vindo{user.person.name}</p>
+            <p>Dados de perfil não localizados</p>
           </div>
         );
       }
@@ -223,10 +233,10 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  //getCurrentProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   //deleteAccount: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
-  //profile: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -237,6 +247,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    /*getCurrentProfile, deleteAccount*/
+    getCurrentProfile
   }
 )(Dashboard);

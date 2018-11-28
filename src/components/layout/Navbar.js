@@ -80,7 +80,7 @@ class Navbar extends Component {
         </li>
       </ul>
     ) : (
-      <span className="text-white">Erro!</span>
+      <span className="text-white">Carregando...</span>
     );
 
     return (
