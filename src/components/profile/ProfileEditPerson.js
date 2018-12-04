@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
@@ -13,7 +13,11 @@ import {
   validateCpfRequired,
   isEmpty
 } from "../../validation";
-import { getCurrentProfile } from "../../actions/profileActions";
+import {
+  getCurrentProfile,
+  getPeopleOptions,
+  updateProfilePerson
+} from "../../actions/profileActions";
 
 class ProfileEditPerson extends Component {
   constructor(props) {
@@ -39,32 +43,68 @@ class ProfileEditPerson extends Component {
 
   componentDidMount() {
     this.props.getCurrentProfile();
+    this.props.getPeopleOptions();
   }
 
   componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+    if (!isEmpty(nextProps.errors)) {
+      if (
+        nextProps.errors.devMessage.errors[0].message === "cpf must be unique"
+      ) {
+        let errors = { ...this.state.errors };
+        errors.cpf = "cpf já cadastrado na base de dados";
+        this.setState({ errors: errors });
+      }
     }
 
     //(Preenchendo / Atualizando) dados do formulario
     if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
-      const data = new Date(profile.person.birthdate);
-      console.log(data.toString());
+      //preenchendo campos caso não existam
+      profile.person.name = !isEmpty(profile.person.name)
+        ? profile.person.name
+        : "";
+      profile.person.surname = !isEmpty(profile.person.surname)
+        ? profile.person.surname
+        : "";
+      profile.person.birthdate = !isEmpty(profile.person.birthdate)
+        ? moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
+            "YYYY-MM-DD"
+          )
+        : "";
+      profile.person.nationality = !isEmpty(profile.person.nationality)
+        ? profile.person.nationality
+        : "";
+      profile.person.rgNumber = !isEmpty(profile.person.rgNumber)
+        ? profile.person.rgNumber
+        : "";
+      profile.person.rgDispatcher = !isEmpty(profile.person.rgDispatcher)
+        ? profile.person.rgDispatcher
+        : "";
+      profile.person.ethnicity = !isEmpty(profile.person.ethnicity)
+        ? profile.person.ethnicity
+        : "";
+      profile.person.gender = !isEmpty(profile.person.gender)
+        ? profile.person.gender
+        : "";
+      profile.person.civilStatus = !isEmpty(profile.person.civilStatus)
+        ? profile.person.civilStatus
+        : "";
 
-      const data2 = moment(profile.person.birthdate);
-      console.log(data2._d);
-
-      // const birthdate = !isEmpty(profile.person.birthdate)
-      //   ? moment(profile.user.birthdate).format("YYYY-MM-DD")
-      //   : "";
-
+      //Atualizando estado do componente
       this.setState({
         name: profile.person.name,
         surname: profile.person.surname,
-        cpf: profile.person.cpf
+        birthdate: profile.person.birthdate,
+        cpf: profile.person.cpf,
+        nationality: profile.person.nationality,
+        rgNumber: profile.person.rgNumber,
+        rgDispatcher: profile.person.rgDispatcher,
+        ethnicity: profile.person.ethnicity,
+        gender: profile.person.gender,
+        civilStatus: profile.person.civilStatus
       });
     }
   }
@@ -107,57 +147,65 @@ class ProfileEditPerson extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const personData = {
+    const profile = this.props.profile.profile;
+
+    let personData = {
       name: this.state.name,
       surname: this.state.surname,
-      birthdate: moment(this.state.birthdate),
+      birthdate: this.state.birthdate,
       cpf: this.state.cpf,
       nationality: this.state.nationality,
       rgNumber: this.state.rgNumber,
       rgDispatcher: this.state.rgDispatcher,
-      ethnicity: this.state.ethnicity,
-      gender: this.state.gender,
-      civilStatus: this.state.civilStatus
+      ethnicity: this.state.ethnicity ? this.state.ethnicity : null,
+      gender: this.state.gender ? this.state.gender : null,
+      civilStatus: this.state.civilStatus ? this.state.civilStatus : null
     };
 
-    console.log(personData);
+    this.props.updateProfilePerson(
+      profile.user.id,
+      personData,
+      this.props.history
+    );
   }
 
   render() {
     const { errors } = this.state;
-    const { colors, genders, civilStates } = {
-      colors: ["branco", "negro", "pardo", "amarelo", "indigena"],
-      genders: ["masculino", "feminino", "outros"],
-      civilStates: ["solteiro", "casado", "separado", "divorciado", "viúvo"]
-    };
+    const options = this.props.profile.options;
 
     const colorOptions = [{ label: "Escolha cor/etnia", value: "" }].concat(
-      colors.map(color => {
-        return {
-          label: `${color.charAt(0).toUpperCase()}${color.slice(1)}`,
-          value: color
-        };
-      })
+      options
+        ? options.ethnicity.values.map(color => {
+            return {
+              label: `${color.charAt(0).toUpperCase()}${color.slice(1)}`,
+              value: color
+            };
+          })
+        : []
     );
 
     const genderOptions = [{ label: "Escolha gênero", value: "" }].concat(
-      genders.map(gender => {
-        return {
-          label: `${gender.charAt(0).toUpperCase()}${gender.slice(1)}`,
-          value: gender
-        };
-      })
+      options
+        ? options.gender.values.map(color => {
+            return {
+              label: `${color.charAt(0).toUpperCase()}${color.slice(1)}`,
+              value: color
+            };
+          })
+        : []
     );
 
     const civilStateOptions = [
       { label: "Escolha estado civil", value: "" }
     ].concat(
-      civilStates.map(civState => {
-        return {
-          label: `${civState.charAt(0).toUpperCase()}${civState.slice(1)}`,
-          value: civState
-        };
-      })
+      options
+        ? options.civilStatus.values.map(color => {
+            return {
+              label: `${color.charAt(0).toUpperCase()}${color.slice(1)}`,
+              value: color
+            };
+          })
+        : []
     );
 
     return (
@@ -245,7 +293,7 @@ class ProfileEditPerson extends Component {
 
                 <SelectListGroup
                   placeholder="Escolha cor/etnia"
-                  name="color"
+                  name="ethnicity"
                   value={this.state.ethnicity}
                   options={colorOptions}
                   onChange={this.onChange}
@@ -262,8 +310,8 @@ class ProfileEditPerson extends Component {
                 />
 
                 <SelectListGroup
-                  placeholder="Escolha cor/etnia"
-                  name="civilState"
+                  placeholder="Escolha estado civil"
+                  name="civilStatus"
                   value={this.state.civilStatus}
                   options={civilStateOptions}
                   onChange={this.onChange}
@@ -285,8 +333,11 @@ class ProfileEditPerson extends Component {
 }
 
 ProfileEditPerson.propsTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  getPeopleOptions: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -296,5 +347,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
-)(ProfileEditPerson);
+  { getCurrentProfile, updateProfilePerson, getPeopleOptions }
+)(withRouter(ProfileEditPerson));

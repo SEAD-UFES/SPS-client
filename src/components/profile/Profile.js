@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import { getCurrentProfile } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 //import ProfileActions from "./ProfileActions";
 
-class Dashboard extends Component {
+class Profile extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
   }
@@ -21,29 +22,6 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
-
-    // const { user } = { user: { name: "Fernando", surname: "Annecchini" } };
-    // const { profile, loading } = {
-    //   profile: {
-    //     user: {
-    //       email: "fernando.void@gmail.com",
-    //       active: true
-    //     },
-    //     person: {
-    //       name: "Fernando",
-    //       surname: "Annecchini",
-    //       birthdate: "07/11/1980",
-    //       cpf: "088.402.807-07",
-    //       nationality: "Brasileiro",
-    //       rgNumber: "1.688.122",
-    //       rgExpeditor: "SSP-ES",
-    //       color: "Pardo",
-    //       gender: "Masculino",
-    //       civilState: "Casado"
-    //     }
-    //   },
-    //   loading: false
-    // };
 
     let dashboardContent;
     if (profile === null || loading) {
@@ -110,7 +88,12 @@ class Dashboard extends Component {
                     </p>
                   </div>
                   <div className="col-md-9">
-                    <p>{profile.person.birthdate}</p>
+                    <p>
+                      {moment(
+                        profile.person.birthdate,
+                        "YYYY-MM-DD HH:mm:ss"
+                      ).format("DD/MM/YYYY")}
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -128,7 +111,7 @@ class Dashboard extends Component {
                 </div>
               </div>
 
-              {profile.person.birthdate ? (
+              {profile.person.nationality ? (
                 <div className="row">
                   <div className="col-md-3">
                     <p>
@@ -136,7 +119,7 @@ class Dashboard extends Component {
                     </p>
                   </div>
                   <div className="col-md-9">
-                    <p>{profile.person.nacionality}</p>
+                    <p>{profile.person.nationality}</p>
                   </div>
                 </div>
               ) : (
@@ -147,7 +130,7 @@ class Dashboard extends Component {
                 <div className="row">
                   <div className="col-md-3">
                     <p>
-                      <strong>RG(Número/Expeditor):</strong>
+                      <strong>RG (Número / Expeditor):</strong>
                     </p>
                   </div>
                   <div className="col-md-9">
@@ -232,7 +215,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Profile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   //deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -249,4 +232,4 @@ export default connect(
   {
     getCurrentProfile
   }
-)(Dashboard);
+)(Profile);

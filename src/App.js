@@ -23,6 +23,8 @@ import Dashboard from "./components/profile/Dashboard";
 import Profile from "./components/profile/Profile";
 import ProfileEditUser from "./components/profile/ProfileEditUser";
 import ProfileEditPerson from "./components/profile/ProfileEditPerson";
+import Users from "./components/users/Users";
+import UserProfile from "./components/users/UserProfile";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -71,6 +73,8 @@ class App extends Component {
               path="/profile/edit-person"
               component={ProfileEditPerson}
             />
+            <Route exact path="/users" component={Users} />
+            <Route exact path="/users/:id" component={UserProfile} />
             <Footer />
           </div>
         </Router>

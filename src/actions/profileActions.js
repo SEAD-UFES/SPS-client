@@ -5,7 +5,8 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_PEOPLE_OPTIONS
 } from "./types";
 
 //Get current profile
@@ -45,17 +46,38 @@ export const updateProfileUser = (userId, userData, history) => dispatch => {
 
 //Update profile person data
 export const updateProfilePerson = (
-  personId,
+  userId,
   personData,
   history
 ) => dispatch => {
   axios
-    .put(`/v1/people/${personId}`, personData, history)
-    .then(res => history.push("/profile"))
+    .put(`/v1/people/${userId}`, personData, history)
+    .then(res => {
+      dispatch({ type: CLEAR_ERRORS });
+      history.push("/profile");
+    })
     .catch(err =>
       dispatch({
-        type: GET_PROFILE,
-        payload: null
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//Update profile person options
+export const getPeopleOptions = () => dispatch => {
+  axios
+    .get("/v1/people/options")
+    .then(res =>
+      dispatch({
+        type: GET_PEOPLE_OPTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: { options: "Don't load the people options" }
       })
     );
 };

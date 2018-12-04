@@ -6,13 +6,18 @@ const initialState = {};
 
 const middleware = [thunk];
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  compose(
+//create compose function - load redux plugin on browser if have it.
+let composeFunction;
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+  composeFunction = compose(
     applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+} else {
+  composeFunction = compose(applyMiddleware(...middleware));
+}
+
+//Create and export the store
+const store = createStore(rootReducer, initialState, composeFunction);
 
 export default store;

@@ -40,7 +40,7 @@ class ProfileEditUser extends Component {
 
   componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
-    if (nextProps.errors) {
+    if (!isEmpty(nextProps.errors)) {
       let errors = { ...this.props.errors };
       if (nextProps.errors.code === "users-06") {
         errors.email = nextProps.errors.userMessage;
