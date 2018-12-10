@@ -1,9 +1,15 @@
-import { GET_USER, GET_USERS, USER_LOADING } from "../actions/types";
+import {
+  GET_USER,
+  GET_USERS,
+  USER_LOADING,
+  GET_USER_PEOPLE_OPTIONS
+} from "../actions/types";
 
 const initialState = {
   user: null,
   users: [],
-  loading: false
+  loading: false,
+  options: null
 };
 
 export default function(state = initialState, action) {
@@ -24,6 +30,11 @@ export default function(state = initialState, action) {
         ...state,
         users: action.payload,
         loading: false
+      };
+    case GET_USER_PEOPLE_OPTIONS:
+      return {
+        ...state,
+        options: action.payload
       };
     default:
       return state;

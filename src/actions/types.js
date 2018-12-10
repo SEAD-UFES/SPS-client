@@ -13,6 +13,7 @@ export const GET_PEOPLE_OPTIONS = "GET_PEOPLE_OPTIONS";
 export const GET_USER = "GET_USER";
 export const GET_USERS = "GET_USERS";
 export const USER_LOADING = "USER_LOADING";
+export const GET_USER_PEOPLE_OPTIONS = "GET_USER_PEOPLE_OPTIONS";
 
 // //Post actions
 // export const POST_LOADING = "POST_LOADING";

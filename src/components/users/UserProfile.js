@@ -203,7 +203,7 @@ class UserProfile extends Component {
           <div className="row">
             <div className="col-md-12">
               <Link to="/users" className="btn btn-light">
-                Voltar para perfil
+                Voltar para lista de usuários
               </Link>
               <h1 className="display-4">Perfil</h1>
               {userContent}

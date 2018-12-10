@@ -1,6 +1,13 @@
 import axios from "axios";
 
-import { GET_USER, GET_USERS, USER_LOADING } from "./types";
+import {
+  GET_USER,
+  GET_USERS,
+  USER_LOADING,
+  CLEAR_ERRORS,
+  GET_ERRORS,
+  GET_USER_PEOPLE_OPTIONS
+} from "./types";
 
 //Get User
 export const getUser = user_id => dispatch => {
@@ -40,9 +47,59 @@ export const getUserList = () => dispatch => {
     );
 };
 
-//Profile loading
+//Update User Data
+export const updateUser = (userId, userData, history) => dispatch => {
+  axios
+    .put(`/v1/users/${userId}`, userData)
+    .then(res => {
+      dispatch({ type: CLEAR_ERRORS });
+      history.push(`/users/${userId}`);
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+//Update Person Data
+export const updatePerson = (userId, personData, history) => dispatch => {
+  axios
+    .put(`/v1/people/${userId}`, personData, history)
+    .then(res => {
+      dispatch({ type: CLEAR_ERRORS });
+      history.push(`/users/${userId}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//User loading
 export const setUserLoading = () => {
   return {
     type: USER_LOADING
   };
+};
+
+//Update user person options
+export const getUserPeopleOptions = () => dispatch => {
+  axios
+    .get("/v1/people/options")
+    .then(res =>
+      dispatch({
+        type: GET_USER_PEOPLE_OPTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: { options: "Don't load the people options" }
+      })
+    );
 };

@@ -25,6 +25,8 @@ import ProfileEditUser from "./components/profile/ProfileEditUser";
 import ProfileEditPerson from "./components/profile/ProfileEditPerson";
 import Users from "./components/users/Users";
 import UserProfile from "./components/users/UserProfile";
+import UserEditUser from "./components/users/UserEditUser";
+import UserEditPerson from "./components/users/UserEditPerson";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -75,6 +77,12 @@ class App extends Component {
             />
             <Route exact path="/users" component={Users} />
             <Route exact path="/users/:id" component={UserProfile} />
+            <Route exact path="/users/:id/edit-user" component={UserEditUser} />
+            <Route
+              exact
+              path="/users/:id/edit-person"
+              component={UserEditPerson}
+            />
             <Footer />
           </div>
         </Router>

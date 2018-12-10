@@ -14,14 +14,14 @@ import {
   isEmpty,
   validateProfileEditPersonForm
 } from "../../validation";
-import {
-  getCurrentProfile,
-  getPeopleOptions,
-  updateProfilePerson
-} from "../../actions/profileActions";
 import { clearErrors } from "../../actions/errorActions";
+import {
+  getUser,
+  updatePerson,
+  getUserPeopleOptions
+} from "../../actions/userActions";
 
-class ProfileEditPerson extends Component {
+class UserEditPerson extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,8 +45,10 @@ class ProfileEditPerson extends Component {
 
   componentDidMount() {
     this.props.clearErrors();
-    this.props.getCurrentProfile();
-    this.props.getPeopleOptions();
+    if (this.props.match.params.id) {
+      this.props.getUser(this.props.match.params.id);
+    }
+    this.props.getUserPeopleOptions();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,52 +64,50 @@ class ProfileEditPerson extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
-      const profile = nextProps.profile.profile;
+    if (isEmpty(nextProps.errors) && nextProps.user.user) {
+      const user = nextProps.user.user;
 
       //preenchendo campos caso não existam
-      profile.person.name = !isEmpty(profile.person.name)
-        ? profile.person.name
+      user.Person.name = !isEmpty(user.Person.name) ? user.Person.name : "";
+      user.Person.surname = !isEmpty(user.Person.surname)
+        ? user.Person.surname
         : "";
-      profile.person.surname = !isEmpty(profile.person.surname)
-        ? profile.person.surname
-        : "";
-      profile.person.birthdate = !isEmpty(profile.person.birthdate)
-        ? moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
+      user.Person.birthdate = !isEmpty(user.Person.birthdate)
+        ? moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
             "YYYY-MM-DD"
           )
         : "";
-      profile.person.nationality = !isEmpty(profile.person.nationality)
-        ? profile.person.nationality
+      user.Person.nationality = !isEmpty(user.Person.nationality)
+        ? user.Person.nationality
         : "";
-      profile.person.rgNumber = !isEmpty(profile.person.rgNumber)
-        ? profile.person.rgNumber
+      user.Person.rgNumber = !isEmpty(user.Person.rgNumber)
+        ? user.Person.rgNumber
         : "";
-      profile.person.rgDispatcher = !isEmpty(profile.person.rgDispatcher)
-        ? profile.person.rgDispatcher
+      user.Person.rgDispatcher = !isEmpty(user.Person.rgDispatcher)
+        ? user.Person.rgDispatcher
         : "";
-      profile.person.ethnicity = !isEmpty(profile.person.ethnicity)
-        ? profile.person.ethnicity
+      user.Person.ethnicity = !isEmpty(user.Person.ethnicity)
+        ? user.Person.ethnicity
         : "";
-      profile.person.gender = !isEmpty(profile.person.gender)
-        ? profile.person.gender
+      user.Person.gender = !isEmpty(user.Person.gender)
+        ? user.Person.gender
         : "";
-      profile.person.civilStatus = !isEmpty(profile.person.civilStatus)
-        ? profile.person.civilStatus
+      user.Person.civilStatus = !isEmpty(user.Person.civilStatus)
+        ? user.Person.civilStatus
         : "";
 
       //Atualizando estado do componente
       this.setState({
-        name: profile.person.name,
-        surname: profile.person.surname,
-        birthdate: profile.person.birthdate,
-        cpf: profile.person.cpf,
-        nationality: profile.person.nationality,
-        rgNumber: profile.person.rgNumber,
-        rgDispatcher: profile.person.rgDispatcher,
-        ethnicity: profile.person.ethnicity,
-        gender: profile.person.gender,
-        civilStatus: profile.person.civilStatus
+        name: user.Person.name,
+        surname: user.Person.surname,
+        birthdate: user.Person.birthdate,
+        cpf: user.Person.cpf,
+        nationality: user.Person.nationality,
+        rgNumber: user.Person.rgNumber,
+        rgDispatcher: user.Person.rgDispatcher,
+        ethnicity: user.Person.ethnicity,
+        gender: user.Person.gender,
+        civilStatus: user.Person.civilStatus
       });
     }
   }
@@ -137,6 +137,7 @@ class ProfileEditPerson extends Component {
     } else {
       delete errors[e.target.name];
     }
+
     //atualizando dados no state
     this.setState({ [e.target.name]: e.target.value, errors: errors });
   }
@@ -149,8 +150,6 @@ class ProfileEditPerson extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
-    const profile = this.props.profile.profile;
 
     let personData = {
       name: this.state.name,
@@ -170,17 +169,14 @@ class ProfileEditPerson extends Component {
     if (!valProfileEditPerson.isValid) {
       this.setState({ errors: valProfileEditPerson.errors });
     } else {
-      this.props.updateProfilePerson(
-        profile.user.id,
-        personData,
-        this.props.history
-      );
+      const user = this.props.user.user;
+      this.props.updatePerson(user.id, personData, this.props.history);
     }
   }
 
   render() {
     const { errors } = this.state;
-    const options = this.props.profile.options;
+    const options = this.props.user.options;
 
     const colorOptions = [{ label: "Escolha cor/etnia", value: "" }].concat(
       options
@@ -218,7 +214,7 @@ class ProfileEditPerson extends Component {
     );
 
     return (
-      <div className="profile-edit-person">
+      <div className="user-edit-person">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -341,20 +337,28 @@ class ProfileEditPerson extends Component {
   }
 }
 
-ProfileEditPerson.propsTypes = {
+UserEditPerson.propsTypes = {
+  clearErrors: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   getPeopleOptions: PropTypes.func.isRequired,
+  getUserPeopleOptions: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  user: state.user,
   profile: state.profile,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, updateProfilePerson, getPeopleOptions, clearErrors }
-)(withRouter(ProfileEditPerson));
+  {
+    clearErrors,
+    getUser,
+    updatePerson,
+    getUserPeopleOptions
+  }
+)(withRouter(UserEditPerson));

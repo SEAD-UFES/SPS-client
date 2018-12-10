@@ -10,3 +10,4 @@ export { validateDate } from "./validateDate.js";
 //Form Validations
 export { validateRegisterForm } from "./validateRegisterForm";
 export { validateProfileEditUserForm } from "./validateProfileEditUserForm";
+export { validateProfileEditPersonForm } from "./validateProfileEditPersonForm";
