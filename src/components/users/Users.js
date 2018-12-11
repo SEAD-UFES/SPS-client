@@ -5,13 +5,28 @@ import PropTypes from "prop-types";
 
 import { getUserList } from "../../actions/userActions";
 import Spinner from "../common/Spinner";
+import Pagination from "../common/Pagination";
 
 class Users extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pageOfItems: []
+    };
+
+    this.onChangePage = this.onChangePage.bind(this);
+  }
+
   componentDidMount() {
     this.props.getUserList();
   }
 
   //componentWillReceiveProps(nextProps) {}
+
+  onChangePage(pageOfItems) {
+    this.setState({ pageOfItems: pageOfItems });
+  }
 
   render() {
     const { users, loading } = this.props.user;
@@ -35,7 +50,7 @@ class Users extends Component {
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => {
+                {this.state.pageOfItems.map(user => {
                   return (
                     <tr key={user.id}>
                       <td>
@@ -56,6 +71,7 @@ class Users extends Component {
                 })}
               </tbody>
             </table>
+            <Pagination items={users} onChangePage={this.onChangePage} />
           </div>
         );
       }
@@ -70,7 +86,7 @@ class Users extends Component {
               <p className="lead text-muted" />
 
               <div className="btn-group mb-4" role="group">
-                <Link to="/users/add" className="btn btn-light">
+                <Link to="/users/create" className="btn btn-light">
                   <i className="fas fa-user-circle text-info mr-1" />
                   Adicionar usuário
                 </Link>

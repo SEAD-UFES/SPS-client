@@ -9,6 +9,21 @@ import {
   GET_USER_PEOPLE_OPTIONS
 } from "./types";
 
+//create user
+export const createUser = (userData, history) => dispatch => {
+  axios
+    .post("/v1/register", userData)
+    .then(res => {
+      history.push(`/users/${res.data.id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 //Get User
 export const getUser = user_id => dispatch => {
   dispatch(setUserLoading());

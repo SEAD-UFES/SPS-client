@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import "./App.css";
 
 //Library imports
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 
@@ -27,6 +27,7 @@ import Users from "./components/users/Users";
 import UserProfile from "./components/users/UserProfile";
 import UserEditUser from "./components/users/UserEditUser";
 import UserEditPerson from "./components/users/UserEditPerson";
+import UserCreate from "./components/users/UserCreate";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -76,13 +77,17 @@ class App extends Component {
               component={ProfileEditPerson}
             />
             <Route exact path="/users" component={Users} />
-            <Route exact path="/users/:id" component={UserProfile} />
+            <Switch>
+              <Route exact path="/users/create" component={UserCreate} />
+              <Route exact path="/users/:id" component={UserProfile} />
+            </Switch>
             <Route exact path="/users/:id/edit-user" component={UserEditUser} />
             <Route
               exact
               path="/users/:id/edit-person"
               component={UserEditPerson}
             />
+
             <Footer />
           </div>
         </Router>
