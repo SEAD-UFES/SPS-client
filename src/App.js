@@ -13,6 +13,7 @@ import store from "./store/store"; //Importa o store criado nesse arquivo.
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -50,7 +51,7 @@ if (localStorage.jwtToken) {
     store.dispatch(logoutUser());
 
     //redirect to login page
-    window.location.href = "/login";
+    //window.location.href = "/login";
   }
 }
 
@@ -61,21 +62,31 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/profile" component={Profile} />
-            <Route
-              exact
-              path="/profile/edit-user"
-              component={ProfileEditUser}
-            />
-            <Route
-              exact
-              path="/profile/edit-person"
-              component={ProfileEditPerson}
-            />
+
+            <Switch>
+              <Route exact path="/" component={Landing} />
+
+              <Route exact path="/register" component={Register} />
+
+              <Route exact path="/login" component={Login} />
+
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+
+              <PrivateRoute exact path="/profile" component={Profile} />
+
+              <PrivateRoute
+                exact
+                path="/profile/edit-user"
+                component={ProfileEditUser}
+              />
+
+              <PrivateRoute
+                exact
+                path="/profile/edit-person"
+                component={ProfileEditPerson}
+              />
+            </Switch>
+
             <Route exact path="/users" component={Users} />
             <Switch>
               <Route exact path="/users/create" component={UserCreate} />

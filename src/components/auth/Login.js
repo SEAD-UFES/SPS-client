@@ -23,14 +23,22 @@ class Login extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.clearErrors();
-      this.props.history.push("/dashboard");
+      if (this.props.location.prevLocation) {
+        this.props.history.push(this.props.location.prevLocation.from.pathname);
+      } else {
+        this.props.history.push("/dashboard");
+      }
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.clearErrors();
-      this.props.history.push("/dashboard");
+      if (this.props.location.prevLocation) {
+        this.props.history.push(this.props.location.prevLocation.from.pathname);
+      } else {
+        this.props.history.push("/dashboard");
+      }
     }
 
     //Tratando errors de autenticação do servidor.
@@ -116,6 +124,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+
     return (
       <div className="login">
         <div className="container">
