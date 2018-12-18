@@ -44,10 +44,10 @@ export const getUser = user_id => dispatch => {
 };
 
 //Get User List
-export const getUserList = () => dispatch => {
+export const getUserList = (page = 1, limit = 10) => dispatch => {
   dispatch(setUserLoading());
   axios
-    .get("/v1/users")
+    .get(`/v1/users?page=${page}&limit=${limit}`)
     .then(res =>
       dispatch({
         type: GET_USERS,
@@ -57,7 +57,7 @@ export const getUserList = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_USERS,
-        payload: []
+        payload: null
       })
     );
 };

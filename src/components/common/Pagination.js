@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  items: PropTypes.array.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  numberOfPages: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
   initialPage: PropTypes.number,
   pageSize: PropTypes.number
@@ -20,41 +21,31 @@ class Pagination extends React.Component {
   }
 
   componentWillMount() {
-    // set page if items array isn't empty
-    if (this.props.items && this.props.items.length) {
-      this.setPage(this.props.initialPage);
-    }
+    var pager = this.state.pager;
+    pager = this.getPager(
+      this.props.currentPage,
+      this.props.numberOfPages,
+      this.props.pageSize
+    );
+    this.setState({ pager: pager });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // reset page if items array has changed
-    if (this.props.items !== prevProps.items) {
-      this.setPage(this.props.initialPage);
-    }
-  }
+  componentWillReceiveProps(nextProps) {}
+
+  componentDidUpdate(prevProps, prevState) {}
 
   setPage(page) {
-    var { items, pageSize } = this.props;
+    var { pageSize } = this.props;
     var pager = this.state.pager;
 
     if (page < 1 || page > pager.totalPages) {
       return;
     }
 
-    // get new pager object for specified page
-    pager = this.getPager(items.length, page, pageSize);
-
-    // get new page of items from items array
-    var pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
-
-    // update state
-    this.setState({ pager: pager });
-
-    // call change page function in parent component
-    this.props.onChangePage(pageOfItems);
+    this.props.onChangePage(page, pageSize);
   }
 
-  getPager(totalItems, currentPage, pageSize) {
+  getPager(currentPage, numberOfPages, pageSize) {
     // default to first page
     currentPage = currentPage || 1;
 
@@ -62,9 +53,10 @@ class Pagination extends React.Component {
     pageSize = pageSize || 10;
 
     // calculate total pages
-    var totalPages = Math.ceil(totalItems / pageSize);
+    var totalPages = numberOfPages;
 
     var startPage, endPage;
+
     if (totalPages <= 10) {
       // less than 10 total pages so show all
       startPage = 1;
@@ -83,10 +75,6 @@ class Pagination extends React.Component {
       }
     }
 
-    // calculate start and end item indexes
-    var startIndex = (currentPage - 1) * pageSize;
-    var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
-
     // create an array of pages to ng-repeat in the pager control
     var pages = [...Array(endPage + 1 - startPage).keys()].map(
       i => startPage + i
@@ -94,24 +82,13 @@ class Pagination extends React.Component {
 
     // return object with all pager properties required by the view
     return {
-      totalItems: totalItems,
       currentPage: currentPage,
       pageSize: pageSize,
       totalPages: totalPages,
       startPage: startPage,
       endPage: endPage,
-      startIndex: startIndex,
-      endIndex: endIndex,
       pages: pages
     };
-  }
-
-  isDisabled(item) {
-    if (item === 1) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   render() {
@@ -124,27 +101,23 @@ class Pagination extends React.Component {
 
     return (
       <ul className="pagination justify-content-center">
-        {/* <li className={pager.currentPage === 1 ? "disabled" : ""}>
-          <a onClick={() => this.setPage(1)}>First</a>
-        </li> */}
-
         <li
           className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}
         >
-          <a className="page-link" onClick={() => this.setPage(1)}>
+          <button className="page-link" onClick={() => this.setPage(1)}>
             First
-          </a>
+          </button>
         </li>
 
         <li
           className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}
         >
-          <a
+          <button
             className="page-link"
             onClick={() => this.setPage(pager.currentPage - 1)}
           >
             Previous
-          </a>
+          </button>
         </li>
         {pager.pages.map((page, index) => (
           <li
@@ -153,9 +126,9 @@ class Pagination extends React.Component {
               pager.currentPage === page ? "active" : ""
             }`}
           >
-            <a className="page-link" onClick={() => this.setPage(page)}>
+            <button className="page-link" onClick={() => this.setPage(page)}>
               {page}
-            </a>
+            </button>
           </li>
         ))}
         <li
@@ -163,24 +136,24 @@ class Pagination extends React.Component {
             pager.currentPage === pager.totalPages ? "disabled" : ""
           }`}
         >
-          <a
+          <button
             className="page-link"
             onClick={() => this.setPage(pager.currentPage + 1)}
           >
             Next
-          </a>
+          </button>
         </li>
         <li
           className={`page-item ${
             pager.currentPage === pager.totalPages ? "disabled" : ""
           }`}
         >
-          <a
+          <button
             className="page-link"
             onClick={() => this.setPage(pager.totalPages)}
           >
             Last
-          </a>
+          </button>
         </li>
       </ul>
     );

@@ -4,10 +4,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { getUserList } from "../../actions/userActions";
+import { getProcessList } from "../../actions/processActions";
+
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 
-class Users extends Component {
+class Processes extends Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +22,7 @@ class Users extends Component {
 
   componentDidMount() {
     this.props.getUserList();
+    this.props.getProcessList();
   }
 
   //componentWillReceiveProps(nextProps) {}
@@ -27,10 +30,12 @@ class Users extends Component {
   onChangePage(page, pageSize) {
     //this.setState({ pageOfItems: pageOfItems });
     this.props.getUserList(page, pageSize);
+    this.props.getProcessList(page, pageSize);
   }
 
   render() {
     const { users, loading } = this.props.user;
+    const { processes, loading2 } = this.props.process;
     //const { users, loading } = { users: [], loading: false };
     let usersContent;
 
@@ -89,17 +94,17 @@ class Users extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="display-4">Lista de usuários</h1>
+              <h1 className="display-4">Lista de processos</h1>
               <p className="lead text-muted" />
 
               <div className="btn-group mb-4" role="group">
-                <Link to="/users/create" className="btn btn-light">
+                <Link to="/processes/create" className="btn btn-light">
                   <i className="fas fa-user-circle text-info mr-1" />
-                  Adicionar usuário
+                  Adicionar processos
                 </Link>
               </div>
 
-              {usersContent}
+              {/* {usersContent} */}
             </div>
           </div>
         </div>
@@ -108,16 +113,18 @@ class Users extends Component {
   }
 }
 
-Users.propTypes = {
+Processes.propTypes = {
   getUserList: PropTypes.func.isRequired,
+  getProcessList: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  process: state.process
 });
 
 export default connect(
   mapStateToProps,
-  { getUserList }
-)(Users);
+  { getUserList, getProcessList }
+)(Processes);

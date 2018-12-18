@@ -29,6 +29,7 @@ import UserProfile from "./components/users/UserProfile";
 import UserEditUser from "./components/users/UserEditUser";
 import UserEditPerson from "./components/users/UserEditPerson";
 import UserCreate from "./components/users/UserCreate";
+import Processes from "./components/processes/Processes";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -50,7 +51,7 @@ if (localStorage.jwtToken) {
     //logout user
     store.dispatch(logoutUser());
 
-    //redirect to login page
+    //redirect to login page (replaced by PrivateRoute)
     //window.location.href = "/login";
   }
 }
@@ -85,19 +86,27 @@ class App extends Component {
                 path="/profile/edit-person"
                 component={ProfileEditPerson}
               />
-            </Switch>
 
-            <Route exact path="/users" component={Users} />
-            <Switch>
-              <Route exact path="/users/create" component={UserCreate} />
-              <Route exact path="/users/:id" component={UserProfile} />
+              <PrivateRoute exact path="/users" component={Users} />
+
+              <PrivateRoute exact path="/users/create" component={UserCreate} />
+
+              <PrivateRoute exact path="/users/:id" component={UserProfile} />
+
+              <PrivateRoute
+                exact
+                path="/users/:id/edit-user"
+                component={UserEditUser}
+              />
+
+              <PrivateRoute
+                exact
+                path="/users/:id/edit-person"
+                component={UserEditPerson}
+              />
+
+              <PrivateRoute exact path="/processes" component={Processes} />
             </Switch>
-            <Route exact path="/users/:id/edit-user" component={UserEditUser} />
-            <Route
-              exact
-              path="/users/:id/edit-person"
-              component={UserEditPerson}
-            />
 
             <Footer />
           </div>
