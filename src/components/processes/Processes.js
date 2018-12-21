@@ -34,43 +34,38 @@ class Processes extends Component {
   }
 
   render() {
-    const { users, loading } = this.props.user;
     const { processes, loading2 } = this.props.process;
     //const { users, loading } = { users: [], loading: false };
     let usersContent;
 
-    if (users === null || loading) {
+    if (processes === null || loading2) {
       usersContent = <Spinner />;
     } else {
-      if (users.users.length > 0) {
+      if (processes.selectiveProcesses.length > 0) {
         usersContent = (
           <div>
             <h4 className="mb-2">Usuários</h4>
             <table className="table">
               <thead>
                 <tr>
-                  <th>Nome/Sobrenome</th>
-                  <th>Login/Email</th>
+                  <th>Número</th>
+                  <th>Ano</th>
                   <th>Status</th>
                   <th />
                 </tr>
               </thead>
               <tbody>
-                {users.users.map(user => {
+                {processes.selectiveProcesses.map(process => {
                   return (
-                    <tr key={user.id}>
+                    <tr key={process.id}>
+                      <td>{process.number}</td>
+                      <td>{process.year}</td>
+                      <td>{process.visible ? "Visível" : "Oculto"}</td>
                       <td>
-                        {user.Person
-                          ? `${user.Person.name} ${user.Person.surname}`
-                          : `Sem nome`}
-                      </td>
-
-                      <td>{user.login}</td>
-
-                      <td>{user.authorized ? "Ativo" : "Desativado"}</td>
-
-                      <td>
-                        <Link className="text-success" to={`/users/${user.id}`}>
+                        <Link
+                          className="text-success"
+                          to={`/processes/${process.id}`}
+                        >
                           <i className="fas fa-info-circle" />
                         </Link>
                       </td>
@@ -80,8 +75,8 @@ class Processes extends Component {
               </tbody>
             </table>
             <Pagination
-              currentPage={users.info.currentPage}
-              numberOfPages={users.info.numberOfPages}
+              currentPage={processes.info.currentPage}
+              numberOfPages={processes.info.numberOfPages}
               onChangePage={this.onChangePage}
             />
           </div>
@@ -100,11 +95,11 @@ class Processes extends Component {
               <div className="btn-group mb-4" role="group">
                 <Link to="/processes/create" className="btn btn-light">
                   <i className="fas fa-user-circle text-info mr-1" />
-                  Adicionar processos
+                  Adicionar processo
                 </Link>
               </div>
 
-              {/* {usersContent} */}
+              {usersContent}
             </div>
           </div>
         </div>

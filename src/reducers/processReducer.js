@@ -1,12 +1,4 @@
-import {
-  GET_USER,
-  GET_USERS,
-  USER_LOADING,
-  GET_USER_PEOPLE_OPTIONS,
-  GET_PROCESS,
-  GET_PROCESSES,
-  PROCESS_LOADING
-} from "../actions/types";
+import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING } from "../actions/types";
 
 const initialState = {
   process: null,

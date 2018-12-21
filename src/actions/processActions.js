@@ -1,12 +1,7 @@
 import axios from "axios";
 
 import {
-  GET_USER,
-  GET_USERS,
-  USER_LOADING,
-  CLEAR_ERRORS,
   GET_ERRORS,
-  GET_USER_PEOPLE_OPTIONS,
   GET_PROCESS,
   GET_PROCESSES,
   PROCESS_LOADING
@@ -17,6 +12,7 @@ export const createProcess = (processData, history) => dispatch => {
   axios
     .post("/v1/selectiveprocesses", processData)
     .then(res => {
+      console.log(res);
       history.push(`/processes/${res.data.id}`);
     })
     .catch(err =>

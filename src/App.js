@@ -30,6 +30,8 @@ import UserEditUser from "./components/users/UserEditUser";
 import UserEditPerson from "./components/users/UserEditPerson";
 import UserCreate from "./components/users/UserCreate";
 import Processes from "./components/processes/Processes";
+import ProcessCreate from "./components/processes/ProcessCreate";
+import ProcessView from "./components/processes/ProcessView";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -105,7 +107,15 @@ class App extends Component {
                 component={UserEditPerson}
               />
 
-              <PrivateRoute exact path="/processes" component={Processes} />
+              <Route exact path="/processes" component={Processes} />
+
+              <PrivateRoute
+                exact
+                path="/processes/create"
+                component={ProcessCreate}
+              />
+
+              <Route exact path="/processes/:id" component={ProcessView} />
             </Switch>
 
             <Footer />
