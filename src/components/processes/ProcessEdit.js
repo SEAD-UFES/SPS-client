@@ -6,15 +6,17 @@ import { withRouter, Link } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import {
+  isEmpty,
   validateProcessNumber,
   validateYearRequired,
   validateDescription,
   validateProcessForm
 } from "../../validation";
 
-import { createProcess } from "../../actions/processActions";
+import { clearErrors } from "../../actions/errorActions";
+import { getProcess, updateProcess } from "../../actions/processActions";
 
-class ProcessCreate extends Component {
+class ProcessEdit extends Component {
   constructor() {
     super();
     this.state = {
@@ -30,10 +32,29 @@ class ProcessCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.clearErrors();
+    if (this.props.match.params.id) {
+      this.props.getProcess(this.props.match.params.id);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
+    //Tratando errors
     if (nextProps.errors) {
       let errors = nextProps.errors;
       this.setState({ errors: errors });
+    }
+
+    //(Preenchendo / Atualizando) dados do formulario
+    if (isEmpty(nextProps.errors) && nextProps.process.process) {
+      const process = nextProps.process.process;
+      this.setState({
+        number: process.number,
+        year: process.year,
+        description: process.description,
+        visible: process.visible
+      });
     }
   }
 
@@ -96,7 +117,11 @@ class ProcessCreate extends Component {
     if (!valProcess.isValid) {
       this.setState({ errors: valProcess.errors });
     } else {
-      this.props.createProcess(processData, this.props.history);
+      this.props.updateProcess(
+        this.props.match.params.id,
+        processData,
+        this.props.history
+      );
     }
   }
 
@@ -108,11 +133,14 @@ class ProcessCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/processes" className="btn btn-light">
-                Voltar lista de processos
+              <Link
+                to={`/processes/${this.props.match.params.id}`}
+                className="btn btn-light"
+              >
+                Voltar para o processo
               </Link>
-              <h1 className="display-4 text-center">Criar processo</h1>
-              <p className="lead text-center">Dê entrada nos dados básicos</p>
+              <h1 className="display-4 text-center">Editar processo</h1>
+              <p className="lead text-center">Altere os dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   type="text"
@@ -166,18 +194,21 @@ class ProcessCreate extends Component {
 }
 
 // "registerUser" and "auth" are required to the Register component
-ProcessCreate.proptypes = {
-  createProcess: PropTypes.func.isRequired,
+ProcessEdit.proptypes = {
+  clearErrors: PropTypes.func.isRequired,
+  getProcess: PropTypes.func.isRequired,
+  updateProcess: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errors,
+  process: state.process
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcess }
-)(withRouter(ProcessCreate));
+  { clearErrors, getProcess, updateProcess }
+)(withRouter(ProcessEdit));

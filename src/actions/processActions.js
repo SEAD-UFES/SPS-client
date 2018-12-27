@@ -4,7 +4,8 @@ import {
   GET_ERRORS,
   GET_PROCESS,
   GET_PROCESSES,
-  PROCESS_LOADING
+  PROCESS_LOADING,
+  CLEAR_ERRORS
 } from "./types";
 
 //create user
@@ -62,21 +63,21 @@ export const getProcessList = (page = 1, limit = 10) => dispatch => {
     });
 };
 
-//Update User Data
-// export const updateUser = (userId, userData, history) => dispatch => {
-//   axios
-//     .put(`/v1/users/${userId}`, userData)
-//     .then(res => {
-//       dispatch({ type: CLEAR_ERRORS });
-//       history.push(`/users/${userId}`);
-//     })
-//     .catch(err => {
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       });
-//     });
-// };
+//Update Process Data
+export const updateProcess = (processId, processData, history) => dispatch => {
+  axios
+    .put(`/v1/selectiveprocesses/${processId}`, processData)
+    .then(res => {
+      dispatch({ type: CLEAR_ERRORS });
+      history.push(`/processes/${processId}`);
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 
 //Update Person Data
 // export const updatePerson = (userId, personData, history) => dispatch => {

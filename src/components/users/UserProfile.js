@@ -24,7 +24,9 @@ class UserProfile extends Component {
       userContent = (
         <div>
           <p className="lead text-muted">
-            {user.Person.name} {user.Person.surname}
+            {user.Person
+              ? `${user.Person.name} ${user.Person.surname}`
+              : "Sem nome"}
           </p>
 
           {/* <!-- Profile Actions --> */}
@@ -70,130 +72,134 @@ class UserProfile extends Component {
           </div>
 
           {/* <!-- Person Data --> */}
-          <div>
-            <h4 className="mb-3">Dados de pessoais</h4>
+          {user.Person ? (
+            <div>
+              <h4 className="mb-3">Dados de pessoais</h4>
 
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>Nome / Sobrenome:</strong>
-                </p>
+              <div className="row">
+                <div className="col-md-3">
+                  <p>
+                    <strong>Nome / Sobrenome:</strong>
+                  </p>
+                </div>
+                <div className="col-md-9">
+                  <p>
+                    {user.Person.name} {user.Person.surname}
+                  </p>
+                </div>
               </div>
-              <div className="col-md-9">
-                <p>
-                  {user.Person.name} {user.Person.surname}
-                </p>
+
+              {user.Person.birthdate ? (
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>
+                      <strong>Data de Nascimento:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-9">
+                    <p>
+                      {moment(
+                        user.Person.birthdate,
+                        "YYYY-MM-DD HH:mm:ss"
+                      ).format("DD/MM/YYYY")}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              <div className="row">
+                <div className="col-md-3">
+                  <p>
+                    <strong>CPF:</strong>
+                  </p>
+                </div>
+                <div className="col-md-9">
+                  <p>{user.Person.cpf}</p>
+                </div>
               </div>
+
+              {user.Person.nationality ? (
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>
+                      <strong>Nacionalidade:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-9">
+                    <p>{user.Person.nationality}</p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {user.Person.rgNumber ? (
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>
+                      <strong>RG (Número / Expeditor):</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-9">
+                    <p>
+                      {user.Person.rgNumber} - {user.Person.rgDispatcher}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {user.Person.ethnicity ? (
+                <div className="row">
+                  <div className="col-md-2">
+                    <p>
+                      <strong>Cor:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-10">
+                    <p>{user.Person.ethnicity}</p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {user.Person.gender ? (
+                <div className="row">
+                  <div className="col-md-2">
+                    <p>
+                      <strong>Sexo:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-10">
+                    <p>{user.Person.gender}</p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {user.Person.civilStatus ? (
+                <div className="row">
+                  <div className="col-md-2">
+                    <p>
+                      <strong>Estado Civil:</strong>
+                    </p>
+                  </div>
+                  <div className="col-md-10">
+                    <p>{user.Person.civilStatus}</p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-
-            {user.Person.birthdate ? (
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>Data de Nascimento:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>
-                    {moment(
-                      user.Person.birthdate,
-                      "YYYY-MM-DD HH:mm:ss"
-                    ).format("DD/MM/YYYY")}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>CPF:</strong>
-                </p>
-              </div>
-              <div className="col-md-9">
-                <p>{user.Person.cpf}</p>
-              </div>
-            </div>
-
-            {user.Person.nationality ? (
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>Nacionalidade:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>{user.Person.nationality}</p>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {user.Person.rgNumber ? (
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>RG (Número / Expeditor):</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>
-                    {user.Person.rgNumber} - {user.Person.rgDispatcher}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {user.Person.ethnicity ? (
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Cor:</strong>
-                  </p>
-                </div>
-                <div className="col-md-10">
-                  <p>{user.Person.ethnicity}</p>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {user.Person.gender ? (
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Sexo:</strong>
-                  </p>
-                </div>
-                <div className="col-md-10">
-                  <p>{user.Person.gender}</p>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {user.Person.civilStatus ? (
-              <div className="row">
-                <div className="col-md-2">
-                  <p>
-                    <strong>Estado Civil:</strong>
-                  </p>
-                </div>
-                <div className="col-md-10">
-                  <p>{user.Person.civilStatus}</p>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
+          ) : (
+            ""
+          )}
         </div>
       );
     }

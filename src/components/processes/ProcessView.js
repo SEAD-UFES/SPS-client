@@ -30,7 +30,7 @@ class ProcessView extends Component {
           {/* <!-- Dashboard Actions --> */}
           <div className="btn-group mb-4" role="group">
             <Link
-              to={`/processes/${process.id}/edit-process`}
+              to={`/processes/${process.id}/edit`}
               className="btn btn-light"
             >
               <i className="fas fa-user-circle text-info mr-1" /> Editar

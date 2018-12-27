@@ -68,47 +68,49 @@ class UserEditPerson extends Component {
       const user = nextProps.user.user;
 
       //preenchendo campos caso não existam
-      user.Person.name = !isEmpty(user.Person.name) ? user.Person.name : "";
-      user.Person.surname = !isEmpty(user.Person.surname)
-        ? user.Person.surname
-        : "";
-      user.Person.birthdate = !isEmpty(user.Person.birthdate)
-        ? moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
-            "YYYY-MM-DD"
-          )
-        : "";
-      user.Person.nationality = !isEmpty(user.Person.nationality)
-        ? user.Person.nationality
-        : "";
-      user.Person.rgNumber = !isEmpty(user.Person.rgNumber)
-        ? user.Person.rgNumber
-        : "";
-      user.Person.rgDispatcher = !isEmpty(user.Person.rgDispatcher)
-        ? user.Person.rgDispatcher
-        : "";
-      user.Person.ethnicity = !isEmpty(user.Person.ethnicity)
-        ? user.Person.ethnicity
-        : "";
-      user.Person.gender = !isEmpty(user.Person.gender)
-        ? user.Person.gender
-        : "";
-      user.Person.civilStatus = !isEmpty(user.Person.civilStatus)
-        ? user.Person.civilStatus
-        : "";
+      if (user.Person) {
+        user.Person.name = !isEmpty(user.Person.name) ? user.Person.name : "";
+        user.Person.surname = !isEmpty(user.Person.surname)
+          ? user.Person.surname
+          : "";
+        user.Person.birthdate = !isEmpty(user.Person.birthdate)
+          ? moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
+              "YYYY-MM-DD"
+            )
+          : "";
+        user.Person.nationality = !isEmpty(user.Person.nationality)
+          ? user.Person.nationality
+          : "";
+        user.Person.rgNumber = !isEmpty(user.Person.rgNumber)
+          ? user.Person.rgNumber
+          : "";
+        user.Person.rgDispatcher = !isEmpty(user.Person.rgDispatcher)
+          ? user.Person.rgDispatcher
+          : "";
+        user.Person.ethnicity = !isEmpty(user.Person.ethnicity)
+          ? user.Person.ethnicity
+          : "";
+        user.Person.gender = !isEmpty(user.Person.gender)
+          ? user.Person.gender
+          : "";
+        user.Person.civilStatus = !isEmpty(user.Person.civilStatus)
+          ? user.Person.civilStatus
+          : "";
 
-      //Atualizando estado do componente
-      this.setState({
-        name: user.Person.name,
-        surname: user.Person.surname,
-        birthdate: user.Person.birthdate,
-        cpf: user.Person.cpf,
-        nationality: user.Person.nationality,
-        rgNumber: user.Person.rgNumber,
-        rgDispatcher: user.Person.rgDispatcher,
-        ethnicity: user.Person.ethnicity,
-        gender: user.Person.gender,
-        civilStatus: user.Person.civilStatus
-      });
+        //Atualizando estado do componente
+        this.setState({
+          name: user.Person.name,
+          surname: user.Person.surname,
+          birthdate: user.Person.birthdate,
+          cpf: user.Person.cpf,
+          nationality: user.Person.nationality,
+          rgNumber: user.Person.rgNumber,
+          rgDispatcher: user.Person.rgDispatcher,
+          ethnicity: user.Person.ethnicity,
+          gender: user.Person.gender,
+          civilStatus: user.Person.civilStatus
+        });
+      }
     }
   }
 
