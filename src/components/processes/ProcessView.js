@@ -37,7 +37,7 @@ class ProcessView extends Component {
               Processo
             </Link>
             <Link
-              to={`/processes/${process.id}/add-call`}
+              to={`/processes/${process.id}/calls/create`}
               className="btn btn-light"
             >
               <i className="fas fa-user-circle text-info mr-1" /> Adicionar

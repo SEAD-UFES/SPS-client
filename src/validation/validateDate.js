@@ -23,6 +23,21 @@ export const validateDate = date => {
   };
 };
 
+export const validateDateRequired = date => {
+  date = !isEmpty(date) ? date : "";
+
+  let { error } = validateDate(date);
+
+  if (Validator.isEmpty(date)) {
+    error = "Este campo é requerido.";
+  }
+
+  return {
+    error: error,
+    isValid: isEmpty(error)
+  };
+};
+
 // br year requeried validation
 export const validateYearRequired = year => {
   year = !isEmpty(year) ? year : "";

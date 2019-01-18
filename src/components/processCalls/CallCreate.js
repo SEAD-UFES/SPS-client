@@ -4,29 +4,28 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import {
-  validateProcessNumber,
-  validateYearRequired,
-  validateDescription,
-  validateProcessForm
+  validateDateRequired,
+  validateNumberRequired,
+  validateProcessCallForm
 } from "../../validation";
 
-import { createProcess } from "../../actions/processActions";
+import { createProcess, createProcessCall } from "../../actions/processActions";
 
-class ProcessCreate extends Component {
+class CallCreate extends Component {
   constructor() {
     super();
     this.state = {
       number: "",
-      year: "",
-      description: "",
-      visible: false,
+      inscriptionsStart: "",
+      inscriptionsEnd: "",
+      callEnd: "",
+
+      //errors
       errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -43,13 +42,16 @@ class ProcessCreate extends Component {
     let valResult = { error: "", isValid: true };
     switch (e.target.name) {
       case "number":
-        valResult = validateProcessNumber(e.target.value);
+        valResult = validateNumberRequired(e.target.value);
         break;
-      case "year":
-        valResult = validateYearRequired(e.target.value);
+      case "inscriptionsStart":
+        valResult = validateDateRequired(e.target.value);
         break;
-      case "description":
-        valResult = validateDescription(e.target.value);
+      case "inscriptionsEnd":
+        valResult = validateDateRequired(e.target.value);
+        break;
+      case "callEnd":
+        valResult = validateDateRequired(e.target.value);
         break;
       default:
         break;
@@ -68,35 +70,25 @@ class ProcessCreate extends Component {
     });
   }
 
-  onCheck(e) {
-    //validação local dos campos
-    let errors = this.state.errors;
-    switch (e.target.name) {
-      default:
-        break;
-    }
-
-    this.setState({
-      [e.target.name]: !this.state[e.target.name],
-      errors: errors
-    });
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
-    const processData = {
+    const callData = {
+      selectiveProcess_id: this.props.match.params.id,
       number: this.state.number,
-      year: this.state.year,
-      description: this.state.description,
-      visible: this.state.visible
+      inscriptionsStart: this.state.inscriptionsStart,
+      inscriptionsEnd: this.state.inscriptionsEnd,
+      callEnd: this.state.callEnd
     };
 
-    const valProcess = validateProcessForm(processData);
-    if (!valProcess.isValid) {
-      this.setState({ errors: valProcess.errors });
+    const valCall = validateProcessCallForm(callData);
+    if (!valCall.isValid) {
+      this.setState({ errors: valCall.errors });
     } else {
-      this.props.createProcess(processData, this.props.history);
+      console.log("ready to go!");
+      console.log(callData);
+      //this.props.createProcess(processData, this.props.history);
+      this.props.createProcessCall(callData, this.props.history);
     }
   }
 
@@ -108,10 +100,13 @@ class ProcessCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/processes" className="btn btn-light">
-                Voltar para a lista de processos
+              <Link
+                to={`/processes/${this.props.match.params.id}`}
+                className="btn btn-light"
+              >
+                Voltar para o processo
               </Link>
-              <h1 className="display-4 text-center">Criar processo</h1>
+              <h1 className="display-4 text-center">Criar chamada</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
@@ -123,37 +118,35 @@ class ProcessCreate extends Component {
                   error={errors.number}
                 />
 
+                <h6>Início das inscrições</h6>
                 <TextFieldGroup
-                  type="text"
-                  name="year"
-                  placeholder="* Ano"
-                  value={this.state.year}
+                  placeholder="Início das inscrições"
+                  type="date"
+                  name="inscriptionsStart"
+                  value={this.state.inscriptionsStart}
                   onChange={this.onChange}
-                  error={errors.year}
+                  error={errors.inscriptionsStart}
                 />
 
-                <TextAreaFieldGroup
-                  placeholder="* Descrição"
-                  name="description"
-                  value={this.state.description}
+                <h6>Encerramento das inscrições</h6>
+                <TextFieldGroup
+                  placeholder="Encerramento das inscrições"
+                  type="date"
+                  name="inscriptionsEnd"
+                  value={this.state.inscriptionsEnd}
                   onChange={this.onChange}
-                  error={errors.description}
-                  info="Apresentação básica do processo seletivo"
+                  error={errors.inscriptionsEnd}
                 />
 
-                <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="visible"
-                    id="visible"
-                    checked={this.state.visible}
-                    onChange={this.onCheck}
-                  />
-                  <label className="form-check-label" htmlFor="visible">
-                    Tornar processo visível
-                  </label>
-                </div>
+                <h6>Final da chamada</h6>
+                <TextFieldGroup
+                  placeholder="Encerramento da chamada"
+                  type="date"
+                  name="callEnd"
+                  value={this.state.callEnd}
+                  onChange={this.onChange}
+                  error={errors.callEnd}
+                />
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
@@ -166,8 +159,8 @@ class ProcessCreate extends Component {
 }
 
 // "registerUser" and "auth" are required to the Register component
-ProcessCreate.proptypes = {
-  createProcess: PropTypes.func.isRequired,
+CallCreate.proptypes = {
+  createProcessCall: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -179,5 +172,5 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcess }
-)(withRouter(ProcessCreate));
+  { createProcess, createProcessCall }
+)(withRouter(CallCreate));

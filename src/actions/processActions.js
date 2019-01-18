@@ -8,12 +8,11 @@ import {
   CLEAR_ERRORS
 } from "./types";
 
-//create user
+//create Process
 export const createProcess = (processData, history) => dispatch => {
   axios
     .post("/v1/selectiveprocesses", processData)
     .then(res => {
-      console.log(res);
       history.push(`/processes/${res.data.id}`);
     })
     .catch(err =>
@@ -24,7 +23,7 @@ export const createProcess = (processData, history) => dispatch => {
     );
 };
 
-//Get Process
+//get Process
 export const getProcess = process_id => dispatch => {
   dispatch(setProcessLoading());
   axios
@@ -43,7 +42,7 @@ export const getProcess = process_id => dispatch => {
     );
 };
 
-//Get Process List
+//get Process List
 export const getProcessList = (page = 1, limit = 10) => dispatch => {
   dispatch(setProcessLoading());
   axios
@@ -55,7 +54,6 @@ export const getProcessList = (page = 1, limit = 10) => dispatch => {
       })
     )
     .catch(err => {
-      console.log("GET_PROCESSES error");
       dispatch({
         type: GET_PROCESSES,
         payload: null
@@ -63,7 +61,7 @@ export const getProcessList = (page = 1, limit = 10) => dispatch => {
     });
 };
 
-//Update Process Data
+//update Process Data
 export const updateProcess = (processId, processData, history) => dispatch => {
   axios
     .put(`/v1/selectiveprocesses/${processId}`, processData)
@@ -78,6 +76,26 @@ export const updateProcess = (processId, processData, history) => dispatch => {
       });
     });
 };
+
+//#####################################################################
+//Call actions
+
+//create ProcessCall
+export const createProcessCall = (callData, history) => dispatch => {
+  axios
+    .post("/v1/calls", callData)
+    .then(res => {
+      history.push(`/processes/${res.data.id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//#####################################################################
 
 //Update Person Data
 // export const updatePerson = (userId, personData, history) => dispatch => {
