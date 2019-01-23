@@ -10,7 +10,7 @@ import {
   validateProcessCallForm
 } from "../../validation";
 
-import { createProcess, createProcessCall } from "../../actions/processActions";
+import { createProcessCall } from "../../actions/processActions";
 
 class CallCreate extends Component {
   constructor() {
@@ -73,7 +73,7 @@ class CallCreate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const callData = {
+    const tmpCallData = {
       selectiveProcess_id: this.props.match.params.id,
       number: this.state.number,
       inscriptionsStart: this.state.inscriptionsStart,
@@ -81,13 +81,18 @@ class CallCreate extends Component {
       callEnd: this.state.callEnd
     };
 
-    const valCall = validateProcessCallForm(callData);
+    const valCall = validateProcessCallForm(tmpCallData);
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      console.log("ready to go!");
-      console.log(callData);
-      //this.props.createProcess(processData, this.props.history);
+      const callData = {
+        selectiveProcess_id: this.props.match.params.id,
+        number: tmpCallData.number,
+        enrollmentOpeningDate: tmpCallData.inscriptionsStart,
+        enrollmentClosingDate: tmpCallData.inscriptionsEnd,
+        endingDate: tmpCallData.callEnd
+      };
+
       this.props.createProcessCall(callData, this.props.history);
     }
   }
@@ -172,5 +177,5 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcess, createProcessCall }
+  { createProcessCall }
 )(withRouter(CallCreate));

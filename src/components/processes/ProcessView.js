@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import { getProcess } from "../../actions/processActions";
 import Spinner from "../common/Spinner";
+import CallTabList from "../processCalls/CallTabList";
 
 class ProcessView extends Component {
   componentDidMount() {
@@ -27,7 +28,7 @@ class ProcessView extends Component {
             {`${process.number}/${process.year}`}
           </p>
 
-          {/* <!-- Dashboard Actions --> */}
+          {/* <!-- Process Actions --> */}
           <div className="btn-group mb-4" role="group">
             <Link
               to={`/processes/${process.id}/edit`}
@@ -52,7 +53,7 @@ class ProcessView extends Component {
             </Link>
           </div>
 
-          {/* <!-- Dados de usuário --> */}
+          {/* <!-- Dados do processo --> */}
           <div>
             <h4 className="mb-2">Dados do processo</h4>
 
@@ -93,6 +94,9 @@ class ProcessView extends Component {
               </div>
             </div>
           </div>
+
+          {/* Call Tab List */}
+          <CallTabList calls={process.Calls} />
         </div>
       );
     }

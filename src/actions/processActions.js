@@ -85,7 +85,7 @@ export const createProcessCall = (callData, history) => dispatch => {
   axios
     .post("/v1/calls", callData)
     .then(res => {
-      history.push(`/processes/${res.data.id}`);
+      history.push(`/processes/${callData.selectiveProcess_id}`);
     })
     .catch(err =>
       dispatch({
