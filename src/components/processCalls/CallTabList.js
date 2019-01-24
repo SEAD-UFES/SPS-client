@@ -25,7 +25,7 @@ class CallTabList extends Component {
           return (
             <li className="nav-item" key={call.id}>
               <a
-                className={"nav-link " + (activeId == call.id ? "active" : "")}
+                className={"nav-link " + (activeId === call.id ? "active" : "")}
                 id={`call-${call.id}-tab`}
                 data-toggle="tab"
                 href={`#call-${call.id}-content`}
@@ -48,7 +48,7 @@ class CallTabList extends Component {
             <div
               key={call.id}
               className={
-                "tab-pane fade " + (activeId == call.id ? "show active" : "")
+                "tab-pane fade " + (activeId === call.id ? "show active" : "")
               }
               id={`call-${call.id}-content`}
               role="tabpanel"

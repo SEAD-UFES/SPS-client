@@ -19,4 +19,9 @@ export { validateRegisterForm } from "./validateRegisterForm";
 export { validateProfileEditUserForm } from "./validateProfileEditUserForm";
 export { validateProfileEditPersonForm } from "./validateProfileEditPersonForm";
 export { validateProcessForm } from "./validateProcessForm";
-export { validateProcessCallForm } from "./validateProcessCallForm";
+export {
+  validateProcessCallForm,
+  validateInscriptionsStart,
+  validateInscriptionsEnd,
+  validateCallEnd
+} from "./validateProcessCallForm";

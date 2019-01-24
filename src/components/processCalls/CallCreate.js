@@ -5,9 +5,11 @@ import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import {
-  validateDateRequired,
   validateNumberRequired,
-  validateProcessCallForm
+  validateProcessCallForm,
+  validateInscriptionsStart,
+  validateInscriptionsEnd,
+  validateCallEnd
 } from "../../validation";
 
 import { createProcessCall } from "../../actions/processActions";
@@ -30,6 +32,7 @@ class CallCreate extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    //If receive errors from server
     if (nextProps.errors) {
       let errors = nextProps.errors;
       this.setState({ errors: errors });
@@ -45,13 +48,103 @@ class CallCreate extends Component {
         valResult = validateNumberRequired(e.target.value);
         break;
       case "inscriptionsStart":
-        valResult = validateDateRequired(e.target.value);
+        valResult = validateInscriptionsStart(
+          e.target.value,
+          this.state.inscriptionsEnd,
+          this.state.callEnd
+        );
+        //Removing errors from inscriptionsEnd if needed
+        if (errors.inscriptionsEnd) {
+          let InsEndVal = validateInscriptionsEnd(
+            e.target.value,
+            this.state.inscriptionsEnd,
+            this.state.callEnd
+          );
+          if (!InsEndVal.isValid) {
+            errors = { ...errors, inscriptionsEnd: InsEndVal.error };
+          } else {
+            delete errors.inscriptionsEnd;
+          }
+        }
+        //Removing errors from callEnd if needed
+        if (errors.callEnd) {
+          let callEndVal = validateInscriptionsEnd(
+            e.target.value,
+            this.state.inscriptionsEnd,
+            this.state.callEnd
+          );
+          if (!callEndVal.isValid) {
+            errors = { ...errors, callEnd: callEndVal.error };
+          } else {
+            delete errors.callEnd;
+          }
+        }
         break;
       case "inscriptionsEnd":
-        valResult = validateDateRequired(e.target.value);
+        valResult = validateInscriptionsEnd(
+          this.state.inscriptionsStart,
+          e.target.value,
+          this.state.callEnd
+        );
+        //Removing errors from inscriptionsStart if needed
+        if (errors.inscriptionsStart) {
+          let InsStartVal = validateInscriptionsStart(
+            this.state.inscriptionsStart,
+            e.target.value,
+            this.state.callEnd
+          );
+          if (!InsStartVal.isValid) {
+            errors = { ...errors, inscriptionsStart: InsStartVal.error };
+          } else {
+            delete errors.inscriptionsStart;
+          }
+        }
+        //Removing errors from callEnd if needed
+        if (errors.callEnd) {
+          let callEndVal = validateInscriptionsEnd(
+            this.state.inscriptionsStart,
+            e.target.value,
+            this.state.callEnd
+          );
+          if (!callEndVal.isValid) {
+            errors = { ...errors, callEnd: callEndVal.error };
+          } else {
+            delete errors.callEnd;
+          }
+        }
         break;
       case "callEnd":
-        valResult = validateDateRequired(e.target.value);
+        valResult = validateCallEnd(
+          this.state.inscriptionsStart,
+          this.state.inscriptionsEnd,
+          e.target.value
+        );
+        //Removing errors from inscriptionsStart if needed
+        if (errors.inscriptionsStart) {
+          let InsStartVal = validateInscriptionsStart(
+            this.state.inscriptionsStart,
+            this.state.inscriptionsEnd,
+            e.target.value
+          );
+          if (!InsStartVal.isValid) {
+            errors = { ...errors, inscriptionsStart: InsStartVal.error };
+          } else {
+            delete errors.inscriptionsStart;
+          }
+        }
+        //Removing errors from inscriptionsEnd if needed
+        if (errors.inscriptionsEnd) {
+          let InsEndVal = validateInscriptionsEnd(
+            this.state.inscriptionsStart,
+            this.state.inscriptionsEnd,
+            e.target.value
+          );
+          if (!InsEndVal.isValid) {
+            errors = { ...errors, inscriptionsEnd: InsEndVal.error };
+          } else {
+            delete errors.inscriptionsEnd;
+          }
+        }
         break;
       default:
         break;
