@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
+import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import {
+  isEmpty,
   validateNumberRequired,
   validateProcessCallForm,
   validateEnrollmentOpeningDate,
@@ -12,9 +14,14 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import { createProcessCall } from "../../actions/processActions";
+import {
+  createProcessCall,
+  getProcessCall,
+  updateProcessCall
+} from "../../actions/processActions";
+import { clearErrors } from "../../actions/errorActions";
 
-class CallCreate extends Component {
+class CallEdit extends Component {
   constructor() {
     super();
     this.state = {
@@ -29,6 +36,13 @@ class CallCreate extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.clearErrors();
+    if (this.props.match.params.call_id) {
+      this.props.getProcessCall(this.props.match.params.call_id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,6 +61,25 @@ class CallCreate extends Component {
       }
 
       this.setState({ errors: newStateErrors });
+    }
+
+    //(Preenchendo / Atualizando) dados do formulario
+    if (isEmpty(nextProps.errors) && nextProps.process.call) {
+      const call = nextProps.process.call;
+      this.setState({
+        number: call.number,
+        enrollmentOpeningDate: moment(
+          call.enrollmentOpeningDate,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("YYYY-MM-DD"),
+        enrollmentClosingDate: moment(
+          call.enrollmentClosingDate,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("YYYY-MM-DD"),
+        endingDate: moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format(
+          "YYYY-MM-DD"
+        )
+      });
     }
   }
 
@@ -177,27 +210,23 @@ class CallCreate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const tmpCallData = {
-      selectiveProcess_id: this.props.match.params.id,
+    const callData = {
+      selectiveProcess_id: this.props.match.params.process_id,
       number: this.state.number,
       enrollmentOpeningDate: this.state.enrollmentOpeningDate,
       enrollmentClosingDate: this.state.enrollmentClosingDate,
       endingDate: this.state.endingDate
     };
 
-    const valCall = validateProcessCallForm(tmpCallData);
+    const valCall = validateProcessCallForm(callData);
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      const callData = {
-        selectiveProcess_id: this.props.match.params.id,
-        number: tmpCallData.number,
-        enrollmentOpeningDate: tmpCallData.enrollmentOpeningDate,
-        enrollmentClosingDate: tmpCallData.enrollmentClosingDate,
-        endingDate: tmpCallData.endingDate
-      };
-
-      this.props.createProcessCall(callData, this.props.history);
+      this.props.updateProcessCall(
+        this.props.match.params.call_id,
+        callData,
+        this.props.history
+      );
     }
   }
 
@@ -210,13 +239,13 @@ class CallCreate extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <Link
-                to={`/processes/${this.props.match.params.id}`}
+                to={`/processes/${this.props.match.params.process_id}`}
                 className="btn btn-light"
               >
                 Voltar para o processo
               </Link>
-              <h1 className="display-4 text-center">Criar chamada</h1>
-              <p className="lead text-center">Dê entrada nos dados básicos</p>
+              <h1 className="display-4 text-center">Editar chamada</h1>
+              <p className="lead text-center">Altere os dados da chamada</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   type="text"
@@ -268,18 +297,20 @@ class CallCreate extends Component {
 }
 
 // "registerUser" and "auth" are required to the Register component
-CallCreate.proptypes = {
+CallEdit.proptypes = {
   createProcessCall: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errors,
+  process: state.process
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCall }
-)(withRouter(CallCreate));
+  { createProcessCall, getProcessCall, updateProcessCall, clearErrors }
+)(withRouter(CallEdit));

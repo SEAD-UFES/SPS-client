@@ -21,7 +21,7 @@ export { validateProfileEditPersonForm } from "./validateProfileEditPersonForm";
 export { validateProcessForm } from "./validateProcessForm";
 export {
   validateProcessCallForm,
-  validateInscriptionsStart,
-  validateInscriptionsEnd,
-  validateCallEnd
+  validateEnrollmentOpeningDate,
+  validateEnrollmentClosingDate,
+  validateEndingDate
 } from "./validateProcessCallForm";

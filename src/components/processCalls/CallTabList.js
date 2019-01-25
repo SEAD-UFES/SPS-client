@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import CallView from "./CallView";
+
 class CallTabList extends Component {
   activeCallId(calls) {
     if (calls.length > 0) {
@@ -54,7 +56,7 @@ class CallTabList extends Component {
               role="tabpanel"
               aria-labelledby={`call-${call.id}-tab`}
             >
-              <p>{call.id}</p>
+              <CallView call={call} />
             </div>
           );
         })}

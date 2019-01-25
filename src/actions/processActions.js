@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   GET_ERRORS,
   GET_PROCESS,
+  GET_CALL,
   GET_PROCESSES,
   PROCESS_LOADING,
   CLEAR_ERRORS
@@ -85,6 +86,40 @@ export const createProcessCall = (callData, history) => dispatch => {
   axios
     .post("/v1/calls", callData)
     .then(res => {
+      history.push(`/processes/${callData.selectiveProcess_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//get ProcessCall
+export const getProcessCall = call_id => dispatch => {
+  axios
+    .get(`/v1/calls/${call_id}`)
+    .then(res => {
+      dispatch({
+        type: GET_CALL,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//update ProcessCall
+export const updateProcessCall = (callId, callData, history) => dispatch => {
+  axios
+    .put(`/v1/calls/${callId}`, callData)
+    .then(res => {
+      console.log("updated");
       history.push(`/processes/${callData.selectiveProcess_id}`);
     })
     .catch(err =>

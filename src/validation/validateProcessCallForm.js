@@ -11,31 +11,31 @@ export const validateProcessCallForm = data => {
     errors.number = field.error;
   }
 
-  field = validateInscriptionsStart(
-    data.inscriptionsStart,
-    data.inscriptionsEnd,
-    data.callEnd
+  field = validateEnrollmentOpeningDate(
+    data.enrollmentOpeningDate,
+    data.enrollmentClosingDate,
+    data.endingDate
   );
   if (!field.isValid) {
-    errors.inscriptionsStart = field.error;
+    errors.enrollmentOpeningDate = field.error;
   }
 
-  field = validateInscriptionsEnd(
-    data.inscriptionsStart,
-    data.inscriptionsEnd,
-    data.callEnd
+  field = validateEnrollmentClosingDate(
+    data.enrollmentOpeningDate,
+    data.enrollmentClosingDate,
+    data.endingDate
   );
   if (!field.isValid) {
-    errors.inscriptionsEnd = field.error;
+    errors.enrollmentClosingDate = field.error;
   }
 
-  field = validateCallEnd(
-    data.inscriptionsStart,
-    data.inscriptionsEnd,
-    data.callEnd
+  field = validateEndingDate(
+    data.enrollmentOpeningDate,
+    data.enrollmentClosingDate,
+    data.endingDate
   );
   if (!field.isValid) {
-    errors.callEnd = field.error;
+    errors.endingDate = field.error;
   }
 
   return {
@@ -44,32 +44,37 @@ export const validateProcessCallForm = data => {
   };
 };
 
-//InscriptionsStart validation####################
-export const validateInscriptionsStart = (
-  inscriptionsStart,
-  inscriptionsEnd,
-  callEnd
+//enrollmentOpeningDate validation####################
+export const validateEnrollmentOpeningDate = (
+  enrollmentOpeningDate,
+  enrollmentClosingDate,
+  endingDate
 ) => {
-  inscriptionsStart = !isEmpty(inscriptionsStart) ? inscriptionsStart : "";
-  inscriptionsEnd = !isEmpty(inscriptionsEnd) ? inscriptionsEnd : "";
-  callEnd = !isEmpty(callEnd) ? callEnd : "";
+  enrollmentOpeningDate = !isEmpty(enrollmentOpeningDate)
+    ? enrollmentOpeningDate
+    : "";
+  enrollmentClosingDate = !isEmpty(enrollmentClosingDate)
+    ? enrollmentClosingDate
+    : "";
+  endingDate = !isEmpty(endingDate) ? endingDate : "";
 
-  let { error } = validateDateRequired(inscriptionsStart);
+  let { error } = validateDateRequired(enrollmentOpeningDate);
 
   if (isEmpty(error)) {
     //deve ser antes do encerramento
     if (
-      !isEmpty(inscriptionsEnd) &&
-      moment(inscriptionsStart, "YYYY-MM-DD") >
-        moment(inscriptionsEnd, "YYYY-MM-DD")
+      !isEmpty(enrollmentClosingDate) &&
+      moment(enrollmentOpeningDate, "YYYY-MM-DD") >
+        moment(enrollmentClosingDate, "YYYY-MM-DD")
     ) {
       error = "Início das inscrições após encerramento das inscrições.";
     }
 
     //deve ser antes do fim da chamada
     if (
-      !isEmpty(callEnd) &&
-      moment(inscriptionsStart, "YYYY-MM-DD") > moment(callEnd, "YYYY-MM-DD")
+      !isEmpty(endingDate) &&
+      moment(enrollmentOpeningDate, "YYYY-MM-DD") >
+        moment(endingDate, "YYYY-MM-DD")
     ) {
       error = "Início das inscrições após encerramento da chamada.";
     }
@@ -81,32 +86,37 @@ export const validateInscriptionsStart = (
   };
 };
 
-//InscriptionsEnd validation####################
-export const validateInscriptionsEnd = (
-  inscriptionsStart,
-  inscriptionsEnd,
-  callEnd
+//enrollmentClosingDate validation####################
+export const validateEnrollmentClosingDate = (
+  enrollmentOpeningDate,
+  enrollmentClosingDate,
+  endingDate
 ) => {
-  inscriptionsStart = !isEmpty(inscriptionsStart) ? inscriptionsStart : "";
-  inscriptionsEnd = !isEmpty(inscriptionsEnd) ? inscriptionsEnd : "";
-  callEnd = !isEmpty(callEnd) ? callEnd : "";
+  enrollmentOpeningDate = !isEmpty(enrollmentOpeningDate)
+    ? enrollmentOpeningDate
+    : "";
+  enrollmentClosingDate = !isEmpty(enrollmentClosingDate)
+    ? enrollmentClosingDate
+    : "";
+  endingDate = !isEmpty(endingDate) ? endingDate : "";
 
-  let { error } = validateDateRequired(inscriptionsEnd);
+  let { error } = validateDateRequired(enrollmentClosingDate);
 
   if (isEmpty(error)) {
     //deve ser depois da abertura das inscrições
     if (
-      !isEmpty(inscriptionsStart) &&
-      moment(inscriptionsEnd, "YYYY-MM-DD") <
-        moment(inscriptionsStart, "YYYY-MM-DD")
+      !isEmpty(enrollmentOpeningDate) &&
+      moment(enrollmentClosingDate, "YYYY-MM-DD") <
+        moment(enrollmentOpeningDate, "YYYY-MM-DD")
     ) {
       error = "Encerramento das inscrições antes da abertura das inscrições.";
     }
 
     //deve ser antes do fim da chamada
     if (
-      !isEmpty(callEnd) &&
-      moment(inscriptionsEnd, "YYYY-MM-DD") > moment(callEnd, "YYYY-MM-DD")
+      !isEmpty(endingDate) &&
+      moment(enrollmentClosingDate, "YYYY-MM-DD") >
+        moment(endingDate, "YYYY-MM-DD")
     ) {
       error = "Encerramento das inscrições após encerramento da chamada.";
     }
@@ -118,31 +128,37 @@ export const validateInscriptionsEnd = (
   };
 };
 
-//callEnd validation####################
-export const validateCallEnd = (
-  inscriptionsStart,
-  inscriptionsEnd,
-  callEnd
+//endingDate validation####################
+export const validateEndingDate = (
+  enrollmentOpeningDate,
+  enrollmentClosingDate,
+  endingDate
 ) => {
-  inscriptionsStart = !isEmpty(inscriptionsStart) ? inscriptionsStart : "";
-  inscriptionsEnd = !isEmpty(inscriptionsEnd) ? inscriptionsEnd : "";
-  callEnd = !isEmpty(callEnd) ? callEnd : "";
+  enrollmentOpeningDate = !isEmpty(enrollmentOpeningDate)
+    ? enrollmentOpeningDate
+    : "";
+  enrollmentClosingDate = !isEmpty(enrollmentClosingDate)
+    ? enrollmentClosingDate
+    : "";
+  endingDate = !isEmpty(endingDate) ? endingDate : "";
 
-  let { error } = validateDateRequired(callEnd);
+  let { error } = validateDateRequired(endingDate);
 
   if (isEmpty(error)) {
     //deve ser depois da abertura das inscrições
     if (
-      !isEmpty(inscriptionsStart) &&
-      moment(callEnd, "YYYY-MM-DD") < moment(inscriptionsStart, "YYYY-MM-DD")
+      !isEmpty(enrollmentOpeningDate) &&
+      moment(endingDate, "YYYY-MM-DD") <
+        moment(enrollmentOpeningDate, "YYYY-MM-DD")
     ) {
       error = "Encerramento da chamada antes da abertura das inscrições.";
     }
 
     //deve ser depois do encerramento das inscrições
     if (
-      !isEmpty(inscriptionsEnd) &&
-      moment(callEnd, "YYYY-MM-DD") < moment(inscriptionsEnd, "YYYY-MM-DD")
+      !isEmpty(enrollmentClosingDate) &&
+      moment(endingDate, "YYYY-MM-DD") <
+        moment(enrollmentClosingDate, "YYYY-MM-DD")
     ) {
       error = "Encerramento da chamada antes do encerramento das inscrições.";
     }
