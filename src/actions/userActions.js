@@ -101,7 +101,7 @@ export const setUserLoading = () => {
   };
 };
 
-//Update user person options
+//load people options
 export const getUserPeopleOptions = () => dispatch => {
   axios
     .get("/v1/people/options")

@@ -27,10 +27,15 @@ class CallView extends Component {
         >
           <i className="fas fa-user-circle text-info mr-1" /> Editar Chamada
         </Link>
-        <a href="4-2-02-process-call-add.html" className="btn btn-light">
+        <Link
+          to={`/processes/${call.selectiveProcess_id}/calls/${
+            call.id
+          }/steps/create`}
+          className="btn btn-light"
+        >
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Etapa
-        </a>
+        </Link>
         <a
           href="4-2-06-process-call-vacancy-add.html"
           className="btn btn-light"

@@ -70,7 +70,7 @@ class CallTabList extends Component {
       </div>
     );
 
-    return <div>{this.props.calls.length > 0 ? CallTabList : "no calls"}</div>;
+    return <div>{this.props.calls.length > 0 ? CallTabList : ""}</div>;
   }
 }
 

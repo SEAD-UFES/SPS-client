@@ -6,7 +6,8 @@ import {
   GET_CALL,
   GET_PROCESSES,
   PROCESS_LOADING,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_STEPTYPES_OPTIONS
 } from "./types";
 
 //create Process
@@ -119,7 +120,6 @@ export const updateProcessCall = (callId, callData, history) => dispatch => {
   axios
     .put(`/v1/calls/${callId}`, callData)
     .then(res => {
-      console.log("updated");
       history.push(`/processes/${callData.selectiveProcess_id}`);
     })
     .catch(err =>
@@ -132,21 +132,28 @@ export const updateProcessCall = (callId, callData, history) => dispatch => {
 
 //#####################################################################
 
-//Update Person Data
-// export const updatePerson = (userId, personData, history) => dispatch => {
-//   axios
-//     .put(`/v1/people/${userId}`, personData, history)
-//     .then(res => {
-//       dispatch({ type: CLEAR_ERRORS });
-//       history.push(`/users/${userId}`);
-//     })
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
+//#####################################################################
+//Step actions
+
+//load step options
+export const getStepOptions = () => dispatch => {
+  axios
+    .get("/v1/steptypes")
+    .then(res =>
+      dispatch({
+        type: GET_STEPTYPES_OPTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: { options: "Don't load the steptypes options" }
+      })
+    );
+};
+
+//#####################################################################
 
 //User loading
 export const setProcessLoading = () => {
