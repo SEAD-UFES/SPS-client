@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
+import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import {
+  isEmpty,
   validateStepType_id,
   validateResultDate,
   validateOpenAppealDate,
@@ -13,13 +15,14 @@ import {
   validateResultAfterAppealDate,
   validateProcessCallStepForm
 } from "../../validation";
-
 import {
   getStepOptions,
-  createProcessCallStep
+  createProcessCallStep,
+  getProcessCallStep
 } from "../../actions/processActions";
+import { clearErrors } from "../../actions/errorActions";
 
-class StepCreate extends Component {
+class StepEdit extends Component {
   constructor() {
     super();
     this.state = {
@@ -39,7 +42,11 @@ class StepCreate extends Component {
   }
 
   componentDidMount() {
+    this.props.clearErrors();
     this.props.getStepOptions();
+    if (this.props.match.params.step_id) {
+      this.props.getProcessCallStep(this.props.match.params.step_id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,6 +65,29 @@ class StepCreate extends Component {
       }
 
       this.setState({ errors: newStateErrors });
+    }
+
+    //loading step values on state
+    if (isEmpty(nextProps.errors) && nextProps.process.step) {
+      const step = nextProps.process.step;
+      this.setState({
+        stepType_id: step.stepType_id,
+        resultDate: moment(step.resultDate, "YYYY-MM-DD HH:mm:ss").format(
+          "YYYY-MM-DD"
+        ),
+        openAppealDate: moment(
+          step.openAppealDate,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("YYYY-MM-DD"),
+        limitAppealDate: moment(
+          step.limitAppealDate,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("YYYY-MM-DD"),
+        resultAfterAppealDate: moment(
+          step.resultAfterAppealDate,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("YYYY-MM-DD")
+      });
     }
   }
 
@@ -135,11 +165,12 @@ class StepCreate extends Component {
     if (!valStep.isValid) {
       this.setState({ errors: valStep.errors });
     } else {
-      this.props.createProcessCallStep(
-        StepData,
-        this.props.match.params.process_id,
-        this.props.history
-      );
+      console.log("ready!");
+      // this.props.createProcessCallStep(
+      //   StepData,
+      //   this.props.match.params.process_id,
+      //   this.props.history
+      // );
     }
   }
 
@@ -170,8 +201,8 @@ class StepCreate extends Component {
               >
                 Voltar para o processo
               </Link>
-              <h1 className="display-4 text-center">Criar etapa</h1>
-              <p className="lead text-center">Dê entrada nos dados básicos</p>
+              <h1 className="display-4 text-center">Editar etapa</h1>
+              <p className="lead text-center">Altere os dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <SelectListGroup
                   placeholder="Escolha o tipo de etapa"
@@ -233,20 +264,22 @@ class StepCreate extends Component {
 }
 
 // "registerUser" and "auth" are required to the Register component
-StepCreate.proptypes = {
+StepEdit.proptypes = {
   createProcessCallStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  options: state.process.options
+  options: state.process.options,
+  process: state.process
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCallStep, getStepOptions }
-)(withRouter(StepCreate));
+  { createProcessCallStep, getStepOptions, clearErrors, getProcessCallStep }
+)(withRouter(StepEdit));

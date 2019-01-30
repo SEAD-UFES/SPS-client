@@ -63,6 +63,80 @@ class CallView extends Component {
       </div>
     );
 
+    const calendarSteps = call.Steps.reduce((acumulador, step) => {
+      const resultDate = (
+        <tr key={`${step.id}-resultDate`}>
+          <td>
+            {step.stepType_id}
+            {" - Resultado"}
+          </td>
+          <td>
+            {moment(step.resultDate, "YYYY-MM-DD HH:mm:ss ").format(
+              "DD/MM/YYYY"
+            )}
+          </td>
+          <td>
+            <Link
+              to={`/processes/${call.selectiveProcess_id}/calls/${
+                step.call_id
+              }/steps/${step.id}/edit`}
+            >
+              <i className="far fa-edit" />
+            </Link>
+          </td>
+        </tr>
+      );
+      const appealPeriod = (
+        <tr key={`${step.id}-appealPeriod`}>
+          <td>
+            {step.stepType_id}
+            {" - Período de recursos"}
+          </td>
+          <td>
+            {moment(step.openAppealDate, "YYYY-MM-DD HH:mm:ss ").format(
+              "DD/MM/YYYY"
+            )}
+            {" - "}
+            {moment(step.limitAppealDate, "YYYY-MM-DD HH:mm:ss ").format(
+              "DD/MM/YYYY"
+            )}
+          </td>
+          <td>
+            <Link
+              to={`/processes/${call.selectiveProcess_id}/calls/${
+                step.call_id
+              }/steps/${step.id}/edit`}
+            >
+              <i className="far fa-edit" />
+            </Link>
+          </td>
+        </tr>
+      );
+      const afterAppealResult = (
+        <tr key={`${step.id}-resultAfterAppealDate`}>
+          <td>
+            {step.stepType_id}
+            {" - Resultado pós recurso"}
+          </td>
+          <td>
+            {moment(step.resultAfterAppealDate, "YYYY-MM-DD HH:mm:ss ").format(
+              "DD/MM/YYYY"
+            )}
+          </td>
+          <td>
+            <Link
+              to={`/processes/${call.selectiveProcess_id}/calls/${
+                step.call_id
+              }/steps/${step.id}/edit`}
+            >
+              <i className="far fa-edit" />
+            </Link>
+          </td>
+        </tr>
+      );
+      return acumulador.concat([resultDate, appealPeriod, afterAppealResult]);
+    }, []);
+
     const callCalendar = (
       <div>
         <h4 className="mb-2">Calendário</h4>
@@ -98,6 +172,11 @@ class CallView extends Component {
                 </Link>
               </td>
             </tr>
+
+            {calendarSteps.map(line => {
+              return line;
+            })}
+
             <tr>
               <td>Finalização da Chamada</td>
               <td>

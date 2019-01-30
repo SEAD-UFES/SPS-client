@@ -3,12 +3,14 @@ import {
   GET_CALL,
   GET_PROCESSES,
   PROCESS_LOADING,
-  GET_STEPTYPES_OPTIONS
+  GET_STEPTYPES_OPTIONS,
+  GET_STEP
 } from "../actions/types";
 
 const initialState = {
   process: null,
   call: null,
+  step: null,
   processes: null,
   loading: false,
   options: null
@@ -31,6 +33,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         call: action.payload,
+        loading: false
+      };
+    case GET_STEP:
+      return {
+        ...state,
+        step: action.payload,
         loading: false
       };
     case GET_PROCESSES:

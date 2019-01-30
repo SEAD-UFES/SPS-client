@@ -7,7 +7,8 @@ import {
   GET_PROCESSES,
   PROCESS_LOADING,
   CLEAR_ERRORS,
-  GET_STEPTYPES_OPTIONS
+  GET_STEPTYPES_OPTIONS,
+  GET_STEP
 } from "./types";
 
 //create Process
@@ -131,8 +132,6 @@ export const updateProcessCall = (callId, callData, history) => dispatch => {
 };
 
 //#####################################################################
-
-//#####################################################################
 //Step actions
 
 //load step options
@@ -153,9 +152,46 @@ export const getStepOptions = () => dispatch => {
     );
 };
 
+//create ProcessCallStep
+export const createProcessCallStep = (
+  stepData,
+  process_id,
+  history
+) => dispatch => {
+  axios
+    .post("/v1/steps", stepData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//get ProcessCall
+export const getProcessCallStep = step_id => dispatch => {
+  axios
+    .get(`/v1/steps/${step_id}`)
+    .then(res => {
+      dispatch({
+        type: GET_STEP,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 //#####################################################################
 
-//User loading
+//Process loading
 export const setProcessLoading = () => {
   return {
     type: PROCESS_LOADING

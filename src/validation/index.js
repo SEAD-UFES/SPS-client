@@ -25,3 +25,11 @@ export {
   validateEnrollmentClosingDate,
   validateEndingDate
 } from "./validateProcessCallForm";
+export {
+  validateProcessCallStepForm,
+  validateStepType_id,
+  validateResultDate,
+  validateOpenAppealDate,
+  validateLimitAppealDate,
+  validateResultAfterAppealDate
+} from "./validateProcessCallStepForm";

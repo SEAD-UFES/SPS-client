@@ -36,6 +36,7 @@ import ProcessEdit from "./components/processes/ProcessEdit";
 import CallCreate from "./components/processCalls/CallCreate";
 import CallEdit from "./components/processCalls/CallEdit";
 import StepCreate from "./components/processCallsSteps/StepCreate";
+import StepEdit from "./components/processCallsSteps/StepEdit";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -143,6 +144,12 @@ class App extends Component {
                 exact
                 path="/processes/:process_id/calls/:call_id/steps/create"
                 component={StepCreate}
+              />
+
+              <PrivateRoute
+                exact
+                path="/processes/:process_id/calls/:call_id/steps/:step_id/edit"
+                component={StepEdit}
               />
             </Switch>
 
