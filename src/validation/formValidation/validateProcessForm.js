@@ -3,7 +3,7 @@ import {
   validateProcessNumber,
   validateYearRequired,
   validateDescription
-} from "./";
+} from "../";
 
 // Register validation
 export const validateProcessForm = data => {

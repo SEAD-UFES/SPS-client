@@ -1,6 +1,6 @@
 import moment from "moment";
 import Validator from "validator";
-import { isEmpty, validateDate } from "./";
+import { isEmpty, validateDate } from "../";
 
 //####################################################################################//
 export const validateProcessCallStepForm = data => {

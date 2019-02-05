@@ -1,7 +1,7 @@
 import Validator from "validator";
 import isEmpty from "./is-empty";
 
-// Name validation
+// Number validation
 export const validateNumberRequired = number => {
   number = !isEmpty(number) ? number : "";
   let error;

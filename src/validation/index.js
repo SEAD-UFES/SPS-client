@@ -15,16 +15,20 @@ export { validateDescription } from "./validateDescription";
 export { validateNumberRequired } from "./validateNumber";
 
 //Form Validations
-export { validateRegisterForm } from "./validateRegisterForm";
-export { validateProfileEditUserForm } from "./validateProfileEditUserForm";
-export { validateProfileEditPersonForm } from "./validateProfileEditPersonForm";
-export { validateProcessForm } from "./validateProcessForm";
+export { validateRegisterForm } from "./formValidation/validateRegisterForm";
+export {
+  validateProfileEditUserForm
+} from "./formValidation/validateProfileEditUserForm";
+export {
+  validateProfileEditPersonForm
+} from "./formValidation/validateProfileEditPersonForm";
+export { validateProcessForm } from "./formValidation/validateProcessForm";
 export {
   validateProcessCallForm,
   validateEnrollmentOpeningDate,
   validateEnrollmentClosingDate,
   validateEndingDate
-} from "./validateProcessCallForm";
+} from "./formValidation/validateProcessCallForm";
 export {
   validateProcessCallStepForm,
   validateStepType_id,
@@ -32,4 +36,8 @@ export {
   validateOpenAppealDate,
   validateLimitAppealDate,
   validateResultAfterAppealDate
-} from "./validateProcessCallStepForm";
+} from "./formValidation/validateProcessCallStepForm";
+export {
+  validateAssignment_id,
+  validateProcessCallVacancyForm
+} from "./formValidation/validateProcessCallVacancyForm";

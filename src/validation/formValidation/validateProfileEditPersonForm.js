@@ -4,7 +4,7 @@ import {
   validateSurname,
   validateCpfRequired,
   validateDate
-} from "./";
+} from "../";
 
 // Register validation
 export const validateProfileEditPersonForm = data => {

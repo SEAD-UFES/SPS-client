@@ -8,7 +8,10 @@ import {
   PROCESS_LOADING,
   CLEAR_ERRORS,
   GET_STEPTYPES_OPTIONS,
-  GET_STEP
+  GET_STEP,
+  GET_ASSIGNMENTS_OPTIONS,
+  GET_RESTRICTIONS_OPTIONS,
+  GET_REGIONS_OPTIONS
 } from "./types";
 
 //create Process
@@ -78,6 +81,13 @@ export const updateProcess = (processId, processData, history) => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+//Process loading
+export const setProcessLoading = () => {
+  return {
+    type: PROCESS_LOADING
+  };
 };
 
 //#####################################################################
@@ -171,7 +181,7 @@ export const createProcessCallStep = (
     );
 };
 
-//get ProcessCall
+//get ProcessCallStep
 export const getProcessCallStep = step_id => dispatch => {
   axios
     .get(`/v1/steps/${step_id}`)
@@ -189,29 +199,96 @@ export const getProcessCallStep = step_id => dispatch => {
     );
 };
 
-//#####################################################################
-
-//Process loading
-export const setProcessLoading = () => {
-  return {
-    type: PROCESS_LOADING
-  };
+//update ProcessCallStep
+export const updateProcessCallStep = (
+  process_id,
+  step_id,
+  stepData,
+  history
+) => dispatch => {
+  axios
+    .put(`/v1/steps/${step_id}`, stepData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
 
-//Update user person options
-// export const getUserPeopleOptions = () => dispatch => {
-//   axios
-//     .get("/v1/people/options")
-//     .then(res =>
-//       dispatch({
-//         type: GET_USER_PEOPLE_OPTIONS,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: { options: "Don't load the people options" }
-//       })
-//     );
-// };
+//#####################################################################
+//Vancancy actions
+
+//load assignment options
+export const getAssignmentOptions = () => dispatch => {
+  axios
+    .get("/v1/assignments")
+    .then(res =>
+      dispatch({
+        type: GET_ASSIGNMENTS_OPTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: { options: "Don't load the assignments options" }
+      })
+    );
+};
+
+export const getRestrictionsOptions = () => dispatch => {
+  axios
+    .get("/v1/restrictions")
+    .then(res =>
+      dispatch({
+        type: GET_RESTRICTIONS_OPTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: { options: "Don't load the restrictions options" }
+      })
+    );
+};
+
+export const getRegionsOptions = () => dispatch => {
+  axios
+    .get("/v1/regions")
+    .then(res =>
+      dispatch({
+        type: GET_REGIONS_OPTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: { options: "Don't load the regions options" }
+      })
+    );
+};
+
+//create ProcessCallVacancy
+export const createProcessCallVacancy = (
+  vacancyData,
+  process_id,
+  history
+) => dispatch => {
+  axios
+    .post("/v1/vacancies", vacancyData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};

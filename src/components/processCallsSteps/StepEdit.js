@@ -18,7 +18,8 @@ import {
 import {
   getStepOptions,
   createProcessCallStep,
-  getProcessCallStep
+  getProcessCallStep,
+  updateProcessCallStep
 } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
@@ -166,11 +167,12 @@ class StepEdit extends Component {
       this.setState({ errors: valStep.errors });
     } else {
       console.log("ready!");
-      // this.props.createProcessCallStep(
-      //   StepData,
-      //   this.props.match.params.process_id,
-      //   this.props.history
-      // );
+      this.props.updateProcessCallStep(
+        this.props.match.params.process_id,
+        this.props.match.params.step_id,
+        StepData,
+        this.props.history
+      );
     }
   }
 
@@ -267,6 +269,7 @@ class StepEdit extends Component {
 StepEdit.proptypes = {
   createProcessCallStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
+  updateProcessCallStep: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -281,5 +284,11 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCallStep, getStepOptions, clearErrors, getProcessCallStep }
+  {
+    createProcessCallStep,
+    getStepOptions,
+    clearErrors,
+    getProcessCallStep,
+    updateProcessCallStep
+  }
 )(withRouter(StepEdit));

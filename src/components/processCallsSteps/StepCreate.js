@@ -18,6 +18,7 @@ import {
   getStepOptions,
   createProcessCallStep
 } from "../../actions/processActions";
+import { clearErrors } from "../../actions/errorActions";
 
 class StepCreate extends Component {
   constructor() {
@@ -39,6 +40,7 @@ class StepCreate extends Component {
   }
 
   componentDidMount() {
+    this.props.clearErrors();
     this.props.getStepOptions();
   }
 
@@ -236,6 +238,7 @@ class StepCreate extends Component {
 StepCreate.proptypes = {
   createProcessCallStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -248,5 +251,5 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCallStep, getStepOptions }
+  { createProcessCallStep, getStepOptions, clearErrors }
 )(withRouter(StepCreate));

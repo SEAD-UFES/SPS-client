@@ -6,7 +6,7 @@ import {
   validateEmailRequired,
   validatePassword,
   validatePasswordCheck
-} from "./";
+} from "../";
 
 // Register validation
 export const validateRegisterForm = data => {

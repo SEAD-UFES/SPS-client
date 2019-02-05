@@ -36,13 +36,15 @@ class CallView extends Component {
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Etapa
         </Link>
-        <a
-          href="4-2-06-process-call-vacancy-add.html"
+        <Link
+          to={`/processes/${call.selectiveProcess_id}/calls/${
+            call.id
+          }/vacancies/create`}
           className="btn btn-light"
         >
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Vaga
-        </a>
+        </Link>
         <a href="4-2-08-process-publication-add.html" className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Publicação
@@ -67,7 +69,7 @@ class CallView extends Component {
       const resultDate = (
         <tr key={`${step.id}-resultDate`}>
           <td>
-            {step.stepType_id}
+            {step.StepType.name}
             {" - Resultado"}
           </td>
           <td>
@@ -86,10 +88,11 @@ class CallView extends Component {
           </td>
         </tr>
       );
+
       const appealPeriod = (
         <tr key={`${step.id}-appealPeriod`}>
           <td>
-            {step.stepType_id}
+            {step.StepType.name}
             {" - Período de recursos"}
           </td>
           <td>
@@ -112,10 +115,11 @@ class CallView extends Component {
           </td>
         </tr>
       );
+
       const afterAppealResult = (
         <tr key={`${step.id}-resultAfterAppealDate`}>
           <td>
-            {step.stepType_id}
+            {step.StepType.name}
             {" - Resultado pós recurso"}
           </td>
           <td>
@@ -199,11 +203,32 @@ class CallView extends Component {
       </div>
     );
 
+    const callVacancies = (
+      <div>
+        <h4 className="mb-2">Oferta de vagas</h4>
+
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Atribuição</th>
+              <th>Local</th>
+              <th>Restrição</th>
+              <th>Vagas</th>
+              <th>Reserva</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody />
+        </table>
+      </div>
+    );
+
     return (
       <div>
         {callActions}
         {callInfo}
         {callCalendar}
+        {callVacancies}
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { isEmpty, validateNumberRequired, validateDateRequired } from "./";
+import { isEmpty, validateNumberRequired, validateDateRequired } from "../";
 
 // create call validation
 export const validateProcessCallForm = data => {

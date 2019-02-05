@@ -4,7 +4,10 @@ import {
   GET_PROCESSES,
   PROCESS_LOADING,
   GET_STEPTYPES_OPTIONS,
-  GET_STEP
+  GET_STEP,
+  GET_ASSIGNMENTS_OPTIONS,
+  GET_RESTRICTIONS_OPTIONS,
+  GET_REGIONS_OPTIONS
 } from "../actions/types";
 
 const initialState = {
@@ -13,7 +16,10 @@ const initialState = {
   step: null,
   processes: null,
   loading: false,
-  options: null
+  options: null,
+  assignments: null,
+  restrictions: null,
+  regions: null
 };
 
 export default function(state = initialState, action) {
@@ -51,6 +57,21 @@ export default function(state = initialState, action) {
       return {
         ...state,
         options: action.payload
+      };
+    case GET_ASSIGNMENTS_OPTIONS:
+      return {
+        ...state,
+        assignments: action.payload
+      };
+    case GET_RESTRICTIONS_OPTIONS:
+      return {
+        ...state,
+        restrictions: action.payload
+      };
+    case GET_REGIONS_OPTIONS:
+      return {
+        ...state,
+        regions: action.payload
       };
 
     default:
