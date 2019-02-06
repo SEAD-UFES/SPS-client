@@ -15,29 +15,18 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
 import PrivateRoute from "./components/common/PrivateRoute";
 
+//Components
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/profile/Dashboard";
-import Profile from "./components/profile/Profile";
-import ProfileEditUser from "./components/profile/ProfileEditUser";
-import ProfileEditPerson from "./components/profile/ProfileEditPerson";
-import Users from "./components/users/Users";
-import UserProfile from "./components/users/UserProfile";
-import UserEditUser from "./components/users/UserEditUser";
-import UserEditPerson from "./components/users/UserEditPerson";
-import UserCreate from "./components/users/UserCreate";
-import Processes from "./components/processes/Processes";
-import ProcessCreate from "./components/processes/ProcessCreate";
-import ProcessView from "./components/processes/ProcessView";
-import ProcessEdit from "./components/processes/ProcessEdit";
-import CallCreate from "./components/processCalls/CallCreate";
-import CallEdit from "./components/processCalls/CallEdit";
-import StepCreate from "./components/processCallsSteps/StepCreate";
-import StepEdit from "./components/processCallsSteps/StepEdit";
-import VacancyCreate from "./components/processCallsVacancies/VacancyCreate";
+
+//Route components
+import ProfileRoutes from "./components/profile/ProfileRoutes";
+import UserRoutes from "./components/users/UsersRoutes";
+import ProcessesRoutes from "./components/processes/ProcessesRoutes";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -81,83 +70,11 @@ class App extends Component {
 
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
-              <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute path="/profile" component={ProfileRoutes} />
 
-              <PrivateRoute
-                exact
-                path="/profile/edit-user"
-                component={ProfileEditUser}
-              />
+              <PrivateRoute path="/users" component={UserRoutes} />
 
-              <PrivateRoute
-                exact
-                path="/profile/edit-person"
-                component={ProfileEditPerson}
-              />
-
-              <PrivateRoute exact path="/users" component={Users} />
-
-              <PrivateRoute exact path="/users/create" component={UserCreate} />
-
-              <PrivateRoute exact path="/users/:id" component={UserProfile} />
-
-              <PrivateRoute
-                exact
-                path="/users/:id/edit-user"
-                component={UserEditUser}
-              />
-
-              <PrivateRoute
-                exact
-                path="/users/:id/edit-person"
-                component={UserEditPerson}
-              />
-
-              <Route exact path="/processes" component={Processes} />
-
-              <PrivateRoute
-                exact
-                path="/processes/create"
-                component={ProcessCreate}
-              />
-
-              <Route exact path="/processes/:id" component={ProcessView} />
-
-              <PrivateRoute
-                exact
-                path="/processes/:id/edit"
-                component={ProcessEdit}
-              />
-
-              <PrivateRoute
-                exact
-                path="/processes/:id/calls/create"
-                component={CallCreate}
-              />
-
-              <PrivateRoute
-                exact
-                path="/processes/:process_id/calls/:call_id/edit"
-                component={CallEdit}
-              />
-
-              <PrivateRoute
-                exact
-                path="/processes/:process_id/calls/:call_id/steps/create"
-                component={StepCreate}
-              />
-
-              <PrivateRoute
-                exact
-                path="/processes/:process_id/calls/:call_id/steps/:step_id/edit"
-                component={StepEdit}
-              />
-
-              <PrivateRoute
-                exact
-                path="/processes/:process_id/calls/:call_id/vacancies/create"
-                component={VacancyCreate}
-              />
+              <Route path="/processes" component={ProcessesRoutes} />
             </Switch>
 
             <Footer />

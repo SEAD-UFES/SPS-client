@@ -13,8 +13,6 @@ class CallTabList extends Component {
       };
       const activeCall = calls.reduce(reducer, calls[0]);
       return activeCall.id;
-    } else {
-      console.log("arrayVazio");
     }
   }
 

@@ -206,20 +206,50 @@ class CallView extends Component {
     const callVacancies = (
       <div>
         <h4 className="mb-2">Oferta de vagas</h4>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Atribuição</th>
-              <th>Local</th>
-              <th>Restrição</th>
-              <th>Vagas</th>
-              <th>Reserva</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody />
-        </table>
+        {call.Vacancies.length > 0 ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Atribuição</th>
+                <th>Local</th>
+                <th>Restrição</th>
+                <th>Vagas</th>
+                <th>Reserva</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {call.Vacancies.map(vacancy => {
+                return (
+                  <tr key={vacancy.id}>
+                    <td>{vacancy.Assignment.name}</td>
+                    <td>
+                      {vacancy.Region ? vacancy.Region.name : "Sem região"}
+                    </td>
+                    <td>
+                      {vacancy.Restriction
+                        ? vacancy.Restriction.name
+                        : "Sem restrições"}
+                    </td>
+                    <td>{vacancy.qtd}</td>
+                    <td>{vacancy.reserve ? "C.R." : "Não"}</td>
+                    <td>
+                      <Link
+                        to={`/processes/${call.selectiveProcess_id}/calls/${
+                          call.id
+                        }/vacancies/${vacancy.id}/edit`}
+                      >
+                        <i className="far fa-edit" />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <p>Esta chamada não possui vagas.</p>
+        )}
       </div>
     );
 

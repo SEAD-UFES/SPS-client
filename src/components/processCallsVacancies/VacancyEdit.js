@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
+import { isEmpty } from "../../validation";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
+
 import {
   validateAssignment_id,
   validateProcessCallVacancyForm,
@@ -12,16 +14,16 @@ import {
 } from "../../validation";
 
 import {
-  getStepOptions,
-  createProcessCallStep,
   getAssignmentOptions,
   getRestrictionsOptions,
   getRegionsOptions,
-  createProcessCallVacancy
+  createProcessCallVacancy,
+  getProcessCallVacancy,
+  updateProcessCallVacancy
 } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
-class VacancyCreate extends Component {
+class VacancyEdit extends Component {
   constructor() {
     super();
     this.state = {
@@ -46,6 +48,9 @@ class VacancyCreate extends Component {
     this.props.getAssignmentOptions();
     this.props.getRestrictionsOptions();
     this.props.getRegionsOptions();
+    if (this.props.match.params.vacancy_id) {
+      this.props.getProcessCallVacancy(this.props.match.params.vacancy_id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,6 +69,18 @@ class VacancyCreate extends Component {
       }
 
       this.setState({ errors: newStateErrors });
+    }
+
+    //load the paramenters on screen
+    if (isEmpty(nextProps.errors) && nextProps.vacancy) {
+      const vacancy = nextProps.vacancy;
+      this.setState({
+        assignment_id: vacancy.assignment_id,
+        region_id: vacancy.region_id ? vacancy.region_id : "",
+        restriction_id: vacancy.restriction_id ? vacancy.restriction_id : "",
+        qtd: `${vacancy.qtd}`,
+        reserve: true
+      });
     }
   }
 
@@ -134,9 +151,10 @@ class VacancyCreate extends Component {
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {
-      this.props.createProcessCallVacancy(
-        vacancyData,
+      this.props.updateProcessCallVacancy(
         this.props.match.params.process_id,
+        this.props.match.params.vacancy_id,
+        vacancyData,
         this.props.history
       );
     }
@@ -196,8 +214,8 @@ class VacancyCreate extends Component {
               >
                 Voltar para o processo
               </Link>
-              <h1 className="display-4 text-center">Criar oferta de vaga</h1>
-              <p className="lead text-center">Dê entrada nos dados básicos</p>
+              <h1 className="display-4 text-center">Editar oferta de vaga</h1>
+              <p className="lead text-center">Altere os dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <SelectListGroup
                   placeholder="* Selecione a atribuição"
@@ -260,33 +278,34 @@ class VacancyCreate extends Component {
 }
 
 // "registerUser" and "auth" are required to the Register component
-VacancyCreate.proptypes = {
+VacancyEdit.proptypes = {
   createProcessCallStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  getAssignmentOptions: PropTypes.func.isRequired
+  getAssignmentOptions: PropTypes.func.isRequired,
+  getProcessCallVacancy: PropTypes.func.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  options: state.process.options,
   assignments: state.process.assignments,
   restrictions: state.process.restrictions,
-  regions: state.process.regions
+  regions: state.process.regions,
+  vacancy: state.process.vacancy
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
   {
-    createProcessCallStep,
-    getStepOptions,
     clearErrors,
     getAssignmentOptions,
     getRestrictionsOptions,
     getRegionsOptions,
-    createProcessCallVacancy
+    createProcessCallVacancy,
+    getProcessCallVacancy,
+    updateProcessCallVacancy
   }
-)(withRouter(VacancyCreate));
+)(withRouter(VacancyEdit));
