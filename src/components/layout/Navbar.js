@@ -71,9 +71,9 @@ class Navbar extends Component {
             <img
               className="rounded-circle"
               src={avatar}
-              alt={profile.person.name}
+              alt={profile.person ? profile.person.name : profile.user.login}
               style={{ width: "25px", marginRight: "5px" }}
-              title={profile.person.name}
+              title={profile.person ? profile.person.name : profile.user.login}
             />{" "}
             Logout
           </button>

@@ -31,7 +31,7 @@ export const getCurrentProfile = () => dispatch => {
 //Update profile user data
 export const updateProfileUser = (userId, userData, history) => dispatch => {
   axios
-    .put(`/v1/users/${userId}`, userData)
+    .put(`/v1/me`, userData)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
       history.push("/profile");
@@ -51,7 +51,7 @@ export const updateProfilePerson = (
   history
 ) => dispatch => {
   axios
-    .put(`/v1/people/${userId}`, personData, history)
+    .put(`/v1/me`, personData, history)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
       history.push("/profile");

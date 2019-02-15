@@ -65,50 +65,52 @@ class ProfileEditPerson extends Component {
     if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
-      //preenchendo campos caso não existam
-      profile.person.name = !isEmpty(profile.person.name)
-        ? profile.person.name
-        : "";
-      profile.person.surname = !isEmpty(profile.person.surname)
-        ? profile.person.surname
-        : "";
-      profile.person.birthdate = !isEmpty(profile.person.birthdate)
-        ? moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
-            "YYYY-MM-DD"
-          )
-        : "";
-      profile.person.nationality = !isEmpty(profile.person.nationality)
-        ? profile.person.nationality
-        : "";
-      profile.person.rgNumber = !isEmpty(profile.person.rgNumber)
-        ? profile.person.rgNumber
-        : "";
-      profile.person.rgDispatcher = !isEmpty(profile.person.rgDispatcher)
-        ? profile.person.rgDispatcher
-        : "";
-      profile.person.ethnicity = !isEmpty(profile.person.ethnicity)
-        ? profile.person.ethnicity
-        : "";
-      profile.person.gender = !isEmpty(profile.person.gender)
-        ? profile.person.gender
-        : "";
-      profile.person.civilStatus = !isEmpty(profile.person.civilStatus)
-        ? profile.person.civilStatus
-        : "";
+      //preenchendo de person se existirem
+      if (profile.person) {
+        profile.person.name = !isEmpty(profile.person.name)
+          ? profile.person.name
+          : "";
+        profile.person.surname = !isEmpty(profile.person.surname)
+          ? profile.person.surname
+          : "";
+        profile.person.birthdate = !isEmpty(profile.person.birthdate)
+          ? moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
+              "YYYY-MM-DD"
+            )
+          : "";
+        profile.person.nationality = !isEmpty(profile.person.nationality)
+          ? profile.person.nationality
+          : "";
+        profile.person.rgNumber = !isEmpty(profile.person.rgNumber)
+          ? profile.person.rgNumber
+          : "";
+        profile.person.rgDispatcher = !isEmpty(profile.person.rgDispatcher)
+          ? profile.person.rgDispatcher
+          : "";
+        profile.person.ethnicity = !isEmpty(profile.person.ethnicity)
+          ? profile.person.ethnicity
+          : "";
+        profile.person.gender = !isEmpty(profile.person.gender)
+          ? profile.person.gender
+          : "";
+        profile.person.civilStatus = !isEmpty(profile.person.civilStatus)
+          ? profile.person.civilStatus
+          : "";
 
-      //Atualizando estado do componente
-      this.setState({
-        name: profile.person.name,
-        surname: profile.person.surname,
-        birthdate: profile.person.birthdate,
-        cpf: profile.person.cpf,
-        nationality: profile.person.nationality,
-        rgNumber: profile.person.rgNumber,
-        rgDispatcher: profile.person.rgDispatcher,
-        ethnicity: profile.person.ethnicity,
-        gender: profile.person.gender,
-        civilStatus: profile.person.civilStatus
-      });
+        //Atualizando estado do componente
+        this.setState({
+          name: profile.person.name,
+          surname: profile.person.surname,
+          birthdate: profile.person.birthdate,
+          cpf: profile.person.cpf,
+          nationality: profile.person.nationality,
+          rgNumber: profile.person.rgNumber,
+          rgDispatcher: profile.person.rgDispatcher,
+          ethnicity: profile.person.ethnicity,
+          gender: profile.person.gender,
+          civilStatus: profile.person.civilStatus
+        });
+      }
     }
   }
 
@@ -168,11 +170,28 @@ class ProfileEditPerson extends Component {
     const valProfileEditPerson = validateProfileEditPersonForm(personData);
 
     if (!valProfileEditPerson.isValid) {
+      console.log(personData);
+      console.log(valProfileEditPerson.errors);
       this.setState({ errors: valProfileEditPerson.errors });
     } else {
+      let updatepersonData = {
+        Person: {
+          name: this.state.name,
+          surname: this.state.surname,
+          birthdate: this.state.birthdate ? this.state.birthdate : null,
+          cpf: this.state.cpf,
+          nationality: this.state.nationality,
+          rgNumber: this.state.rgNumber,
+          rgDispatcher: this.state.rgDispatcher,
+          ethnicity: this.state.ethnicity ? this.state.ethnicity : null,
+          gender: this.state.gender ? this.state.gender : null,
+          civilStatus: this.state.civilStatus ? this.state.civilStatus : null
+        }
+      };
+
       this.props.updateProfilePerson(
         profile.user.id,
-        personData,
+        updatepersonData,
         this.props.history
       );
     }

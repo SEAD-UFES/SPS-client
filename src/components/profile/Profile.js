@@ -23,6 +23,162 @@ class Profile extends Component {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
+    const userData =
+      profile !== null && !loading && profile.user ? (
+        <div>
+          <h4 className="mb-2">Dados de usuário</h4>
+
+          <div className="row">
+            <div className="col-md-3">
+              <p>
+                <strong>Login/Email:</strong>
+              </p>
+            </div>
+            <div className="col-md-9">
+              <p>{profile.user.login}</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <h4 className="mb-2">Dados de usuário</h4>
+          <p>Erro ao exibir dados de usuário</p>
+        </div>
+      );
+
+    const personData =
+      profile !== null && !loading && profile.person ? (
+        <div>
+          <h4 className="mb-3">Dados de pessoais</h4>
+
+          <div className="row">
+            <div className="col-md-3">
+              <p>
+                <strong>Nome / Sobrenome:</strong>
+              </p>
+            </div>
+            <div className="col-md-9">
+              <p>
+                {profile.person.name} {profile.person.surname}
+              </p>
+            </div>
+          </div>
+
+          {profile.person.birthdate ? (
+            <div className="row">
+              <div className="col-md-3">
+                <p>
+                  <strong>Data de Nascimento:</strong>
+                </p>
+              </div>
+              <div className="col-md-9">
+                <p>
+                  {moment(
+                    profile.person.birthdate,
+                    "YYYY-MM-DD HH:mm:ss"
+                  ).format("DD/MM/YYYY")}
+                </p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          <div className="row">
+            <div className="col-md-3">
+              <p>
+                <strong>CPF:</strong>
+              </p>
+            </div>
+            <div className="col-md-9">
+              <p>{profile.person.cpf}</p>
+            </div>
+          </div>
+
+          {profile.person.nationality ? (
+            <div className="row">
+              <div className="col-md-3">
+                <p>
+                  <strong>Nacionalidade:</strong>
+                </p>
+              </div>
+              <div className="col-md-9">
+                <p>{profile.person.nationality}</p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {profile.person.rgNumber ? (
+            <div className="row">
+              <div className="col-md-3">
+                <p>
+                  <strong>RG (Número / Expeditor):</strong>
+                </p>
+              </div>
+              <div className="col-md-9">
+                <p>
+                  {profile.person.rgNumber} - {profile.person.rgDispatcher}
+                </p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {profile.person.ethnicity ? (
+            <div className="row">
+              <div className="col-md-2">
+                <p>
+                  <strong>Cor:</strong>
+                </p>
+              </div>
+              <div className="col-md-10">
+                <p>{profile.person.ethnicity}</p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {profile.person.gender ? (
+            <div className="row">
+              <div className="col-md-2">
+                <p>
+                  <strong>Sexo:</strong>
+                </p>
+              </div>
+              <div className="col-md-10">
+                <p>{profile.person.gender}</p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {profile.person.civilStatus ? (
+            <div className="row">
+              <div className="col-md-2">
+                <p>
+                  <strong>Estado Civil:</strong>
+                </p>
+              </div>
+              <div className="col-md-10">
+                <p>{profile.person.civilStatus}</p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        <div>
+          <h4 className="mb-3">Dados de pessoais</h4>
+          <p>Usuário ainda não possui dados pessoais</p>
+        </div>
+      );
+
     let dashboardContent;
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
@@ -32,7 +188,9 @@ class Profile extends Component {
         dashboardContent = (
           <div>
             <p className="lead text-muted">
-              {profile.person.name} {profile.person.surname}
+              {profile.person
+                ? profile.person.name + " " + profile.person.surname
+                : profile.user.login}
             </p>
 
             {/* <!-- Profile Actions --> */}
@@ -47,147 +205,9 @@ class Profile extends Component {
               </Link>
             </div>
 
-            {/* <!-- User data --> */}
-            <div>
-              <h4 className="mb-2">Dados de usuário</h4>
+            {userData}
 
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>Login/Email:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>{profile.user.login}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* <!-- Person Data --> */}
-            <div>
-              <h4 className="mb-3">Dados de pessoais</h4>
-
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>Nome / Sobrenome:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>
-                    {profile.person.name} {profile.person.surname}
-                  </p>
-                </div>
-              </div>
-
-              {profile.person.birthdate ? (
-                <div className="row">
-                  <div className="col-md-3">
-                    <p>
-                      <strong>Data de Nascimento:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-9">
-                    <p>
-                      {moment(
-                        profile.person.birthdate,
-                        "YYYY-MM-DD HH:mm:ss"
-                      ).format("DD/MM/YYYY")}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>CPF:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>{profile.person.cpf}</p>
-                </div>
-              </div>
-
-              {profile.person.nationality ? (
-                <div className="row">
-                  <div className="col-md-3">
-                    <p>
-                      <strong>Nacionalidade:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-9">
-                    <p>{profile.person.nationality}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {profile.person.rgNumber ? (
-                <div className="row">
-                  <div className="col-md-3">
-                    <p>
-                      <strong>RG (Número / Expeditor):</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-9">
-                    <p>
-                      {profile.person.rgNumber} - {profile.person.rgDispatcher}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {profile.person.ethnicity ? (
-                <div className="row">
-                  <div className="col-md-2">
-                    <p>
-                      <strong>Cor:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-10">
-                    <p>{profile.person.ethnicity}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {profile.person.gender ? (
-                <div className="row">
-                  <div className="col-md-2">
-                    <p>
-                      <strong>Sexo:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-10">
-                    <p>{profile.person.gender}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {profile.person.civilStatus ? (
-                <div className="row">
-                  <div className="col-md-2">
-                    <p>
-                      <strong>Estado Civil:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-10">
-                    <p>{profile.person.civilStatus}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+            {personData}
           </div>
         );
       } else {

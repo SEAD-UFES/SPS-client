@@ -7,7 +7,10 @@ import TextFieldAreaGroup from "../common/TextAreaFieldGroup";
 
 import { clearErrors } from "../../actions/errorActions";
 import { getAssignmentOptions } from "../../actions/processActions";
-import { createAssignment } from "../../actions/parameterActions";
+import {
+  createAssignment,
+  updateAssignment
+} from "../../actions/parameterActions";
 
 class Assignments extends Component {
   constructor(props) {
@@ -122,6 +125,7 @@ class Assignments extends Component {
                             targetName={`editModal-${assignment.id}`}
                             mode="edit"
                             item={assignment}
+                            editFunction={this.props.updateAssignment}
                           />
                         </td>
                       </tr>
@@ -169,7 +173,8 @@ export default connect(
   {
     clearErrors,
     getAssignmentOptions,
-    createAssignment
+    createAssignment,
+    updateAssignment
   }
 )(Assignments);
 
@@ -215,6 +220,7 @@ class ItemFormModal extends Component {
     if (this.state.mode === "add") {
       this.props.addFunction(assignmentData, () => {
         window.$(`#${this.props.targetName}`).modal("hide");
+        this.setState({ name: "", description: "" });
       });
     }
 

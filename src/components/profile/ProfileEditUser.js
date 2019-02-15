@@ -163,10 +163,13 @@ class ProfileEditUser extends Component {
       this.setState({ errors: valProfileUserEdit.errors });
     } else {
       let updateUserData = {
-        login: this.state.email
+        User: {
+          login: this.state.email
+        }
       };
+
       if (this.state.changePassword) {
-        updateUserData.password = this.state.password;
+        updateUserData.User.password = this.state.password;
       }
 
       const profile = this.props.profile.profile;
