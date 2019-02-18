@@ -84,6 +84,15 @@ ul.timeline > li:before {
   text-decoration: none;
 }
 
+/* Button as link */
+.buttonAsLink {
+  background: none !important;
+  color: inherit;
+  border: none;
+  padding: 0 !important;
+  font: inherit;
+}
+
 /*#### Codigo original create-react-app ####*/
 /*
 .App {

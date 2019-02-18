@@ -50,6 +50,7 @@ class Processes extends Component {
                 <tr>
                   <th>Número</th>
                   <th>Ano</th>
+                  <th>Curso</th>
                   <th>Status</th>
                   <th />
                 </tr>
@@ -60,6 +61,7 @@ class Processes extends Component {
                     <tr key={process.id}>
                       <td>{process.number}</td>
                       <td>{process.year}</td>
+                      <td>{process.Course.name}</td>
                       <td>{process.visible ? "Visível" : "Oculto"}</td>
                       <td>
                         <Link

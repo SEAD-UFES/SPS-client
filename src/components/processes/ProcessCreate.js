@@ -5,6 +5,8 @@ import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
+import SelectListGroup from "../common/SelectListGroup";
+
 import {
   validateProcessNumber,
   validateYearRequired,
@@ -13,6 +15,7 @@ import {
 } from "../../validation";
 
 import { createProcess } from "../../actions/processActions";
+import { getCourses } from "../parameters/courses/coursesActions";
 
 class ProcessCreate extends Component {
   constructor() {
@@ -20,6 +23,7 @@ class ProcessCreate extends Component {
     this.state = {
       number: "",
       year: "",
+      course_id: "",
       description: "",
       visible: false,
       errors: {}
@@ -28,6 +32,10 @@ class ProcessCreate extends Component {
     this.onChange = this.onChange.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getCourses();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +58,8 @@ class ProcessCreate extends Component {
         break;
       case "description":
         valResult = validateDescription(e.target.value);
+        break;
+      case "course_id":
         break;
       default:
         break;
@@ -88,6 +98,7 @@ class ProcessCreate extends Component {
     const processData = {
       number: this.state.number,
       year: this.state.year,
+      course_id: this.state.course_id,
       description: this.state.description,
       visible: this.state.visible
     };
@@ -101,7 +112,19 @@ class ProcessCreate extends Component {
   }
 
   render() {
+    const { coursesStorage } = this.props;
     const { errors } = this.state;
+
+    const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
+      coursesStorage.courses
+        ? coursesStorage.courses.map(course => {
+            return {
+              label: course.name,
+              value: course.id
+            };
+          })
+        : []
+    );
 
     return (
       <div className="register">
@@ -130,6 +153,15 @@ class ProcessCreate extends Component {
                   value={this.state.year}
                   onChange={this.onChange}
                   error={errors.year}
+                />
+
+                <SelectListGroup
+                  placeholder=""
+                  name="course_id"
+                  value={this.state.course_id}
+                  options={courseOptions}
+                  onChange={this.onChange}
+                  error={errors.course_id}
                 />
 
                 <TextAreaFieldGroup
@@ -168,16 +200,18 @@ class ProcessCreate extends Component {
 // "registerUser" and "auth" are required to the Register component
 ProcessCreate.proptypes = {
   createProcess: PropTypes.func.isRequired,
+  getCourses: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
+  coursesStorage: state.coursesStorage,
   errors: state.errors
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcess }
+  { createProcess, getCourses }
 )(withRouter(ProcessCreate));

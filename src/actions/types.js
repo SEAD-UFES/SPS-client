@@ -26,6 +26,12 @@ export const GET_RESTRICTIONS_OPTIONS = "GET_RESTRICTIONS_OPTIONS";
 export const GET_REGIONS_OPTIONS = "GET_REGIONS_OPTIONS";
 export const GET_VACANCY = "GET_VACANCY";
 
+//courses actions
+export {
+  GET_COURSES,
+  COURSES_LOADING
+} from "../components/parameters/courses/coursesActionTypes";
+
 // //Post actions
 // export const POST_LOADING = "POST_LOADING";
 // export const GET_POSTS = "GET_POSTS";
