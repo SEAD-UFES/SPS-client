@@ -29,25 +29,7 @@ export const getCourse = course_id => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: { options: "Don't load the assignments options" }
-      })
-    );
-};
-
-export const getCourses = () => dispatch => {
-  dispatch(setCoursesLoading());
-  axios
-    .get("/v1/courses")
-    .then(res =>
-      dispatch({
-        type: GET_COURSES,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: { courses: "Don't load the courses." }
+        payload: err.response.data
       })
     );
 };
@@ -66,9 +48,41 @@ export const updateCourse = (courseData, callback_ok) => dispatch => {
     });
 };
 
+export const deleteCourse = (course_id, callback_ok) => dispatch => {
+  axios
+    .delete(`/v1/courses/${course_id}`)
+    .then(res => {
+      callback_ok();
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 //courses loading
 export const setCoursesLoading = () => {
   return {
     type: COURSES_LOADING
   };
+};
+
+export const getCourses = () => dispatch => {
+  dispatch(setCoursesLoading());
+  axios
+    .get("/v1/courses")
+    .then(res =>
+      dispatch({
+        type: GET_COURSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };

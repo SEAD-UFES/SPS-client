@@ -3,21 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { clearErrors } from "../../../actions/errorActions";
-import { getCourses, createCourse, updateCourse } from "./coursesActions";
+import {
+  getCourses,
+  createCourse,
+  updateCourse,
+  deleteCourse
+} from "./coursesActions";
 
 import CoursesModalForm from "./CoursesModalForm";
+import CoursesModalDelete from "./CoursesModalDelete";
 
 class CoursesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //comportamento do componente
-      add_item: false,
-
-      //dados do item
-      item_list: [],
-
-      //errors:
       errors: []
     };
 
@@ -116,18 +115,26 @@ class CoursesList extends Component {
                           data-target={`#editModal-${course.id}`}
                         >
                           <i className="far fa-edit" />
-                        </button>{" "}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink"
-                        >
-                          <i className="far fa-trash-alt text-danger" />
                         </button>
                         <CoursesModalForm
                           targetName={`editModal-${course.id}`}
                           mode="edit"
                           item={course}
                           editFunction={this.props.updateCourse}
+                          reloadFunction={this.props.getCourses}
+                        />{" "}
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${course.id}`}
+                        >
+                          <i className="far fa-trash-alt text-danger" />
+                        </button>
+                        <CoursesModalDelete
+                          targetName={`deleteModal-${course.id}`}
+                          item={course}
+                          deleteFunction={this.props.deleteCourse}
                           reloadFunction={this.props.getCourses}
                         />
                       </td>
@@ -168,7 +175,8 @@ CoursesList.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   getCourses: PropTypes.func.isRequired,
   createCourse: PropTypes.func.isRequired,
-  updateCourse: PropTypes.func.isRequired
+  updateCourse: PropTypes.func.isRequired,
+  deleteCourse: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -181,6 +189,7 @@ export default connect(
     clearErrors,
     getCourses,
     createCourse,
-    updateCourse
+    updateCourse,
+    deleteCourse
   }
 )(CoursesList);

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import TextFieldGroup from "../../common/TextFieldGroup";
 import TextFieldAreaGroup from "../../common/TextAreaFieldGroup";
-import { validateName } from "../../../validation";
+import { isEmpty, validateName } from "../../../validation";
 import { validateCoursesForm } from "./validateCoursesForm";
+import { clearErrors } from "../../../actions/errorActions";
 
 class CoursesModalForm extends Component {
   constructor(props) {
@@ -28,12 +31,49 @@ class CoursesModalForm extends Component {
     this.resetState = this.resetState.bind(this);
   }
 
+  componentDidMount() {
+    window
+      .$(`#${this.props.targetName}`)
+      .on("hidden.bs.modal", this.resetState);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    //error management
+    if (!isEmpty(nextProps.errors)) {
+      let newErrors = [];
+      switch (nextProps.errors.code) {
+        case "courses-02":
+          newErrors = {};
+          if (
+            nextProps.errors.devMessage.name ===
+            "SequelizeUniqueConstraintError"
+          ) {
+            if (
+              nextProps.errors.devMessage.errors[0].message ===
+              "name must be unique"
+            ) {
+              newErrors.name = "Já existe uma curso com esse nome.";
+              this.setState({ errors: newErrors });
+            }
+          }
+          break;
+        default:
+          return null;
+      }
+    } else {
+      this.setState({ errors: [] });
+    }
+  }
+
   onChange(e) {
     //local validation of fields:
     let errors = this.state.errors;
     let valResult = { error: "", isValid: true };
     switch (e.target.name) {
       case "name":
+        valResult = validateName(e.target.value);
+        break;
+      case "description":
         valResult = validateName(e.target.value);
         break;
       default:
@@ -97,6 +137,7 @@ class CoursesModalForm extends Component {
       //errors
       errors: []
     });
+    this.props.clearErrors();
   }
 
   render() {
@@ -167,7 +208,6 @@ class CoursesModalForm extends Component {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
-                onClick={this.resetState}
               >
                 Cancelar
               </button>
@@ -179,4 +219,16 @@ class CoursesModalForm extends Component {
   }
 }
 
-export default CoursesModalForm;
+CoursesModalForm.proptypes = {
+  clearErrors: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { clearErrors }
+)(CoursesModalForm);
