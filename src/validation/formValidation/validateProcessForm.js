@@ -2,7 +2,8 @@ import {
   isEmpty,
   validateProcessNumber,
   validateYearRequired,
-  validateDescription
+  validateDescription,
+  validateId
 } from "../";
 
 // Register validation
@@ -18,6 +19,11 @@ export const validateProcessForm = data => {
   field = validateYearRequired(data.year);
   if (!field.isValid) {
     errors.year = field.error;
+  }
+
+  field = validateId(data.course_id);
+  if (!field.isValid) {
+    errors.course_id = field.error;
   }
 
   field = validateDescription(data.description);

@@ -25,7 +25,7 @@ class ProcessView extends Component {
         <div>
           {/* <!-- Process basic data --> */}
           <p className="lead text-muted">
-            {`${process.number}/${process.year}`}
+            {`${process.number}/${process.year} - ${process.Course.name}`}
           </p>
 
           {/* <!-- Process Actions --> */}
@@ -67,6 +67,17 @@ class ProcessView extends Component {
                 <p>
                   {process.number}/{process.year}
                 </p>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-2">
+                <p>
+                  <strong>Curso:</strong>
+                </p>
+              </div>
+              <div className="col-md-10">
+                <p>{process.Course.name}</p>
               </div>
             </div>
 

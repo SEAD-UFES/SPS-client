@@ -17,15 +17,35 @@ class CoursesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      sortMethod: "",
+      sortReverse: false,
+      coursesList: [],
       errors: []
     };
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.compareBy = this.compareBy.bind(this);
+    this.sortBy = this.sortBy.bind(this);
+    this.orderIcon = this.orderIcon.bind(this);
   }
 
   componentDidMount() {
     this.props.clearErrors();
     this.props.getCourses();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    //atualizar lista
+    if (nextProps.coursesStorage.courses) {
+      this.setState(
+        {
+          sortMethod: "",
+          sortReverse: false,
+          coursesList: nextProps.coursesStorage.courses
+        },
+        () => this.sortBy("name", { reverse: false })
+      );
+    }
   }
 
   onChange(e) {
@@ -55,8 +75,55 @@ class CoursesList extends Component {
     e.preventDefault();
   }
 
+  compareBy(key) {
+    return function(a, b) {
+      if (a[key].toLowerCase() < b[key].toLowerCase()) return -1;
+      if (a[key].toLowerCase() > b[key].toLowerCase()) return 1;
+      return 0;
+    };
+  }
+
+  sortBy(key = "name", options) {
+    let sortMethod = this.state.sortMethod;
+    let sortReverse = this.state.sortReverse;
+    let arrayCopy = [...this.state.coursesList];
+
+    //Determinar se é ordem é forçada.
+    if (options && options.reverse) {
+      sortReverse = options.reverse;
+    } else {
+      //Se o método está sendo aplicado novamente na mesma key
+      if (sortMethod === key) {
+        sortReverse = sortReverse ? false : true;
+      }
+    }
+
+    arrayCopy.sort(this.compareBy(key));
+
+    if (sortReverse) {
+      arrayCopy.reverse();
+    }
+
+    this.setState({
+      sortMethod: key,
+      sortReverse: sortReverse,
+      coursesList: arrayCopy
+    });
+  }
+
+  orderIcon(key) {
+    if (this.state.sortMethod === key) {
+      if (this.state.sortReverse === false) {
+        return <i className="fas fa-arrow-up" />;
+      } else {
+        return <i className="fas fa-arrow-down" />;
+      }
+    }
+    return null;
+  }
+
   render() {
-    const { coursesStorage } = this.props;
+    const { coursesList } = this.state;
 
     //Add item - form
     const addItemTool = (
@@ -85,18 +152,22 @@ class CoursesList extends Component {
     const assignmentsList = (
       <div>
         <h4 className="mb-2">Lista de cursos</h4>
-        {coursesStorage.courses ? (
+        {CoursesList ? (
           <table className="table">
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Ferramentas</th>
+                <th onClick={() => this.sortBy("name")}>
+                  Nome {this.orderIcon("name")}
+                </th>
+                <th onClick={() => this.sortBy("description")}>
+                  Descrição {this.orderIcon("description")}
+                </th>
+                <th>Opções</th>
               </tr>
             </thead>
             <tbody>
-              {coursesStorage.courses.length > 0 ? (
-                coursesStorage.courses.map(course => {
+              {coursesList.length > 0 ? (
+                coursesList.map(course => {
                   return (
                     <tr key={course.id}>
                       <td>{course.name}</td>
@@ -142,12 +213,16 @@ class CoursesList extends Component {
                   );
                 })
               ) : (
-                <p>Sem itens para exibir</p>
+                <tr>
+                  <td colSpan="3">Sem itens para exibir</td>
+                </tr>
               )}
             </tbody>
           </table>
         ) : (
-          <p>Sem itens para exibir</p>
+          <tr>
+            <td colSpan="3">Sem itens para exibir</td>
+          </tr>
         )}
       </div>
     );

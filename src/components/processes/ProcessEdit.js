@@ -4,17 +4,21 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
+import SelectListGroup from "../common/SelectListGroup";
+
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import {
   isEmpty,
   validateProcessNumber,
   validateYearRequired,
   validateDescription,
-  validateProcessForm
+  validateProcessForm,
+  validateId
 } from "../../validation";
 
 import { clearErrors } from "../../actions/errorActions";
 import { getProcess, updateProcess } from "../../actions/processActions";
+import { getCourses } from "../parameters/courses/coursesActions";
 
 class ProcessEdit extends Component {
   constructor() {
@@ -22,6 +26,7 @@ class ProcessEdit extends Component {
     this.state = {
       number: "",
       year: "",
+      course_id: "",
       description: "",
       visible: false,
       errors: {}
@@ -37,6 +42,8 @@ class ProcessEdit extends Component {
     if (this.props.match.params.id) {
       this.props.getProcess(this.props.match.params.id);
     }
+
+    this.props.getCourses();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,6 +59,7 @@ class ProcessEdit extends Component {
       this.setState({
         number: process.number,
         year: process.year,
+        course_id: process.course_id,
         description: process.description,
         visible: process.visible
       });
@@ -68,6 +76,9 @@ class ProcessEdit extends Component {
         break;
       case "year":
         valResult = validateYearRequired(e.target.value);
+        break;
+      case "course_id":
+        valResult = validateId(e.target.value);
         break;
       case "description":
         valResult = validateDescription(e.target.value);
@@ -127,6 +138,18 @@ class ProcessEdit extends Component {
 
   render() {
     const { errors } = this.state;
+    const { coursesStorage } = this.props;
+
+    const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
+      coursesStorage.courses
+        ? coursesStorage.courses.map(course => {
+            return {
+              label: course.name,
+              value: course.id
+            };
+          })
+        : []
+    );
 
     return (
       <div className="register">
@@ -158,6 +181,15 @@ class ProcessEdit extends Component {
                   value={this.state.year}
                   onChange={this.onChange}
                   error={errors.year}
+                />
+
+                <SelectListGroup
+                  placeholder=""
+                  name="course_id"
+                  value={this.state.course_id}
+                  options={courseOptions}
+                  onChange={this.onChange}
+                  error={errors.course_id}
                 />
 
                 <TextAreaFieldGroup
@@ -198,17 +230,19 @@ ProcessEdit.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   getProcess: PropTypes.func.isRequired,
   updateProcess: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  getCourses: PropTypes.func.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  process: state.process
+  process: state.process,
+  coursesStorage: state.coursesStorage
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { clearErrors, getProcess, updateProcess }
+  { clearErrors, getProcess, updateProcess, getCourses }
 )(withRouter(ProcessEdit));

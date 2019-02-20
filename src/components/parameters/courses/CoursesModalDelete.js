@@ -19,9 +19,10 @@ class CoursesModalDelete extends Component {
   }
 
   componentDidMount() {
-    window
-      .$(`#${this.props.targetName}`)
-      .on("hidden.bs.modal", this.resetState);
+    window.$(`#${this.props.targetName}`).on("hidden.bs.modal", () => {
+      this.resetState();
+      this.props.reloadFunction();
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,8 +51,6 @@ class CoursesModalDelete extends Component {
   onSubmit() {
     this.props.deleteFunction(this.props.item.id, () => {
       window.$(`#${this.props.targetName}`).modal("hide");
-      this.props.reloadFunction();
-      this.resetState();
     });
   }
 

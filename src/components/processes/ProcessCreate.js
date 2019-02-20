@@ -11,7 +11,8 @@ import {
   validateProcessNumber,
   validateYearRequired,
   validateDescription,
-  validateProcessForm
+  validateProcessForm,
+  validateId
 } from "../../validation";
 
 import { createProcess } from "../../actions/processActions";
@@ -56,10 +57,11 @@ class ProcessCreate extends Component {
       case "year":
         valResult = validateYearRequired(e.target.value);
         break;
+      case "course_id":
+        valResult = validateId(e.target.value);
+        break;
       case "description":
         valResult = validateDescription(e.target.value);
-        break;
-      case "course_id":
         break;
       default:
         break;
