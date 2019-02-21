@@ -4,22 +4,22 @@ import { connect } from "react-redux";
 
 import { clearErrors } from "../../../actions/errorActions";
 import {
-  getCourses,
-  createCourse,
-  updateCourse,
-  deleteCourse
-} from "./coursesActions";
+  getAssignments,
+  createAssignment,
+  updateAssignment,
+  deleteAssignment
+} from "./assignmentsActions";
 import { compareBy } from "utils/compareBy";
-import CoursesModalForm from "./CoursesModalForm";
-import CoursesModalDelete from "./CoursesModalDelete";
+import AssignmentsModalForm from "./AssignmentsModalForm";
+import AssignmentsModalDelete from "./AssignmentsModalDelete";
 
-class CoursesList extends Component {
+class AssignmentsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       sortMethod: "",
       sortReverse: false,
-      coursesList: [],
+      assignmentsList: [],
       errors: []
     };
 
@@ -29,17 +29,17 @@ class CoursesList extends Component {
 
   componentDidMount() {
     this.props.clearErrors();
-    this.props.getCourses();
+    this.props.getAssignments();
   }
 
   componentWillReceiveProps(nextProps) {
     //atualizar lista
-    if (nextProps.coursesStore.courses) {
+    if (nextProps.assignmentsStore.assignments) {
       this.setState(
         {
           sortMethod: "",
           sortReverse: false,
-          coursesList: nextProps.coursesStore.courses
+          assignmentsList: nextProps.assignmentsStore.assignments
         },
         () => this.sortBy("name", { reverse: false })
       );
@@ -72,7 +72,7 @@ class CoursesList extends Component {
   sortBy(key = "name", options) {
     let sortMethod = this.state.sortMethod;
     let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.coursesList];
+    let arrayCopy = [...this.state.assignmentsList];
 
     //Determinar se é ordem é forçada.
     if (options && options.reverse) {
@@ -93,7 +93,7 @@ class CoursesList extends Component {
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
-      coursesList: arrayCopy
+      assignmentsList: arrayCopy
     });
   }
 
@@ -109,7 +109,7 @@ class CoursesList extends Component {
   }
 
   render() {
-    const { coursesList } = this.state;
+    const { assignmentsList } = this.state;
 
     //Add item - form
     const addItemTool = (
@@ -121,24 +121,24 @@ class CoursesList extends Component {
             data-toggle="modal"
             data-target="#addModal"
           >
-            + Adicionar curso
+            + Adicionar atribuição
           </button>
         </div>
 
-        <CoursesModalForm
+        <AssignmentsModalForm
           mode="add"
           targetName="addModal"
-          addFunction={this.props.createCourse}
-          reloadFunction={this.props.getCourses}
+          addFunction={this.props.createAssignment}
+          reloadFunction={this.props.getAssignments}
         />
       </div>
     );
 
     //item list
-    const coursesTable = (
+    const assignmentsTable = (
       <div>
-        <h4 className="mb-2">Lista de cursos</h4>
-        {CoursesList ? (
+        <h4 className="mb-2">Lista de atribuições</h4>
+        {AssignmentsList ? (
           <table className="table">
             <thead>
               <tr>
@@ -152,14 +152,14 @@ class CoursesList extends Component {
               </tr>
             </thead>
             <tbody>
-              {coursesList.length > 0 ? (
-                coursesList.map(course => {
+              {assignmentsList.length > 0 ? (
+                assignmentsList.map(assignment => {
                   return (
-                    <tr key={course.id}>
-                      <td>{course.name}</td>
+                    <tr key={assignment.id}>
+                      <td>{assignment.name}</td>
                       <td>
-                        {course.description ? (
-                          course.description
+                        {assignment.description ? (
+                          assignment.description
                         ) : (
                           <span className="text-muted">Sem descrição.</span>
                         )}
@@ -169,30 +169,30 @@ class CoursesList extends Component {
                           type="button"
                           className="btn btn-link buttonAsLink text-info"
                           data-toggle="modal"
-                          data-target={`#editModal-${course.id}`}
+                          data-target={`#editModal-${assignment.id}`}
                         >
                           <i className="far fa-edit" />
                         </button>
-                        <CoursesModalForm
-                          targetName={`editModal-${course.id}`}
+                        <AssignmentsModalForm
+                          targetName={`editModal-${assignment.id}`}
                           mode="edit"
-                          item={course}
-                          editFunction={this.props.updateCourse}
-                          reloadFunction={this.props.getCourses}
+                          item={assignment}
+                          editFunction={this.props.updateAssignment}
+                          reloadFunction={this.props.getAssignments}
                         />{" "}
                         <button
                           type="button"
                           className="btn btn-link buttonAsLink"
                           data-toggle="modal"
-                          data-target={`#deleteModal-${course.id}`}
+                          data-target={`#deleteModal-${assignment.id}`}
                         >
                           <i className="far fa-trash-alt text-danger" />
                         </button>
-                        <CoursesModalDelete
-                          targetName={`deleteModal-${course.id}`}
-                          item={course}
-                          deleteFunction={this.props.deleteCourse}
-                          reloadFunction={this.props.getCourses}
+                        <AssignmentsModalDelete
+                          targetName={`deleteModal-${assignment.id}`}
+                          item={assignment}
+                          deleteFunction={this.props.deleteAssignment}
+                          reloadFunction={this.props.getAssignments}
                         />
                       </td>
                     </tr>
@@ -218,12 +218,12 @@ class CoursesList extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="display-4">Cursos</h1>
+              <h1 className="display-4">Atribuições</h1>
               <p className="lead text-muted">
-                Cursos que fazem uso do sistema de processo seletivo
+                Atribuições que serão ofertadas pelo sistema
               </p>
               {addItemTool}
-              {coursesTable}
+              {assignmentsTable}
             </div>
           </div>
         </div>
@@ -232,25 +232,25 @@ class CoursesList extends Component {
   }
 }
 
-CoursesList.proptypes = {
+AssignmentsList.proptypes = {
   clearErrors: PropTypes.func.isRequired,
-  getCourses: PropTypes.func.isRequired,
-  createCourse: PropTypes.func.isRequired,
-  updateCourse: PropTypes.func.isRequired,
-  deleteCourse: PropTypes.func.isRequired
+  getAssignments: PropTypes.func.isRequired,
+  createAssignment: PropTypes.func.isRequired,
+  updateAssignment: PropTypes.func.isRequired,
+  deleteAssignment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  coursesStore: state.coursesStore
+  assignmentsStore: state.assignmentsStore
 });
 
 export default connect(
   mapStateToProps,
   {
     clearErrors,
-    getCourses,
-    createCourse,
-    updateCourse,
-    deleteCourse
+    getAssignments,
+    createAssignment,
+    updateAssignment,
+    deleteAssignment
   }
-)(CoursesList);
+)(AssignmentsList);

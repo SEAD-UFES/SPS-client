@@ -32,6 +32,12 @@ export {
   COURSES_LOADING
 } from "../components/parameters/courses/coursesActionTypes";
 
+//assignments actions
+export {
+  GET_ASSIGNMENTS,
+  ASSIGNMENTS_LOADING
+} from "../components/parameters/assignments/assignmentsActionTypes";
+
 // //Post actions
 // export const POST_LOADING = "POST_LOADING";
 // export const GET_POSTS = "GET_POSTS";

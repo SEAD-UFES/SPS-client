@@ -4,7 +4,9 @@ import errorReducer from "./errorReducer";
 import profileReducer from "./profileReducer";
 import userReducer from "./userReducer";
 import processReducer from "./processReducer";
-import coursesReducer from "../components/parameters/courses/coursesReducer";
+import coursesReducer from "components/parameters/courses/coursesReducer";
+import assignmentsReducer from "components/parameters/assignments/assignmentsReducer";
+
 //import postReducer from "./postReducer";
 
 export default combineReducers({
@@ -13,6 +15,7 @@ export default combineReducers({
   profile: profileReducer,
   user: userReducer,
   process: processReducer,
-  coursesStorage: coursesReducer
+  coursesStore: coursesReducer,
+  assignmentsStore: assignmentsReducer
   //post: postReducer
 });
