@@ -1,0 +1,4 @@
+//Restrictions actions
+export const RESTRICTIONS_LOADING = "RESTRICTIONS_LOADING";
+export const GET_RESTRICTION = "GET_RESTRICTION";
+export const GET_RESTRICTIONS = "GET_RESTRICTIONS";
