@@ -28,6 +28,7 @@ import ProfileRoutes from "./components/profile/ProfileRoutes";
 import UserRoutes from "./components/users/UsersRoutes";
 import ProcessesRoutes from "./components/processes/ProcessesRoutes";
 import ParametersRoutes from "./components/parameters/ParametersRoutes";
+import RoleTypesRoutes from "./components/roleTypes/RoleTypesRoutes";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -78,6 +79,8 @@ class App extends Component {
               <Route path="/processes" component={ProcessesRoutes} />
 
               <PrivateRoute path="/parameters" component={ParametersRoutes} />
+
+              <PrivateRoute path="/roletypes" component={RoleTypesRoutes} />
             </Switch>
 
             <Footer />

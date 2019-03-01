@@ -8,6 +8,8 @@ import coursesReducer from "components/parameters/courses/coursesReducer";
 import assignmentsReducer from "components/parameters/assignments/assignmentsReducer";
 import regionsReducer from "components/parameters/regions/regionsReducer";
 import restrictionsReducer from "components/parameters/restrictions/restrictionsReducer";
+import roleTypesReducer from "components/roleTypes/roleTypesReducer";
+
 //import postReducer from "./postReducer";
 
 export default combineReducers({
@@ -19,6 +21,7 @@ export default combineReducers({
   coursesStore: coursesReducer,
   assignmentsStore: assignmentsReducer,
   regionsStore: regionsReducer,
-  restrictionsStore: restrictionsReducer
+  restrictionsStore: restrictionsReducer,
+  roleTypesStore: roleTypesReducer
   //post: postReducer
 });
