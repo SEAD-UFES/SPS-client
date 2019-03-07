@@ -9,7 +9,7 @@ import axios from "axios";
 
 export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
   axios
-    .post("/v1/roleTypes", roleTypeData)
+    .post("/v1/roletypes", roleTypeData)
     .then(res => {
       callback_ok();
     })
@@ -22,8 +22,9 @@ export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
 };
 
 export const getRoleType = roleType_id => dispatch => {
+  dispatch(setRoleTypesLoading());
   axios
-    .get(`/v1/roleTypes/${roleType_id}`)
+    .get(`/v1/roletypes/${roleType_id}`)
     .then(res =>
       dispatch({
         type: GET_ROLETYPE,
@@ -40,7 +41,7 @@ export const getRoleType = roleType_id => dispatch => {
 
 export const updateRoleType = (roleTypeData, callback_ok) => dispatch => {
   axios
-    .put(`/v1/roleTypes/${roleTypeData.id}`, roleTypeData)
+    .put(`/v1/roletypes/${roleTypeData.id}`, roleTypeData)
     .then(res => {
       callback_ok();
     })
@@ -54,7 +55,7 @@ export const updateRoleType = (roleTypeData, callback_ok) => dispatch => {
 
 export const deleteRoleType = (roleType_id, callback_ok) => dispatch => {
   axios
-    .delete(`/v1/roleTypes/${roleType_id}`)
+    .delete(`/v1/roletypes/${roleType_id}`)
     .then(res => {
       callback_ok();
     })

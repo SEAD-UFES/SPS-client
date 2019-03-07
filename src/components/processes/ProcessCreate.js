@@ -114,12 +114,12 @@ class ProcessCreate extends Component {
   }
 
   render() {
-    const { coursesStorage } = this.props;
+    const { coursesStore } = this.props;
     const { errors } = this.state;
 
     const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
-      coursesStorage.courses
-        ? coursesStorage.courses.map(course => {
+      coursesStore.courses
+        ? coursesStore.courses.map(course => {
             return {
               label: course.name,
               value: course.id
@@ -208,7 +208,7 @@ ProcessCreate.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  coursesStorage: state.coursesStorage,
+  coursesStore: state.coursesStore,
   errors: state.errors
 });
 

@@ -138,11 +138,11 @@ class ProcessEdit extends Component {
 
   render() {
     const { errors } = this.state;
-    const { coursesStorage } = this.props;
+    const { coursesStore } = this.props;
 
     const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
-      coursesStorage.courses
-        ? coursesStorage.courses.map(course => {
+      coursesStore.courses
+        ? coursesStore.courses.map(course => {
             return {
               label: course.name,
               value: course.id
@@ -238,7 +238,7 @@ ProcessEdit.proptypes = {
 const mapStateToProps = state => ({
   errors: state.errors,
   process: state.process,
-  coursesStorage: state.coursesStorage
+  coursesStore: state.coursesStore
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store

@@ -1,7 +1,12 @@
-import { ROLETYPES_LOADING, GET_ROLETYPES } from "./roleTypesActionTypes";
+import {
+  ROLETYPES_LOADING,
+  GET_ROLETYPES,
+  GET_ROLETYPE
+} from "./roleTypesActionTypes";
 
 const initialState = {
   loading: false,
+  roleType: null,
   roleTypes: null
 };
 
@@ -17,6 +22,12 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         roleTypes: action.payload
+      };
+    case GET_ROLETYPE:
+      return {
+        ...state,
+        loading: false,
+        roleType: action.payload
       };
     default:
       return state;

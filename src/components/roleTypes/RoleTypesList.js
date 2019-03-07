@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
   getRoleTypes
@@ -9,6 +10,7 @@ import {
   // deleteCourse
 } from "./roleTypesActions";
 import { compareBy } from "utils/compareBy";
+import Spinner from "components/common/Spinner";
 
 class RoleTypesList extends Component {
   constructor(props) {
@@ -82,30 +84,56 @@ class RoleTypesList extends Component {
   }
 
   render() {
-    //const { roleTypesList } = this.state;
+    const { roleTypesStore } = this.props;
+    const { roleTypesList } = this.state;
 
-    //Add item - form
-    // const addItemTool = (
-    //   <div>
-    //     <div className="mb-2">
-    //       <button
-    //         type="button"
-    //         className="btn btn-info"
-    //         data-toggle="modal"
-    //         data-target="#addModal"
-    //       >
-    //         + Adicionar curso
-    //       </button>
-    //     </div>
+    const roleTypesTable =
+      roleTypesStore.roleTypes === null || roleTypesStore.loading ? (
+        <Spinner />
+      ) : roleTypesList.length > 0 ? (
+        <div>
+          <h4 className="mb-2">Lista de tipos de papel</h4>
+          <table className="table">
+            <thead>
+              <tr>
+                <th onClick={() => this.sortBy("name")}>
+                  Nome {this.orderIcon("name")}
+                </th>
+                <th onClick={() => this.sortBy("description")}>
+                  Descrição {this.orderIcon("description")}
+                </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {roleTypesList.map(roleType => {
+                return (
+                  <tr key={roleType.id}>
+                    <td>{roleType.name}</td>
+                    <td>{roleType.description}</td>
+                    <td>
+                      <Link
+                        className="text-success"
+                        to={`/roletypes/${roleType.id}`}
+                      >
+                        <i className="fas fa-info-circle" />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p>Sem tipos de papel cadastrados</p>
+      );
 
-    //     {/* <RoleTypesModalForm
-    //       mode="add"
-    //       targetName="addModal"
-    //       addFunction={this.props.createRoleType}
-    //       reloadFunction={this.props.getRoleTypes}
-    //     /> */}
-    //   </div>
-    // );
+    // if (processes === null || loading2) {
+    //   usersContent = <Spinner />;
+    // } else {
+    //   usersContent = <div>ok</div>;
+    // }
 
     // //item list
     // const roleTypesTable = (
@@ -186,6 +214,15 @@ class RoleTypesList extends Component {
     //   </div>
     // );
 
+    const addButton = (
+      <div className="btn-group mb-4" role="group">
+        <Link to="/roletypes/create" className="btn btn-light">
+          <i className="fas fa-user-circle text-info mr-1" />
+          Adicionar tipo de papel
+        </Link>
+      </div>
+    );
+
     return (
       <div className="assignments">
         <div className="container">
@@ -195,8 +232,8 @@ class RoleTypesList extends Component {
               <p className="lead text-muted">
                 Papéis que podem ser atribuidos a usuários dentro do sistema
               </p>
-              {/* {addItemTool} */}
-              {/* {roleTypesTable} */}
+              {addButton}
+              {roleTypesTable}
             </div>
           </div>
         </div>
@@ -207,14 +244,14 @@ class RoleTypesList extends Component {
 
 RoleTypesList.proptypes = {
   // clearErrors: PropTypes.func.isRequired,
-  // getRoleTypes: PropTypes.func.isRequired,
+  getRoleTypes: PropTypes.func.isRequired
   // createRoleType: PropTypes.func.isRequired,
   // updateRoleType: PropTypes.func.isRequired,
   // deleteRoleType: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  //roleTypesStore: state.roleTypesStore
+  roleTypesStore: state.roleTypesStore
 });
 
 export default connect(
