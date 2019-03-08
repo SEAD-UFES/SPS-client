@@ -11,7 +11,7 @@ export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
   axios
     .post("/v1/roletypes", roleTypeData)
     .then(res => {
-      callback_ok();
+      callback_ok(res.data.id);
     })
     .catch(err => {
       dispatch({
@@ -43,7 +43,7 @@ export const updateRoleType = (roleTypeData, callback_ok) => dispatch => {
   axios
     .put(`/v1/roletypes/${roleTypeData.id}`, roleTypeData)
     .then(res => {
-      callback_ok();
+      callback_ok(roleTypeData.id);
     })
     .catch(err => {
       dispatch({

@@ -4,7 +4,9 @@ import { Switch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 
 import RoleTypesList from "components/roleTypes/RoleTypesList";
+import RoleTypeCreateUpdate from "components/roleTypes/RoleTypeCreateUpdate";
 import RoleTypeView from "components/roleTypes/RoleTypeView";
+import RoleTypeDelete from "components/roleTypes/RoleTypeDelete";
 
 export default class ParametersRoutes extends Component {
   render() {
@@ -18,8 +20,26 @@ export default class ParametersRoutes extends Component {
 
         <PrivateRoute
           exact
+          path={`${this.props.match.path}/create`}
+          component={RoleTypeCreateUpdate}
+        />
+
+        <PrivateRoute
+          exact
           path={`${this.props.match.path}/:roletype_id`}
           component={RoleTypeView}
+        />
+
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/:roletype_id/update`}
+          component={RoleTypeCreateUpdate}
+        />
+
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/:roletype_id/delete`}
+          component={RoleTypeDelete}
         />
       </Switch>
     );
