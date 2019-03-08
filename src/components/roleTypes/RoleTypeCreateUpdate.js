@@ -168,7 +168,9 @@ RoleTypeCreateUpdate.propTypes = {
   updateRoleType: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  roleTypesStore: state.roleTypesStore
+});
 
 export default connect(
   mapStateToProps,
