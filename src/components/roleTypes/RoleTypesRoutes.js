@@ -8,7 +8,7 @@ import RoleTypeCreateUpdate from "components/roleTypes/RoleTypeCreateUpdate";
 import RoleTypeView from "components/roleTypes/RoleTypeView";
 import RoleTypeDelete from "components/roleTypes/RoleTypeDelete";
 
-export default class ParametersRoutes extends Component {
+export default class RoleTypesRoutes extends Component {
   render() {
     return (
       <Switch>
