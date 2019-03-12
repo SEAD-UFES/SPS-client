@@ -43,6 +43,13 @@ class RoleTypeCreateUpdate extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    //errors
+    if (nextProps.errors) {
+      let errors = nextProps.errors;
+      this.setState({ errors: errors });
+    }
+
+    //Load data on form
     if (nextProps.roleTypesStore.roleType !== null) {
       const roleType = nextProps.roleTypesStore.roleType;
       this.setState({
@@ -109,6 +116,25 @@ class RoleTypeCreateUpdate extends Component {
   render() {
     const { errors } = this.state;
 
+    const alertsList = (
+      <div>
+        {errors.serverError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro do servidor
+          </div>
+        ) : (
+          ""
+        )}
+        {errors.anotherError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro desconhecido
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+
     const roletypeForm = (
       <form noValidate onSubmit={this.onSubmit}>
         <div className="form-group">
@@ -153,6 +179,8 @@ class RoleTypeCreateUpdate extends Component {
                   ? "Dê entrada nos dados básicos"
                   : "Altere os dados básicos"}
               </p>
+
+              {alertsList}
               {roletypeForm}
             </div>
           </div>

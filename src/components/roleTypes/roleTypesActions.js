@@ -14,10 +14,19 @@ export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
       callback_ok(res.data.id);
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
     });
 };
 
@@ -46,10 +55,19 @@ export const updateRoleType = (roleTypeData, callback_ok) => dispatch => {
       callback_ok(roleTypeData.id);
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
     });
 };
 
@@ -59,12 +77,21 @@ export const deleteRoleType = (roleType_id, callback_ok) => dispatch => {
     .then(res => {
       callback_ok();
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
+    });
 };
 
 //roleTypes loading

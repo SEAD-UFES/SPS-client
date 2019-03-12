@@ -10,12 +10,23 @@ import { deleteRoleType } from "./roleTypesActions";
 class RoleTypeDelete extends Component {
   constructor() {
     super();
+    this.state = {
+      errors: []
+    };
+
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
     if (this.props.match.params.roletype_id) {
       this.props.getRoleType(this.props.match.params.roletype_id);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      let errors = nextProps.errors;
+      this.setState({ errors: errors });
     }
   }
 
@@ -27,6 +38,7 @@ class RoleTypeDelete extends Component {
 
   render() {
     const { roleTypesStore } = this.props;
+    const { errors } = this.state;
 
     const infoTable =
       roleTypesStore.roleType === null || roleTypesStore.loading ? (
@@ -59,6 +71,25 @@ class RoleTypeDelete extends Component {
         </div>
       );
 
+    const alertsList = (
+      <div>
+        {errors.serverError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro do servidor
+          </div>
+        ) : (
+          ""
+        )}
+        {errors.anotherError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro desconhecido
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+
     return (
       <div className="roletypes">
         <div className="container">
@@ -70,9 +101,13 @@ class RoleTypeDelete extends Component {
               >
                 Voltar para tipo de papel
               </Link>
+
               <h1 className="display-4 mb-4 text-center">
                 Excluir tipo de Papel
               </h1>
+
+              {alertsList}
+
               <p className="lead text-center">Você solicitou excluir o item:</p>
               {infoTable}
               <p className="lead text-center">Confirma a operação?</p>
@@ -108,7 +143,8 @@ class RoleTypeDelete extends Component {
 }
 
 RoleTypeDelete.propTypes = {
-  getRoleType: PropTypes.func.isRequired
+  getRoleType: PropTypes.func.isRequired,
+  deleteRoleType: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
