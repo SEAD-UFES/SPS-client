@@ -4,9 +4,12 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import SelectListGroup from "components/common/SelectListGroup";
+import { isEmpty, validateName } from "validation";
+import { validatePermAssigForm } from "./validatePermAssigForm";
 
 import { getRoleTypes } from "./roleTypesActions";
 import { getPermissionTypes } from "components/permissionTypes/permissionTypesActions";
+import { createPermissionAssignment } from "components/permissionAssignments/permissionAssignmentsActions";
 
 class RoleTypePermAssigCreate extends Component {
   constructor() {
@@ -14,6 +17,8 @@ class RoleTypePermAssigCreate extends Component {
     this.state = {
       roleType_id: "",
       permissionType_id: "",
+
+      roleType: {},
       errors: []
     };
 
@@ -21,13 +26,27 @@ class RoleTypePermAssigCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillMount() {
+    //define roleType_id
+    if (this.props.location.state && this.props.location.state.roleType) {
+      this.setState({
+        roleType_id: this.props.location.state.roleType.id,
+        roleType: this.props.location.state.roleType
+      });
+    } else if (this.props.match.params.roletype_id) {
+      this.setState({ roleType_id: this.props.match.params.roletype_id });
+    }
+  }
+
   componentDidMount() {
-    this.props.getRoleTypes();
+    if (!(this.props.location.state && this.props.location.state.roleType)) {
+      this.props.getRoleTypes();
+    }
     this.props.getPermissionTypes();
   }
 
   componentWillReceiveProps(nextProps) {
-    //errors
+    //Errors
     if (nextProps.errors) {
       let errors = nextProps.errors;
       this.setState({ errors: errors });
@@ -40,7 +59,11 @@ class RoleTypePermAssigCreate extends Component {
     let valResult = { error: "", isValid: true };
 
     switch (e.target.name) {
-      case "name":
+      case "roleType_id":
+        valResult = validateName(e.target.value);
+        break;
+      case "permissionType_id":
+        valResult = validateName(e.target.value);
         break;
       default:
         break;
@@ -60,13 +83,42 @@ class RoleTypePermAssigCreate extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
+
+    const permissionAssignmentData = {
+      roleType_id: this.state.roleType_id,
+      permission_id: this.state.permissionType_id
+    };
+
+    const valRoleType = validatePermAssigForm(permissionAssignmentData);
+    if (!valRoleType.isValid) {
+      this.setState({ errors: valRoleType.errors });
+    } else {
+      console.log(permissionAssignmentData);
+      this.props.createPermissionAssignment(permissionAssignmentData, () => {
+        this.props.history.push(`/roletypes/${this.state.roleType_id}`);
+      });
+    }
   }
 
   render() {
     const { errors } = this.state;
     const permissionTypes = this.props.permissionTypesStore.permissionTypes;
+    const roleTypes = !isEmpty(this.state.roleType)
+      ? [this.state.roleType]
+      : this.props.roleTypesStore.roleTypes;
 
-    const roleTypeOptions = [];
+    const roleTypeOptions = [
+      { label: "* Selecione a papel", value: "" }
+    ].concat(
+      roleTypes
+        ? roleTypes.map(roleType => {
+            return {
+              label: roleType.name,
+              value: roleType.id
+            };
+          })
+        : []
+    );
 
     const permissionOptions = [
       { label: "* Selecione a papel", value: "" }
@@ -106,10 +158,11 @@ class RoleTypePermAssigCreate extends Component {
           <SelectListGroup
             placeholder="* Selecione o usuário"
             name="roleType_id"
-            value={this.state.permissionType_id}
+            value={this.state.roleType_id}
             options={roleTypeOptions}
             onChange={this.onChange}
-            error={errors.user_id}
+            error={errors.roleType_id}
+            disabled={this.state.roleType ? true : false}
           />
 
           <SelectListGroup
@@ -131,7 +184,10 @@ class RoleTypePermAssigCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/roletypes/roleType_id`} className="btn btn-light">
+              <Link
+                to={`/roletypes/${this.props.match.params.roletype_id}`}
+                className="btn btn-light"
+              >
                 Voltar para tipo de papel
               </Link>
               <h1 className="display-4 text-center">
@@ -162,6 +218,7 @@ export default connect(
   mapStateToProps,
   {
     getRoleTypes,
-    getPermissionTypes
+    getPermissionTypes,
+    createPermissionAssignment
   }
 )(RoleTypePermAssigCreate);

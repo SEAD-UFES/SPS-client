@@ -72,7 +72,16 @@ class RoleTypeView extends Component {
                   return (
                     <tr key={permission.id}>
                       <td>{permission.name}</td>
-                      <td />
+                      <td>
+                        <Link
+                          className="text-danger"
+                          to={`/roletypes/${
+                            roleTypesStore.roleType.id
+                          }/delete-permassig/${permission.id}`}
+                        >
+                          <i className="fas fa-times-circle" />
+                        </Link>
+                      </td>
                     </tr>
                   );
                 })}
@@ -80,7 +89,18 @@ class RoleTypeView extends Component {
             </table>
           ) : (
             <div>
-              <p>Não existem permissões associadas a esse papel.</p>
+              <p>
+                Não existem permissões associadas a esse papel.{" "}
+                <Link
+                  className="text-success"
+                  to={{
+                    pathname: `${this.props.match.url}/create-permassig`,
+                    state: { roleType: roleTypesStore.roleType }
+                  }}
+                >
+                  <i className="fas fa-plus-circle" /> Adicionar
+                </Link>
+              </p>
             </div>
           )}
         </div>
