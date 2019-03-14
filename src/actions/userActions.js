@@ -6,7 +6,8 @@ import {
   USER_LOADING,
   CLEAR_ERRORS,
   GET_ERRORS,
-  GET_USER_PEOPLE_OPTIONS
+  GET_USER_PEOPLE_OPTIONS,
+  GET_USERS_MINIMAL
 } from "./types";
 
 //create user
@@ -115,6 +116,25 @@ export const getUserPeopleOptions = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: { options: "Don't load the people options" }
+      })
+    );
+};
+
+//Get User Minimal
+export const getUsersMinimal = () => dispatch => {
+  dispatch(setUserLoading());
+  axios
+    .get(`/v1/users/minimal`)
+    .then(res =>
+      dispatch({
+        type: GET_USERS_MINIMAL,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_USERS,
+        payload: null
       })
     );
 };

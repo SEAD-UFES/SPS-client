@@ -46,7 +46,7 @@ class RoleTypeView extends Component {
         <Spinner />
       ) : (
         <div>
-          <h4 className="mb-2">Lista de permissões</h4>
+          <h4 className="mb-2">Lista de permissões atribuidas</h4>
           {roleTypesStore.roleType.name === "Administrador" ? (
             <p>Administradores podem tudo.</p>
           ) : roleTypesStore.roleType.Permissions.length > 0 ? (
@@ -57,9 +57,10 @@ class RoleTypeView extends Component {
                   <th>
                     <Link
                       className="text-success"
-                      to={`/roletypes/${
-                        roleTypesStore.roleType.id
-                      }/permissions/add`}
+                      to={{
+                        pathname: `${this.props.match.url}/create-permassig`,
+                        state: { roleType: roleTypesStore.roleType }
+                      }}
                     >
                       <i className="fas fa-plus-circle" />
                     </Link>
@@ -71,15 +72,7 @@ class RoleTypeView extends Component {
                   return (
                     <tr key={permission.id}>
                       <td>{permission.name}</td>
-                      <td>
-                        <Link
-                          to={`/roletypes/${
-                            roleTypesStore.roleType.id
-                          }/permissions/${permission.id}/add`}
-                        >
-                          <i className="far fa-trash-alt text-danger" />
-                        </Link>
-                      </td>
+                      <td />
                     </tr>
                   );
                 })}
@@ -87,13 +80,7 @@ class RoleTypeView extends Component {
             </table>
           ) : (
             <div>
-              <p>
-                Não existem permissões associadas a esse papel.{" "}
-                <Link className="text-success" to={`/permissions/add`}>
-                  <i className="fas fa-plus-circle" />
-                  Adicionar
-                </Link>
-              </p>
+              <p>Não existem permissões associadas a esse papel.</p>
             </div>
           )}
         </div>

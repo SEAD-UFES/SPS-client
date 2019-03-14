@@ -1,6 +1,7 @@
 import {
   GET_USER,
   GET_USERS,
+  GET_USERS_MINIMAL,
   USER_LOADING,
   GET_USER_PEOPLE_OPTIONS
 } from "../actions/types";
@@ -8,6 +9,7 @@ import {
 const initialState = {
   user: null,
   users: null,
+  usersMinimal: null,
   loading: false,
   options: null
 };
@@ -29,6 +31,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         users: action.payload,
+        loading: false
+      };
+    case GET_USERS_MINIMAL:
+      return {
+        ...state,
+        usersMinimal: action.payload,
         loading: false
       };
     case GET_USER_PEOPLE_OPTIONS:

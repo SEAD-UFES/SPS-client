@@ -138,7 +138,10 @@ class RoleAssignmentsList extends Component {
                   Curso {this.orderIcon("course")}
                 </th>
                 <th>
-                  <Link className="text-success" to="/roletypes/create">
+                  <Link
+                    className="text-success"
+                    to={`${this.props.match.url}/create`}
+                  >
                     <i className="fas fa-plus-circle" />
                   </Link>
                 </th>
@@ -148,8 +151,16 @@ class RoleAssignmentsList extends Component {
               {roleAssignmentsList.map(roleAssignment => {
                 return (
                   <tr key={roleAssignment.id}>
-                    <td>{roleAssignment.User.login}</td>
-                    <td>{roleAssignment.RoleType.name}</td>
+                    <td>
+                      <Link to={`/users/${roleAssignment.User.id}`}>
+                        {roleAssignment.User.login}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link to={`/roletypes/${roleAssignment.RoleType.id}`}>
+                        {roleAssignment.RoleType.name}
+                      </Link>
+                    </td>
                     <td>
                       {roleAssignment.Course ? (
                         roleAssignment.Course.name
@@ -160,7 +171,9 @@ class RoleAssignmentsList extends Component {
                     <td>
                       <Link
                         className="text-danger"
-                        to={`/roletypes/${roleAssignment.id}/delete`}
+                        to={`${this.props.match.url}/${
+                          roleAssignment.id
+                        }/delete`}
                       >
                         <i className="fas fa-times-circle" />
                       </Link>

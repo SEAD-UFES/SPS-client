@@ -10,6 +10,7 @@ import regionsReducer from "components/parameters/regions/regionsReducer";
 import restrictionsReducer from "components/parameters/restrictions/restrictionsReducer";
 import roleTypesReducer from "components/roleTypes/roleTypesReducer";
 import roleAssignmentsReducer from "components/roleAssignments/roleAssignmentsReducer";
+import permissionTypesReducer from "components/permissionTypes/permissionTypesReducer";
 
 //import postReducer from "./postReducer";
 
@@ -24,6 +25,7 @@ export default combineReducers({
   regionsStore: regionsReducer,
   restrictionsStore: restrictionsReducer,
   roleTypesStore: roleTypesReducer,
-  roleAssignmentsStore: roleAssignmentsReducer
+  roleAssignmentsStore: roleAssignmentsReducer,
+  permissionTypesStore: permissionTypesReducer
   //post: postReducer
 });
