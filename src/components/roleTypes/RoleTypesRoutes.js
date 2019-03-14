@@ -8,6 +8,7 @@ import RoleTypeCreateUpdate from "components/roleTypes/RoleTypeCreateUpdate";
 import RoleTypeView from "components/roleTypes/RoleTypeView";
 import RoleTypeDelete from "components/roleTypes/RoleTypeDelete";
 import RoleTypePermAssigCreate from "components/roleTypes/RoleTypePermAssigCreate";
+import RoleTypePermAssigDelete from "components/roleTypes/RoleTypePermAssigDelete";
 
 export default class RoleTypesRoutes extends Component {
   render() {
@@ -47,6 +48,14 @@ export default class RoleTypesRoutes extends Component {
           exact
           path={`${this.props.match.path}/:roletype_id/create-permassig`}
           component={RoleTypePermAssigCreate}
+        />
+
+        <PrivateRoute
+          exact
+          path={`${
+            this.props.match.path
+          }/:roletype_id/delete-permassig/:permissionassignment_id`}
+          component={RoleTypePermAssigDelete}
         />
       </Switch>
     );

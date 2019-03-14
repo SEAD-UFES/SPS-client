@@ -1,6 +1,6 @@
 import { GET_ERRORS } from "actions/types";
 import {
-  //GET_PERMISSIONASSIGNMENT,
+  GET_PERMISSIONASSIGNMENT,
   //GET_PERMISSIONASSIGNMENTS,
   PERMISSIONASSIGNMENTS_LOADING
 } from "./permissionAssignmentsActionTypes";
@@ -33,23 +33,23 @@ export const createPermissionAssignment = (
     });
 };
 
-// export const getPermissionAssignment = permissionAssignment_id => dispatch => {
-//   dispatch(setPermissionAssignmentsLoading());
-//   axios
-//     .get(`/v1/permissionassignments/${permissionAssignment_id}`)
-//     .then(res =>
-//       dispatch({
-//         type: GET_PERMISSIONASSIGNMENT,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
+export const getPermissionAssignment = permissionAssignment_id => dispatch => {
+  dispatch(setPermissionAssignmentsLoading());
+  axios
+    .get(`/v1/rolepermissions/${permissionAssignment_id}`)
+    .then(res =>
+      dispatch({
+        type: GET_PERMISSIONASSIGNMENT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
 
 // export const updatePermissionAssignment = (
 //   permissionAssignmentData,
