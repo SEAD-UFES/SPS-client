@@ -93,7 +93,6 @@ class RoleTypePermAssigCreate extends Component {
     if (!valRoleType.isValid) {
       this.setState({ errors: valRoleType.errors });
     } else {
-      console.log(permissionAssignmentData);
       this.props.createPermissionAssignment(permissionAssignmentData, () => {
         this.props.history.push(`/roletypes/${this.state.roleType_id}`);
       });

@@ -3,14 +3,32 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getPermissionAssignment } from "components/permissionAssignments/permissionAssignmentsActions";
+import Spinner from "components/common/Spinner";
+import {
+  getPermissionAssignment,
+  deletePermissionAssignment
+} from "components/permissionAssignments/permissionAssignmentsActions";
 
 class RoleTypePermAssigDelete extends Component {
   constructor() {
     super();
     this.state = {
+      permissionAssignment: null,
       errors: []
     };
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    if (
+      this.props.location.state &&
+      this.props.location.state.permissionAssignment
+    ) {
+      this.setState({
+        permissionAssignment: this.props.location.state.permissionAssignment
+      });
+    }
   }
 
   componentDidMount() {
@@ -22,45 +40,70 @@ class RoleTypePermAssigDelete extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    //errors
     if (nextProps.errors) {
       let errors = nextProps.errors;
       this.setState({ errors: errors });
     }
   }
 
+  onSubmit() {
+    this.props.deletePermissionAssignment(
+      this.props.match.params.permissionassignment_id,
+      () => {
+        this.props.history.push(
+          `/roletypes/${this.props.match.params.roletype_id}`
+        );
+      }
+    );
+  }
+
+  createInfoTable = permissionAssignment => {
+    return (
+      <div>
+        <h4 className="mb-2">Informações</h4>
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>
+                <strong>Id:</strong>
+              </td>
+              <td>{permissionAssignment.id}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Papel:</strong>
+              </td>
+              <td>{permissionAssignment.RoleType.name}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Permissão:</strong>
+              </td>
+              <td>{permissionAssignment.Permission.name}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   render() {
     const { errors } = this.state;
+    const { permissionAssignmentsStore } = this.props;
 
-    // const infoTable =
-    // permissionAssigmentsStore.permissionAssigment === null || permissionAssigmentsStore.loading ? (
-    //   <Spinner />
-    // ) : (
-    //   <div>
-    //     <h4 className="mb-2">Informações</h4>
-    //     <table className="table">
-    //       <tbody>
-    //         <tr>
-    //           <td>
-    //             <strong>Id:</strong>
-    //           </td>
-    //           <td>{permissionAssigmentsStore.permissionAssigment.id}</td>
-    //         </tr>
-    //         <tr>
-    //           <td>
-    //             <strong>Nome:</strong>
-    //           </td>
-    //           <td>{roleTypesStore.roleType.name}</td>
-    //         </tr>
-    //         <tr>
-    //           <td>
-    //             <strong>Descrição:</strong>
-    //           </td>
-    //           <td>{roleTypesStore.roleType.description}</td>
-    //         </tr>
-    //       </tbody>
-    //     </table>
-    //   </div>
-    // );
+    const permissionAssignment = this.state.permissionAssignment
+      ? this.state.permissionAssignment
+      : null;
+
+    const infoTable = permissionAssignment ? (
+      this.createInfoTable(permissionAssignment)
+    ) : permissionAssignmentsStore.permissionAssignment === null ||
+      permissionAssignmentsStore.loading ? (
+      <Spinner />
+    ) : (
+      this.createInfoTable(permissionAssignmentsStore.permissionAssignment)
+    );
 
     const alertsList = (
       <div>
@@ -100,8 +143,7 @@ class RoleTypePermAssigDelete extends Component {
               {alertsList}
 
               <p className="lead text-center">Você solicitou excluir o item:</p>
-              {/* {infoTable} */}
-              <h1>Item</h1>
+              {infoTable}
               <p className="lead text-center">Confirma a operação?</p>
 
               <div className="row">
@@ -137,12 +179,13 @@ RoleTypePermAssigDelete.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  permissonAssignmentsStore: state.permissonAssignmentsStore
+  permissionAssignmentsStore: state.permissionAssignmentsStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getPermissionAssignment
+    getPermissionAssignment,
+    deletePermissionAssignment
   }
 )(RoleTypePermAssigDelete);

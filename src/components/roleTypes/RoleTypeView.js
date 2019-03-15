@@ -13,6 +13,21 @@ class RoleTypeView extends Component {
     }
   }
 
+  buildPermissionAssignment(roleType, permission) {
+    let dryRoleType = JSON.parse(JSON.stringify(roleType));
+    delete dryRoleType.Permissions;
+
+    let dryPermission = JSON.parse(JSON.stringify(permission));
+    delete dryPermission.RolePermission;
+
+    let permAssig = {};
+    permAssig = permission.RolePermission;
+    permAssig.RoleType = dryRoleType;
+    permAssig.Permission = dryPermission;
+
+    return permAssig;
+  }
+
   render() {
     const { roleTypesStore } = this.props;
 
@@ -75,9 +90,18 @@ class RoleTypeView extends Component {
                       <td>
                         <Link
                           className="text-danger"
-                          to={`/roletypes/${
-                            roleTypesStore.roleType.id
-                          }/delete-permassig/${permission.id}`}
+                          to={{
+                            pathname: `/roletypes/${
+                              roleTypesStore.roleType.id
+                            }/delete-permassig/${permission.RolePermission.id}`,
+                            state: {
+                              roleType: roleTypesStore.roleType,
+                              permissionAssignment: this.buildPermissionAssignment(
+                                roleTypesStore.roleType,
+                                permission
+                              )
+                            }
+                          }}
                         >
                           <i className="fas fa-times-circle" />
                         </Link>

@@ -17,6 +17,47 @@ class ProcessView extends Component {
   render() {
     const { process, loading } = this.props.process;
 
+    const infoTable =
+      process === null || loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <h4 className="mb-2">Informações do processo</h4>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Número/Ano:</strong>
+                </td>
+                <td>
+                  {process.number}/{process.year}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Curso:</strong>
+                </td>
+                <td>{process.Course.name}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Visibilidade:</strong>
+                </td>
+                <td>
+                  {process.visible ? "Processo visível" : "Processo oculto"}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Descrição:</strong>
+                </td>
+                <td>{process.description}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
+
     let processContent;
     if (process === null || loading) {
       processContent = <Spinner />;
@@ -53,58 +94,7 @@ class ProcessView extends Component {
             </Link>
           </div>
 
-          {/* <!-- Dados do processo --> */}
-          <div>
-            <h4 className="mb-2">Dados do processo</h4>
-
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Número/Ano:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>
-                  {process.number}/{process.year}
-                </p>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Curso:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>{process.Course.name}</p>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Visibilidade:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>
-                  {process.visible ? "Processo visível" : "Processo oculto"}
-                </p>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Descrição:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>{process.description}</p>
-              </div>
-            </div>
-          </div>
+          {infoTable}
 
           {/* Call Tab List */}
           <CallTabList calls={process.Calls} />

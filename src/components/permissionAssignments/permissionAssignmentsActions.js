@@ -37,12 +37,12 @@ export const getPermissionAssignment = permissionAssignment_id => dispatch => {
   dispatch(setPermissionAssignmentsLoading());
   axios
     .get(`/v1/rolepermissions/${permissionAssignment_id}`)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: GET_PERMISSIONASSIGNMENT,
         payload: res.data
-      })
-    )
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -77,31 +77,31 @@ export const getPermissionAssignment = permissionAssignment_id => dispatch => {
 //     });
 // };
 
-// export const deletePermissionAssignment = (
-//   permissionAssignment_id,
-//   callback_ok
-// ) => dispatch => {
-//   axios
-//     .delete(`/v1/permissionassignments/${permissionAssignment_id}`)
-//     .then(res => {
-//       callback_ok();
-//     })
-//     .catch(err => {
-//       if (err.response) {
-//         let errors = err.response.data;
-//         errors.serverError = true;
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: errors
-//         });
-//       } else {
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: { anotherError: true }
-//         });
-//       }
-//     });
-// };
+export const deletePermissionAssignment = (
+  permissionAssignment_id,
+  callback_ok
+) => dispatch => {
+  axios
+    .delete(`/v1/rolepermissions/${permissionAssignment_id}`)
+    .then(res => {
+      callback_ok();
+    })
+    .catch(err => {
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
+    });
+};
 
 //permissionAssignments loading
 export const setPermissionAssignmentsLoading = () => {
