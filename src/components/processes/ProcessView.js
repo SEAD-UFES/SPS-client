@@ -58,49 +58,56 @@ class ProcessView extends Component {
         </div>
       );
 
-    let processContent;
-    if (process === null || loading) {
-      processContent = <Spinner />;
-    } else {
-      processContent = (
-        <div>
-          {/* <!-- Process basic data --> */}
-          <p className="lead text-muted">
-            {`${process.number}/${process.year} - ${process.Course.name}`}
-          </p>
-
-          {/* <!-- Process Actions --> */}
-          <div className="btn-group mb-4" role="group">
-            <Link
-              to={`/processes/${process.id}/edit`}
-              className="btn btn-light"
-            >
-              <i className="fas fa-user-circle text-info mr-1" /> Editar
-              Processo
-            </Link>
-            <Link
-              to={`/processes/${process.id}/calls/create`}
-              className="btn btn-light"
-            >
-              <i className="fas fa-user-circle text-info mr-1" /> Adicionar
-              Chamada
-            </Link>
-            <Link
-              to={`/processes/${process.id}/add-publication`}
-              className="btn btn-light"
-            >
-              <i className="fas fa-user-circle text-info mr-1" /> Adicionar
-              Publicação
-            </Link>
-          </div>
-
-          {infoTable}
-
-          {/* Call Tab List */}
-          <CallTabList calls={process.Calls} />
+    const processActions =
+      process === null || loading ? (
+        <Spinner />
+      ) : (
+        <div className="btn-group mb-4" role="group">
+          <Link to={`/processes/${process.id}/edit`} className="btn btn-light">
+            <i className="fas fa-user-circle text-info mr-1" /> Editar Processo
+          </Link>
+          <Link
+            to={`/processes/${process.id}/calls/create`}
+            className="btn btn-light"
+          >
+            <i className="fas fa-user-circle text-info mr-1" /> Adicionar
+            Chamada
+          </Link>
+          <Link
+            to={{
+              pathname: `/processes/${process.id}/publications/create`,
+              state: { selectiveProcess: process }
+            }}
+            className="btn btn-light"
+          >
+            <i className="fas fa-user-circle text-info mr-1" /> Adicionar
+            Publicação
+          </Link>
         </div>
       );
-    }
+
+    const basicData =
+      process === null || loading ? (
+        <Spinner />
+      ) : (
+        <p className="lead text-muted">
+          {`${process.number}/${process.year} - ${process.Course.name}`}
+        </p>
+      );
+
+    const callsList =
+      process === null || loading ? (
+        <Spinner />
+      ) : (
+        <CallTabList calls={process.Calls} />
+      );
+
+    const processPublications = (
+      <div>
+        <h4 className="mb-2">Publicações do edital</h4>
+      </div>
+    );
+
     return (
       <div className="profile">
         <div className="container">
@@ -110,7 +117,11 @@ class ProcessView extends Component {
                 Voltar para lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
-              {processContent}
+              {basicData}
+              {processActions}
+              {infoTable}
+              {processPublications}
+              {callsList}
             </div>
           </div>
         </div>

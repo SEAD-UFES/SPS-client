@@ -13,6 +13,7 @@ import StepCreate from "../processCallsSteps/StepCreate";
 import StepEdit from "../processCallsSteps/StepEdit";
 import VacancyCreate from "../processCallsVacancies/VacancyCreate";
 import VacancyEdit from "../processCallsVacancies/VacancyEdit";
+import ProcessPublicationCreate from "components/processPublications/ProcessPublicationCreate";
 
 export default class ProcessesRoutes extends Component {
   render() {
@@ -80,6 +81,12 @@ export default class ProcessesRoutes extends Component {
             this.props.match.path
           }/:process_id/calls/:call_id/vacancies/:vacancy_id/edit`}
           component={VacancyEdit}
+        />
+
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/:process_id/publications/create`}
+          component={ProcessPublicationCreate}
         />
       </Switch>
     );
