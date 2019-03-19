@@ -130,6 +130,8 @@ class ProcessPublicationCreate extends Component {
           })[0].Steps
         : [];
 
+    const publicationTypes = [];
+
     const processOptions = [
       { label: "* Selecione o processo seletivo", value: "" }
     ].concat(
@@ -156,7 +158,6 @@ class ProcessPublicationCreate extends Component {
         : []
     );
 
-    console.log(steps);
     const stepOptions = [{ label: "* Selecione a etapa", value: "" }].concat(
       steps
         ? steps.map(step => {
@@ -167,6 +168,8 @@ class ProcessPublicationCreate extends Component {
           })
         : []
     );
+
+    const publicationTypeOptions = [];
 
     const publicationForm = (
       <form noValidate onSubmit={this.onSubmit}>
@@ -239,6 +242,15 @@ class ProcessPublicationCreate extends Component {
           onChange={this.onChangeFile}
           error={errors.files}
         /> */}
+
+        <SelectListGroup
+          placeholder="* Selecione o tipo de publicação"
+          name="publicationType_id"
+          value={this.state.publicationType_id}
+          options={publicationTypeOptions}
+          onChange={this.onChange}
+          error={errors.publicationType_id}
+        />
 
         <div className="form-group">
           <input

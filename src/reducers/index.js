@@ -12,6 +12,7 @@ import roleTypesReducer from "components/roleTypes/roleTypesReducer";
 import roleAssignmentsReducer from "components/roleAssignments/roleAssignmentsReducer";
 import permissionTypesReducer from "components/permissionTypes/permissionTypesReducer";
 import permissionAssignmentsReducer from "components/permissionAssignments/permissionAssignmentsReducer";
+import processPublicationTypesReducer from "components/processPublicationTypes/processPublicationTypesReducer";
 
 //import postReducer from "./postReducer";
 
@@ -28,6 +29,7 @@ export default combineReducers({
   roleTypesStore: roleTypesReducer,
   roleAssignmentsStore: roleAssignmentsReducer,
   permissionTypesStore: permissionTypesReducer,
-  permissionAssignmentsStore: permissionAssignmentsReducer
+  permissionAssignmentsStore: permissionAssignmentsReducer,
+  processPublicationTypesStore: processPublicationTypesReducer
   //post: postReducer
 });
