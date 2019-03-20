@@ -1,18 +1,18 @@
 import { GET_ERRORS } from "actions/types";
 import {
-  GET_PROCESSPUBLICATION,
-  GET_PROCESSPUBLICATIONS,
-  PROCESSPUBLICATIONS_LOADING
-} from "./processPublicationsActionTypes";
+  GET_PROCESSPUBLICATIONTYPE,
+  GET_PROCESSPUBLICATIONTYPES,
+  PROCESSPUBLICATIONTYPES_LOADING
+} from "./processPublicationTypesActionTypes";
 
 import axios from "axios";
 
-export const createProcessPublication = (
-  processPublicationData,
+export const createProcessPublicationType = (
+  processPublicationTypeData,
   callback_ok
 ) => dispatch => {
   axios
-    .post("/v1/roles", processPublicationData)
+    .post("/v1/publicationtypes", processPublicationTypeData)
     .then(res => {
       callback_ok(res.data.id);
     })
@@ -33,13 +33,13 @@ export const createProcessPublication = (
     });
 };
 
-export const getProcessPublication = processPublication_id => dispatch => {
-  dispatch(setProcessPublicationsLoading());
+export const getProcessPublicationType = processPublication_id => dispatch => {
+  dispatch(setProcessPublicationTypesLoading());
   axios
-    .get(`/v1/publications/${processPublication_id}`)
+    .get(`/v1/publicationtypes/${processPublication_id}`)
     .then(res =>
       dispatch({
-        type: GET_PROCESSPUBLICATION,
+        type: GET_PROCESSPUBLICATIONTYPE,
         payload: res.data
       })
     )
@@ -51,17 +51,17 @@ export const getProcessPublication = processPublication_id => dispatch => {
     );
 };
 
-export const updateProcessPublication = (
-  processPublicationData,
+export const updateProcessPublicationType = (
+  processPublicationTypeData,
   callback_ok
 ) => dispatch => {
   axios
     .put(
-      `/v1/publications/${processPublicationData.id}`,
-      processPublicationData
+      `/v1/publicationtypes/${processPublicationTypeData.id}`,
+      processPublicationTypeData
     )
     .then(res => {
-      callback_ok(processPublicationData.id);
+      callback_ok(processPublicationTypeData.id);
     })
     .catch(err => {
       if (err.response) {
@@ -80,12 +80,12 @@ export const updateProcessPublication = (
     });
 };
 
-export const deleteProcessPublication = (
+export const deleteProcessPublicationType = (
   processPublication_id,
   callback_ok
 ) => dispatch => {
   axios
-    .delete(`/v1/publications/${processPublication_id}`)
+    .delete(`/v1/publicationtypes/${processPublication_id}`)
     .then(res => {
       callback_ok();
     })
@@ -107,19 +107,19 @@ export const deleteProcessPublication = (
 };
 
 //processPublications loading
-export const setProcessPublicationsLoading = () => {
+export const setProcessPublicationTypesLoading = () => {
   return {
-    type: PROCESSPUBLICATIONS_LOADING
+    type: PROCESSPUBLICATIONTYPES_LOADING
   };
 };
 
-export const getProcessPublications = () => dispatch => {
-  dispatch(setProcessPublicationsLoading());
+export const getProcessPublicationTypes = () => dispatch => {
+  dispatch(setProcessPublicationTypesLoading());
   axios
-    .get("/v1/publications")
+    .get("/v1/publicationtypes")
     .then(res =>
       dispatch({
-        type: GET_PROCESSPUBLICATIONS,
+        type: GET_PROCESSPUBLICATIONTYPES,
         payload: res.data
       })
     )

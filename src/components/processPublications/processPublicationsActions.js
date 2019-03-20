@@ -7,21 +7,26 @@ import { GET_ERRORS } from "actions/types";
 
 import axios from "axios";
 
-export const createProcessPublications = (
+export const createProcessPublication = (
   processPublicationsData,
   callback_ok
 ) => dispatch => {
   let formData = new FormData();
-  formData.append("creation_date", processPublicationsData.creation_date);
+  formData.append("date", processPublicationsData.date);
   formData.append("name", processPublicationsData.name);
-  formData.append("process_id", processPublicationsData.process_id);
+  formData.append(
+    "selectiveProcess_id",
+    processPublicationsData.selectiveProcess_id
+  );
   formData.append("call_id", processPublicationsData.call_id);
   formData.append("step_id", processPublicationsData.step_id);
   formData.append(
     "publicationType_id",
     processPublicationsData.publicationType_id
   );
-  formData.append("file", processPublicationsData.fileUrl);
+  formData.append("file", processPublicationsData.file);
+
+  console.log(formData);
 
   axios
     .post("/v1/publications", formData)
@@ -116,7 +121,7 @@ export const createProcessPublications = (
 //   };
 // };
 
-// export const getProcessPublicationss = () => dispatch => {
+// export const getProcessPublications = () => dispatch => {
 //   dispatch(setProcessPublicationssLoading());
 //   axios
 //     .get("/v1/publications")

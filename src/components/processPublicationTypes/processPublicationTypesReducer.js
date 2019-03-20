@@ -1,33 +1,33 @@
 import {
-  PROCESSPUBLICATIONS_LOADING,
-  GET_PROCESSPUBLICATIONS,
-  GET_PROCESSPUBLICATION
+  PROCESSPUBLICATIONTYPES_LOADING,
+  GET_PROCESSPUBLICATIONTYPES,
+  GET_PROCESSPUBLICATIONTYPE
 } from "./processPublicationTypesActionTypes";
 
 const initialState = {
   loading: false,
-  processPublications: null,
-  processPublication: null
+  processPublicationTypes: null,
+  processPublicationType: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case PROCESSPUBLICATIONS_LOADING:
+    case PROCESSPUBLICATIONTYPES_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_PROCESSPUBLICATIONS:
+    case GET_PROCESSPUBLICATIONTYPES:
       return {
         ...state,
         loading: false,
-        processPublications: action.payload
+        processPublicationTypes: action.payload
       };
-    case GET_PROCESSPUBLICATION:
+    case GET_PROCESSPUBLICATIONTYPE:
       return {
         ...state,
         loading: false,
-        processPublication: action.payload
+        processPublicationType: action.payload
       };
     default:
       return state;

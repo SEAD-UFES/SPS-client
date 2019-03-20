@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getProcessPublications } from "./processPublicationsActions";
+import { getProcessPublicationTypes } from "./processPublicationsActions";
 import { compareBy } from "utils/compareBy";
 import Spinner from "components/common/Spinner";
 
@@ -13,7 +13,7 @@ class ProcessPublicationTypesList extends Component {
     this.state = {
       sortMethod: "",
       sortReverse: false,
-      processPublicationsList: [],
+      processPublicationTypesList: [],
       errors: []
     };
 
@@ -22,7 +22,7 @@ class ProcessPublicationTypesList extends Component {
   }
 
   componentDidMount() {
-    this.props.getProcessPublications();
+    this.props.getProcessPublicationTypes();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -186,16 +186,16 @@ class ProcessPublicationTypesList extends Component {
 }
 
 ProcessPublicationTypesList.proptypes = {
-  getProcessPublications: PropTypes.func.isRequired
+  getProcessPublicationTypes: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  processPublicationsStore: state.processPublicationsStore
+  processPublicationTypesStore: state.processPublicationTypesStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessPublications
+    getProcessPublicationTypes
   }
 )(ProcessPublicationTypesList);
