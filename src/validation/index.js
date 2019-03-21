@@ -14,6 +14,7 @@ export {
 export { validateProcessNumber } from "./validateProcessNumber";
 export { validateDescription } from "./validateDescription";
 export { validateNumberRequired } from "./validateNumber";
+export { validateFileType } from "./validateFileType";
 
 //Form Validations
 export { validateRegisterForm } from "./formValidation/validateRegisterForm";

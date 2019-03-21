@@ -2,23 +2,26 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import TextFieldGroup from "components/common/TextFieldGroup";
 import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
-//import FileFieldGroup from "components/common/FileFieldGroup";
+import FileFieldGroup from "../common/FileFieldGroup";
 
 import { createProcessPublication } from "./processPublicationsActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 
 import { validateDateRequired, validateName } from "validation";
-import { validateProcessPublication } from "./";
+import { validateProcessPublicationForm } from "./validateProcessPublicationForm";
+import { validateFileType } from "../../validation";
 
 class ProcessPublicationCreate extends Component {
   constructor() {
     super();
+
     this.state = {
-      creation_date: "",
+      creation_date: moment().format("YYYY-MM-DD"),
       name: "",
       selectiveProcess_id: "",
       call_id: "",
@@ -77,15 +80,41 @@ class ProcessPublicationCreate extends Component {
 
     let file = e.target.files[0];
     let reader = new FileReader();
+    const fieldName = e.target.name;
+    let errors = this.state.errors;
 
     reader.onloadend = e => {
+      //validation
+      let valResult = validateFileType(file, ["application/pdf"]);
+      if (!valResult.isValid) {
+        errors = { ...errors, [fieldName]: valResult.error };
+      } else {
+        delete errors[fieldName];
+      }
+
+      //setting values on state
       this.setState({
         file: file,
-        fileUrl: reader.result
+        fileUrl: reader.result,
+        errors: errors
       });
     };
 
-    reader.readAsDataURL(file);
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      //validation
+      let valResult = validateFileType(file, ["application/pdf"]);
+      if (!valResult.isValid) {
+        errors = { ...errors, [fieldName]: valResult.error };
+      } else {
+        delete errors[fieldName];
+      }
+
+      this.setState({
+        errors: errors
+      });
+    }
   }
 
   onChange(e) {
@@ -97,9 +126,9 @@ class ProcessPublicationCreate extends Component {
       case "creation_date":
         valResult = validateDateRequired(e.target.value);
         break;
-      case "name":
-        valResult = validateName(e.target.value);
-        break;
+      // case "name":
+      //   valResult = validateName(e.target.value);
+      //   break;
       case "selectiveProcess_id":
         valResult = validateName(e.target.value);
         break;
@@ -130,14 +159,12 @@ class ProcessPublicationCreate extends Component {
       date: this.state.creation_date,
       name: this.state.name,
       selectiveProcess_id: this.state.selectiveProcess_id,
-      call_id: this.state.call_id,
-      step_id: this.state.step_id,
+      call_id: this.state.call_id ? this.state.call_id : null,
+      step_id: this.state.step_id ? this.state.step_id : null,
       publicationType_id: this.state.publicationType_id,
       file: this.state.file,
       valid: this.state.valid
     };
-
-    console.log(publicationData);
 
     const valRoleType = validateProcessPublicationForm(publicationData);
     if (!valRoleType.isValid) {
@@ -235,14 +262,14 @@ class ProcessPublicationCreate extends Component {
           error={errors.creation_date}
         />
 
-        <TextFieldGroup
+        {/* <TextFieldGroup
           type="text"
           name="name"
           placeholder="* Nome da publicação"
           value={this.state.name}
           onChange={this.onChange}
           error={errors.name}
-        />
+        /> */}
 
         <SelectListGroup
           placeholder="* Selecione o processo seletivo"
@@ -289,13 +316,6 @@ class ProcessPublicationCreate extends Component {
           error={errors.description}
         />
 
-        {/* <FileFieldGroup
-          name="file"
-          value={this.state.file}
-          onChange={this.onChangeFile}
-          error={errors.files}
-        /> */}
-
         <SelectListGroup
           placeholder="* Selecione o tipo de publicação"
           name="publicationType_id"
@@ -305,14 +325,11 @@ class ProcessPublicationCreate extends Component {
           error={errors.publicationType_id}
         />
 
-        <div className="form-group">
-          <input
-            style={{ paddingBottom: "43px" }}
-            type="file"
-            className={"form-control form-control-lg"}
-            onChange={this.onChangeFile}
-          />
-        </div>
+        <FileFieldGroup
+          name="file"
+          error={errors.file}
+          onChange={this.onChangeFile}
+        />
 
         <div className="form-check mb-4">
           <input

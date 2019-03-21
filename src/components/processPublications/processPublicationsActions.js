@@ -18,8 +18,15 @@ export const createProcessPublication = (
     "selectiveProcess_id",
     processPublicationsData.selectiveProcess_id
   );
-  formData.append("call_id", processPublicationsData.call_id);
-  formData.append("step_id", processPublicationsData.step_id);
+
+  if (processPublicationsData.call_id) {
+    formData.append("call_id", processPublicationsData.call_id);
+  }
+
+  if (processPublicationsData.step_id) {
+    formData.append("step_id", processPublicationsData.step_id);
+  }
+
   formData.append(
     "publicationType_id",
     processPublicationsData.publicationType_id
