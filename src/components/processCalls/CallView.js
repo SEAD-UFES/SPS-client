@@ -143,7 +143,7 @@ class CallView extends Component {
 
     const callCalendar = (
       <div>
-        <h4 className="mb-2">Calendário</h4>
+        <h4 className="mb-2">Calendário da chamada</h4>
         <table className="table">
           <thead>
             <tr>
@@ -205,7 +205,7 @@ class CallView extends Component {
 
     const callVacancies = (
       <div>
-        <h4 className="mb-2">Oferta de vagas</h4>
+        <h4 className="mb-2">Oferta de vagas da chamada</h4>
         {call.Vacancies.length > 0 ? (
           <table className="table">
             <thead>
@@ -253,12 +253,39 @@ class CallView extends Component {
       </div>
     );
 
+    const callPublications = (
+      <div>
+        <h4 className="mb-2">Publicações da chamada</h4>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.publications.map(publication => {
+              return (
+                <tr>
+                  <td>
+                    {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
+                      "DD/MM/YYYY"
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+
     return (
       <div>
         {callActions}
         {callInfo}
         {callCalendar}
         {callVacancies}
+        {callPublications}
       </div>
     );
   }

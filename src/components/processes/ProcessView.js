@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import { getProcess } from "../../actions/processActions";
 import Spinner from "../common/Spinner";
@@ -99,14 +100,53 @@ class ProcessView extends Component {
       process === null || loading ? (
         <Spinner />
       ) : (
-        <CallTabList calls={process.Calls} />
+        <div>
+          <h4 className="mb-2">Chamadas do processo</h4>
+          <CallTabList
+            calls={process.Calls}
+            publications={process.Publications}
+          />
+        </div>
       );
 
-    const processPublications = (
-      <div>
-        <h4 className="mb-2">Publicações do edital</h4>
-      </div>
-    );
+    const processPublications =
+      process === null || loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <h4 className="mb-2">Publicações do processo</h4>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {process.Publications.filter(value => {
+                return value.call_id === null;
+              }).map(publication => {
+                return (
+                  <tr key={publication.id}>
+                    <td>
+                      {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
+                        "DD/MM/YYYY"
+                      )}
+                    </td>
+                    <td>{publication.PublicationType.name}</td>
+                    <td>
+                      {publication.description ? publication.description : ""}
+                    </td>
+                    <td />
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      );
 
     return (
       <div className="profile">

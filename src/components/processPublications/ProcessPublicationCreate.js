@@ -9,6 +9,7 @@ import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 import FileFieldGroup from "../common/FileFieldGroup";
 
+import { getProcess } from "actions/processActions";
 import { createProcessPublication } from "./processPublicationsActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 
@@ -54,6 +55,10 @@ class ProcessPublicationCreate extends Component {
         selectiveProcess_id: this.props.location.state.selectiveProcess.id,
         selectiveProcess: this.props.location.state.selectiveProcess
       });
+    } else {
+      if (this.props.match.params.process_id) {
+        this.props.getProcess(this.props.match.params.process_id);
+      }
     }
   }
 
@@ -62,10 +67,25 @@ class ProcessPublicationCreate extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //errors
+    //Errors
     if (nextProps.errors) {
       let errors = nextProps.errors;
       this.setState({ errors: errors });
+    }
+
+    //Load process on State if dont have
+    if (!this.state.selectiveProcess) {
+      if (nextProps.process) {
+        let process = nextProps.process.process;
+        let loading = nextProps.process.loading;
+
+        if (process !== null && loading === false) {
+          this.setState({
+            selectiveProcess_id: process.id,
+            selectiveProcess: process
+          });
+        }
+      }
     }
   }
 
@@ -369,10 +389,13 @@ class ProcessPublicationCreate extends Component {
 }
 
 ProcessPublicationCreate.proptypes = {
-  getProcessPublicationTypes: PropTypes.func.isRequired
+  getProcess: PropTypes.func.isRequired,
+  getProcessPublicationTypes: PropTypes.func.isRequired,
+  createProcessPublication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  process: state.process,
   processPublicationTypesStore: state.processPublicationTypesStore
 });
 
@@ -380,6 +403,7 @@ export default connect(
   mapStateToProps,
   {
     getProcessPublicationTypes,
-    createProcessPublication
+    createProcessPublication,
+    getProcess
   }
 )(ProcessPublicationCreate);

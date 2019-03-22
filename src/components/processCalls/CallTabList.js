@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import CallView from "./CallView";
+import processReducer from "../../reducers/processReducer";
 
 class CallTabList extends Component {
   activeCallId(calls) {
@@ -54,7 +55,12 @@ class CallTabList extends Component {
               role="tabpanel"
               aria-labelledby={`call-${call.id}-tab`}
             >
-              <CallView call={call} />
+              <CallView
+                call={call}
+                publications={this.props.publications.filter(value => {
+                  return value.call_id === call.id;
+                })}
+              />
             </div>
           );
         })}
