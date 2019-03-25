@@ -115,36 +115,38 @@ class ProcessView extends Component {
       ) : (
         <div>
           <h4 className="mb-2">Publicações do processo</h4>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Tipo</th>
-                <th>Descrição</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {process.Publications.filter(value => {
-                return value.call_id === null;
-              }).map(publication => {
-                return (
-                  <tr key={publication.id}>
-                    <td>
-                      {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
-                        "DD/MM/YYYY"
-                      )}
-                    </td>
-                    <td>{publication.PublicationType.name}</td>
-                    <td>
-                      {publication.description ? publication.description : ""}
-                    </td>
-                    <td />
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <ul className="timeline">
+            {process.Publications.filter(value => {
+              return value.call_id === null;
+            }).map(publication => {
+              return (
+                <li key={publication.id}>
+                  <a
+                    href={`http://localhost:3000/v1/publications/download/${
+                      publication.file
+                    }`}
+                  >
+                    {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
+                      "DD/MM/YYYY"
+                    )}{" "}
+                    | {publication.PublicationType.name}
+                  </a>{" "}
+                  <Link
+                    to={`/processes/${process.id}/publications/${
+                      publication.id
+                    }/update`}
+                  >
+                    <i className="far fa-edit" />
+                  </Link>
+                  {publication.description ? (
+                    <p>{publication.description}</p>
+                  ) : (
+                    ""
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       );
 

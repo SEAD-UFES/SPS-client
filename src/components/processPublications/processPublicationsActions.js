@@ -27,13 +27,15 @@ export const createProcessPublication = (
     formData.append("step_id", processPublicationsData.step_id);
   }
 
+  if (processPublicationsData.description) {
+    formData.append("description", processPublicationsData.description);
+  }
+
   formData.append(
     "publicationType_id",
     processPublicationsData.publicationType_id
   );
   formData.append("file", processPublicationsData.file);
-
-  console.log(formData);
 
   axios
     .post("/v1/publications", formData)

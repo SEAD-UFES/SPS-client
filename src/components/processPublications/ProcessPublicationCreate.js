@@ -35,6 +35,8 @@ class ProcessPublicationCreate extends Component {
       fileUrl: null,
 
       selectiveProcess: "",
+      lock_process: false,
+      lock_call: false,
 
       errors: []
     };
@@ -53,11 +55,22 @@ class ProcessPublicationCreate extends Component {
     ) {
       this.setState({
         selectiveProcess_id: this.props.location.state.selectiveProcess.id,
-        selectiveProcess: this.props.location.state.selectiveProcess
+        selectiveProcess: this.props.location.state.selectiveProcess,
+        lock_process: true
       });
     } else {
       if (this.props.match.params.process_id) {
+        this.setState({
+          selectiveProcess_id: this.props.match.params.process_id,
+          lock_process: true
+        });
         this.props.getProcess(this.props.match.params.process_id);
+      }
+      if (this.props.match.params.call_id) {
+        this.setState({
+          call_id: this.props.match.params.call_id,
+          lock_call: true
+        });
       }
     }
   }
@@ -181,6 +194,7 @@ class ProcessPublicationCreate extends Component {
       selectiveProcess_id: this.state.selectiveProcess_id,
       call_id: this.state.call_id ? this.state.call_id : null,
       step_id: this.state.step_id ? this.state.step_id : null,
+      description: this.state.description ? this.state.description : null,
       publicationType_id: this.state.publicationType_id,
       file: this.state.file,
       valid: this.state.valid
@@ -298,7 +312,7 @@ class ProcessPublicationCreate extends Component {
           options={processOptions}
           onChange={this.onChange}
           error={errors.selectiveProcess_id}
-          disabled={this.state.selectiveProcess ? true : false}
+          disabled={this.state.lock_process ? true : false}
         />
 
         {this.state.selectiveProcess_id ? (
@@ -309,6 +323,7 @@ class ProcessPublicationCreate extends Component {
             options={callOptions}
             onChange={this.onChange}
             error={errors.call_id}
+            disabled={this.state.lock_call ? true : false}
           />
         ) : (
           ""

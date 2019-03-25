@@ -45,7 +45,12 @@ class CallView extends Component {
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Vaga
         </Link>
-        <a href="4-2-08-process-publication-add.html" className="btn btn-light">
+        <a
+          href={`/processes/${call.selectiveProcess_id}/calls/${
+            call.id
+          }/publications/create`}
+          className="btn btn-light"
+        >
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Publicação
         </a>
@@ -253,29 +258,36 @@ class CallView extends Component {
       </div>
     );
 
-    const callPublications = (
+    const callPublications2 = (
       <div>
         <h4 className="mb-2">Publicações da chamada</h4>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Data</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.publications.map(publication => {
-              return (
-                <tr>
-                  <td>
-                    {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
-                      "DD/MM/YYYY"
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <ul className="timeline">
+          {this.props.publications.map(publication => {
+            return (
+              <li key={publication.id}>
+                <Link to={`/files/${publication.file}`}>
+                  {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
+                    "DD/MM/YYYY"
+                  )}{" "}
+                  {publication.step_id ? "| Etapa x " : ""}|{" "}
+                  {publication.PublicationType.name}
+                </Link>{" "}
+                <Link
+                  to={`/processes/${
+                    publication.selectiveProcess_id
+                  }/publications/${publication.id}/update`}
+                >
+                  <i className="far fa-edit" />
+                </Link>
+                {publication.description ? (
+                  <p>{publication.description}</p>
+                ) : (
+                  ""
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
 
@@ -285,7 +297,7 @@ class CallView extends Component {
         {callInfo}
         {callCalendar}
         {callVacancies}
-        {callPublications}
+        {callPublications2}
       </div>
     );
   }

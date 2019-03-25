@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import CallView from "./CallView";
-import processReducer from "../../reducers/processReducer";
 
 class CallTabList extends Component {
   activeCallId(calls) {

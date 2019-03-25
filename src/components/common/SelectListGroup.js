@@ -12,7 +12,7 @@ const SelectListGroup = ({
   disabled
 }) => {
   const selectOptions = options.map(option => (
-    <option key={option.label} value={option.value}>
+    <option key={option.value} value={option.value}>
       {option.label}
     </option>
   ));
