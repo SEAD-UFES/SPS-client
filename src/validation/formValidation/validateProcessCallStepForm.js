@@ -1,11 +1,16 @@
 import moment from "moment";
 import Validator from "validator";
-import { isEmpty, validateDate } from "../";
+import { isEmpty, validateDate, validateNumberRequired } from "../";
 
 //####################################################################################//
 export const validateProcessCallStepForm = data => {
   let errors = {};
   let field = {};
+
+  field = validateNumberRequired(data.number);
+  if (!field.isValid) {
+    errors.number = field.error;
+  }
 
   field = validateStepType_id(data.stepType_id);
   if (!field.isValid) {

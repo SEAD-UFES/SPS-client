@@ -7,17 +7,11 @@ import { GET_ERRORS } from "actions/types";
 
 import axios from "axios";
 
-export const createProcessPublication = (
-  processPublicationsData,
-  callback_ok
-) => dispatch => {
+export const createProcessPublication = (processPublicationsData, callback_ok) => dispatch => {
   let formData = new FormData();
   formData.append("date", processPublicationsData.date);
   formData.append("name", processPublicationsData.name);
-  formData.append(
-    "selectiveProcess_id",
-    processPublicationsData.selectiveProcess_id
-  );
+  formData.append("selectiveProcess_id", processPublicationsData.selectiveProcess_id);
 
   if (processPublicationsData.call_id) {
     formData.append("call_id", processPublicationsData.call_id);
@@ -31,10 +25,10 @@ export const createProcessPublication = (
     formData.append("description", processPublicationsData.description);
   }
 
-  formData.append(
-    "publicationType_id",
-    processPublicationsData.publicationType_id
-  );
+  formData.append("publicationType_id", processPublicationsData.publicationType_id);
+
+  formData.append("valid", processPublicationsData.valid);
+
   formData.append("file", processPublicationsData.file);
 
   axios

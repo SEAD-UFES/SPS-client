@@ -13,7 +13,8 @@ import {
   validateOpenAppealDate,
   validateLimitAppealDate,
   validateResultAfterAppealDate,
-  validateProcessCallStepForm
+  validateProcessCallStepForm,
+  validateNumberRequired
 } from "../../validation";
 import {
   getStepOptions,
@@ -28,6 +29,7 @@ class StepEdit extends Component {
     super();
     this.state = {
       //Step data
+      number: "",
       stepType_id: "",
       resultDate: "",
       openAppealDate: "",
@@ -98,6 +100,9 @@ class StepEdit extends Component {
     let valResult = { error: "", isValid: true };
 
     switch (e.target.name) {
+      case "number":
+        valResult = validateNumberRequired(e.target.value);
+        break;
       case "stepType_id":
         valResult = validateStepType_id(e.target.value);
         break;
@@ -154,6 +159,7 @@ class StepEdit extends Component {
     e.preventDefault();
 
     const StepData = {
+      number: this.state.number,
       call_id: this.props.match.params.call_id,
       stepType_id: this.state.stepType_id,
       resultDate: this.state.resultDate,

@@ -11,13 +11,11 @@ import {
   validateOpenAppealDate,
   validateLimitAppealDate,
   validateResultAfterAppealDate,
-  validateProcessCallStepForm
+  validateProcessCallStepForm,
+  validateNumberRequired
 } from "../../validation";
 
-import {
-  getStepOptions,
-  createProcessCallStep
-} from "../../actions/processActions";
+import { getStepOptions, createProcessCallStep } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepCreate extends Component {
@@ -25,6 +23,7 @@ class StepCreate extends Component {
     super();
     this.state = {
       //Step data
+      number: "",
       stepType_id: "",
       resultDate: "",
       openAppealDate: "",
@@ -69,40 +68,23 @@ class StepCreate extends Component {
     let valResult = { error: "", isValid: true };
 
     switch (e.target.name) {
+      case "number":
+        valResult = validateNumberRequired(e.target.value);
+        break;
       case "stepType_id":
         valResult = validateStepType_id(e.target.value);
         break;
       case "resultDate":
-        valResult = validateResultDate(
-          e.target.value,
-          this.state.openAppealDate,
-          this.state.limitAppealDate,
-          this.state.resultAfterAppealDate
-        );
+        valResult = validateResultDate(e.target.value, this.state.openAppealDate, this.state.limitAppealDate, this.state.resultAfterAppealDate);
         break;
       case "openAppealDate":
-        valResult = validateOpenAppealDate(
-          this.state.resultDate,
-          e.target.value,
-          this.state.limitAppealDate,
-          this.state.resultAfterAppealDate
-        );
+        valResult = validateOpenAppealDate(this.state.resultDate, e.target.value, this.state.limitAppealDate, this.state.resultAfterAppealDate);
         break;
       case "limitAppealDate":
-        valResult = validateLimitAppealDate(
-          this.state.resultDate,
-          this.state.openAppealDate,
-          e.target.value,
-          this.state.resultAfterAppealDate
-        );
+        valResult = validateLimitAppealDate(this.state.resultDate, this.state.openAppealDate, e.target.value, this.state.resultAfterAppealDate);
         break;
       case "resultAfterAppealDate":
-        valResult = validateResultAfterAppealDate(
-          this.state.resultDate,
-          this.state.openAppealDate,
-          this.state.limitAppealDate,
-          e.target.value
-        );
+        valResult = validateResultAfterAppealDate(this.state.resultDate, this.state.openAppealDate, this.state.limitAppealDate, e.target.value);
         break;
       default:
         break;
@@ -125,6 +107,7 @@ class StepCreate extends Component {
     e.preventDefault();
 
     const StepData = {
+      number: this.state.number,
       call_id: this.props.match.params.call_id,
       stepType_id: this.state.stepType_id,
       resultDate: this.state.resultDate,
@@ -137,20 +120,14 @@ class StepCreate extends Component {
     if (!valStep.isValid) {
       this.setState({ errors: valStep.errors });
     } else {
-      this.props.createProcessCallStep(
-        StepData,
-        this.props.match.params.process_id,
-        this.props.history
-      );
+      this.props.createProcessCallStep(StepData, this.props.match.params.process_id, this.props.history);
     }
   }
 
   render() {
     const { errors } = this.state;
 
-    const steptypeOptions = [
-      { label: "Escolha o tipo de etapa", value: "" }
-    ].concat(
+    const steptypeOptions = [{ label: "Escolha o tipo de etapa", value: "" }].concat(
       this.props.options
         ? this.props.options.map(steptype => {
             return {
@@ -166,15 +143,21 @@ class StepCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.process_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Criar etapa</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
+                <TextFieldGroup
+                  placeholder="Número da etapa"
+                  type="text"
+                  name="number"
+                  value={this.state.number}
+                  onChange={this.onChange}
+                  error={errors.number}
+                />
+
                 <SelectListGroup
                   placeholder="Escolha o tipo de etapa"
                   name="stepType_id"

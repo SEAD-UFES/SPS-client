@@ -44,9 +44,7 @@ class ProcessView extends Component {
                 <td>
                   <strong>Visibilidade:</strong>
                 </td>
-                <td>
-                  {process.visible ? "Processo visível" : "Processo oculto"}
-                </td>
+                <td>{process.visible ? "Processo visível" : "Processo oculto"}</td>
               </tr>
               <tr>
                 <td>
@@ -67,12 +65,8 @@ class ProcessView extends Component {
           <Link to={`/processes/${process.id}/edit`} className="btn btn-light">
             <i className="fas fa-user-circle text-info mr-1" /> Editar Processo
           </Link>
-          <Link
-            to={`/processes/${process.id}/calls/create`}
-            className="btn btn-light"
-          >
-            <i className="fas fa-user-circle text-info mr-1" /> Adicionar
-            Chamada
+          <Link to={`/processes/${process.id}/calls/create`} className="btn btn-light">
+            <i className="fas fa-user-circle text-info mr-1" /> Adicionar Chamada
           </Link>
           <Link
             to={{
@@ -81,20 +75,13 @@ class ProcessView extends Component {
             }}
             className="btn btn-light"
           >
-            <i className="fas fa-user-circle text-info mr-1" /> Adicionar
-            Publicação
+            <i className="fas fa-user-circle text-info mr-1" /> Adicionar Publicação
           </Link>
         </div>
       );
 
     const basicData =
-      process === null || loading ? (
-        <Spinner />
-      ) : (
-        <p className="lead text-muted">
-          {`${process.number}/${process.year} - ${process.Course.name}`}
-        </p>
-      );
+      process === null || loading ? <Spinner /> : <p className="lead text-muted">{`${process.number}/${process.year} - ${process.Course.name}`}</p>;
 
     const callsList =
       process === null || loading ? (
@@ -102,10 +89,17 @@ class ProcessView extends Component {
       ) : (
         <div>
           <h4 className="mb-2">Chamadas do processo</h4>
-          <CallTabList
-            calls={process.Calls}
-            publications={process.Publications}
-          />
+          {process.Calls.length > 0 ? (
+            <CallTabList calls={process.Calls} publications={process.Publications} />
+          ) : (
+            <p>
+              Sem chamadas cadastradas.{" "}
+              <Link className="text-success" to={`/processes/${process.id}/calls/create`}>
+                <i className="fas fa-plus-circle" />
+                Adicionar
+              </Link>
+            </p>
+          )}
         </div>
       );
 
@@ -115,38 +109,45 @@ class ProcessView extends Component {
       ) : (
         <div>
           <h4 className="mb-2">Publicações do processo</h4>
-          <ul className="timeline">
-            {process.Publications.filter(value => {
-              return value.call_id === null;
-            }).map(publication => {
-              return (
-                <li key={publication.id}>
-                  <a
-                    href={`http://localhost:3000/v1/publications/download/${
-                      publication.file
-                    }`}
-                  >
-                    {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
-                      "DD/MM/YYYY"
-                    )}{" "}
-                    | {publication.PublicationType.name}
-                  </a>{" "}
-                  <Link
-                    to={`/processes/${process.id}/publications/${
-                      publication.id
-                    }/update`}
-                  >
-                    <i className="far fa-edit" />
-                  </Link>
-                  {publication.description ? (
-                    <p>{publication.description}</p>
-                  ) : (
-                    ""
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+          {process.Publications.filter(value => {
+            return value.call_id === null;
+          }).length > 0 ? (
+            <ul className="timeline">
+              {process.Publications.filter(value => {
+                return value.call_id === null;
+              }).map(publication => {
+                return (
+                  <li key={publication.id}>
+                    <a
+                      className={publication.valid ? "" : "isDisabled"}
+                      onClick={publication.valid ? e => {} : e => e.preventDefault()}
+                      href={publication.valid ? `http://localhost:3000/v1/publications/download/${publication.file}` : ""}
+                    >
+                      {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")} | {publication.PublicationType.name}
+                    </a>{" "}
+                    <Link to={`/processes/${process.id}/publications/${publication.id}/update`}>
+                      <i className="far fa-edit" />
+                    </Link>
+                    {publication.description ? <p>{publication.description}</p> : ""}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p>
+              Sem publicações de processo cadastrados.{" "}
+              <Link
+                className="text-success"
+                to={{
+                  pathname: `/processes/${process.id}/publications/create`,
+                  state: { selectiveProcess: process }
+                }}
+              >
+                <i className="fas fa-plus-circle" />
+                Adicionar
+              </Link>
+            </p>
+          )}
         </div>
       );
 

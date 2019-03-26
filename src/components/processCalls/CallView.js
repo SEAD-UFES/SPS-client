@@ -21,39 +21,21 @@ class CallView extends Component {
 
     const callActions = (
       <div className="btn-group mb-4" role="group">
-        <Link
-          to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}
-          className="btn btn-light"
-        >
+        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`} className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" /> Editar Chamada
         </Link>
-        <Link
-          to={`/processes/${call.selectiveProcess_id}/calls/${
-            call.id
-          }/steps/create`}
-          className="btn btn-light"
-        >
+        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/steps/create`} className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Etapa
         </Link>
-        <Link
-          to={`/processes/${call.selectiveProcess_id}/calls/${
-            call.id
-          }/vacancies/create`}
-          className="btn btn-light"
-        >
+        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`} className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Vaga
         </Link>
-        <a
-          href={`/processes/${call.selectiveProcess_id}/calls/${
-            call.id
-          }/publications/create`}
-          className="btn btn-light"
-        >
+        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`} className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar Publicação
-        </a>
+        </Link>
       </div>
     );
 
@@ -74,20 +56,13 @@ class CallView extends Component {
       const resultDate = (
         <tr key={`${step.id}-resultDate`}>
           <td>
+            {`Etapa ${step.number} | `}
             {step.StepType.name}
             {" - Resultado"}
           </td>
+          <td>{moment(step.resultDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
           <td>
-            {moment(step.resultDate, "YYYY-MM-DD HH:mm:ss ").format(
-              "DD/MM/YYYY"
-            )}
-          </td>
-          <td>
-            <Link
-              to={`/processes/${call.selectiveProcess_id}/calls/${
-                step.call_id
-              }/steps/${step.id}/edit`}
-            >
+            <Link to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
               <i className="far fa-edit" />
             </Link>
           </td>
@@ -97,24 +72,17 @@ class CallView extends Component {
       const appealPeriod = (
         <tr key={`${step.id}-appealPeriod`}>
           <td>
+            {`Etapa ${step.number} | `}
             {step.StepType.name}
             {" - Período de recursos"}
           </td>
           <td>
-            {moment(step.openAppealDate, "YYYY-MM-DD HH:mm:ss ").format(
-              "DD/MM/YYYY"
-            )}
+            {moment(step.openAppealDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
             {" - "}
-            {moment(step.limitAppealDate, "YYYY-MM-DD HH:mm:ss ").format(
-              "DD/MM/YYYY"
-            )}
+            {moment(step.limitAppealDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
           </td>
           <td>
-            <Link
-              to={`/processes/${call.selectiveProcess_id}/calls/${
-                step.call_id
-              }/steps/${step.id}/edit`}
-            >
+            <Link to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
               <i className="far fa-edit" />
             </Link>
           </td>
@@ -124,20 +92,13 @@ class CallView extends Component {
       const afterAppealResult = (
         <tr key={`${step.id}-resultAfterAppealDate`}>
           <td>
+            {`Etapa ${step.number} | `}
             {step.StepType.name}
             {" - Resultado pós recurso"}
           </td>
+          <td>{moment(step.resultAfterAppealDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
           <td>
-            {moment(step.resultAfterAppealDate, "YYYY-MM-DD HH:mm:ss ").format(
-              "DD/MM/YYYY"
-            )}
-          </td>
-          <td>
-            <Link
-              to={`/processes/${call.selectiveProcess_id}/calls/${
-                step.call_id
-              }/steps/${step.id}/edit`}
-            >
+            <Link to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
               <i className="far fa-edit" />
             </Link>
           </td>
@@ -161,22 +122,11 @@ class CallView extends Component {
             <tr>
               <td>Periodo de inscrições</td>
               <td>
-                {moment(
-                  call.enrollmentOpeningDate,
-                  "YYYY-MM-DD HH:mm:ss"
-                ).format("DD/MM/YYYY")}{" "}
-                -{" "}
-                {moment(
-                  call.enrollmentClosingDate,
-                  "YYYY-MM-DD HH:mm:ss"
-                ).format("DD/MM/YYYY")}
+                {moment(call.enrollmentOpeningDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")} -{" "}
+                {moment(call.enrollmentClosingDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}
               </td>
               <td>
-                <Link
-                  to={`/processes/${call.selectiveProcess_id}/calls/${
-                    call.id
-                  }/edit`}
-                >
+                <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                   <i className="far fa-edit" />
                 </Link>
               </td>
@@ -188,17 +138,9 @@ class CallView extends Component {
 
             <tr>
               <td>Finalização da Chamada</td>
+              <td>{moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</td>
               <td>
-                {moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format(
-                  "DD/MM/YYYY"
-                )}
-              </td>
-              <td>
-                <Link
-                  to={`/processes/${call.selectiveProcess_id}/calls/${
-                    call.id
-                  }/edit`}
-                >
+                <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                   <i className="far fa-edit" />
                 </Link>
               </td>
@@ -228,22 +170,12 @@ class CallView extends Component {
                 return (
                   <tr key={vacancy.id}>
                     <td>{vacancy.Assignment.name}</td>
-                    <td>
-                      {vacancy.Region ? vacancy.Region.name : "Sem região"}
-                    </td>
-                    <td>
-                      {vacancy.Restriction
-                        ? vacancy.Restriction.name
-                        : "Sem restrições"}
-                    </td>
+                    <td>{vacancy.Region ? vacancy.Region.name : "Sem região"}</td>
+                    <td>{vacancy.Restriction ? vacancy.Restriction.name : "Sem restrições"}</td>
                     <td>{vacancy.qtd}</td>
                     <td>{vacancy.reserve ? "C.R." : "Não"}</td>
                     <td>
-                      <Link
-                        to={`/processes/${call.selectiveProcess_id}/calls/${
-                          call.id
-                        }/vacancies/${vacancy.id}/edit`}
-                      >
+                      <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
                         <i className="far fa-edit" />
                       </Link>
                     </td>
@@ -253,41 +185,61 @@ class CallView extends Component {
             </tbody>
           </table>
         ) : (
-          <p>Esta chamada não possui vagas.</p>
+          <p>
+            Esta chamada não possui ofertas de vagas cadastradas.{" "}
+            <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`}>
+              <i className="fas fa-plus-circle" />
+              Adicionar
+            </Link>
+          </p>
         )}
       </div>
     );
 
-    const callPublications2 = (
+    const stepNumber = step_id => {
+      const step = call.Steps.filter(value => {
+        return value.id === step_id;
+      });
+      if (step.length > 0) {
+        return step[0].number ? step[0].number : "";
+      } else {
+        return "";
+      }
+    };
+
+    const callPublications = (
       <div>
         <h4 className="mb-2">Publicações da chamada</h4>
-        <ul className="timeline">
-          {this.props.publications.map(publication => {
-            return (
-              <li key={publication.id}>
-                <Link to={`/files/${publication.file}`}>
-                  {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format(
-                    "DD/MM/YYYY"
-                  )}{" "}
-                  {publication.step_id ? "| Etapa x " : ""}|{" "}
-                  {publication.PublicationType.name}
-                </Link>{" "}
-                <Link
-                  to={`/processes/${
-                    publication.selectiveProcess_id
-                  }/publications/${publication.id}/update`}
-                >
-                  <i className="far fa-edit" />
-                </Link>
-                {publication.description ? (
-                  <p>{publication.description}</p>
-                ) : (
-                  ""
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        {this.props.publications.length > 0 ? (
+          <ul className="timeline">
+            {this.props.publications.map(publication => {
+              return (
+                <li key={publication.id}>
+                  <a
+                    className={publication.valid ? "" : "isDisabled"}
+                    onClick={publication.valid ? e => {} : e => e.preventDefault()}
+                    href={publication.valid ? `http://localhost:3000/v1/publications/download/${publication.file}` : ""}
+                  >
+                    {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}{" "}
+                    {publication.step_id ? `| Etapa ${stepNumber(publication.step_id)} ` : ""}| {publication.PublicationType.name}
+                  </a>{" "}
+                  <Link to={`/processes/${publication.selectiveProcess_id}/publications/${publication.id}/update`}>
+                    <i className="far fa-edit" />
+                  </Link>
+                  {publication.description ? <p>{publication.description}</p> : ""}
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p>
+            Sem publicações de chamada cadastradas.{" "}
+            <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`}>
+              <i className="fas fa-plus-circle" />
+              Adicionar
+            </Link>
+          </p>
+        )}
       </div>
     );
 
@@ -297,7 +249,7 @@ class CallView extends Component {
         {callInfo}
         {callCalendar}
         {callVacancies}
-        {callPublications2}
+        {callPublications}
       </div>
     );
   }

@@ -49,10 +49,7 @@ class ProcessPublicationCreate extends Component {
 
   componentWillMount() {
     //get process from link
-    if (
-      this.props.location.state &&
-      this.props.location.state.selectiveProcess
-    ) {
+    if (this.props.location.state && this.props.location.state.selectiveProcess) {
       this.setState({
         selectiveProcess_id: this.props.location.state.selectiveProcess.id,
         selectiveProcess: this.props.location.state.selectiveProcess,
@@ -218,8 +215,7 @@ class ProcessPublicationCreate extends Component {
 
     //mounting data structures
     const processPublicationTypes =
-      processPublicationTypesStore.processPublicationTypes !== null &&
-      !processPublicationTypesStore.loading
+      processPublicationTypesStore.processPublicationTypes !== null && !processPublicationTypesStore.loading
         ? processPublicationTypesStore.processPublicationTypes
         : [];
 
@@ -235,9 +231,7 @@ class ProcessPublicationCreate extends Component {
         : [];
 
     //mounting render pieces
-    const processPublicationTypeOptions = [
-      { label: "* Selecione o tipo de publicação", value: "" }
-    ].concat(
+    const processPublicationTypeOptions = [{ label: "* Selecione o tipo de publicação", value: "" }].concat(
       processPublicationTypes
         ? processPublicationTypes.map(procPubTypes => {
             return {
@@ -248,15 +242,11 @@ class ProcessPublicationCreate extends Component {
         : []
     );
 
-    const processOptions = [
-      { label: "* Selecione o processo seletivo", value: "" }
-    ].concat(
+    const processOptions = [{ label: "* Selecione o processo seletivo", value: "" }].concat(
       processes
         ? processes.map(process => {
             return {
-              label: `${process.number}/${process.year} - ${
-                process.Course.name
-              }`,
+              label: `${process.number}/${process.year} - ${process.Course.name}`,
               value: process.id
             };
           })
@@ -360,21 +350,10 @@ class ProcessPublicationCreate extends Component {
           error={errors.publicationType_id}
         />
 
-        <FileFieldGroup
-          name="file"
-          error={errors.file}
-          onChange={this.onChangeFile}
-        />
+        <FileFieldGroup name="file" error={errors.file} onChange={this.onChangeFile} />
 
         <div className="form-check mb-4">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="valid"
-            id="valid"
-            checked={this.state.valid}
-            onChange={this.onCheck}
-          />
+          <input className="form-check-input" type="checkbox" name="valid" id="valid" checked={this.state.valid} onChange={this.onCheck} />
           <label className="form-check-label" htmlFor="valid">
             Documento atualizado
           </label>
