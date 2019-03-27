@@ -176,7 +176,11 @@ class CallView extends Component {
                 <th>Restrição</th>
                 <th>Vagas</th>
                 <th>Reserva</th>
-                <th />
+                <th>
+                  <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`}>
+                    <i className="fas fa-plus-circle" />
+                  </Link>
+                </th>
               </tr>
             </thead>
             <tbody>
