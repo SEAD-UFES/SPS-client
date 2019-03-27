@@ -257,7 +257,7 @@ class ProcessPublicationCreate extends Component {
       calls
         ? calls.map(call => {
             return {
-              label: `${call.number}`,
+              label: `Chamada ${call.number}`,
               value: `${call.id}`
             };
           })
@@ -268,7 +268,7 @@ class ProcessPublicationCreate extends Component {
       steps
         ? steps.map(step => {
             return {
-              label: `${step.StepType.name}`,
+              label: `Etapa ${step.number} | ${step.StepType.name}`,
               value: `${step.id}`
             };
           })

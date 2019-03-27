@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import CallView from "./CallView";
 
@@ -38,6 +39,11 @@ class CallTabList extends Component {
             </li>
           );
         })}
+        <li className="nav-item" key="call-add">
+          <Link className="nav-link text-success" to={`/processes/${this.props.process_id}/calls/create`}>
+            <i className="fas fa-plus-circle" />
+          </Link>
+        </li>
       </ul>
     );
 
@@ -47,9 +53,7 @@ class CallTabList extends Component {
           return (
             <div
               key={call.id}
-              className={
-                "tab-pane fade " + (activeId === call.id ? "show active" : "")
-              }
+              className={"tab-pane fade " + (activeId === call.id ? "show active" : "")}
               id={`call-${call.id}-content`}
               role="tabpanel"
               aria-labelledby={`call-${call.id}-tab`}

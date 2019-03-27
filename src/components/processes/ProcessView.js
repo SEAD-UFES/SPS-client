@@ -23,7 +23,14 @@ class ProcessView extends Component {
         <Spinner />
       ) : (
         <div>
-          <h4 className="mb-2">Informações do processo</h4>
+          <h4 className="mb-2">
+            Informações do processo{" "}
+            <small>
+              <Link className="text-info" to={`/processes/${process.id}/edit`}>
+                <i className="fas fa-cog" />
+              </Link>
+            </small>
+          </h4>
           <table className="table">
             <tbody>
               <tr>
@@ -80,9 +87,6 @@ class ProcessView extends Component {
         </div>
       );
 
-    const basicData =
-      process === null || loading ? <Spinner /> : <p className="lead text-muted">{`${process.number}/${process.year} - ${process.Course.name}`}</p>;
-
     const callsList =
       process === null || loading ? (
         <Spinner />
@@ -90,7 +94,7 @@ class ProcessView extends Component {
         <div>
           <h4 className="mb-2">Chamadas do processo</h4>
           {process.Calls.length > 0 ? (
-            <CallTabList calls={process.Calls} publications={process.Publications} />
+            <CallTabList process_id={process.id} calls={process.Calls} publications={process.Publications} />
           ) : (
             <p>
               Sem chamadas cadastradas.{" "}
@@ -112,27 +116,41 @@ class ProcessView extends Component {
           {process.Publications.filter(value => {
             return value.call_id === null;
           }).length > 0 ? (
-            <ul className="timeline">
-              {process.Publications.filter(value => {
-                return value.call_id === null;
-              }).map(publication => {
-                return (
-                  <li key={publication.id}>
-                    <a
-                      className={publication.valid ? "" : "isDisabled"}
-                      onClick={publication.valid ? e => {} : e => e.preventDefault()}
-                      href={publication.valid ? `http://localhost:3000/v1/publications/download/${publication.file}` : ""}
-                    >
-                      {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")} | {publication.PublicationType.name}
-                    </a>{" "}
-                    <Link to={`/processes/${process.id}/publications/${publication.id}/update`}>
-                      <i className="far fa-edit" />
-                    </Link>
-                    {publication.description ? <p>{publication.description}</p> : ""}
-                  </li>
-                );
-              })}
-            </ul>
+            <div>
+              <p className="ml-4 mt-3">
+                <Link
+                  className="text-success mb-0"
+                  to={{
+                    pathname: `/processes/${process.id}/publications/create`,
+                    state: { selectiveProcess: process }
+                  }}
+                >
+                  <i className="fas fa-plus-circle" /> Adicionar
+                </Link>
+              </p>
+
+              <ul className="timeline">
+                {process.Publications.filter(value => {
+                  return value.call_id === null;
+                }).map(publication => {
+                  return (
+                    <li key={publication.id}>
+                      <a
+                        className={publication.valid ? "" : "isDisabled"}
+                        onClick={publication.valid ? e => {} : e => e.preventDefault()}
+                        href={publication.valid ? `http://localhost:3000/v1/publications/download/${publication.file}` : ""}
+                      >
+                        {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")} | {publication.PublicationType.name}
+                      </a>{" "}
+                      <Link className="text-info" to={`/processes/${process.id}/publications/${publication.id}/update`}>
+                        <i className="fas fa-cog" />
+                      </Link>
+                      {publication.description ? <p>{publication.description}</p> : ""}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           ) : (
             <p>
               Sem publicações de processo cadastrados.{" "}
@@ -160,7 +178,6 @@ class ProcessView extends Component {
                 Voltar para lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
-              {basicData}
               {processActions}
               {infoTable}
               {processPublications}
