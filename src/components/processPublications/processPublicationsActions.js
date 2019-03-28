@@ -1,9 +1,9 @@
 import { GET_ERRORS } from "actions/types";
-// import {
-//   GET_PROCESSPUBLICATION,
-//   GET_PROCESSPUBLICATIONS,
-//   PROCESSPUBLICATIONS_LOADING
-// } from "./processPublicationsActionTypes";
+import {
+  GET_PROCESSPUBLICATION,
+  //GET_PROCESSPUBLICATIONS,
+  PROCESSPUBLICATIONS_LOADING
+} from "./processPublicationsActionTypes";
 
 import axios from "axios";
 
@@ -53,46 +53,62 @@ export const createProcessPublication = (processPublicationsData, callback_ok) =
     });
 };
 
-// export const getProcessPublications = processPublications_id => dispatch => {
-//   dispatch(setProcessPublicationssLoading());
-//   axios
-//     .get(`/v1/publications/${processPublications_id}`)
-//     .then(res =>
-//       dispatch({
-//         type: GET_PROCESSPUBLICATION,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
+export const getProcessPublication = publication_id => dispatch => {
+  dispatch(setProcessPublicationsLoading());
+  axios
+    .get(`/v1/publications/${publication_id}`)
+    .then(res =>
+      dispatch({
+        type: GET_PROCESSPUBLICATION,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
+    });
+};
 
-// export const updateProcessPublications = (processPublicationsData, callback_ok) => dispatch => {
-//   axios
-//     .put(`/v1/publications/${processPublicationsData.id}`, processPublicationsData)
-//     .then(res => {
-//       callback_ok(processPublicationsData.id);
-//     })
-//     .catch(err => {
-//       if (err.response) {
-//         let errors = err.response.data;
-//         errors.serverError = true;
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: errors
-//         });
-//       } else {
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: { anotherError: true }
-//         });
-//       }
-//     });
-// };
+//processPublicationss loading
+export const setProcessPublicationsLoading = () => {
+  return {
+    type: PROCESSPUBLICATIONS_LOADING
+  };
+};
+
+export const updateProcessPublication = (processPublicationData, callback_ok) => dispatch => {
+  axios
+    .put(`/v1/publications/${processPublicationData.id}`, processPublicationData)
+    .then(res => {
+      callback_ok(processPublicationData.id);
+    })
+    .catch(err => {
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
+    });
+};
 
 // export const deleteProcessPublications = (processPublications_id, callback_ok) => dispatch => {
 //   axios
@@ -115,13 +131,6 @@ export const createProcessPublication = (processPublicationsData, callback_ok) =
 //         });
 //       }
 //     });
-// };
-
-// //processPublicationss loading
-// export const setProcessPublicationssLoading = () => {
-//   return {
-//     type: PROCESSPUBLICATIONS_LOADING
-//   };
 // };
 
 // export const getProcessPublications = () => dispatch => {

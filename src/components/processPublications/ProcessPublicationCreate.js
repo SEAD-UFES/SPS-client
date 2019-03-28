@@ -231,6 +231,26 @@ class ProcessPublicationCreate extends Component {
         : [];
 
     //mounting render pieces
+
+    const alertsList = (
+      <div>
+        {errors.serverError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro do servidor
+          </div>
+        ) : (
+          ""
+        )}
+        {errors.anotherError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro desconhecido
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+
     const processPublicationTypeOptions = [{ label: "* Selecione o tipo de publicação", value: "" }].concat(
       processPublicationTypes
         ? processPublicationTypes.map(procPubTypes => {
@@ -373,6 +393,7 @@ class ProcessPublicationCreate extends Component {
               </Link>
               <h1 className="display-4 text-center">Criar publicação</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
+              {alertsList}
               {publicationForm}
             </div>
           </div>

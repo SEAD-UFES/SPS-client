@@ -1,11 +1,6 @@
-import {
-  isEmpty,
-  validateName,
-  validateDateRequired,
-  validateFileType
-} from "validation/";
+import { isEmpty, validateName, validateDateRequired, validateFileType } from "validation/";
 
-export const validateProcessPublicationForm = data => {
+export const validateProcessPublicationForm = (data, options) => {
   let errors = {};
   let field = {};
 
@@ -29,9 +24,11 @@ export const validateProcessPublicationForm = data => {
     errors.publicationType_id = field.error;
   }
 
-  field = validateFileType(data.file, ["application/pdf"]);
-  if (!field.isValid) {
-    errors.file = field.error;
+  if (!(options && options.verifyFile === false)) {
+    field = validateFileType(data.file, ["application/pdf"]);
+    if (!field.isValid) {
+      errors.file = field.error;
+    }
   }
 
   return {

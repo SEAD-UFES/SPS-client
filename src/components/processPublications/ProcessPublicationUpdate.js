@@ -7,22 +7,22 @@ import moment from "moment";
 import TextFieldGroup from "components/common/TextFieldGroup";
 import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
-import FileFieldGroup from "../common/FileFieldGroup";
 
 import { getProcess } from "actions/processActions";
 import { createProcessPublication } from "./processPublicationsActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
+import { getProcessPublication, updateProcessPublication } from "components/processPublications/processPublicationsActions";
 
 import { validateDateRequired, validateName } from "validation";
 import { validateProcessPublicationForm } from "./validateProcessPublicationForm";
-import { validateFileType } from "../../validation";
 
 class ProcessPublicationUpdate extends Component {
   constructor() {
     super();
 
     this.state = {
-      creation_date: moment().format("YYYY-MM-DD"),
+      id: "",
+      creation_date: "",
       name: "",
       selectiveProcess_id: "",
       call_id: "",
@@ -30,6 +30,8 @@ class ProcessPublicationUpdate extends Component {
       publicationType_id: "",
       description: "",
       valid: true,
+
+      fileName: "",
 
       file: null,
       fileUrl: null,
@@ -42,13 +44,12 @@ class ProcessPublicationUpdate extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onChangeFile = this.onChangeFile.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentWillMount() {
-    //get process from link
+    //handling process on state
     if (this.props.location.state && this.props.location.state.selectiveProcess) {
       this.setState({
         selectiveProcess_id: this.props.location.state.selectiveProcess.id,
@@ -70,6 +71,25 @@ class ProcessPublicationUpdate extends Component {
         });
       }
     }
+
+    //handling publication on state. Else load
+    if (this.props.location.state && this.props.location.state.publication) {
+      this.setState({
+        id: this.props.location.state.publication.id,
+        creation_date: moment(this.props.location.state.publication.date, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        selectiveProcess_id: this.props.location.state.publication.selectiveProcess_id,
+        call_id: this.props.location.state.publication.call_id ? this.props.location.state.publication.call_id : "",
+        step_id: this.props.location.state.publication.step_id ? this.props.location.state.publication.step_id : "",
+        publicationType_id: this.props.location.state.publication.publicationType_id ? this.props.location.state.publication.publicationType_id : "",
+        description: this.props.location.state.publication.description ? this.props.location.state.publication.description : "",
+        valid: this.props.location.state.publication.valid,
+        fileName: this.props.location.state.publication.file
+      });
+    } else {
+      if (this.props.match.params.publication_id) {
+        this.props.getProcessPublication(this.props.match.params.publication_id);
+      }
+    }
   }
 
   componentDidMount() {
@@ -86,13 +106,34 @@ class ProcessPublicationUpdate extends Component {
     //Load process on State if dont have
     if (!this.state.selectiveProcess) {
       if (nextProps.process) {
-        let process = nextProps.process.process;
-        let loading = nextProps.process.loading;
+        const process = nextProps.process.process;
+        const loading = nextProps.process.loading;
 
         if (process !== null && loading === false) {
           this.setState({
             selectiveProcess_id: process.id,
             selectiveProcess: process
+          });
+        }
+      }
+    }
+
+    //load publication on state if needed.
+    if (!(this.props.location.state && this.props.location.state.publication)) {
+      if (nextProps.processPublicationsStore) {
+        const publication = nextProps.processPublicationsStore.processPublication;
+        const loading = nextProps.processPublicationsStore.loading;
+        if (publication !== null && loading === false) {
+          this.setState({
+            id: publication.id,
+            creation_date: moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+            selectiveProcess_id: publication.selectiveProcess_id,
+            call_id: publication.call_id ? publication.call_id : "",
+            step_id: publication.step_id ? publication.step_id : "",
+            publicationType_id: publication.publicationType_id ? publication.publicationType_id : "",
+            description: publication.description ? publication.description : "",
+            valid: publication.valid,
+            fileName: publication.file
           });
         }
       }
@@ -105,48 +146,6 @@ class ProcessPublicationUpdate extends Component {
     });
   }
 
-  onChangeFile(e) {
-    e.preventDefault();
-
-    let file = e.target.files[0];
-    let reader = new FileReader();
-    const fieldName = e.target.name;
-    let errors = this.state.errors;
-
-    reader.onloadend = e => {
-      //validation
-      let valResult = validateFileType(file, ["application/pdf"]);
-      if (!valResult.isValid) {
-        errors = { ...errors, [fieldName]: valResult.error };
-      } else {
-        delete errors[fieldName];
-      }
-
-      //setting values on state
-      this.setState({
-        file: file,
-        fileUrl: reader.result,
-        errors: errors
-      });
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      //validation
-      let valResult = validateFileType(file, ["application/pdf"]);
-      if (!valResult.isValid) {
-        errors = { ...errors, [fieldName]: valResult.error };
-      } else {
-        delete errors[fieldName];
-      }
-
-      this.setState({
-        errors: errors
-      });
-    }
-  }
-
   onChange(e) {
     //local validation of fields:
     let errors = this.state.errors;
@@ -156,9 +155,6 @@ class ProcessPublicationUpdate extends Component {
       case "creation_date":
         valResult = validateDateRequired(e.target.value);
         break;
-      // case "name":
-      //   valResult = validateName(e.target.value);
-      //   break;
       case "selectiveProcess_id":
         valResult = validateName(e.target.value);
         break;
@@ -185,7 +181,8 @@ class ProcessPublicationUpdate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const publicationData = {
+    let publicationData = {
+      id: this.state.id,
       date: this.state.creation_date,
       name: this.state.name,
       selectiveProcess_id: this.state.selectiveProcess_id,
@@ -197,11 +194,12 @@ class ProcessPublicationUpdate extends Component {
       valid: this.state.valid
     };
 
-    const valRoleType = validateProcessPublicationForm(publicationData);
+    const valRoleType = validateProcessPublicationForm(publicationData, { verifyFile: false });
     if (!valRoleType.isValid) {
       this.setState({ errors: valRoleType.errors });
     } else {
-      this.props.createProcessPublication(publicationData, () => {
+      delete publicationData.file;
+      this.props.updateProcessPublication(publicationData, () => {
         this.props.history.push(`/processes/${this.state.selectiveProcess_id}`);
       });
     }
@@ -231,6 +229,26 @@ class ProcessPublicationUpdate extends Component {
         : [];
 
     //mounting render pieces
+
+    const alertsList = (
+      <div>
+        {errors.serverError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro do servidor
+          </div>
+        ) : (
+          ""
+        )}
+        {errors.anotherError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro desconhecido
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+
     const processPublicationTypeOptions = [{ label: "* Selecione o tipo de publicação", value: "" }].concat(
       processPublicationTypes
         ? processPublicationTypes.map(procPubTypes => {
@@ -286,15 +304,6 @@ class ProcessPublicationUpdate extends Component {
           error={errors.creation_date}
         />
 
-        {/* <TextFieldGroup
-          type="text"
-          name="name"
-          placeholder="* Nome da publicação"
-          value={this.state.name}
-          onChange={this.onChange}
-          error={errors.name}
-        /> */}
-
         <SelectListGroup
           placeholder="* Selecione o processo seletivo"
           name="selectiveProcess_id"
@@ -313,7 +322,6 @@ class ProcessPublicationUpdate extends Component {
             options={callOptions}
             onChange={this.onChange}
             error={errors.call_id}
-            disabled={this.state.lock_call ? true : false}
           />
         ) : (
           ""
@@ -350,7 +358,11 @@ class ProcessPublicationUpdate extends Component {
           error={errors.publicationType_id}
         />
 
-        <FileFieldGroup name="file" error={errors.file} onChange={this.onChangeFile} />
+        <div className="mt-4 mb-4">
+          <a href={`http://localhost:3000/v1/publications/download/${this.state.fileName}`}>
+            <i className="fas fa-file" /> {this.state.fileName}
+          </a>
+        </div>
 
         <div className="form-check mb-4">
           <input className="form-check-input" type="checkbox" name="valid" id="valid" checked={this.state.valid} onChange={this.onCheck} />
@@ -373,6 +385,7 @@ class ProcessPublicationUpdate extends Component {
               </Link>
               <h1 className="display-4 text-center">Editar publicação</h1>
               <p className="lead text-center">Altere os dados básicos</p>
+              {alertsList}
               {publicationForm}
             </div>
           </div>
@@ -385,12 +398,15 @@ class ProcessPublicationUpdate extends Component {
 ProcessPublicationUpdate.proptypes = {
   getProcess: PropTypes.func.isRequired,
   getProcessPublicationTypes: PropTypes.func.isRequired,
-  createProcessPublication: PropTypes.func.isRequired
+  createProcessPublication: PropTypes.func.isRequired,
+  getProcessPublication: PropTypes.func.isRequired,
+  updateProcessPublication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   process: state.process,
-  processPublicationTypesStore: state.processPublicationTypesStore
+  processPublicationTypesStore: state.processPublicationTypesStore,
+  processPublicationsStore: state.processPublicationsStore
 });
 
 export default connect(
@@ -398,6 +414,8 @@ export default connect(
   {
     getProcessPublicationTypes,
     createProcessPublication,
-    getProcess
+    getProcess,
+    getProcessPublication,
+    updateProcessPublication
   }
 )(ProcessPublicationUpdate);

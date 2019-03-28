@@ -48,7 +48,7 @@ export default class ProcessesRoutes extends Component {
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/:publication_id/publications/update`}
+          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/update`}
           component={ProcessPublicationUpdate}
         />
       </Switch>

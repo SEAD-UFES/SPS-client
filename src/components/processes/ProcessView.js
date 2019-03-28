@@ -142,7 +142,10 @@ class ProcessView extends Component {
                       >
                         {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")} | {publication.PublicationType.name}
                       </a>{" "}
-                      <Link className="text-info" to={`/processes/${process.id}/publications/${publication.id}/update`}>
+                      <Link
+                        className="text-info"
+                        to={{ pathname: `/processes/${process.id}/publications/${publication.id}/update`, state: { publication: publication } }}
+                      >
                         <i className="fas fa-cog" />
                       </Link>
                       {publication.description ? <p>{publication.description}</p> : ""}
