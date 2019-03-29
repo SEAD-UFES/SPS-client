@@ -110,28 +110,28 @@ export const updateProcessPublication = (processPublicationData, callback_ok) =>
     });
 };
 
-// export const deleteProcessPublications = (processPublications_id, callback_ok) => dispatch => {
-//   axios
-//     .delete(`/v1/publications/${processPublications_id}`)
-//     .then(res => {
-//       callback_ok();
-//     })
-//     .catch(err => {
-//       if (err.response) {
-//         let errors = err.response.data;
-//         errors.serverError = true;
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: errors
-//         });
-//       } else {
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: { anotherError: true }
-//         });
-//       }
-//     });
-// };
+export const deleteProcessPublication = (processPublication_id, callback_ok) => dispatch => {
+  axios
+    .delete(`/v1/publications/${processPublication_id}`)
+    .then(res => {
+      callback_ok();
+    })
+    .catch(err => {
+      if (err.response) {
+        let errors = err.response.data;
+        errors.serverError = true;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
+    });
+};
 
 // export const getProcessPublications = () => dispatch => {
 //   dispatch(setProcessPublicationssLoading());

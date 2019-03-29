@@ -9,7 +9,6 @@ import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 
 import { getProcess } from "actions/processActions";
-import { createProcessPublication } from "./processPublicationsActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 import { getProcessPublication, updateProcessPublication } from "components/processPublications/processPublicationsActions";
 
@@ -23,7 +22,6 @@ class ProcessPublicationUpdate extends Component {
     this.state = {
       id: "",
       creation_date: "",
-      name: "",
       selectiveProcess_id: "",
       call_id: "",
       step_id: "",
@@ -184,7 +182,6 @@ class ProcessPublicationUpdate extends Component {
     let publicationData = {
       id: this.state.id,
       date: this.state.creation_date,
-      name: this.state.name,
       selectiveProcess_id: this.state.selectiveProcess_id,
       call_id: this.state.call_id ? this.state.call_id : null,
       step_id: this.state.step_id ? this.state.step_id : null,
@@ -375,6 +372,13 @@ class ProcessPublicationUpdate extends Component {
       </form>
     );
 
+    const deleteButton = (
+      <div className="text-right mt-2 mb-2">
+        <Link className="text-danger" to={{ pathname: `/processes/${this.state.selectiveProcess_id}/publications/${this.state.id}/delete` }}>
+          <i className="fas fa-times-circle" /> Excluir esta publicação
+        </Link>
+      </div>
+    );
     return (
       <div className="publication-update">
         <div className="container">
@@ -387,6 +391,7 @@ class ProcessPublicationUpdate extends Component {
               <p className="lead text-center">Altere os dados básicos</p>
               {alertsList}
               {publicationForm}
+              {deleteButton}
             </div>
           </div>
         </div>
@@ -398,7 +403,6 @@ class ProcessPublicationUpdate extends Component {
 ProcessPublicationUpdate.proptypes = {
   getProcess: PropTypes.func.isRequired,
   getProcessPublicationTypes: PropTypes.func.isRequired,
-  createProcessPublication: PropTypes.func.isRequired,
   getProcessPublication: PropTypes.func.isRequired,
   updateProcessPublication: PropTypes.func.isRequired
 };
@@ -413,7 +417,6 @@ export default connect(
   mapStateToProps,
   {
     getProcessPublicationTypes,
-    createProcessPublication,
     getProcess,
     getProcessPublication,
     updateProcessPublication

@@ -15,6 +15,7 @@ import VacancyCreate from "../processCallsVacancies/VacancyCreate";
 import VacancyEdit from "../processCallsVacancies/VacancyEdit";
 import ProcessPublicationCreate from "components/processPublications/ProcessPublicationCreate";
 import ProcessPublicationUpdate from "components/processPublications/ProcessPublicationUpdate";
+import ProcessPublicationDelete from "components/processPublications/ProcessPublicationDelete";
 
 export default class ProcessesRoutes extends Component {
   render() {
@@ -50,6 +51,14 @@ export default class ProcessesRoutes extends Component {
           exact
           path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/update`}
           component={ProcessPublicationUpdate}
+        />
+
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/publications/:publication_id/delete`} component={ProcessPublicationDelete} />
+
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/delete`}
+          component={ProcessPublicationDelete}
         />
       </Switch>
     );

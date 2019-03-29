@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getRoleAssignment } from "./roleAssignmentsActions";
+import { getRoleAssignment, deleteRoleAssignment } from "./roleAssignmentsActions";
 import Spinner from "components/common/Spinner";
-import { deleteRoleAssignment } from "./roleAssignmentsActions";
 
 class RoleAssignmentDelete extends Component {
   constructor() {
@@ -30,13 +29,11 @@ class RoleAssignmentDelete extends Component {
     }
   }
 
-  onSubmit() {
-    this.props.deleteRoleAssignment(
-      this.props.match.params.roleassignment_id,
-      () => {
-        this.props.history.push(`/roleassignments`);
-      }
-    );
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.deleteRoleAssignment(this.props.match.params.roleassignment_id, () => {
+      this.props.history.push(`/roleassignments`);
+    });
   }
 
   render() {
@@ -44,8 +41,7 @@ class RoleAssignmentDelete extends Component {
     const { errors } = this.state;
 
     const infoTable =
-      roleAssignmentsStore.roleAssignment === null ||
-      roleAssignmentsStore.loading ? (
+      roleAssignmentsStore.roleAssignment === null || roleAssignmentsStore.loading ? (
         <Spinner />
       ) : (
         <div>
@@ -75,11 +71,7 @@ class RoleAssignmentDelete extends Component {
                   <strong>Curso:</strong>
                 </td>
                 <td>
-                  {roleAssignmentsStore.roleAssignment.Course ? (
-                    roleAssignmentsStore.roleAssignment.Course.name
-                  ) : (
-                    <span className="text-muted">n/a</span>
-                  )}
+                  {roleAssignmentsStore.roleAssignment.Course ? roleAssignmentsStore.roleAssignment.Course.name : <span className="text-muted">n/a</span>}
                 </td>
               </tr>
             </tbody>
@@ -111,18 +103,11 @@ class RoleAssignmentDelete extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/roleassignments/${
-                  this.props.match.params.roleassignment_id
-                }`}
-                className="btn btn-light"
-              >
+              <Link to={`/roleassignments/${this.props.match.params.roleassignment_id}`} className="btn btn-light">
                 Voltar para lista de atribuição de papeis
               </Link>
 
-              <h1 className="display-4 mb-4 text-center">
-                Excluir atribuição de papel
-              </h1>
+              <h1 className="display-4 mb-4 text-center">Excluir atribuição de papel</h1>
 
               {alertsList}
 
@@ -132,12 +117,7 @@ class RoleAssignmentDelete extends Component {
 
               <div className="row">
                 <div className="col">
-                  <input
-                    type="button"
-                    value="Excluir"
-                    className="btn btn-danger btn-block mt-4"
-                    onClick={this.onSubmit}
-                  />
+                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
                 </div>
                 <div className="col">
                   <input
