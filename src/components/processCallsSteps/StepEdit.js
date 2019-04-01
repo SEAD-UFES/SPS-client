@@ -213,6 +213,21 @@ class StepEdit extends Component {
       </form>
     );
 
+    const deleteButton = (
+      <div className="text-right mt-2 mb-2">
+        <Link
+          className="text-danger"
+          to={{
+            pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/steps/${
+              this.props.match.params.step_id
+            }/delete`
+          }}
+        >
+          <i className="fas fa-times-circle" /> Excluir esta etapa
+        </Link>
+      </div>
+    );
+
     return (
       <div className="register">
         <div className="container">
@@ -224,6 +239,7 @@ class StepEdit extends Component {
               <h1 className="display-4 text-center">Editar etapa</h1>
               <p className="lead text-center">Altere os dados básicos</p>
               {stepForm}
+              {deleteButton}
             </div>
           </div>
         </div>

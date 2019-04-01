@@ -9,8 +9,11 @@ import ProcessView from "./ProcessView";
 import ProcessEdit from "./ProcessEdit";
 import CallCreate from "../processCalls/CallCreate";
 import CallEdit from "../processCalls/CallEdit";
+
 import StepCreate from "../processCallsSteps/StepCreate";
 import StepEdit from "../processCallsSteps/StepEdit";
+import StepDelete from "../processCallsSteps/StepDelete";
+
 import VacancyCreate from "../processCallsVacancies/VacancyCreate";
 import VacancyEdit from "../processCallsVacancies/VacancyEdit";
 import VacancyDelete from "../processCallsVacancies/VacancyDelete";
@@ -38,6 +41,8 @@ export default class ProcessesRoutes extends Component {
         <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/steps/create`} component={StepCreate} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/steps/:step_id/edit`} component={StepEdit} />
+
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/steps/:step_id/delete`} component={StepDelete} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/vacancies/create`} component={VacancyCreate} />
 

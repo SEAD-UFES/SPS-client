@@ -15,6 +15,7 @@ import permissionAssignmentsReducer from "components/permissionAssignments/permi
 import processPublicationTypesReducer from "components/processPublicationTypes/processPublicationTypesReducer";
 import processPublicationsReducer from "components/processPublications/processPublicationsReducer";
 import processCallVacanciesReducer from "components/processCallsVacancies/processCallVacanciesReducer";
+import processCallStepsReducer from "components/processCallsSteps/processCallStepsReducer";
 
 //import postReducer from "./postReducer";
 
@@ -34,7 +35,8 @@ export default combineReducers({
   permissionAssignmentsStore: permissionAssignmentsReducer,
   processPublicationTypesStore: processPublicationTypesReducer,
   processPublicationsStore: processPublicationsReducer,
-  processCallVacanciesStore: processCallVacanciesReducer
+  processCallVacanciesStore: processCallVacanciesReducer,
+  processCallStepsStore: processCallStepsReducer
 
   //post: postReducer
 });

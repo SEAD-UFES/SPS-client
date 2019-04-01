@@ -7,11 +7,7 @@ import { isEmpty } from "../../validation";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 
-import {
-  validateAssignment_id,
-  validateProcessCallVacancyForm,
-  validateNumberRequired
-} from "../../validation";
+import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
 import {
   getAssignmentOptions,
@@ -140,9 +136,7 @@ class VacancyEdit extends Component {
       call_id: this.props.match.params.call_id,
       assignment_id: this.state.assignment_id,
       region_id: this.state.region_id ? this.state.region_id : null,
-      restriction_id: this.state.restriction_id
-        ? this.state.restriction_id
-        : null,
+      restriction_id: this.state.restriction_id ? this.state.restriction_id : null,
       qtd: this.state.qtd,
       reserve: this.state.reserve
     };
@@ -151,12 +145,7 @@ class VacancyEdit extends Component {
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {
-      this.props.updateProcessCallVacancy(
-        this.props.match.params.process_id,
-        this.props.match.params.vacancy_id,
-        vacancyData,
-        this.props.history
-      );
+      this.props.updateProcessCallVacancy(this.props.match.params.process_id, this.props.match.params.vacancy_id, vacancyData, this.props.history);
     }
   }
 
@@ -164,9 +153,7 @@ class VacancyEdit extends Component {
     const { errors } = this.state;
     const { assignments, restrictions, regions } = this.props;
 
-    const assignmentOptions = [
-      { label: "* Selecione a atribuição", value: "" }
-    ].concat(
+    const assignmentOptions = [{ label: "* Selecione a atribuição", value: "" }].concat(
       assignments
         ? assignments.map(assignment => {
             return {
@@ -177,9 +164,7 @@ class VacancyEdit extends Component {
         : []
     );
 
-    const restrictionsOptions = [
-      { label: "Selecione a restrição (opcional)", value: "" }
-    ].concat(
+    const restrictionsOptions = [{ label: "Selecione a restrição (opcional)", value: "" }].concat(
       restrictions
         ? restrictions.map(restriction => {
             return {
@@ -190,9 +175,7 @@ class VacancyEdit extends Component {
         : []
     );
 
-    const regionsOptions = [
-      { label: "Selecione o polo (opcional)", value: "" }
-    ].concat(
+    const regionsOptions = [{ label: "Selecione o polo (opcional)", value: "" }].concat(
       regions
         ? regions.map(region => {
             return {
@@ -203,72 +186,75 @@ class VacancyEdit extends Component {
         : []
     );
 
+    const vacancyForm = (
+      <form noValidate onSubmit={this.onSubmit}>
+        <SelectListGroup
+          placeholder="* Selecione a atribuição"
+          name="assignment_id"
+          value={this.state.assignment_id}
+          options={assignmentOptions}
+          onChange={this.onChange}
+          error={errors.assignment_id}
+        />
+
+        <SelectListGroup
+          placeholder="Selecione o polo associado"
+          name="region_id"
+          value={this.state.region_id}
+          options={regionsOptions}
+          onChange={this.onChange}
+          error={errors.region_id}
+        />
+
+        <SelectListGroup
+          placeholder="Selecione a restrição da vaga"
+          name="restriction_id"
+          value={this.state.restriction_id}
+          options={restrictionsOptions}
+          onChange={this.onChange}
+          error={errors.restriction_id}
+        />
+
+        <TextFieldGroup type="text" name="qtd" placeholder="* Quantidade" value={this.state.qtd} onChange={this.onChange} error={errors.qtd} />
+
+        <div className="form-check mb-4">
+          <input className="form-check-input" type="checkbox" name="reserve" id="reserve" checked={this.state.reserve} onChange={this.onCheck} />
+          <label className="form-check-label" htmlFor="reserve">
+            Esta oferta de vagas permite cadastro de reserva.
+          </label>
+        </div>
+
+        <input type="submit" className="btn btn-info btn-block mt-4" />
+      </form>
+    );
+
+    const deleteButton = (
+      <div className="text-right mt-2 mb-2">
+        <Link
+          className="text-danger"
+          to={{
+            pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/vacancies/${
+              this.props.match.params.vacancy_id
+            }/delete`
+          }}
+        >
+          <i className="fas fa-times-circle" /> Excluir esta vaga
+        </Link>
+      </div>
+    );
+
     return (
       <div className="register">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.process_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Editar oferta de vaga</h1>
               <p className="lead text-center">Altere os dados básicos</p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <SelectListGroup
-                  placeholder="* Selecione a atribuição"
-                  name="assignment_id"
-                  value={this.state.assignment_id}
-                  options={assignmentOptions}
-                  onChange={this.onChange}
-                  error={errors.assignment_id}
-                />
-
-                <SelectListGroup
-                  placeholder="Selecione o polo associado"
-                  name="region_id"
-                  value={this.state.region_id}
-                  options={regionsOptions}
-                  onChange={this.onChange}
-                  error={errors.region_id}
-                />
-
-                <SelectListGroup
-                  placeholder="Selecione a restrição da vaga"
-                  name="restriction_id"
-                  value={this.state.restriction_id}
-                  options={restrictionsOptions}
-                  onChange={this.onChange}
-                  error={errors.restriction_id}
-                />
-
-                <TextFieldGroup
-                  type="text"
-                  name="qtd"
-                  placeholder="* Quantidade"
-                  value={this.state.qtd}
-                  onChange={this.onChange}
-                  error={errors.qtd}
-                />
-
-                <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="reserve"
-                    id="reserve"
-                    checked={this.state.reserve}
-                    onChange={this.onCheck}
-                  />
-                  <label className="form-check-label" htmlFor="reserve">
-                    Esta oferta de vagas permite cadastro de reserva.
-                  </label>
-                </div>
-
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
+              {vacancyForm}
+              {deleteButton}
             </div>
           </div>
         </div>

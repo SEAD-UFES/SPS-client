@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 import Spinner from "components/common/Spinner";
 
-import { getProcessCallVacancy, deleteProcessCallVacancy } from "components/processCallsVacancies/vacanciesActions";
+import { getProcessCallStep, deleteProcessCallStep } from "components/processCallsSteps/stepsActions";
 
-class VacancyDelete extends Component {
+class StepDelete extends Component {
   constructor() {
     super();
     this.state = { errors: [] };
@@ -16,8 +16,8 @@ class VacancyDelete extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.vacancy_id) {
-      this.props.getProcessCallVacancy(this.props.match.params.vacancy_id);
+    if (this.props.match.params.step_id) {
+      this.props.getProcessCallStep(this.props.match.params.step_id);
     }
   }
 
@@ -31,26 +31,26 @@ class VacancyDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteProcessCallVacancy(this.props.match.params.vacancy_id, () => {
+    this.props.deleteProcessCallStep(this.props.match.params.step_id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`);
     });
   }
 
   render() {
-    const { vacancy, loading } = this.props;
+    const { step, loading } = this.props;
     const { errors } = this.state;
 
     const alertsList = (
       <div>
         {errors.serverError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro do servidor
           </div>
         ) : (
           ""
         )}
         {errors.anotherError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro desconhecido
           </div>
         ) : (
@@ -60,7 +60,7 @@ class VacancyDelete extends Component {
     );
 
     const infoTable =
-      vacancy === null || loading ? (
+      step === null || loading ? (
         <Spinner />
       ) : (
         <div>
@@ -71,12 +71,30 @@ class VacancyDelete extends Component {
                 <td>
                   <strong>Id:</strong>
                 </td>
-                <td>{vacancy.id}</td>
+                <td>{step.id}</td>
               </tr>
             </tbody>
           </table>
         </div>
       );
+
+    const choices = (
+      <div className="row">
+        <div className="col">
+          <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+        </div>
+        <div className="col">
+          <input
+            type="button"
+            value="Cancelar"
+            className="btn btn-secondary btn-block mt-4"
+            onClick={() => {
+              this.props.history.push(`/processes/${this.props.match.params.process_id}`);
+            }}
+          />
+        </div>
+      </div>
+    );
 
     return (
       <div className="roleassignments">
@@ -86,30 +104,12 @@ class VacancyDelete extends Component {
               <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para lista de atribuição de papeis
               </Link>
-
-              <h1 className="display-4 mb-4 text-center">Excluir atribuição de papel</h1>
-
+              <h1 className="display-4 mb-4 text-center">Excluir etapa</h1>
               {alertsList}
-
               <p className="lead text-center">Você solicitou excluir o item:</p>
               {infoTable}
               <p className="lead text-center">Confirma a operação?</p>
-
-              <div className="row">
-                <div className="col">
-                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
-                </div>
-                <div className="col">
-                  <input
-                    type="button"
-                    value="Cancelar"
-                    className="btn btn-secondary btn-block mt-4"
-                    onClick={() => {
-                      this.props.history.push(`/processes/${this.props.match.params.process_id}`);
-                    }}
-                  />
-                </div>
-              </div>
+              {choices}
             </div>
           </div>
         </div>
@@ -118,20 +118,21 @@ class VacancyDelete extends Component {
   }
 }
 
-VacancyDelete.propTypes = {
-  getProcessCallVacancy: PropTypes.func.isRequired,
-  deleteProcessCallVacancy: PropTypes.func.isRequired
+StepDelete.propTypes = {
+  getProcessCallStep: PropTypes.func.isRequired,
+  deleteProcessCallStep: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  vacancy: state.processCallVacanciesStore.vacancy,
-  loading: state.processCallVacanciesStore.loading
+  step: state.processCallStepsStore.step,
+  loading: state.processCallStepsStore.loading,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessCallVacancy,
-    deleteProcessCallVacancy
+    getProcessCallStep,
+    deleteProcessCallStep
   }
-)(VacancyDelete);
+)(StepDelete);
