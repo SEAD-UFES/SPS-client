@@ -16,12 +16,7 @@ import {
   validateProcessCallStepForm,
   validateNumberRequired
 } from "../../validation";
-import {
-  getStepOptions,
-  createProcessCallStep,
-  getProcessCallStep,
-  updateProcessCallStep
-} from "../../actions/processActions";
+import { getStepOptions, createProcessCallStep, getProcessCallStep, updateProcessCallStep } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepEdit extends Component {
@@ -74,22 +69,12 @@ class StepEdit extends Component {
     if (isEmpty(nextProps.errors) && nextProps.process.step) {
       const step = nextProps.process.step;
       this.setState({
+        number: step.number,
         stepType_id: step.stepType_id,
-        resultDate: moment(step.resultDate, "YYYY-MM-DD HH:mm:ss").format(
-          "YYYY-MM-DD"
-        ),
-        openAppealDate: moment(
-          step.openAppealDate,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format("YYYY-MM-DD"),
-        limitAppealDate: moment(
-          step.limitAppealDate,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format("YYYY-MM-DD"),
-        resultAfterAppealDate: moment(
-          step.resultAfterAppealDate,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format("YYYY-MM-DD")
+        resultDate: moment(step.resultDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        openAppealDate: moment(step.openAppealDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        limitAppealDate: moment(step.limitAppealDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        resultAfterAppealDate: moment(step.resultAfterAppealDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
       });
     }
   }
@@ -107,36 +92,16 @@ class StepEdit extends Component {
         valResult = validateStepType_id(e.target.value);
         break;
       case "resultDate":
-        valResult = validateResultDate(
-          e.target.value,
-          this.state.openAppealDate,
-          this.state.limitAppealDate,
-          this.state.resultAfterAppealDate
-        );
+        valResult = validateResultDate(e.target.value, this.state.openAppealDate, this.state.limitAppealDate, this.state.resultAfterAppealDate);
         break;
       case "openAppealDate":
-        valResult = validateOpenAppealDate(
-          this.state.resultDate,
-          e.target.value,
-          this.state.limitAppealDate,
-          this.state.resultAfterAppealDate
-        );
+        valResult = validateOpenAppealDate(this.state.resultDate, e.target.value, this.state.limitAppealDate, this.state.resultAfterAppealDate);
         break;
       case "limitAppealDate":
-        valResult = validateLimitAppealDate(
-          this.state.resultDate,
-          this.state.openAppealDate,
-          e.target.value,
-          this.state.resultAfterAppealDate
-        );
+        valResult = validateLimitAppealDate(this.state.resultDate, this.state.openAppealDate, e.target.value, this.state.resultAfterAppealDate);
         break;
       case "resultAfterAppealDate":
-        valResult = validateResultAfterAppealDate(
-          this.state.resultDate,
-          this.state.openAppealDate,
-          this.state.limitAppealDate,
-          e.target.value
-        );
+        valResult = validateResultAfterAppealDate(this.state.resultDate, this.state.openAppealDate, this.state.limitAppealDate, e.target.value);
         break;
       default:
         break;
@@ -173,21 +138,14 @@ class StepEdit extends Component {
       this.setState({ errors: valStep.errors });
     } else {
       console.log("ready!");
-      this.props.updateProcessCallStep(
-        this.props.match.params.process_id,
-        this.props.match.params.step_id,
-        StepData,
-        this.props.history
-      );
+      this.props.updateProcessCallStep(this.props.match.params.process_id, this.props.match.params.step_id, StepData, this.props.history);
     }
   }
 
   render() {
     const { errors } = this.state;
 
-    const steptypeOptions = [
-      { label: "Escolha o tipo de etapa", value: "" }
-    ].concat(
+    const steptypeOptions = [{ label: "Escolha o tipo de etapa", value: "" }].concat(
       this.props.options
         ? this.props.options.map(steptype => {
             return {
@@ -198,71 +156,74 @@ class StepEdit extends Component {
         : []
     );
 
+    const stepForm = (
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup placeholder="Número da etapa" type="text" name="number" value={this.state.number} onChange={this.onChange} error={errors.number} />
+
+        <SelectListGroup
+          placeholder="Escolha o tipo de etapa"
+          name="stepType_id"
+          value={this.state.stepType_id}
+          options={steptypeOptions}
+          onChange={this.onChange}
+          error={errors.stepType_id}
+        />
+
+        <h6>Previsão de resultado da etapa</h6>
+        <TextFieldGroup
+          placeholder="Previsão de resultado da etapa"
+          type="date"
+          name="resultDate"
+          value={this.state.resultDate}
+          onChange={this.onChange}
+          error={errors.resultDate}
+        />
+
+        <h6>Início do periodo de recursos</h6>
+        <TextFieldGroup
+          placeholder="Início do periodo de recursos"
+          type="date"
+          name="openAppealDate"
+          value={this.state.openAppealDate}
+          onChange={this.onChange}
+          error={errors.openAppealDate}
+        />
+
+        <h6>Fim do periodo de recursos</h6>
+        <TextFieldGroup
+          placeholder="Fim do periodo de recursos"
+          type="date"
+          name="limitAppealDate"
+          value={this.state.limitAppealDate}
+          onChange={this.onChange}
+          error={errors.limitAppealDate}
+        />
+
+        <h6>Previsão de resultado pós recursos</h6>
+        <TextFieldGroup
+          placeholder="Previsão de resultado pós recursos"
+          type="date"
+          name="resultAfterAppealDate"
+          value={this.state.resultAfterAppealDate}
+          onChange={this.onChange}
+          error={errors.resultAfterAppealDate}
+        />
+
+        <input type="submit" className="btn btn-info btn-block mt-4" />
+      </form>
+    );
+
     return (
       <div className="register">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.process_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Editar etapa</h1>
               <p className="lead text-center">Altere os dados básicos</p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <SelectListGroup
-                  placeholder="Escolha o tipo de etapa"
-                  name="stepType_id"
-                  value={this.state.stepType_id}
-                  options={steptypeOptions}
-                  onChange={this.onChange}
-                  error={errors.stepType_id}
-                />
-
-                <h6>Previsão de resultado da etapa</h6>
-                <TextFieldGroup
-                  placeholder="Previsão de resultado da etapa"
-                  type="date"
-                  name="resultDate"
-                  value={this.state.resultDate}
-                  onChange={this.onChange}
-                  error={errors.resultDate}
-                />
-
-                <h6>Início do periodo de recursos</h6>
-                <TextFieldGroup
-                  placeholder="Início do periodo de recursos"
-                  type="date"
-                  name="openAppealDate"
-                  value={this.state.openAppealDate}
-                  onChange={this.onChange}
-                  error={errors.openAppealDate}
-                />
-
-                <h6>Fim do periodo de recursos</h6>
-                <TextFieldGroup
-                  placeholder="Fim do periodo de recursos"
-                  type="date"
-                  name="limitAppealDate"
-                  value={this.state.limitAppealDate}
-                  onChange={this.onChange}
-                  error={errors.limitAppealDate}
-                />
-
-                <h6>Previsão de resultado pós recursos</h6>
-                <TextFieldGroup
-                  placeholder="Previsão de resultado pós recursos"
-                  type="date"
-                  name="resultAfterAppealDate"
-                  value={this.state.resultAfterAppealDate}
-                  onChange={this.onChange}
-                  error={errors.resultAfterAppealDate}
-                />
-
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
+              {stepForm}
             </div>
           </div>
         </div>
