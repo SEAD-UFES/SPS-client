@@ -7,14 +7,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import {
-  isEmpty,
-  validateProcessNumber,
-  validateYearRequired,
-  validateDescription,
-  validateProcessForm,
-  validateId
-} from "../../validation";
+import { isEmpty, validateProcessNumber, validateYearRequired, validateDescription, validateProcessForm, validateId } from "../../validation";
 
 import { clearErrors } from "../../actions/errorActions";
 import { getProcess, updateProcess } from "../../actions/processActions";
@@ -120,6 +113,7 @@ class ProcessEdit extends Component {
     const processData = {
       number: this.state.number,
       year: this.state.year,
+      course_id: this.state.course_id,
       description: this.state.description,
       visible: this.state.visible
     };
@@ -128,11 +122,7 @@ class ProcessEdit extends Component {
     if (!valProcess.isValid) {
       this.setState({ errors: valProcess.errors });
     } else {
-      this.props.updateProcess(
-        this.props.match.params.id,
-        processData,
-        this.props.history
-      );
+      this.props.updateProcess(this.props.match.params.id, processData, this.props.history);
     }
   }
 
@@ -156,32 +146,15 @@ class ProcessEdit extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Editar processo</h1>
               <p className="lead text-center">Altere os dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  type="text"
-                  name="number"
-                  placeholder="* Número"
-                  value={this.state.number}
-                  onChange={this.onChange}
-                  error={errors.number}
-                />
+                <TextFieldGroup type="text" name="number" placeholder="* Número" value={this.state.number} onChange={this.onChange} error={errors.number} />
 
-                <TextFieldGroup
-                  type="text"
-                  name="year"
-                  placeholder="* Ano"
-                  value={this.state.year}
-                  onChange={this.onChange}
-                  error={errors.year}
-                />
+                <TextFieldGroup type="text" name="year" placeholder="* Ano" value={this.state.year} onChange={this.onChange} error={errors.year} />
 
                 <SelectListGroup
                   placeholder=""
@@ -202,14 +175,7 @@ class ProcessEdit extends Component {
                 />
 
                 <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="visible"
-                    id="visible"
-                    checked={this.state.visible}
-                    onChange={this.onCheck}
-                  />
+                  <input className="form-check-input" type="checkbox" name="visible" id="visible" checked={this.state.visible} onChange={this.onCheck} />
                   <label className="form-check-label" htmlFor="visible">
                     Tornar processo visível
                   </label>

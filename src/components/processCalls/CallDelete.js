@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Spinner from "components/common/Spinner";
 
-import { getProcessCallStep, deleteProcessCallStep } from "components/processCallsSteps/stepsActions";
+import { getProcessCall, deleteProcessCall } from "components/processCalls/callsActions";
 
 class CallDelete extends Component {
   constructor() {
@@ -16,8 +16,8 @@ class CallDelete extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.step_id) {
-      this.props.getProcessCallStep(this.props.match.params.step_id);
+    if (this.props.match.params.call_id) {
+      this.props.getProcessCall(this.props.match.params.call_id);
     }
   }
 
@@ -31,13 +31,13 @@ class CallDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteProcessCallStep(this.props.match.params.step_id, () => {
+    this.props.deleteProcessCall(this.props.match.params.call_id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`);
     });
   }
 
   render() {
-    const { step, loading } = this.props;
+    const { call, loading } = this.props;
     const { errors } = this.state;
 
     const alertsList = (
@@ -60,7 +60,7 @@ class CallDelete extends Component {
     );
 
     const infoTable =
-      step === null || loading ? (
+      call === null || loading ? (
         <Spinner />
       ) : (
         <div>
@@ -71,7 +71,13 @@ class CallDelete extends Component {
                 <td>
                   <strong>Id:</strong>
                 </td>
-                <td>{step.id}</td>
+                <td>{call.id}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Número:</strong>
+                </td>
+                <td>{call.number}</td>
               </tr>
             </tbody>
           </table>
@@ -119,20 +125,20 @@ class CallDelete extends Component {
 }
 
 CallDelete.propTypes = {
-  getProcessCallStep: PropTypes.func.isRequired,
-  deleteProcessCallStep: PropTypes.func.isRequired
+  getProcessCall: PropTypes.func.isRequired,
+  deleteProcessCall: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  step: state.processCallStepsStore.step,
-  loading: state.processCallStepsStore.loading,
+  call: state.processCallsStore.call,
+  loading: state.processCallsStore.loading,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessCallStep,
-    deleteProcessCallStep
+    getProcessCall,
+    deleteProcessCall
   }
 )(CallDelete);

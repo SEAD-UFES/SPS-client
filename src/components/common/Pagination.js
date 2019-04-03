@@ -22,24 +22,19 @@ class Pagination extends React.Component {
 
   componentWillMount() {
     var pager = this.state.pager;
-    pager = this.getPager(
-      this.props.currentPage,
-      this.props.numberOfPages,
-      this.props.pageSize
-    );
+    pager = this.getPager(this.props.currentPage, this.props.numberOfPages, this.props.pageSize);
     this.setState({ pager: pager });
   }
 
-  componentWillReceiveProps(nextProps) {}
-
-  componentDidUpdate(prevProps, prevState) {}
-
   setPage(page) {
+    console.log(`SetPage:${page}`);
     var { pageSize } = this.props;
     var pager = this.state.pager;
 
     if (page < 1 || page > pager.totalPages) {
       return;
+    } else {
+      this.setState({ pager: this.getPager(page, pager.totalPages, pager.pageSize) });
     }
 
     this.props.onChangePage(page, pageSize);
@@ -76,9 +71,7 @@ class Pagination extends React.Component {
     }
 
     // create an array of pages to ng-repeat in the pager control
-    var pages = [...Array(endPage + 1 - startPage).keys()].map(
-      i => startPage + i
-    );
+    var pages = [...Array(endPage + 1 - startPage).keys()].map(i => startPage + i);
 
     // return object with all pager properties required by the view
     return {
@@ -99,60 +92,38 @@ class Pagination extends React.Component {
       return null;
     }
 
+    console.log(pager.currentPage);
+
     return (
       <ul className="pagination justify-content-center">
-        <li
-          className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}
-        >
+        <li className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}>
           <button className="page-link" onClick={() => this.setPage(1)}>
-            First
+            <i className="fas fa-step-backward" />
           </button>
         </li>
 
-        <li
-          className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}
-        >
-          <button
-            className="page-link"
-            onClick={() => this.setPage(pager.currentPage - 1)}
-          >
-            Previous
+        <li className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}>
+          <button className="page-link" onClick={() => this.setPage(pager.currentPage - 1)}>
+            <i className="fas fa-backward" />
           </button>
         </li>
+
         {pager.pages.map((page, index) => (
-          <li
-            key={index}
-            className={`page-item ${
-              pager.currentPage === page ? "active" : ""
-            }`}
-          >
+          <li key={index} className={`page-item ${pager.currentPage === page ? "active" : ""}`}>
             <button className="page-link" onClick={() => this.setPage(page)}>
               {page}
             </button>
           </li>
         ))}
-        <li
-          className={`page-item ${
-            pager.currentPage === pager.totalPages ? "disabled" : ""
-          }`}
-        >
-          <button
-            className="page-link"
-            onClick={() => this.setPage(pager.currentPage + 1)}
-          >
-            Next
+
+        <li className={`page-item ${pager.currentPage === pager.totalPages ? "disabled" : ""}`}>
+          <button className="page-link" onClick={() => this.setPage(pager.currentPage + 1)}>
+            <i className="fas fa-forward" />
           </button>
         </li>
-        <li
-          className={`page-item ${
-            pager.currentPage === pager.totalPages ? "disabled" : ""
-          }`}
-        >
-          <button
-            className="page-link"
-            onClick={() => this.setPage(pager.totalPages)}
-          >
-            Last
+        <li className={`page-item ${pager.currentPage === pager.totalPages ? "disabled" : ""}`}>
+          <button className="page-link" onClick={() => this.setPage(pager.totalPages)}>
+            <i className="fas fa-step-forward" />
           </button>
         </li>
       </ul>

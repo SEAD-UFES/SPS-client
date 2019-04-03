@@ -28,8 +28,7 @@ class Processes extends Component {
   //componentWillReceiveProps(nextProps) {}
 
   onChangePage(page, pageSize) {
-    //this.setState({ pageOfItems: pageOfItems });
-    this.props.getUserList(page, pageSize);
+    //this.props.getUserList(page, pageSize);
     this.props.getProcessList(page, pageSize);
   }
 
@@ -64,10 +63,7 @@ class Processes extends Component {
                       <td>{process.Course.name}</td>
                       <td>{process.visible ? "Visível" : "Oculto"}</td>
                       <td>
-                        <Link
-                          className="text-success"
-                          to={`/processes/${process.id}`}
-                        >
+                        <Link className="text-success" to={`/processes/${process.id}`}>
                           <i className="fas fa-info-circle" />
                         </Link>
                       </td>
@@ -76,11 +72,7 @@ class Processes extends Component {
                 })}
               </tbody>
             </table>
-            <Pagination
-              currentPage={processes.info.currentPage}
-              numberOfPages={processes.info.numberOfPages}
-              onChangePage={this.onChangePage}
-            />
+            <Pagination currentPage={processes.info.currentPage} numberOfPages={processes.info.numberOfPages} onChangePage={this.onChangePage} />
           </div>
         );
       }

@@ -43,14 +43,14 @@ class VacancyDelete extends Component {
     const alertsList = (
       <div>
         {errors.serverError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro do servidor
           </div>
         ) : (
           ""
         )}
         {errors.anotherError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro desconhecido
           </div>
         ) : (
@@ -73,10 +73,66 @@ class VacancyDelete extends Component {
                 </td>
                 <td>{vacancy.id}</td>
               </tr>
+              <tr>
+                <td>
+                  <strong>Processo:</strong>
+                </td>
+                <td>{`${vacancy.Call.SelectiveProcess.number}/${vacancy.Call.SelectiveProcess.year} - ${vacancy.Call.SelectiveProcess.Course.name} | Chamada ${
+                  vacancy.Call.number
+                }`}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Atribuição:</strong>
+                </td>
+                <td>{vacancy.Assignment.name}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Região:</strong>
+                </td>
+                <td>{vacancy.Region ? vacancy.Region.name : "Sem região"}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Restrição:</strong>
+                </td>
+                <td>{vacancy.Restriction ? vacancy.Restriction.name : "Sem restrição"}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Vagas:</strong>
+                </td>
+                <td>{vacancy.qtd}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Reserva:</strong>
+                </td>
+                <td>{vacancy.reserve ? "Sim" : "Não"}</td>
+              </tr>
             </tbody>
           </table>
         </div>
       );
+
+    const choices = (
+      <div className="row">
+        <div className="col">
+          <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+        </div>
+        <div className="col">
+          <input
+            type="button"
+            value="Cancelar"
+            className="btn btn-secondary btn-block mt-4"
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+          />
+        </div>
+      </div>
+    );
 
     return (
       <div className="roleassignments">
@@ -86,30 +142,12 @@ class VacancyDelete extends Component {
               <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
-
-              <h1 className="display-4 mb-4 text-center">Excluir atribuição de papel</h1>
-
+              <h1 className="display-4 mb-4 text-center">Excluir oferta de vaga</h1>
               {alertsList}
-
               <p className="lead text-center">Você solicitou excluir o item:</p>
               {infoTable}
               <p className="lead text-center">Confirma a operação?</p>
-
-              <div className="row">
-                <div className="col">
-                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
-                </div>
-                <div className="col">
-                  <input
-                    type="button"
-                    value="Cancelar"
-                    className="btn btn-secondary btn-block mt-4"
-                    onClick={() => {
-                      this.props.history.goBack();
-                    }}
-                  />
-                </div>
-              </div>
+              {choices}
             </div>
           </div>
         </div>

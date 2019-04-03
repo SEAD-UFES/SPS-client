@@ -16,6 +16,7 @@ import processPublicationTypesReducer from "components/processPublicationTypes/p
 import processPublicationsReducer from "components/processPublications/processPublicationsReducer";
 import processCallVacanciesReducer from "components/processCallsVacancies/processCallVacanciesReducer";
 import processCallStepsReducer from "components/processCallsSteps/processCallStepsReducer";
+import processCallsReducer from "components/processCalls/processCallsReducer";
 
 //import postReducer from "./postReducer";
 
@@ -36,7 +37,8 @@ export default combineReducers({
   processPublicationTypesStore: processPublicationTypesReducer,
   processPublicationsStore: processPublicationsReducer,
   processCallVacanciesStore: processCallVacanciesReducer,
-  processCallStepsStore: processCallStepsReducer
+  processCallStepsStore: processCallStepsReducer,
+  processCallsStore: processCallsReducer
 
   //post: postReducer
 });

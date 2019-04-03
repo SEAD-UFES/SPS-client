@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import moment from "moment";
 import Spinner from "components/common/Spinner";
 
 import { getProcessCallStep, deleteProcessCallStep } from "components/processCallsSteps/stepsActions";
@@ -72,6 +73,40 @@ class StepDelete extends Component {
                   <strong>Id:</strong>
                 </td>
                 <td>{step.id}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Número:</strong>
+                </td>
+                <td>{step.number}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Tipo:</strong>
+                </td>
+                <td>{step.stepType_id}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Resultado:</strong>
+                </td>
+                <td>{moment(step.resultDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Periodo de recursos:</strong>
+                </td>
+                <td>
+                  {moment(step.openAppealDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}
+                  {" - "}
+                  {moment(step.limitAppealDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Resultado pós-recurso:</strong>
+                </td>
+                <td>{moment(step.resultAfterAppealDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</td>
               </tr>
             </tbody>
           </table>
