@@ -89,7 +89,7 @@ class StepDelete extends Component {
             value="Cancelar"
             className="btn btn-secondary btn-block mt-4"
             onClick={() => {
-              this.props.history.push(`/processes/${this.props.match.params.process_id}`);
+              this.props.history.goBack();
             }}
           />
         </div>
@@ -102,7 +102,7 @@ class StepDelete extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para lista de atribuição de papeis
+                Voltar para o processo
               </Link>
               <h1 className="display-4 mb-4 text-center">Excluir etapa</h1>
               {alertsList}

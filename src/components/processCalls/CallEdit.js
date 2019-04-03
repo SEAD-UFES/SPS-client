@@ -14,11 +14,7 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import {
-  createProcessCall,
-  getProcessCall,
-  updateProcessCall
-} from "../../actions/processActions";
+import { createProcessCall, getProcessCall, updateProcessCall } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class CallEdit extends Component {
@@ -68,17 +64,9 @@ class CallEdit extends Component {
       const call = nextProps.process.call;
       this.setState({
         number: call.number,
-        enrollmentOpeningDate: moment(
-          call.enrollmentOpeningDate,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format("YYYY-MM-DD"),
-        enrollmentClosingDate: moment(
-          call.enrollmentClosingDate,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format("YYYY-MM-DD"),
-        endingDate: moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format(
-          "YYYY-MM-DD"
-        )
+        enrollmentOpeningDate: moment(call.enrollmentOpeningDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        enrollmentClosingDate: moment(call.enrollmentClosingDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        endingDate: moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
       });
     }
   }
@@ -92,18 +80,10 @@ class CallEdit extends Component {
         valResult = validateNumberRequired(e.target.value);
         break;
       case "enrollmentOpeningDate":
-        valResult = validateEnrollmentOpeningDate(
-          e.target.value,
-          this.state.enrollmentClosingDate,
-          this.state.endingDate
-        );
+        valResult = validateEnrollmentOpeningDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
         //Removing errors from enrollmentClosingDate if needed
         if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(
-            e.target.value,
-            this.state.enrollmentClosingDate,
-            this.state.endingDate
-          );
+          let InsEndVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
           if (!InsEndVal.isValid) {
             errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
           } else {
@@ -112,11 +92,7 @@ class CallEdit extends Component {
         }
         //Removing errors from endingDate if needed
         if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(
-            e.target.value,
-            this.state.enrollmentClosingDate,
-            this.state.endingDate
-          );
+          let endingDateVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
           if (!endingDateVal.isValid) {
             errors = { ...errors, endingDate: endingDateVal.error };
           } else {
@@ -125,18 +101,10 @@ class CallEdit extends Component {
         }
         break;
       case "enrollmentClosingDate":
-        valResult = validateEnrollmentClosingDate(
-          this.state.enrollmentOpeningDate,
-          e.target.value,
-          this.state.endingDate
-        );
+        valResult = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
         //Removing errors from enrollmentOpeningDate if needed
         if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(
-            this.state.enrollmentOpeningDate,
-            e.target.value,
-            this.state.endingDate
-          );
+          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
           if (!InsStartVal.isValid) {
             errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
           } else {
@@ -145,11 +113,7 @@ class CallEdit extends Component {
         }
         //Removing errors from endingDate if needed
         if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(
-            this.state.enrollmentOpeningDate,
-            e.target.value,
-            this.state.endingDate
-          );
+          let endingDateVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
           if (!endingDateVal.isValid) {
             errors = { ...errors, endingDate: endingDateVal.error };
           } else {
@@ -158,18 +122,10 @@ class CallEdit extends Component {
         }
         break;
       case "endingDate":
-        valResult = validateEndingDate(
-          this.state.enrollmentOpeningDate,
-          this.state.enrollmentClosingDate,
-          e.target.value
-        );
+        valResult = validateEndingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
         //Removing errors from enrollmentOpeningDate if needed
         if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(
-            this.state.enrollmentOpeningDate,
-            this.state.enrollmentClosingDate,
-            e.target.value
-          );
+          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
           if (!InsStartVal.isValid) {
             errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
           } else {
@@ -178,11 +134,7 @@ class CallEdit extends Component {
         }
         //Removing errors from enrollmentClosingDate if needed
         if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(
-            this.state.enrollmentOpeningDate,
-            this.state.enrollmentClosingDate,
-            e.target.value
-          );
+          let InsEndVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
           if (!InsEndVal.isValid) {
             errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
           } else {
@@ -222,39 +174,38 @@ class CallEdit extends Component {
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      this.props.updateProcessCall(
-        this.props.match.params.call_id,
-        callData,
-        this.props.history
-      );
+      this.props.updateProcessCall(this.props.match.params.call_id, callData, this.props.history);
     }
   }
 
   render() {
     const { errors } = this.state;
 
+    const deleteButton = (
+      <div className="text-right mt-2 mb-2">
+        <Link
+          className="text-danger"
+          to={{
+            pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/delete`
+          }}
+        >
+          <i className="fas fa-times-circle" /> Excluir chamada
+        </Link>
+      </div>
+    );
+
     return (
       <div className="register">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.process_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Editar chamada</h1>
               <p className="lead text-center">Altere os dados da chamada</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  type="text"
-                  name="number"
-                  placeholder="* Número"
-                  value={this.state.number}
-                  onChange={this.onChange}
-                  error={errors.number}
-                />
+                <TextFieldGroup type="text" name="number" placeholder="* Número" value={this.state.number} onChange={this.onChange} error={errors.number} />
 
                 <h6>Início das inscrições</h6>
                 <TextFieldGroup
@@ -288,6 +239,7 @@ class CallEdit extends Component {
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
+              {deleteButton}
             </div>
           </div>
         </div>
