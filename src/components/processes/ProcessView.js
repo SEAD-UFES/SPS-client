@@ -7,6 +7,7 @@ import moment from "moment";
 import { getProcess } from "../../actions/processActions";
 import Spinner from "../common/Spinner";
 import CallTabList from "../processCalls/CallTabList";
+import DrawFilter from "../profile/DrawFilter";
 
 class ProcessView extends Component {
   componentDidMount() {
@@ -69,21 +70,29 @@ class ProcessView extends Component {
         <Spinner />
       ) : (
         <div className="btn-group mb-4" role="group">
-          <Link to={`/processes/${process.id}/edit`} className="btn btn-light">
-            <i className="fas fa-user-circle text-info mr-1" /> Editar Processo
-          </Link>
-          <Link to={`/processes/${process.id}/calls/create`} className="btn btn-light">
-            <i className="fas fa-user-circle text-info mr-1" /> Adicionar Chamada
-          </Link>
-          <Link
-            to={{
-              pathname: `/processes/${process.id}/publications/create`,
-              state: { selectiveProcess: process }
-            }}
-            className="btn btn-light"
-          >
-            <i className="fas fa-user-circle text-info mr-1" /> Adicionar Publicação
-          </Link>
+          <DrawFilter permission="processo seletivo editar">
+            <Link to={`/processes/${process.id}/edit`} className="btn btn-light">
+              <i className="fas fa-user-circle text-info mr-1" /> Editar Processo
+            </Link>
+          </DrawFilter>
+
+          <DrawFilter permission="chamada criar">
+            <Link to={`/processes/${process.id}/calls/create`} className="btn btn-light">
+              <i className="fas fa-user-circle text-info mr-1" /> Adicionar Chamada
+            </Link>
+          </DrawFilter>
+
+          <DrawFilter permission="publicação criar">
+            <Link
+              to={{
+                pathname: `/processes/${process.id}/publications/create`,
+                state: { selectiveProcess: process }
+              }}
+              className="btn btn-light"
+            >
+              <i className="fas fa-user-circle text-info mr-1" /> Adicionar Publicação
+            </Link>
+          </DrawFilter>
         </div>
       );
 

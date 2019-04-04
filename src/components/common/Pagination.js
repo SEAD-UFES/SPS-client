@@ -27,7 +27,6 @@ class Pagination extends React.Component {
   }
 
   setPage(page) {
-    console.log(`SetPage:${page}`);
     var { pageSize } = this.props;
     var pager = this.state.pager;
 
@@ -91,8 +90,6 @@ class Pagination extends React.Component {
       // don't display pager if there is only 1 page
       return null;
     }
-
-    console.log(pager.currentPage);
 
     return (
       <ul className="pagination justify-content-center">

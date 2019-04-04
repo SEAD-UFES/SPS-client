@@ -8,6 +8,7 @@ import { getProcessList } from "../../actions/processActions";
 
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
+import DrawFilter from "components/profile/DrawFilter";
 
 class Processes extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ class Processes extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserList();
     this.props.getProcessList();
   }
 
@@ -51,7 +51,13 @@ class Processes extends Component {
                   <th>Ano</th>
                   <th>Curso</th>
                   <th>Status</th>
-                  <th />
+                  <th>
+                    <DrawFilter permission="processo seletivo criar">
+                      <Link className="text-success" to={`${this.props.match.url}/create`}>
+                        <i className="fas fa-plus-circle" />
+                      </Link>
+                    </DrawFilter>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -64,7 +70,7 @@ class Processes extends Component {
                       <td>{process.visible ? "Visível" : "Oculto"}</td>
                       <td>
                         <Link className="text-success" to={`/processes/${process.id}`}>
-                          <i className="fas fa-info-circle" />
+                          <i className="fas fa-eye" />
                         </Link>
                       </td>
                     </tr>
@@ -87,10 +93,12 @@ class Processes extends Component {
               <p className="lead text-muted" />
 
               <div className="btn-group mb-4" role="group">
-                <Link to="/processes/create" className="btn btn-light">
-                  <i className="fas fa-user-circle text-info mr-1" />
-                  Adicionar processo
-                </Link>
+                <DrawFilter permission="processo seletivo criar">
+                  <Link to="/processes/create" className="btn btn-light">
+                    <i className="fas fa-user-circle text-info mr-1" />
+                    Adicionar processo
+                  </Link>
+                </DrawFilter>
               </div>
 
               {usersContent}

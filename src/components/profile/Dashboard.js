@@ -29,10 +29,7 @@ class Dashboard extends Component {
         dashboardContent = (
           <div>
             <p className="lead text-muted">
-              Bem-vindo{" "}
-              <Link to={"/profile"}>
-                {profile.person ? profile.person.name : profile.user.login}
-              </Link>
+              Bem-vindo <Link to={"/profile"}>{profile.Person ? profile.Person.name : profile.login}</Link>
             </p>
           </div>
         );

@@ -4,10 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { logoutUser } from "../../actions/authActions";
-import {
-  getCurrentProfile,
-  clearCurrentProfile
-} from "../../actions/profileActions";
+import { getCurrentProfile, clearCurrentProfile } from "../../actions/profileActions";
 import avatar from "../../img/none.png";
 
 class Navbar extends Component {
@@ -21,10 +18,7 @@ class Navbar extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      if (
-        nextProps.profile.loading === false &&
-        nextProps.profile.profile === null
-      ) {
+      if (nextProps.profile.loading === false && nextProps.profile.profile === null) {
         this.props.getCurrentProfile();
       }
     }
@@ -63,17 +57,13 @@ class Navbar extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <button
-            type="button"
-            onClick={this.onLogoutClick.bind(this)}
-            className="btn btn-link nav-link"
-          >
+          <button type="button" onClick={this.onLogoutClick.bind(this)} className="btn btn-link nav-link">
             <img
               className="rounded-circle"
               src={avatar}
-              alt={profile.person ? profile.person.name : profile.user.login}
+              alt={profile.Person ? profile.Person.name : profile.login}
               style={{ width: "25px", marginRight: "5px" }}
-              title={profile.person ? profile.person.name : profile.user.login}
+              title={profile.Person ? profile.Person.name : profile.login}
             />{" "}
             Logout
           </button>
@@ -89,12 +79,7 @@ class Navbar extends Component {
           <Link className="navbar-brand" to="/">
             SEAD SPS
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#mobile-nav"
-          >
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
             <span className="navbar-toggler-icon" />
           </button>
 
