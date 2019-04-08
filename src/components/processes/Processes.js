@@ -52,7 +52,7 @@ class Processes extends Component {
                   <th>Curso</th>
                   <th>Status</th>
                   <th>
-                    <DrawFilter permission="processo seletivo criar">
+                    <DrawFilter permission="processo seletivo criar" anyCourse={true}>
                       <Link className="text-success" to={`${this.props.match.url}/create`}>
                         <i className="fas fa-plus-circle" />
                       </Link>
@@ -93,7 +93,7 @@ class Processes extends Component {
               <p className="lead text-muted" />
 
               <div className="btn-group mb-4" role="group">
-                <DrawFilter permission="processo seletivo criar">
+                <DrawFilter permission="processo seletivo criar" anyCourse={true}>
                   <Link to="/processes/create" className="btn btn-light">
                     <i className="fas fa-user-circle text-info mr-1" />
                     Adicionar processo

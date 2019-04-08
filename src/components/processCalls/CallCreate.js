@@ -59,18 +59,10 @@ class CallCreate extends Component {
         valResult = validateNumberRequired(e.target.value);
         break;
       case "enrollmentOpeningDate":
-        valResult = validateEnrollmentOpeningDate(
-          e.target.value,
-          this.state.enrollmentClosingDate,
-          this.state.endingDate
-        );
+        valResult = validateEnrollmentOpeningDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
         //Removing errors from enrollmentClosingDate if needed
         if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(
-            e.target.value,
-            this.state.enrollmentClosingDate,
-            this.state.endingDate
-          );
+          let InsEndVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
           if (!InsEndVal.isValid) {
             errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
           } else {
@@ -79,11 +71,7 @@ class CallCreate extends Component {
         }
         //Removing errors from endingDate if needed
         if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(
-            e.target.value,
-            this.state.enrollmentClosingDate,
-            this.state.endingDate
-          );
+          let endingDateVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
           if (!endingDateVal.isValid) {
             errors = { ...errors, endingDate: endingDateVal.error };
           } else {
@@ -92,18 +80,10 @@ class CallCreate extends Component {
         }
         break;
       case "enrollmentClosingDate":
-        valResult = validateEnrollmentClosingDate(
-          this.state.enrollmentOpeningDate,
-          e.target.value,
-          this.state.endingDate
-        );
+        valResult = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
         //Removing errors from enrollmentOpeningDate if needed
         if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(
-            this.state.enrollmentOpeningDate,
-            e.target.value,
-            this.state.endingDate
-          );
+          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
           if (!InsStartVal.isValid) {
             errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
           } else {
@@ -112,11 +92,7 @@ class CallCreate extends Component {
         }
         //Removing errors from endingDate if needed
         if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(
-            this.state.enrollmentOpeningDate,
-            e.target.value,
-            this.state.endingDate
-          );
+          let endingDateVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
           if (!endingDateVal.isValid) {
             errors = { ...errors, endingDate: endingDateVal.error };
           } else {
@@ -125,18 +101,10 @@ class CallCreate extends Component {
         }
         break;
       case "endingDate":
-        valResult = validateEndingDate(
-          this.state.enrollmentOpeningDate,
-          this.state.enrollmentClosingDate,
-          e.target.value
-        );
+        valResult = validateEndingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
         //Removing errors from enrollmentOpeningDate if needed
         if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(
-            this.state.enrollmentOpeningDate,
-            this.state.enrollmentClosingDate,
-            e.target.value
-          );
+          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
           if (!InsStartVal.isValid) {
             errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
           } else {
@@ -145,11 +113,7 @@ class CallCreate extends Component {
         }
         //Removing errors from enrollmentClosingDate if needed
         if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(
-            this.state.enrollmentOpeningDate,
-            this.state.enrollmentClosingDate,
-            e.target.value
-          );
+          let InsEndVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
           if (!InsEndVal.isValid) {
             errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
           } else {
@@ -182,7 +146,9 @@ class CallCreate extends Component {
       number: this.state.number,
       enrollmentOpeningDate: this.state.enrollmentOpeningDate,
       enrollmentClosingDate: this.state.enrollmentClosingDate,
-      endingDate: this.state.endingDate
+      endingDate: this.state.endingDate,
+      //course_id for permissions
+      course_id: ""
     };
 
     const valCall = validateProcessCallForm(tmpCallData);
@@ -194,7 +160,9 @@ class CallCreate extends Component {
         number: tmpCallData.number,
         enrollmentOpeningDate: tmpCallData.enrollmentOpeningDate,
         enrollmentClosingDate: tmpCallData.enrollmentClosingDate,
-        endingDate: tmpCallData.endingDate
+        endingDate: tmpCallData.endingDate,
+        //course_id for permissions
+        course_id: ""
       };
 
       this.props.createProcessCall(callData, this.props.history);
@@ -209,23 +177,13 @@ class CallCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Criar chamada</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  type="text"
-                  name="number"
-                  placeholder="* Número"
-                  value={this.state.number}
-                  onChange={this.onChange}
-                  error={errors.number}
-                />
+                <TextFieldGroup type="text" name="number" placeholder="* Número" value={this.state.number} onChange={this.onChange} error={errors.number} />
 
                 <h6>Início das inscrições</h6>
                 <TextFieldGroup

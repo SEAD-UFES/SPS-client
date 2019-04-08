@@ -27,9 +27,11 @@ class ProcessView extends Component {
           <h4 className="mb-2">
             Informações do processo{" "}
             <small>
-              <Link className="text-info" to={`/processes/${process.id}/edit`}>
-                <i className="fas fa-cog" />
-              </Link>
+              <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
+                <Link className="text-info" to={`/processes/${process.id}/edit`}>
+                  <i className="fas fa-cog" />
+                </Link>
+              </DrawFilter>
             </small>
           </h4>
           <table className="table">
@@ -70,19 +72,19 @@ class ProcessView extends Component {
         <Spinner />
       ) : (
         <div className="btn-group mb-4" role="group">
-          <DrawFilter permission="processo seletivo editar">
+          <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
             <Link to={`/processes/${process.id}/edit`} className="btn btn-light">
               <i className="fas fa-user-circle text-info mr-1" /> Editar Processo
             </Link>
           </DrawFilter>
 
-          <DrawFilter permission="chamada criar">
+          <DrawFilter permission="chamada criar" course_id={process.Course.id}>
             <Link to={`/processes/${process.id}/calls/create`} className="btn btn-light">
               <i className="fas fa-user-circle text-info mr-1" /> Adicionar Chamada
             </Link>
           </DrawFilter>
 
-          <DrawFilter permission="publicação criar">
+          <DrawFilter permission="publication_create" course_id={process.Course.id}>
             <Link
               to={{
                 pathname: `/processes/${process.id}/publications/create`,
@@ -107,10 +109,12 @@ class ProcessView extends Component {
           ) : (
             <p>
               Sem chamadas cadastradas.{" "}
-              <Link className="text-success" to={`/processes/${process.id}/calls/create`}>
-                <i className="fas fa-plus-circle" />
-                Adicionar
-              </Link>
+              <DrawFilter permission="chamada criar" course_id={process.Course.id}>
+                <Link className="text-success" to={`/processes/${process.id}/calls/create`}>
+                  <i className="fas fa-plus-circle" />
+                  Adicionar
+                </Link>
+              </DrawFilter>
             </p>
           )}
         </div>
@@ -127,15 +131,17 @@ class ProcessView extends Component {
           }).length > 0 ? (
             <div>
               <p className="ml-4 mt-3">
-                <Link
-                  className="text-success mb-0"
-                  to={{
-                    pathname: `/processes/${process.id}/publications/create`,
-                    state: { selectiveProcess: process }
-                  }}
-                >
-                  <i className="fas fa-plus-circle" /> Adicionar
-                </Link>
+                <DrawFilter permission="publication_create" course_id={process.Course.id}>
+                  <Link
+                    className="text-success mb-0"
+                    to={{
+                      pathname: `/processes/${process.id}/publications/create`,
+                      state: { selectiveProcess: process }
+                    }}
+                  >
+                    <i className="fas fa-plus-circle" /> Adicionar
+                  </Link>
+                </DrawFilter>
               </p>
 
               <ul className="timeline">
@@ -166,16 +172,18 @@ class ProcessView extends Component {
           ) : (
             <p>
               Sem publicações de processo cadastrados.{" "}
-              <Link
-                className="text-success"
-                to={{
-                  pathname: `/processes/${process.id}/publications/create`,
-                  state: { selectiveProcess: process }
-                }}
-              >
-                <i className="fas fa-plus-circle" />
-                Adicionar
-              </Link>
+              <DrawFilter permission="publication_create" course_id={process.Course.id}>
+                <Link
+                  className="text-success"
+                  to={{
+                    pathname: `/processes/${process.id}/publications/create`,
+                    state: { selectiveProcess: process }
+                  }}
+                >
+                  <i className="fas fa-plus-circle" />
+                  Adicionar
+                </Link>
+              </DrawFilter>
             </p>
           )}
         </div>

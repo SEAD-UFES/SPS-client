@@ -194,8 +194,12 @@ class ProcessPublicationCreate extends Component {
       description: this.state.description ? this.state.description : null,
       publicationType_id: this.state.publicationType_id,
       file: this.state.file,
-      valid: this.state.valid
+      valid: this.state.valid,
+      //Course to check permission
+      course_id: this.state.selectiveProcess.Course.id
     };
+
+    console.log(publicationData);
 
     const valRoleType = validateProcessPublicationForm(publicationData);
     if (!valRoleType.isValid) {
