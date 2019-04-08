@@ -97,6 +97,12 @@ class Navbar extends Component {
                   Processos
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/parameters">
+                  {" "}
+                  Parametros
+                </Link>
+              </li>
             </ul>
 
             {isAuthenticated ? authLinks : guestLinks}
