@@ -11,7 +11,7 @@ import { isEmpty, validateProcessNumber, validateYearRequired, validateDescripti
 
 import { clearErrors } from "../../actions/errorActions";
 import { getProcess, updateProcess } from "../../actions/processActions";
-import { getCourses } from "../parameters/courses/coursesActions";
+import { getCourses } from "../course/courseActions";
 
 class ProcessEdit extends Component {
   constructor() {
@@ -128,11 +128,11 @@ class ProcessEdit extends Component {
 
   render() {
     const { errors } = this.state;
-    const { coursesStore } = this.props;
+    const { courseStore } = this.props;
 
     const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
-      coursesStore.courses
-        ? coursesStore.courses.map(course => {
+      courseStore.courses
+        ? courseStore.courses.map(course => {
             return {
               label: course.name,
               value: course.id
@@ -204,7 +204,7 @@ ProcessEdit.proptypes = {
 const mapStateToProps = state => ({
   errors: state.errors,
   process: state.process,
-  coursesStore: state.coursesStore
+  courseStore: state.courseStore
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store

@@ -12,7 +12,7 @@ import { validateRoleAssignmentForm } from "./validateRoleAssignmentForm";
 import { createRoleAssignment } from "./roleAssignmentsActions";
 import { getUsersMinimal } from "actions/userActions";
 import { getRoleTypes } from "components/roleTypes/roleTypesActions";
-import { getCourses } from "components/parameters/courses/coursesActions";
+import { getCourses } from "components/course/courseActions";
 
 class RoleAssignmentCreate extends Component {
   constructor() {
@@ -95,7 +95,7 @@ class RoleAssignmentCreate extends Component {
     const { errors } = this.state;
     const users = this.props.usersStore.usersMinimal;
     const { roleTypes } = this.props.roleTypesStore;
-    const { courses } = this.props.coursesStore;
+    const { courses } = this.props.courseStore;
 
     const userOptions = [{ label: "* Selecione o usuário", value: "" }].concat(
       users
@@ -108,9 +108,7 @@ class RoleAssignmentCreate extends Component {
         : []
     );
 
-    const roleTypeOptions = [
-      { label: "* Selecione a papel", value: "" }
-    ].concat(
+    const roleTypeOptions = [{ label: "* Selecione a papel", value: "" }].concat(
       roleTypes
         ? roleTypes.map(roleType => {
             return {
@@ -121,9 +119,7 @@ class RoleAssignmentCreate extends Component {
         : []
     );
 
-    const courseOptions = [
-      { label: "Selecione o curso (opcional)", value: "" }
-    ].concat(
+    const courseOptions = [{ label: "Selecione o curso (opcional)", value: "" }].concat(
       courses
         ? courses.map(course => {
             return {
@@ -196,9 +192,7 @@ class RoleAssignmentCreate extends Component {
               <Link to="/roleassignments" className="btn btn-light">
                 Voltar para lista de atribuições de papel
               </Link>
-              <h1 className="display-4 text-center">
-                Criar atribuição de papel
-              </h1>
+              <h1 className="display-4 text-center">Criar atribuição de papel</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
 
               {alertsList}
@@ -219,7 +213,7 @@ const mapStateToProps = state => ({
   roleAssignmentsStore: state.roleAssignmentsStore,
   usersStore: state.user,
   roleTypesStore: state.roleTypesStore,
-  coursesStore: state.coursesStore
+  courseStore: state.courseStore
 });
 
 export default connect(

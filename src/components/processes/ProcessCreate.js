@@ -7,16 +7,10 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 
-import {
-  validateProcessNumber,
-  validateYearRequired,
-  validateDescription,
-  validateProcessForm,
-  validateId
-} from "../../validation";
+import { validateProcessNumber, validateYearRequired, validateDescription, validateProcessForm, validateId } from "../../validation";
 
 import { createProcess } from "../../actions/processActions";
-import { getCourses } from "../parameters/courses/coursesActions";
+import { getCourses } from "../course/courseActions";
 
 class ProcessCreate extends Component {
   constructor() {
@@ -114,12 +108,12 @@ class ProcessCreate extends Component {
   }
 
   render() {
-    const { coursesStore } = this.props;
+    const { courseStore } = this.props;
     const { errors } = this.state;
 
     const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
-      coursesStore.courses
-        ? coursesStore.courses.map(course => {
+      courseStore.courses
+        ? courseStore.courses.map(course => {
             return {
               label: course.name,
               value: course.id
@@ -139,23 +133,9 @@ class ProcessCreate extends Component {
               <h1 className="display-4 text-center">Criar processo</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  type="text"
-                  name="number"
-                  placeholder="* Número"
-                  value={this.state.number}
-                  onChange={this.onChange}
-                  error={errors.number}
-                />
+                <TextFieldGroup type="text" name="number" placeholder="* Número" value={this.state.number} onChange={this.onChange} error={errors.number} />
 
-                <TextFieldGroup
-                  type="text"
-                  name="year"
-                  placeholder="* Ano"
-                  value={this.state.year}
-                  onChange={this.onChange}
-                  error={errors.year}
-                />
+                <TextFieldGroup type="text" name="year" placeholder="* Ano" value={this.state.year} onChange={this.onChange} error={errors.year} />
 
                 <SelectListGroup
                   placeholder=""
@@ -176,14 +156,7 @@ class ProcessCreate extends Component {
                 />
 
                 <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="visible"
-                    id="visible"
-                    checked={this.state.visible}
-                    onChange={this.onCheck}
-                  />
+                  <input className="form-check-input" type="checkbox" name="visible" id="visible" checked={this.state.visible} onChange={this.onCheck} />
                   <label className="form-check-label" htmlFor="visible">
                     Tornar processo visível
                   </label>
@@ -208,7 +181,7 @@ ProcessCreate.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  coursesStore: state.coursesStore,
+  courseStore: state.courseStore,
   errors: state.errors
 });
 

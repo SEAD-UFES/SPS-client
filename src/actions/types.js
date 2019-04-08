@@ -28,16 +28,10 @@ export const GET_REGIONS_OPTIONS = "GET_REGIONS_OPTIONS";
 export const GET_VACANCY = "GET_VACANCY";
 
 //courses actions
-export {
-  GET_COURSES,
-  COURSES_LOADING
-} from "../components/parameters/courses/coursesActionTypes";
+export { GET_COURSES, COURSES_LOADING } from "../components/course/courseActionTypes";
 
 //assignments actions
-export {
-  GET_ASSIGNMENTS,
-  ASSIGNMENTS_LOADING
-} from "../components/parameters/assignments/assignmentsActionTypes";
+export { GET_ASSIGNMENTS, ASSIGNMENTS_LOADING } from "../components/parameters/assignments/assignmentsActionTypes";
 
 // //Post actions
 // export const POST_LOADING = "POST_LOADING";

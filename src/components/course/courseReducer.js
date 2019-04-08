@@ -1,4 +1,4 @@
-import { COURSES_LOADING, GET_COURSES } from "./coursesActionTypes";
+import { COURSES_LOADING, GET_COURSES } from "./courseActionTypes";
 
 const initialState = {
   loading: false,

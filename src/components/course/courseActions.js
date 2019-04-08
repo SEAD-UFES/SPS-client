@@ -1,5 +1,5 @@
-import { GET_ERRORS } from "../../../actions/types";
-import { GET_COURSE, GET_COURSES, COURSES_LOADING } from "./coursesActionTypes";
+import { GET_ERRORS } from "../../actions/types";
+import { GET_COURSE, GET_COURSES, COURSES_LOADING } from "./courseActionTypes";
 
 import axios from "axios";
 

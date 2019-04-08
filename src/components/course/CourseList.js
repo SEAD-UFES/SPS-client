@@ -2,18 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { clearErrors } from "../../../actions/errorActions";
-import {
-  getCourses,
-  createCourse,
-  updateCourse,
-  deleteCourse
-} from "./coursesActions";
+import { clearErrors } from "../../actions/errorActions";
+import { getCourses, createCourse, updateCourse, deleteCourse } from "./courseActions";
 import { compareBy } from "utils/compareBy";
-import CoursesModalForm from "./CoursesModalForm";
-import CoursesModalDelete from "./CoursesModalDelete";
+import CourseModalForm from "./CourseModalForm";
+import CourseModalDelete from "./CourseModalDelete";
 
-class CoursesList extends Component {
+class CourseList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,12 +29,12 @@ class CoursesList extends Component {
 
   componentWillReceiveProps(nextProps) {
     //atualizar lista
-    if (nextProps.coursesStore.courses) {
+    if (nextProps.courseStore.courses) {
       this.setState(
         {
           sortMethod: "",
           sortReverse: false,
-          coursesList: nextProps.coursesStore.courses
+          coursesList: nextProps.courseStore.courses
         },
         () => this.sortBy("name", { reverse: false })
       );
@@ -115,22 +110,12 @@ class CoursesList extends Component {
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button
-            type="button"
-            className="btn btn-info"
-            data-toggle="modal"
-            data-target="#addModal"
-          >
+          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
             + Adicionar curso
           </button>
         </div>
 
-        <CoursesModalForm
-          mode="add"
-          targetName="addModal"
-          addFunction={this.props.createCourse}
-          reloadFunction={this.props.getCourses}
-        />
+        <CourseModalForm mode="add" targetName="addModal" addFunction={this.props.createCourse} reloadFunction={this.props.getCourses} />
       </div>
     );
 
@@ -138,16 +123,12 @@ class CoursesList extends Component {
     const coursesTable = (
       <div>
         <h4 className="mb-2">Lista de cursos</h4>
-        {CoursesList ? (
+        {coursesList ? (
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>
-                  Nome {this.orderIcon("name")}
-                </th>
-                <th onClick={() => this.sortBy("description")}>
-                  Descrição {this.orderIcon("description")}
-                </th>
+                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -157,38 +138,22 @@ class CoursesList extends Component {
                   return (
                     <tr key={course.id}>
                       <td>{course.name}</td>
+                      <td>{course.description ? course.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
-                        {course.description ? (
-                          course.description
-                        ) : (
-                          <span className="text-muted">Sem descrição.</span>
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-info"
-                          data-toggle="modal"
-                          data-target={`#editModal-${course.id}`}
-                        >
+                        <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${course.id}`}>
                           <i className="far fa-edit" />
                         </button>
-                        <CoursesModalForm
+                        <CourseModalForm
                           targetName={`editModal-${course.id}`}
                           mode="edit"
                           item={course}
                           editFunction={this.props.updateCourse}
                           reloadFunction={this.props.getCourses}
                         />{" "}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${course.id}`}
-                        >
+                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${course.id}`}>
                           <i className="far fa-trash-alt text-danger" />
                         </button>
-                        <CoursesModalDelete
+                        <CourseModalDelete
                           targetName={`deleteModal-${course.id}`}
                           item={course}
                           deleteFunction={this.props.deleteCourse}
@@ -219,9 +184,7 @@ class CoursesList extends Component {
           <div className="row">
             <div className="col-md-12">
               <h1 className="display-4">Cursos</h1>
-              <p className="lead text-muted">
-                Cursos que fazem uso do sistema de processo seletivo
-              </p>
+              <p className="lead text-muted">Cursos que fazem uso do sistema de processo seletivo</p>
               {addItemTool}
               {coursesTable}
             </div>
@@ -232,7 +195,7 @@ class CoursesList extends Component {
   }
 }
 
-CoursesList.proptypes = {
+CourseList.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   getCourses: PropTypes.func.isRequired,
   createCourse: PropTypes.func.isRequired,
@@ -241,7 +204,7 @@ CoursesList.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  coursesStore: state.coursesStore
+  courseStore: state.courseStore
 });
 
 export default connect(
@@ -253,4 +216,4 @@ export default connect(
     updateCourse,
     deleteCourse
   }
-)(CoursesList);
+)(CourseList);

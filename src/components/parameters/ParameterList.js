@@ -10,16 +10,19 @@ export default class ParameterList extends Component {
             <Link to={`${this.props.match.path}/courses`}>Cursos</Link>
           </li>
           <li className="list-group-item">
-            <Link to={`${this.props.match.path}/regions`}>Regiões</Link>
-          </li>
-          <li className="list-group-item">
             <Link to={`/roletypes`}>Papéis</Link>
           </li>
           <li className="list-group-item">
-            <Link to={`${this.props.match.path}/restrictions`}>Retrições de Vaga</Link>
+            <Link to={`/roleassignments`}>Atribuições de papel</Link>
           </li>
           <li className="list-group-item">
-            <Link to={`/roleassignments`}>Atribuições de papel</Link>
+            <Link to={`${this.props.match.path}/regions`}>Regiões</Link>
+          </li>
+          <li className="list-group-item">
+            <Link to={`${this.props.match.path}/restrictions`}>Retrições de vaga</Link>
+          </li>
+          <li className="list-group-item">
+            <Link to={`/assignments`}>Atribuições de vaga</Link>
           </li>
         </ul>
       </div>
