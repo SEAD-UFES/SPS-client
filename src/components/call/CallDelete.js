@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Spinner from "components/common/Spinner";
 
-import { getProcessCall, deleteProcessCall } from "components/processCalls/callsActions";
+import { getCall, deleteCall } from "components/call/callActions";
 
 class CallDelete extends Component {
   constructor() {
@@ -17,7 +17,7 @@ class CallDelete extends Component {
 
   componentDidMount() {
     if (this.props.match.params.call_id) {
-      this.props.getProcessCall(this.props.match.params.call_id);
+      this.props.getCall(this.props.match.params.call_id);
     }
   }
 
@@ -31,7 +31,7 @@ class CallDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteProcessCall(this.props.match.params.call_id, () => {
+    this.props.deleteCall(this.props.match.params.call_id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`);
     });
   }
@@ -125,20 +125,20 @@ class CallDelete extends Component {
 }
 
 CallDelete.propTypes = {
-  getProcessCall: PropTypes.func.isRequired,
-  deleteProcessCall: PropTypes.func.isRequired
+  getCall: PropTypes.func.isRequired,
+  deleteCall: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  call: state.processCallsStore.call,
-  loading: state.processCallsStore.loading,
+  call: state.callStore.call,
+  loading: state.callStore.loading,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessCall,
-    deleteProcessCall
+    getCall,
+    deleteCall
   }
 )(CallDelete);

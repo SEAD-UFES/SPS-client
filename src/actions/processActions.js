@@ -110,7 +110,7 @@ export const createProcessCall = (callData, history) => dispatch => {
 };
 
 //get ProcessCall
-export const getProcessCall = call_id => dispatch => {
+export const getCall = call_id => dispatch => {
   axios
     .get(`/v1/calls/${call_id}`)
     .then(res => {
@@ -164,11 +164,7 @@ export const getStepOptions = () => dispatch => {
 };
 
 //create ProcessCallStep
-export const createProcessCallStep = (
-  stepData,
-  process_id,
-  history
-) => dispatch => {
+export const createProcessCallStep = (stepData, process_id, history) => dispatch => {
   axios
     .post("/v1/steps", stepData)
     .then(res => {
@@ -201,12 +197,7 @@ export const getProcessCallStep = step_id => dispatch => {
 };
 
 //update ProcessCallStep
-export const updateProcessCallStep = (
-  process_id,
-  step_id,
-  stepData,
-  history
-) => dispatch => {
+export const updateProcessCallStep = (process_id, step_id, stepData, history) => dispatch => {
   axios
     .put(`/v1/steps/${step_id}`, stepData)
     .then(res => {
@@ -276,11 +267,7 @@ export const getRegionsOptions = () => dispatch => {
 };
 
 //create ProcessCallVacancy
-export const createProcessCallVacancy = (
-  vacancyData,
-  process_id,
-  history
-) => dispatch => {
+export const createProcessCallVacancy = (vacancyData, process_id, history) => dispatch => {
   axios
     .post("/v1/vacancies", vacancyData)
     .then(res => {
@@ -313,12 +300,7 @@ export const getProcessCallVacancy = vacancy_id => dispatch => {
 };
 
 //update ProcessCallVacancy
-export const updateProcessCallVacancy = (
-  process_id,
-  vacancy_id,
-  vacancyData,
-  history
-) => dispatch => {
+export const updateProcessCallVacancy = (process_id, vacancy_id, vacancyData, history) => dispatch => {
   axios
     .put(`/v1/vacancies/${vacancy_id}`, vacancyData)
     .then(res => {

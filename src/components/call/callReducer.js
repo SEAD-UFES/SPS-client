@@ -1,4 +1,4 @@
-import { CALLS_LOADING, GET_CALLS, GET_CALL } from "./callsActionTypes";
+import { CALLS_LOADING, GET_CALLS, GET_CALL } from "./callActionTypes";
 
 const initialState = {
   loading: false,

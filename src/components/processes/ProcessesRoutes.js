@@ -8,9 +8,9 @@ import ProcessCreate from "./ProcessCreate";
 import ProcessView from "./ProcessView";
 import ProcessEdit from "./ProcessEdit";
 
-import CallCreate from "../processCalls/CallCreate";
-import CallEdit from "../processCalls/CallEdit";
-import CallDelete from "../processCalls/CallDelete";
+import CallCreate from "../call/CallCreate";
+import CallEdit from "../call/CallEdit";
+import CallDelete from "../call/CallDelete";
 
 import StepCreate from "../processCallsSteps/StepCreate";
 import StepEdit from "../processCallsSteps/StepEdit";

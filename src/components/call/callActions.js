@@ -1,10 +1,17 @@
 import axios from "axios";
 
 import { GET_ERRORS } from "actions/types";
-import { GET_CALL, CALLS_LOADING } from "./callsActionTypes";
+import { GET_CALL, CALLS_LOADING } from "./callActionTypes";
 
-export const getProcessCall = call_id => dispatch => {
-  dispatch(setProcessCallsLoading());
+//calls loading
+export const setCallsLoading = () => {
+  return {
+    type: CALLS_LOADING
+  };
+};
+
+export const getCall = call_id => dispatch => {
+  dispatch(setCallsLoading());
   axios
     .get(`/v1/calls/${call_id}`)
     .then(res =>
@@ -21,7 +28,7 @@ export const getProcessCall = call_id => dispatch => {
     );
 };
 
-export const deleteProcessCall = (call_id, callback_ok) => dispatch => {
+export const deleteCall = (call_id, callback_ok) => dispatch => {
   axios
     .delete(`/v1/calls/${call_id}`)
     .then(res => {
@@ -43,11 +50,4 @@ export const deleteProcessCall = (call_id, callback_ok) => dispatch => {
         });
       }
     });
-};
-
-//calls loading
-export const setProcessCallsLoading = () => {
-  return {
-    type: CALLS_LOADING
-  };
 };

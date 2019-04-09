@@ -6,7 +6,7 @@ import moment from "moment";
 
 import { getProcess } from "../../actions/processActions";
 import Spinner from "../common/Spinner";
-import CallTabList from "../processCalls/CallTabList";
+import CallTabList from "../call/CallTabList";
 import DrawFilter from "../profile/DrawFilter";
 
 class ProcessView extends Component {

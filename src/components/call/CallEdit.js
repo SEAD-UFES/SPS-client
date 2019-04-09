@@ -14,7 +14,7 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import { createProcessCall, getProcessCall, updateProcessCall } from "../../actions/processActions";
+import { createProcessCall, getCall, updateProcessCall } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class CallEdit extends Component {
@@ -37,7 +37,7 @@ class CallEdit extends Component {
   componentDidMount() {
     this.props.clearErrors();
     if (this.props.match.params.call_id) {
-      this.props.getProcessCall(this.props.match.params.call_id);
+      this.props.getCall(this.props.match.params.call_id);
     }
   }
 
@@ -264,5 +264,5 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCall, getProcessCall, updateProcessCall, clearErrors }
+  { createProcessCall, getCall, updateProcessCall, clearErrors }
 )(withRouter(CallEdit));
