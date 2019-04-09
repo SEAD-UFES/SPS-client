@@ -4,16 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Spinner from "components/common/Spinner";
-import {
-  getPermissionAssignment,
-  deletePermissionAssignment
-} from "components/permissionAssignments/permissionAssignmentsActions";
+import { getRolePermission, deleteRolePermission } from "components/rolePermission/rolePermissionActions";
 
 class RoleTypePermAssigDelete extends Component {
   constructor() {
     super();
     this.state = {
-      permissionAssignment: null,
+      rolePermission: null,
       errors: []
     };
 
@@ -21,21 +18,16 @@ class RoleTypePermAssigDelete extends Component {
   }
 
   componentWillMount() {
-    if (
-      this.props.location.state &&
-      this.props.location.state.permissionAssignment
-    ) {
+    if (this.props.location.state && this.props.location.state.rolePermission) {
       this.setState({
-        permissionAssignment: this.props.location.state.permissionAssignment
+        rolePermission: this.props.location.state.rolePermission
       });
     }
   }
 
   componentDidMount() {
     if (this.props.match.params.permissionassignment_id) {
-      this.props.getPermissionAssignment(
-        this.props.match.params.permissionassignment_id
-      );
+      this.props.getRolePermission(this.props.match.params.permissionassignment_id);
     }
   }
 
@@ -48,17 +40,12 @@ class RoleTypePermAssigDelete extends Component {
   }
 
   onSubmit() {
-    this.props.deletePermissionAssignment(
-      this.props.match.params.permissionassignment_id,
-      () => {
-        this.props.history.push(
-          `/roletypes/${this.props.match.params.roletype_id}`
-        );
-      }
-    );
+    this.props.deleteRolePermission(this.props.match.params.permissionassignment_id, () => {
+      this.props.history.push(`/roletypes/${this.props.match.params.roletype_id}`);
+    });
   }
 
-  createInfoTable = permissionAssignment => {
+  createInfoTable = rolePermission => {
     return (
       <div>
         <h4 className="mb-2">Informações</h4>
@@ -68,19 +55,19 @@ class RoleTypePermAssigDelete extends Component {
               <td>
                 <strong>Id:</strong>
               </td>
-              <td>{permissionAssignment.id}</td>
+              <td>{rolePermission.id}</td>
             </tr>
             <tr>
               <td>
                 <strong>Papel:</strong>
               </td>
-              <td>{permissionAssignment.RoleType.name}</td>
+              <td>{rolePermission.RoleType.name}</td>
             </tr>
             <tr>
               <td>
                 <strong>Permissão:</strong>
               </td>
-              <td>{permissionAssignment.Permission.name}</td>
+              <td>{rolePermission.Permission.name}</td>
             </tr>
           </tbody>
         </table>
@@ -90,19 +77,16 @@ class RoleTypePermAssigDelete extends Component {
 
   render() {
     const { errors } = this.state;
-    const { permissionAssignmentsStore } = this.props;
+    const { rolePermissionStore } = this.props;
 
-    const permissionAssignment = this.state.permissionAssignment
-      ? this.state.permissionAssignment
-      : null;
+    const rolePermission = this.state.rolePermission ? this.state.rolePermission : null;
 
-    const infoTable = permissionAssignment ? (
-      this.createInfoTable(permissionAssignment)
-    ) : permissionAssignmentsStore.permissionAssignment === null ||
-      permissionAssignmentsStore.loading ? (
+    const infoTable = rolePermission ? (
+      this.createInfoTable(rolePermission)
+    ) : rolePermissionStore.rolePermission === null || rolePermissionStore.loading ? (
       <Spinner />
     ) : (
-      this.createInfoTable(permissionAssignmentsStore.permissionAssignment)
+      this.createInfoTable(rolePermissionStore.rolePermission)
     );
 
     const alertsList = (
@@ -129,16 +113,11 @@ class RoleTypePermAssigDelete extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/roletypes/${this.props.match.params.roletype_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
                 Voltar para tipo de papel
               </Link>
 
-              <h1 className="display-4 mb-4 text-center">
-                Excluir atribuição de permissão
-              </h1>
+              <h1 className="display-4 mb-4 text-center">Excluir atribuição de permissão</h1>
 
               {alertsList}
 
@@ -148,12 +127,7 @@ class RoleTypePermAssigDelete extends Component {
 
               <div className="row">
                 <div className="col">
-                  <input
-                    type="button"
-                    value="Excluir"
-                    className="btn btn-danger btn-block mt-4"
-                    onClick={this.onSubmit}
-                  />
+                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
                 </div>
                 <div className="col">
                   <input
@@ -175,17 +149,17 @@ class RoleTypePermAssigDelete extends Component {
 }
 
 RoleTypePermAssigDelete.propTypes = {
-  getPermissionAssignment: PropTypes.func.isRequired
+  getRolePermission: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  permissionAssignmentsStore: state.permissionAssignmentsStore
+  rolePermissionStore: state.rolePermissionStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getPermissionAssignment,
-    deletePermissionAssignment
+    getRolePermission,
+    deleteRolePermission
   }
 )(RoleTypePermAssigDelete);

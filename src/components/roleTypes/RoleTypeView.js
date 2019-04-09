@@ -91,15 +91,10 @@ class RoleTypeView extends Component {
                         <Link
                           className="text-danger"
                           to={{
-                            pathname: `/roletypes/${
-                              roleTypesStore.roleType.id
-                            }/delete-permassig/${permission.RolePermission.id}`,
+                            pathname: `/roletypes/${roleTypesStore.roleType.id}/delete-permassig/${permission.RolePermission.id}`,
                             state: {
                               roleType: roleTypesStore.roleType,
-                              permissionAssignment: this.buildPermissionAssignment(
-                                roleTypesStore.roleType,
-                                permission
-                              )
+                              rolePermission: this.buildPermissionAssignment(roleTypesStore.roleType, permission)
                             }
                           }}
                         >

@@ -9,7 +9,7 @@ import { validatePermAssigForm } from "./validatePermAssigForm";
 
 import { getRoleTypes } from "./roleTypesActions";
 import { getPermissionTypes } from "components/permissionTypes/permissionTypesActions";
-import { createPermissionAssignment } from "components/permissionAssignments/permissionAssignmentsActions";
+import { createRolePermission } from "components/rolePermission/rolePermissionActions";
 
 class RoleTypePermAssigCreate extends Component {
   constructor() {
@@ -84,16 +84,16 @@ class RoleTypePermAssigCreate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const permissionAssignmentData = {
+    const rolePermissionData = {
       roleType_id: this.state.roleType_id,
       permission_id: this.state.permissionType_id
     };
 
-    const valRoleType = validatePermAssigForm(permissionAssignmentData);
+    const valRoleType = validatePermAssigForm(rolePermissionData);
     if (!valRoleType.isValid) {
       this.setState({ errors: valRoleType.errors });
     } else {
-      this.props.createPermissionAssignment(permissionAssignmentData, () => {
+      this.props.createRolePermission(rolePermissionData, () => {
         this.props.history.push(`/roletypes/${this.state.roleType_id}`);
       });
     }
@@ -102,13 +102,9 @@ class RoleTypePermAssigCreate extends Component {
   render() {
     const { errors } = this.state;
     const permissionTypes = this.props.permissionTypesStore.permissionTypes;
-    const roleTypes = !isEmpty(this.state.roleType)
-      ? [this.state.roleType]
-      : this.props.roleTypesStore.roleTypes;
+    const roleTypes = !isEmpty(this.state.roleType) ? [this.state.roleType] : this.props.roleTypesStore.roleTypes;
 
-    const roleTypeOptions = [
-      { label: "* Selecione a papel", value: "" }
-    ].concat(
+    const roleTypeOptions = [{ label: "* Selecione a papel", value: "" }].concat(
       roleTypes
         ? roleTypes.map(roleType => {
             return {
@@ -119,9 +115,7 @@ class RoleTypePermAssigCreate extends Component {
         : []
     );
 
-    const permissionOptions = [
-      { label: "* Selecione a papel", value: "" }
-    ].concat(
+    const permissionOptions = [{ label: "* Selecione a papel", value: "" }].concat(
       permissionTypes
         ? permissionTypes.map(permissionType => {
             return {
@@ -183,15 +177,10 @@ class RoleTypePermAssigCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/roletypes/${this.props.match.params.roletype_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
                 Voltar para tipo de papel
               </Link>
-              <h1 className="display-4 text-center">
-                Criar atribuição de permissão
-              </h1>
+              <h1 className="display-4 text-center">Criar atribuição de permissão</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
 
               {alertsList}
@@ -218,6 +207,6 @@ export default connect(
   {
     getRoleTypes,
     getPermissionTypes,
-    createPermissionAssignment
+    createRolePermission
   }
 )(RoleTypePermAssigCreate);
