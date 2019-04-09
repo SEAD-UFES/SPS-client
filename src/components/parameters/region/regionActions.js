@@ -1,5 +1,5 @@
 import { GET_ERRORS } from "../../../actions/types";
-import { GET_REGION, GET_REGIONS, REGIONS_LOADING } from "./regionsActionTypes";
+import { GET_REGION, GET_REGIONS, REGIONS_LOADING } from "./regionActionTypes";
 
 import axios from "axios";
 

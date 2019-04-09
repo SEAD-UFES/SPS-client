@@ -5,7 +5,7 @@ import PrivateRoute from "../common/PrivateRoute";
 
 import AssignmentList from "../assignment/AssignmentList";
 import CourseList from "../course/CourseList";
-import RegionsList from "./regions/RegionsList";
+import RegionList from "./region/RegionList";
 import RestrictionsList from "./restrictions/RestrictionsList";
 import ParameterList from "./ParameterList";
 
@@ -19,7 +19,7 @@ export default class ParametersRoutes extends Component {
 
         <PrivateRoute exact path={`${this.props.match.path}/assignments`} component={AssignmentList} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/regions`} component={RegionsList} />
+        <PrivateRoute exact path={`${this.props.match.path}/regions`} component={RegionList} />
 
         <PrivateRoute exact path={`${this.props.match.path}/restrictions`} component={RestrictionsList} />
       </Switch>

@@ -3,17 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { clearErrors } from "../../../actions/errorActions";
-import {
-  getRegions,
-  createRegion,
-  updateRegion,
-  deleteRegion
-} from "./regionsActions";
+import { getRegions, createRegion, updateRegion, deleteRegion } from "./regionActions";
 import { compareBy } from "utils/compareBy";
-import RegionsModalForm from "./RegionsModalForm";
-import RegionsModalDelete from "./RegionsModalDelete";
+import RegionModalForm from "./RegionModalForm";
+import RegionsModalDelete from "./RegionModalDelete";
 
-class RegionsList extends Component {
+class RegionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -115,22 +110,12 @@ class RegionsList extends Component {
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button
-            type="button"
-            className="btn btn-info"
-            data-toggle="modal"
-            data-target="#addModal"
-          >
+          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
             + Adicionar região
           </button>
         </div>
 
-        <RegionsModalForm
-          mode="add"
-          targetName="addModal"
-          addFunction={this.props.createRegion}
-          reloadFunction={this.props.getRegions}
-        />
+        <RegionModalForm mode="add" targetName="addModal" addFunction={this.props.createRegion} reloadFunction={this.props.getRegions} />
       </div>
     );
 
@@ -138,16 +123,12 @@ class RegionsList extends Component {
     const regionsTable = (
       <div>
         <h4 className="mb-2">Lista de regiões</h4>
-        {RegionsList ? (
+        {RegionList ? (
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>
-                  Nome {this.orderIcon("name")}
-                </th>
-                <th onClick={() => this.sortBy("description")}>
-                  Descrição {this.orderIcon("description")}
-                </th>
+                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -157,35 +138,19 @@ class RegionsList extends Component {
                   return (
                     <tr key={region.id}>
                       <td>{region.name}</td>
+                      <td>{region.description ? region.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
-                        {region.description ? (
-                          region.description
-                        ) : (
-                          <span className="text-muted">Sem descrição.</span>
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-info"
-                          data-toggle="modal"
-                          data-target={`#editModal-${region.id}`}
-                        >
+                        <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${region.id}`}>
                           <i className="far fa-edit" />
                         </button>
-                        <RegionsModalForm
+                        <RegionModalForm
                           targetName={`editModal-${region.id}`}
                           mode="edit"
                           item={region}
                           editFunction={this.props.updateRegion}
                           reloadFunction={this.props.getRegions}
                         />{" "}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${region.id}`}
-                        >
+                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${region.id}`}>
                           <i className="far fa-trash-alt text-danger" />
                         </button>
                         <RegionsModalDelete
@@ -219,9 +184,7 @@ class RegionsList extends Component {
           <div className="row">
             <div className="col-md-12">
               <h1 className="display-4">Regiões</h1>
-              <p className="lead text-muted">
-                Regiões que serão ofertadas pelo sistema
-              </p>
+              <p className="lead text-muted">Regiões que serão ofertadas pelo sistema</p>
               {addItemTool}
               {regionsTable}
             </div>
@@ -232,7 +195,7 @@ class RegionsList extends Component {
   }
 }
 
-RegionsList.proptypes = {
+RegionList.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   getRegions: PropTypes.func.isRequired,
   createRegion: PropTypes.func.isRequired,
@@ -253,4 +216,4 @@ export default connect(
     updateRegion,
     deleteRegion
   }
-)(RegionsList);
+)(RegionList);

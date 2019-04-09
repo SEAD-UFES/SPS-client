@@ -1,7 +1,7 @@
 import { isEmpty, validateName } from "../../../validation";
 
 // Register validation
-export const validateRegionsForm = data => {
+export const validateRegionForm = data => {
   let errors = {};
   let field = {};
 

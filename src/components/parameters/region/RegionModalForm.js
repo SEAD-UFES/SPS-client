@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import TextFieldGroup from "../../common/TextFieldGroup";
 import TextFieldAreaGroup from "../../common/TextAreaFieldGroup";
 import { isEmpty, validateName } from "../../../validation";
-import { validateRegionsForm } from "./validateRegionsForm";
+import { validateRegionForm } from "./validateRegionForm";
 import { clearErrors } from "../../../actions/errorActions";
 
-class RegionsModalForm extends Component {
+class RegionModalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,11 +18,7 @@ class RegionsModalForm extends Component {
       //item data
       id: this.props.item ? this.props.item.id : null,
       name: this.props.item ? this.props.item.name : "",
-      description: this.props.item
-        ? this.props.item.description
-          ? this.props.item.description
-          : ""
-        : "",
+      description: this.props.item ? (this.props.item.description ? this.props.item.description : "") : "",
       //errors
       errors: []
     };
@@ -32,9 +28,7 @@ class RegionsModalForm extends Component {
   }
 
   componentDidMount() {
-    window
-      .$(`#${this.props.targetName}`)
-      .on("hidden.bs.modal", this.resetState);
+    window.$(`#${this.props.targetName}`).on("hidden.bs.modal", this.resetState);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,14 +38,8 @@ class RegionsModalForm extends Component {
       switch (nextProps.errors.code) {
         case "regions-02":
           newErrors = {};
-          if (
-            nextProps.errors.devMessage.name ===
-            "SequelizeUniqueConstraintError"
-          ) {
-            if (
-              nextProps.errors.devMessage.errors[0].message ===
-              "name must be unique"
-            ) {
+          if (nextProps.errors.devMessage.name === "SequelizeUniqueConstraintError") {
+            if (nextProps.errors.devMessage.errors[0].message === "name must be unique") {
               newErrors.name = "Já existe uma curso com esse nome.";
               this.setState({ errors: newErrors });
             }
@@ -102,7 +90,7 @@ class RegionsModalForm extends Component {
     };
 
     //Form validation:
-    const valRegion = validateRegionsForm(regionData);
+    const valRegion = validateRegionForm(regionData);
     if (!valRegion.isValid) {
       this.setState({ errors: valRegion.errors });
     } else {
@@ -129,11 +117,7 @@ class RegionsModalForm extends Component {
     this.setState({
       id: this.props.item ? this.props.item.id : null,
       name: this.props.item ? this.props.item.name : "",
-      description: this.props.item
-        ? this.props.item.description
-          ? this.props.item.description
-          : ""
-        : "",
+      description: this.props.item ? (this.props.item.description ? this.props.item.description : "") : "",
       //errors
       errors: []
     });
@@ -154,20 +138,10 @@ class RegionsModalForm extends Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5
-                className="modal-title"
-                id={`${this.props.targetName}-ModalLabel`}
-              >
-                {this.props.mode === "edit"
-                  ? "Editar região"
-                  : "Adicionar região"}
+              <h5 className="modal-title" id={`${this.props.targetName}-ModalLabel`}>
+                {this.props.mode === "edit" ? "Editar região" : "Adicionar região"}
               </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -175,14 +149,7 @@ class RegionsModalForm extends Component {
               <form className="">
                 <div className="">
                   <div className="form-group">
-                    <TextFieldGroup
-                      type="text"
-                      name="name"
-                      placeholder="* Nome"
-                      value={this.state.name}
-                      onChange={this.onChange}
-                      error={errors.name}
-                    />
+                    <TextFieldGroup type="text" name="name" placeholder="* Nome" value={this.state.name} onChange={this.onChange} error={errors.name} />
 
                     <TextFieldAreaGroup
                       type="text"
@@ -197,18 +164,9 @@ class RegionsModalForm extends Component {
               </form>
             </div>
             <div className="modal-footer">
-              <input
-                type="submit"
-                className="btn btn-info"
-                onClick={this.onSubmit}
-                value={this.props.mode === "edit" ? "Atualizar" : "Adicionar"}
-              />
+              <input type="submit" className="btn btn-info" onClick={this.onSubmit} value={this.props.mode === "edit" ? "Atualizar" : "Adicionar"} />
 
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">
                 Cancelar
               </button>
             </div>
@@ -219,7 +177,7 @@ class RegionsModalForm extends Component {
   }
 }
 
-RegionsModalForm.proptypes = {
+RegionModalForm.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -231,4 +189,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { clearErrors }
-)(RegionsModalForm);
+)(RegionModalForm);

@@ -1,4 +1,4 @@
-import { REGIONS_LOADING, GET_REGIONS } from "./regionsActionTypes";
+import { REGIONS_LOADING, GET_REGIONS } from "./regionActionTypes";
 
 const initialState = {
   loading: false,
