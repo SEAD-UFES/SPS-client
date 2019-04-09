@@ -31,7 +31,7 @@ export const GET_VACANCY = "GET_VACANCY";
 export { GET_COURSES, COURSES_LOADING } from "../components/course/courseActionTypes";
 
 //assignments actions
-export { GET_ASSIGNMENTS, ASSIGNMENTS_LOADING } from "../components/parameters/assignments/assignmentsActionTypes";
+export { GET_ASSIGNMENTS, ASSIGNMENTS_LOADING } from "../components/assignment/assignmentActionTypes";
 
 // //Post actions
 // export const POST_LOADING = "POST_LOADING";

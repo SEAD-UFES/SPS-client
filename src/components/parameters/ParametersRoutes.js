@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 
 import PrivateRoute from "../common/PrivateRoute";
 
-import AssignmentsList from "./assignments/AssignmentsList";
+import AssignmentList from "../assignment/AssignmentList";
 import CourseList from "../course/CourseList";
 import RegionsList from "./regions/RegionsList";
 import RestrictionsList from "./restrictions/RestrictionsList";
@@ -17,7 +17,7 @@ export default class ParametersRoutes extends Component {
 
         <PrivateRoute exact path={`${this.props.match.path}/courses`} component={CourseList} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/assignments`} component={AssignmentsList} />
+        <PrivateRoute exact path={`${this.props.match.path}/assignments`} component={AssignmentList} />
 
         <PrivateRoute exact path={`${this.props.match.path}/regions`} component={RegionsList} />
 

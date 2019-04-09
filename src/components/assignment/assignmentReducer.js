@@ -1,4 +1,4 @@
-import { ASSIGNMENTS_LOADING, GET_ASSIGNMENTS } from "./assignmentsActionTypes";
+import { ASSIGNMENTS_LOADING, GET_ASSIGNMENTS } from "./assignmentActionTypes";
 
 const initialState = {
   loading: false,

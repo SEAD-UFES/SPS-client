@@ -5,7 +5,7 @@ import profileReducer from "./profileReducer";
 import userReducer from "./userReducer";
 import processReducer from "./processReducer";
 import courseReducer from "components/course/courseReducer";
-import assignmentsReducer from "components/parameters/assignments/assignmentsReducer";
+import assignmentReducer from "components/assignment/assignmentReducer";
 import regionsReducer from "components/parameters/regions/regionsReducer";
 import restrictionsReducer from "components/parameters/restrictions/restrictionsReducer";
 import roleTypesReducer from "components/roleTypes/roleTypesReducer";
@@ -27,7 +27,7 @@ export default combineReducers({
   user: userReducer,
   process: processReducer,
   courseStore: courseReducer,
-  assignmentsStore: assignmentsReducer,
+  assignmentStore: assignmentReducer,
   regionsStore: regionsReducer,
   restrictionsStore: restrictionsReducer,
   roleTypesStore: roleTypesReducer,

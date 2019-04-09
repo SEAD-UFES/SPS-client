@@ -1,9 +1,5 @@
-import { GET_ERRORS } from "../../../actions/types";
-import {
-  GET_ASSIGNMENT,
-  GET_ASSIGNMENTS,
-  ASSIGNMENTS_LOADING
-} from "./assignmentsActionTypes";
+import { GET_ERRORS } from "../../actions/types";
+import { GET_ASSIGNMENT, GET_ASSIGNMENTS, ASSIGNMENTS_LOADING } from "./assignmentActionTypes";
 
 import axios from "axios";
 

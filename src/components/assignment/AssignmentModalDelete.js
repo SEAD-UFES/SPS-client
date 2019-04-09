@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { isEmpty } from "../../../validation";
-import { clearErrors } from "../../../actions/errorActions";
-import Alert from "../../../components/common/Alert";
+import { isEmpty } from "../../validation";
+import { clearErrors } from "../../actions/errorActions";
+import Alert from "../common/Alert";
 
-class AssignmentsModalDelete extends Component {
+class AssignmentModalDelete extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,12 +32,8 @@ class AssignmentsModalDelete extends Component {
       switch (nextProps.errors.code) {
         case "assignments-02":
           newErrors = {};
-          if (
-            nextProps.errors.devMessage.name ===
-            "SequelizeForeignKeyConstraintError"
-          ) {
-            newErrors.assignment =
-              "A atribuição está em uso dentro do sistema.";
+          if (nextProps.errors.devMessage.name === "SequelizeForeignKeyConstraintError") {
+            newErrors.assignment = "A atribuição está em uso dentro do sistema.";
             this.setState({ errors: newErrors });
           }
           break;
@@ -76,18 +72,10 @@ class AssignmentsModalDelete extends Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5
-                className="modal-title"
-                id={`${this.props.targetName}-ModalLabel`}
-              >
+              <h5 className="modal-title" id={`${this.props.targetName}-ModalLabel`}>
                 Excluir curso
               </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -107,18 +95,9 @@ class AssignmentsModalDelete extends Component {
               </p>
             </div>
             <div className="modal-footer">
-              <input
-                type="submit"
-                className="btn btn-danger"
-                onClick={this.onSubmit}
-                value="Excluir"
-              />
+              <input type="submit" className="btn btn-danger" onClick={this.onSubmit} value="Excluir" />
 
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">
                 Cancelar
               </button>
             </div>
@@ -129,7 +108,7 @@ class AssignmentsModalDelete extends Component {
   }
 }
 
-AssignmentsModalDelete.proptypes = {
+AssignmentModalDelete.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -141,4 +120,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { clearErrors }
-)(AssignmentsModalDelete);
+)(AssignmentModalDelete);
