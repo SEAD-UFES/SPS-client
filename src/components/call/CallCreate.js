@@ -146,9 +146,9 @@ class CallCreate extends Component {
       number: this.state.number,
       enrollmentOpeningDate: this.state.enrollmentOpeningDate,
       enrollmentClosingDate: this.state.enrollmentClosingDate,
-      endingDate: this.state.endingDate,
+      endingDate: this.state.endingDate
       //course_id for permissions
-      course_id: ""
+      //course_id: ""
     };
 
     const valCall = validateProcessCallForm(tmpCallData);
@@ -160,9 +160,9 @@ class CallCreate extends Component {
         number: tmpCallData.number,
         enrollmentOpeningDate: tmpCallData.enrollmentOpeningDate,
         enrollmentClosingDate: tmpCallData.enrollmentClosingDate,
-        endingDate: tmpCallData.endingDate,
+        endingDate: tmpCallData.endingDate
         //course_id for permissions
-        course_id: ""
+        //course_id: ""
       };
 
       this.props.createProcessCall(callData, this.props.history);
