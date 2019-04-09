@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import TextFieldGroup from "../../common/TextFieldGroup";
-import TextFieldAreaGroup from "../../common/TextAreaFieldGroup";
-import { isEmpty, validateName } from "../../../validation";
+import TextFieldGroup from "../common/TextFieldGroup";
+import TextFieldAreaGroup from "../common/TextAreaFieldGroup";
+import { isEmpty, validateName } from "../../validation";
 import { validateRegionForm } from "./validateRegionForm";
-import { clearErrors } from "../../../actions/errorActions";
+import { clearErrors } from "../../actions/errorActions";
 
 class RegionModalForm extends Component {
   constructor(props) {

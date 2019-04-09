@@ -5,7 +5,7 @@ import PrivateRoute from "../common/PrivateRoute";
 
 import AssignmentList from "../assignment/AssignmentList";
 import CourseList from "../course/CourseList";
-import RegionList from "./region/RegionList";
+import RegionList from "../region/RegionList";
 import RestrictionsList from "./restrictions/RestrictionsList";
 import ParameterList from "./ParameterList";
 
