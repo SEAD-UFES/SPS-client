@@ -1,7 +1,4 @@
-import {
-  RESTRICTIONS_LOADING,
-  GET_RESTRICTIONS
-} from "./restrictionsActionTypes";
+import { RESTRICTIONS_LOADING, GET_RESTRICTIONS } from "./restrictionActionTypes";
 
 const initialState = {
   loading: false,

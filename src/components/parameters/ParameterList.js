@@ -23,7 +23,7 @@ export default class ParameterList extends Component {
                   <Link to={`${this.props.match.path}/regions`}>Regiões</Link>
                 </li>
                 <li className="list-group-item">
-                  <Link to={`${this.props.match.path}/restrictions`}>Retrições de vaga</Link>
+                  <Link to={`${this.props.match.path}/restrictions`}>Restrições de vaga</Link>
                 </li>
                 <li className="list-group-item">
                   <Link to={`${this.props.match.path}/assignments`}>Atribuições de vaga</Link>

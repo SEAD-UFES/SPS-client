@@ -3,17 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { clearErrors } from "../../../actions/errorActions";
-import {
-  getRestrictions,
-  createRestriction,
-  updateRestriction,
-  deleteRestriction
-} from "./restrictionsActions";
+import { getRestrictions, createRestriction, updateRestriction, deleteRestriction } from "./restrictionActions";
 import { compareBy } from "utils/compareBy";
-import RestrictionsModalForm from "./RestrictionsModalForm";
-import RestrictionsModalDelete from "./RestrictionsModalDelete";
+import RestrictionModalForm from "./RestrictionModalForm";
+import RestrictionModalDelete from "./RestrictionModalDelete";
 
-class RestrictionsList extends Component {
+class RestrictionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,12 +29,12 @@ class RestrictionsList extends Component {
 
   componentWillReceiveProps(nextProps) {
     //atualizar lista
-    if (nextProps.restrictionsStore.restrictions) {
+    if (nextProps.restrictionStore.restrictions) {
       this.setState(
         {
           sortMethod: "",
           sortReverse: false,
-          restrictionsList: nextProps.restrictionsStore.restrictions
+          restrictionsList: nextProps.restrictionStore.restrictions
         },
         () => this.sortBy("name", { reverse: false })
       );
@@ -115,22 +110,12 @@ class RestrictionsList extends Component {
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button
-            type="button"
-            className="btn btn-info"
-            data-toggle="modal"
-            data-target="#addModal"
-          >
+          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
             + Adicionar restrição
           </button>
         </div>
 
-        <RestrictionsModalForm
-          mode="add"
-          targetName="addModal"
-          addFunction={this.props.createRestriction}
-          reloadFunction={this.props.getRestrictions}
-        />
+        <RestrictionModalForm mode="add" targetName="addModal" addFunction={this.props.createRestriction} reloadFunction={this.props.getRestrictions} />
       </div>
     );
 
@@ -138,16 +123,12 @@ class RestrictionsList extends Component {
     const restrictionsTable = (
       <div>
         <h4 className="mb-2">Lista de restrições</h4>
-        {RestrictionsList ? (
+        {RestrictionList ? (
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>
-                  Nome {this.orderIcon("name")}
-                </th>
-                <th onClick={() => this.sortBy("description")}>
-                  Descrição {this.orderIcon("description")}
-                </th>
+                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -157,38 +138,22 @@ class RestrictionsList extends Component {
                   return (
                     <tr key={restriction.id}>
                       <td>{restriction.name}</td>
+                      <td>{restriction.description ? restriction.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
-                        {restriction.description ? (
-                          restriction.description
-                        ) : (
-                          <span className="text-muted">Sem descrição.</span>
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-info"
-                          data-toggle="modal"
-                          data-target={`#editModal-${restriction.id}`}
-                        >
+                        <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${restriction.id}`}>
                           <i className="far fa-edit" />
                         </button>
-                        <RestrictionsModalForm
+                        <RestrictionModalForm
                           targetName={`editModal-${restriction.id}`}
                           mode="edit"
                           item={restriction}
                           editFunction={this.props.updateRestriction}
                           reloadFunction={this.props.getRestrictions}
                         />{" "}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${restriction.id}`}
-                        >
+                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${restriction.id}`}>
                           <i className="far fa-trash-alt text-danger" />
                         </button>
-                        <RestrictionsModalDelete
+                        <RestrictionModalDelete
                           targetName={`deleteModal-${restriction.id}`}
                           item={restriction}
                           deleteFunction={this.props.deleteRestriction}
@@ -219,9 +184,7 @@ class RestrictionsList extends Component {
           <div className="row">
             <div className="col-md-12">
               <h1 className="display-4">Restrições</h1>
-              <p className="lead text-muted">
-                Restrições que serão ofertadas pelo sistema
-              </p>
+              <p className="lead text-muted">Restrições que serão ofertadas pelo sistema</p>
               {addItemTool}
               {restrictionsTable}
             </div>
@@ -232,7 +195,7 @@ class RestrictionsList extends Component {
   }
 }
 
-RestrictionsList.proptypes = {
+RestrictionList.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   getRestrictions: PropTypes.func.isRequired,
   createRestriction: PropTypes.func.isRequired,
@@ -241,7 +204,7 @@ RestrictionsList.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  restrictionsStore: state.restrictionsStore
+  restrictionStore: state.restrictionStore
 });
 
 export default connect(
@@ -253,4 +216,4 @@ export default connect(
     updateRestriction,
     deleteRestriction
   }
-)(RestrictionsList);
+)(RestrictionList);

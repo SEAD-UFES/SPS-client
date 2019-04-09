@@ -29,12 +29,12 @@ class RegionList extends Component {
 
   componentWillReceiveProps(nextProps) {
     //atualizar lista
-    if (nextProps.regionsStore.regions) {
+    if (nextProps.regionStore.regions) {
       this.setState(
         {
           sortMethod: "",
           sortReverse: false,
-          regionsList: nextProps.regionsStore.regions
+          regionsList: nextProps.regionStore.regions
         },
         () => this.sortBy("name", { reverse: false })
       );
@@ -204,7 +204,7 @@ RegionList.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  regionsStore: state.regionsStore
+  regionStore: state.regionStore
 });
 
 export default connect(
