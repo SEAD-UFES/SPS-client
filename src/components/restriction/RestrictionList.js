@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { clearErrors } from "../../../actions/errorActions";
+import { clearErrors } from "actions/errorActions";
 import { getRestrictions, createRestriction, updateRestriction, deleteRestriction } from "./restrictionActions";
 import { compareBy } from "utils/compareBy";
 import RestrictionModalForm from "./RestrictionModalForm";

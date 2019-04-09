@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { isEmpty } from "../../../validation";
-import { clearErrors } from "../../../actions/errorActions";
-import Alert from "../../common/Alert";
+import { isEmpty } from "validation";
+import { clearErrors } from "actions/errorActions";
+import Alert from "components/common/Alert";
 
 class RestrictionModalDelete extends Component {
   constructor(props) {

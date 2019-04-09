@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import TextFieldGroup from "../../common/TextFieldGroup";
-import TextFieldAreaGroup from "../../common/TextAreaFieldGroup";
-import { isEmpty, validateName } from "../../../validation";
+import TextFieldGroup from "components/common/TextFieldGroup";
+import TextFieldAreaGroup from "components/common/TextAreaFieldGroup";
+import { isEmpty, validateName } from "validation";
 import { validateRestrictionForm } from "./validateRestrictionForm";
-import { clearErrors } from "../../../actions/errorActions";
+import { clearErrors } from "actions/errorActions";
 
 class RestrictionModalForm extends Component {
   constructor(props) {

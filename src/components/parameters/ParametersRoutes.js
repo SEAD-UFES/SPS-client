@@ -6,7 +6,7 @@ import PrivateRoute from "../common/PrivateRoute";
 import AssignmentList from "../assignment/AssignmentList";
 import CourseList from "../course/CourseList";
 import RegionList from "../region/RegionList";
-import RestrictionList from "./restriction/RestrictionList";
+import RestrictionList from "components/restriction/RestrictionList";
 import ParameterList from "./ParameterList";
 
 export default class ParametersRoutes extends Component {

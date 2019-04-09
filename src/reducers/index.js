@@ -7,7 +7,7 @@ import processReducer from "./processReducer";
 import courseReducer from "components/course/courseReducer";
 import assignmentReducer from "components/assignment/assignmentReducer";
 import regionReducer from "components/region/regionReducer";
-import restrictionReducer from "components/parameters/restriction/restrictionReducer";
+import restrictionReducer from "components/restriction/restrictionReducer";
 import roleTypesReducer from "components/roleTypes/roleTypesReducer";
 import roleAssignmentsReducer from "components/roleAssignments/roleAssignmentsReducer";
 import permissionTypesReducer from "components/permissionTypes/permissionTypesReducer";

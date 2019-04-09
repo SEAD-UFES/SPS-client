@@ -1,4 +1,4 @@
-import { GET_ERRORS } from "../../../actions/types";
+import { GET_ERRORS } from "actions/types";
 import { GET_RESTRICTION, GET_RESTRICTIONS, RESTRICTIONS_LOADING } from "./restrictionActionTypes";
 
 import axios from "axios";
