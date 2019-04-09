@@ -1,0 +1,4 @@
+//PermissionTypes actions
+export const PERMISSIONS_LOADING = "PERMISSIONS_LOADING";
+export const GET_PERMISSION = "GET_PERMISSION";
+export const GET_PERMISSIONS = "GET_PERMISSIONS";

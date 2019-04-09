@@ -8,7 +8,7 @@ import { isEmpty, validateName } from "validation";
 import { validatePermAssigForm } from "./validatePermAssigForm";
 
 import { getRoleTypes } from "./roleTypesActions";
-import { getPermissionTypes } from "components/permissionTypes/permissionTypesActions";
+import { getPermissions } from "components/permission/permissionActions";
 import { createRolePermission } from "components/rolePermission/rolePermissionActions";
 
 class RoleTypePermAssigCreate extends Component {
@@ -42,7 +42,7 @@ class RoleTypePermAssigCreate extends Component {
     if (!(this.props.location.state && this.props.location.state.roleType)) {
       this.props.getRoleTypes();
     }
-    this.props.getPermissionTypes();
+    this.props.getPermissions();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -101,7 +101,7 @@ class RoleTypePermAssigCreate extends Component {
 
   render() {
     const { errors } = this.state;
-    const permissionTypes = this.props.permissionTypesStore.permissionTypes;
+    const permissions = this.props.permissionStore.permissions;
     const roleTypes = !isEmpty(this.state.roleType) ? [this.state.roleType] : this.props.roleTypesStore.roleTypes;
 
     const roleTypeOptions = [{ label: "* Selecione a papel", value: "" }].concat(
@@ -116,11 +116,11 @@ class RoleTypePermAssigCreate extends Component {
     );
 
     const permissionOptions = [{ label: "* Selecione a papel", value: "" }].concat(
-      permissionTypes
-        ? permissionTypes.map(permissionType => {
+      permissions
+        ? permissions.map(permission => {
             return {
-              label: permissionType.name,
-              value: permissionType.id
+              label: permission.name,
+              value: permission.id
             };
           })
         : []
@@ -199,14 +199,14 @@ RoleTypePermAssigCreate.propTypes = {
 
 const mapStateToProps = state => ({
   roleTypesStore: state.roleTypesStore,
-  permissionTypesStore: state.permissionTypesStore
+  permissionStore: state.permissionStore
 });
 
 export default connect(
   mapStateToProps,
   {
     getRoleTypes,
-    getPermissionTypes,
+    getPermissions,
     createRolePermission
   }
 )(RoleTypePermAssigCreate);
