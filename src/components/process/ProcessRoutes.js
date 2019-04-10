@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import PrivateRoute from "../common/PrivateRoute";
 
-import Processes from "./Processes";
+import ProcessList from "./ProcessList";
 import ProcessCreate from "./ProcessCreate";
 import ProcessView from "./ProcessView";
 import ProcessEdit from "./ProcessEdit";
@@ -24,11 +24,11 @@ import PublicationCreate from "components/publication/PublicationCreate";
 import PublicationUpdate from "components/publication/PublicationUpdate";
 import PublicationDelete from "components/publication/PublicationDelete";
 
-export default class ProcessesRoutes extends Component {
+export default class ProcessRoutes extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path={`${this.props.match.path}`} component={Processes} />
+        <Route exact path={`${this.props.match.path}`} component={ProcessList} />
 
         <PrivateRoute exact path={`${this.props.match.path}/create`} component={ProcessCreate} />
 

@@ -26,7 +26,7 @@ import Dashboard from "./components/profile/Dashboard";
 //Route components
 import ProfileRoutes from "./components/profile/ProfileRoutes";
 import UserRoutes from "./components/users/UsersRoutes";
-import ProcessesRoutes from "./components/processes/ProcessesRoutes";
+import ProcessRoutes from "./components/process/ProcessRoutes";
 import ParameterRoutes from "./components/parameter/ParameterRoutes";
 import RoleTypesRoutes from "./components/roleTypes/RoleTypesRoutes";
 import RoleAssignmentsRoutes from "./components/roleAssignments/RoleAssignmentsRoutes";
@@ -77,7 +77,7 @@ class App extends Component {
 
               <PrivateRoute path="/users" component={UserRoutes} />
 
-              <Route path="/processes" component={ProcessesRoutes} />
+              <Route path="/processes" component={ProcessRoutes} />
 
               <PrivateRoute path="/parameters" component={ParameterRoutes} />
 

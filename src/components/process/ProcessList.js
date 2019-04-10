@@ -10,7 +10,7 @@ import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 import DrawFilter from "components/profile/DrawFilter";
 
-class Processes extends Component {
+class ProcessList extends Component {
   constructor(props) {
     super(props);
 
@@ -110,7 +110,7 @@ class Processes extends Component {
   }
 }
 
-Processes.propTypes = {
+ProcessList.propTypes = {
   getUserList: PropTypes.func.isRequired,
   getProcessList: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
@@ -124,4 +124,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getUserList, getProcessList }
-)(Processes);
+)(ProcessList);
