@@ -12,17 +12,9 @@ export default class RoleAssignmentsRoutes extends Component {
   render() {
     return (
       <Switch>
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/`}
-          component={RoleAssignmentsList}
-        />
+        <PrivateRoute exact path={`${this.props.match.path}/`} component={RoleAssignmentsList} />
 
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/create`}
-          component={RoleAssignmentCreate}
-        />
+        <PrivateRoute exact path={`${this.props.match.path}/create`} component={RoleAssignmentCreate} />
 
         {/* <PrivateRoute
           exact
@@ -36,11 +28,7 @@ export default class RoleAssignmentsRoutes extends Component {
           component={RoleAssignmentCreateUpdate}
         /> */}
 
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:roleassignment_id/delete`}
-          component={RoleAssignmentDelete}
-        />
+        <PrivateRoute exact path={`${this.props.match.path}/:roleassignment_id/delete`} component={RoleAssignmentDelete} />
       </Switch>
     );
   }

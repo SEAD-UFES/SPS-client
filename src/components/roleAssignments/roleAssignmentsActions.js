@@ -1,16 +1,9 @@
 import { GET_ERRORS } from "actions/types";
-import {
-  GET_ROLEASSIGNMENT,
-  GET_ROLEASSIGNMENTS,
-  ROLEASSIGNMENTS_LOADING
-} from "./roleAssignmentsActionTypes";
+import { GET_ROLEASSIGNMENT, GET_ROLEASSIGNMENTS, ROLEASSIGNMENTS_LOADING } from "./roleAssignmentsActionTypes";
 
 import axios from "axios";
 
-export const createRoleAssignment = (
-  roleAssignmentData,
-  callback_ok
-) => dispatch => {
+export const createRoleAssignment = (roleAssignmentData, callback_ok) => dispatch => {
   axios
     .post("/v1/roles", roleAssignmentData)
     .then(res => {
@@ -51,10 +44,7 @@ export const getRoleAssignment = roleAssignment_id => dispatch => {
     );
 };
 
-export const updateRoleAssignment = (
-  roleAssignmentData,
-  callback_ok
-) => dispatch => {
+export const updateRoleAssignment = (roleAssignmentData, callback_ok) => dispatch => {
   axios
     .put(`/v1/roles/${roleAssignmentData.id}`, roleAssignmentData)
     .then(res => {
@@ -77,10 +67,7 @@ export const updateRoleAssignment = (
     });
 };
 
-export const deleteRoleAssignment = (
-  roleAssignment_id,
-  callback_ok
-) => dispatch => {
+export const deleteRoleAssignment = (roleAssignment_id, callback_ok) => dispatch => {
   axios
     .delete(`/v1/roles/${roleAssignment_id}`)
     .then(res => {

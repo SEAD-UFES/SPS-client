@@ -1,4 +1,4 @@
-import { isEmpty, validateName } from "validation/";
+import { isEmpty, validateName } from "validation";
 
 export const validateRoleAssignmentForm = data => {
   let errors = {};
