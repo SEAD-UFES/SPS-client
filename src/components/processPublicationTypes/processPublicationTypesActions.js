@@ -1,16 +1,9 @@
 import { GET_ERRORS } from "actions/types";
-import {
-  GET_PROCESSPUBLICATIONTYPE,
-  GET_PROCESSPUBLICATIONTYPES,
-  PROCESSPUBLICATIONTYPES_LOADING
-} from "./processPublicationTypesActionTypes";
+import { GET_PROCESSPUBLICATIONTYPE, GET_PROCESSPUBLICATIONTYPES, PROCESSPUBLICATIONTYPES_LOADING } from "./processPublicationTypesActionTypes";
 
 import axios from "axios";
 
-export const createProcessPublicationType = (
-  processPublicationTypeData,
-  callback_ok
-) => dispatch => {
+export const createProcessPublicationType = (processPublicationTypeData, callback_ok) => dispatch => {
   axios
     .post("/v1/publicationtypes", processPublicationTypeData)
     .then(res => {
@@ -33,10 +26,10 @@ export const createProcessPublicationType = (
     });
 };
 
-export const getProcessPublicationType = processPublication_id => dispatch => {
+export const getProcessPublicationType = publication_id => dispatch => {
   dispatch(setProcessPublicationTypesLoading());
   axios
-    .get(`/v1/publicationtypes/${processPublication_id}`)
+    .get(`/v1/publicationtypes/${publication_id}`)
     .then(res =>
       dispatch({
         type: GET_PROCESSPUBLICATIONTYPE,
@@ -51,15 +44,9 @@ export const getProcessPublicationType = processPublication_id => dispatch => {
     );
 };
 
-export const updateProcessPublicationType = (
-  processPublicationTypeData,
-  callback_ok
-) => dispatch => {
+export const updateProcessPublicationType = (processPublicationTypeData, callback_ok) => dispatch => {
   axios
-    .put(
-      `/v1/publicationtypes/${processPublicationTypeData.id}`,
-      processPublicationTypeData
-    )
+    .put(`/v1/publicationtypes/${processPublicationTypeData.id}`, processPublicationTypeData)
     .then(res => {
       callback_ok(processPublicationTypeData.id);
     })
@@ -80,12 +67,9 @@ export const updateProcessPublicationType = (
     });
 };
 
-export const deleteProcessPublicationType = (
-  processPublication_id,
-  callback_ok
-) => dispatch => {
+export const deleteProcessPublicationType = (publication_id, callback_ok) => dispatch => {
   axios
-    .delete(`/v1/publicationtypes/${processPublication_id}`)
+    .delete(`/v1/publicationtypes/${publication_id}`)
     .then(res => {
       callback_ok();
     })

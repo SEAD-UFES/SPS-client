@@ -10,12 +10,12 @@ import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 
 import { getProcess } from "actions/processActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
-import { getProcessPublication, updateProcessPublication } from "components/processPublications/processPublicationsActions";
+import { getPublication, updatePublication } from "components/publication/publicationActions";
 
 import { validateDateRequired, validateName } from "validation";
-import { validateProcessPublicationForm } from "./validateProcessPublicationForm";
+import { validatePublicationForm } from "./validatePublicationForm";
 
-class ProcessPublicationUpdate extends Component {
+class PublicationUpdate extends Component {
   constructor() {
     super();
 
@@ -85,7 +85,7 @@ class ProcessPublicationUpdate extends Component {
       });
     } else {
       if (this.props.match.params.publication_id) {
-        this.props.getProcessPublication(this.props.match.params.publication_id);
+        this.props.getPublication(this.props.match.params.publication_id);
       }
     }
   }
@@ -191,12 +191,12 @@ class ProcessPublicationUpdate extends Component {
       valid: this.state.valid
     };
 
-    const valRoleType = validateProcessPublicationForm(publicationData, { verifyFile: false });
+    const valRoleType = validatePublicationForm(publicationData, { verifyFile: false });
     if (!valRoleType.isValid) {
       this.setState({ errors: valRoleType.errors });
     } else {
       delete publicationData.file;
-      this.props.updateProcessPublication(publicationData, () => {
+      this.props.updatePublication(publicationData, () => {
         this.props.history.push(`/processes/${this.state.selectiveProcess_id}`);
       });
     }
@@ -400,11 +400,11 @@ class ProcessPublicationUpdate extends Component {
   }
 }
 
-ProcessPublicationUpdate.proptypes = {
+PublicationUpdate.proptypes = {
   getProcess: PropTypes.func.isRequired,
   getProcessPublicationTypes: PropTypes.func.isRequired,
-  getProcessPublication: PropTypes.func.isRequired,
-  updateProcessPublication: PropTypes.func.isRequired
+  getPublication: PropTypes.func.isRequired,
+  updatePublication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -418,7 +418,7 @@ export default connect(
   {
     getProcessPublicationTypes,
     getProcess,
-    getProcessPublication,
-    updateProcessPublication
+    getPublication,
+    updatePublication
   }
-)(ProcessPublicationUpdate);
+)(PublicationUpdate);

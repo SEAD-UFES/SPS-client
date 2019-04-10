@@ -14,7 +14,7 @@ import roleAssignmentsReducer from "components/roleAssignments/roleAssignmentsRe
 import permissionReducer from "components/permission/permissionReducer";
 import rolePermissionReducer from "components/rolePermission/rolePermissionReducer";
 import processPublicationTypesReducer from "components/processPublicationTypes/processPublicationTypesReducer";
-import processPublicationsReducer from "components/processPublications/processPublicationsReducer";
+import publicationReducer from "components/publication/publicationReducer";
 import callReducer from "components/call/callReducer";
 import stepReducer from "components/step/stepReducer";
 import vacancyReducer from "components/vacancy/vacancyReducer";
@@ -34,7 +34,7 @@ export default combineReducers({
   permissionStore: permissionReducer,
   rolePermissionStore: rolePermissionReducer,
   processPublicationTypesStore: processPublicationTypesReducer,
-  processPublicationsStore: processPublicationsReducer,
+  processPublicationsStore: publicationReducer,
   callStore: callReducer,
   stepStore: stepReducer,
   vacancyStore: vacancyReducer

@@ -10,14 +10,14 @@ import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 import FileFieldGroup from "../common/FileFieldGroup";
 
 import { getProcess } from "actions/processActions";
-import { createProcessPublication } from "./processPublicationsActions";
+import { createPublication } from "./publicationActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 
 import { validateDateRequired, validateName } from "validation";
-import { validateProcessPublicationForm } from "./validateProcessPublicationForm";
+import { validatePublicationForm } from "./validatePublicationForm";
 import { validateFileType } from "../../validation";
 
-class ProcessPublicationCreate extends Component {
+class PublicationCreate extends Component {
   constructor() {
     super();
 
@@ -201,11 +201,11 @@ class ProcessPublicationCreate extends Component {
 
     console.log(publicationData);
 
-    const valRoleType = validateProcessPublicationForm(publicationData);
+    const valRoleType = validatePublicationForm(publicationData);
     if (!valRoleType.isValid) {
       this.setState({ errors: valRoleType.errors });
     } else {
-      this.props.createProcessPublication(publicationData, () => {
+      this.props.createPublication(publicationData, () => {
         this.props.history.push(`/processes/${this.state.selectiveProcess_id}`);
       });
     }
@@ -407,10 +407,10 @@ class ProcessPublicationCreate extends Component {
   }
 }
 
-ProcessPublicationCreate.proptypes = {
+PublicationCreate.proptypes = {
   getProcess: PropTypes.func.isRequired,
   getProcessPublicationTypes: PropTypes.func.isRequired,
-  createProcessPublication: PropTypes.func.isRequired
+  createPublication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -422,7 +422,7 @@ export default connect(
   mapStateToProps,
   {
     getProcessPublicationTypes,
-    createProcessPublication,
+    createPublication,
     getProcess
   }
-)(ProcessPublicationCreate);
+)(PublicationCreate);

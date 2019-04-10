@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 import { getProcess } from "actions/processActions";
-import { createProcessPublication } from "./processPublicationsActions";
+import { createPublication } from "./publicationActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
-import { getProcessPublication, deleteProcessPublication } from "components/processPublications/processPublicationsActions";
+import { getPublication, deletePublication } from "components/publication/publicationActions";
 
-class ProcessPublicationDelete extends Component {
+class PublicationDelete extends Component {
   constructor() {
     super();
 
@@ -78,7 +78,7 @@ class ProcessPublicationDelete extends Component {
       });
     } else {
       if (this.props.match.params.publication_id) {
-        this.props.getProcessPublication(this.props.match.params.publication_id);
+        this.props.getPublication(this.props.match.params.publication_id);
       }
     }
   }
@@ -133,7 +133,7 @@ class ProcessPublicationDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteProcessPublication(this.state.id, () => {
+    this.props.deletePublication(this.state.id, () => {
       this.props.history.push(`/processes/${this.state.selectiveProcess_id}`);
     });
   }
@@ -306,12 +306,12 @@ class ProcessPublicationDelete extends Component {
   }
 }
 
-ProcessPublicationDelete.proptypes = {
+PublicationDelete.proptypes = {
   getProcess: PropTypes.func.isRequired,
   getProcessPublicationTypes: PropTypes.func.isRequired,
-  createProcessPublication: PropTypes.func.isRequired,
-  getProcessPublication: PropTypes.func.isRequired,
-  deleteProcessPublication: PropTypes.func.isRequired
+  createPublication: PropTypes.func.isRequired,
+  getPublication: PropTypes.func.isRequired,
+  deletePublication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -324,9 +324,9 @@ export default connect(
   mapStateToProps,
   {
     getProcessPublicationTypes,
-    createProcessPublication,
+    createPublication,
     getProcess,
-    getProcessPublication,
-    deleteProcessPublication
+    getPublication,
+    deletePublication
   }
-)(ProcessPublicationDelete);
+)(PublicationDelete);

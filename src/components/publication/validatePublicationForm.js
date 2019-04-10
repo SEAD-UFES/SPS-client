@@ -1,6 +1,6 @@
 import { isEmpty, validateName, validateDateRequired, validateFileType } from "validation/";
 
-export const validateProcessPublicationForm = (data, options) => {
+export const validatePublicationForm = (data, options) => {
   let errors = {};
   let field = {};
 

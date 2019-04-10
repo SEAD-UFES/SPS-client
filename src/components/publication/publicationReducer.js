@@ -1,4 +1,4 @@
-import { PROCESSPUBLICATIONS_LOADING, GET_PROCESSPUBLICATIONS, GET_PROCESSPUBLICATION } from "./processPublicationsActionTypes";
+import { PUBLICATIONS_LOADING, GET_PUBLICATIONS, GET_PUBLICATION } from "./publicationActionTypes";
 
 const initialState = {
   loading: false,
@@ -8,18 +8,18 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case PROCESSPUBLICATIONS_LOADING:
+    case PUBLICATIONS_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_PROCESSPUBLICATIONS:
+    case GET_PUBLICATIONS:
       return {
         ...state,
         loading: false,
         processPublications: action.payload
       };
-    case GET_PROCESSPUBLICATION:
+    case GET_PUBLICATION:
       return {
         ...state,
         loading: false,
