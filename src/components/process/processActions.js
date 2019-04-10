@@ -1,19 +1,18 @@
 import axios from "axios";
 
+import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
 import {
-  GET_ERRORS,
   GET_PROCESS,
   GET_CALL,
   GET_PROCESSES,
   PROCESS_LOADING,
-  CLEAR_ERRORS,
   GET_STEPTYPES_OPTIONS,
   GET_STEP,
   GET_ASSIGNMENTS_OPTIONS,
   GET_RESTRICTIONS_OPTIONS,
   GET_REGIONS_OPTIONS,
   GET_VACANCY
-} from "./types";
+} from "./processActionTypes";
 
 //create Process
 export const createProcess = (processData, history) => dispatch => {

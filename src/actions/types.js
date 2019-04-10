@@ -15,17 +15,6 @@ export const GET_USERS = "GET_USERS";
 export const GET_USERS_MINIMAL = "GET_USERS_MINIMAL";
 export const USER_LOADING = "USER_LOADING";
 export const GET_USER_PEOPLE_OPTIONS = "GET_USER_PEOPLE_OPTIONS";
-//Process actions
-export const GET_PROCESS = "GET_PROCESS";
-export const GET_CALL = "GET_CALL";
-export const GET_PROCESSES = "GET_PROCESSES";
-export const PROCESS_LOADING = "PROCESS_LOADING";
-export const GET_STEPTYPES_OPTIONS = "GET_STEPTYPES_OPTIONS";
-export const GET_STEP = "GET_STEP";
-export const GET_ASSIGNMENTS_OPTIONS = "GET_ASSIGNMENTS_OPTIONS";
-export const GET_RESTRICTIONS_OPTIONS = "GET_RESTRICTIONS_OPTIONS";
-export const GET_REGIONS_OPTIONS = "GET_REGIONS_OPTIONS";
-export const GET_VACANCY = "GET_VACANCY";
 
 //courses actions
 export { GET_COURSES, COURSES_LOADING } from "../components/course/courseActionTypes";

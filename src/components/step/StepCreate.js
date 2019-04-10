@@ -15,7 +15,7 @@ import {
   validateNumberRequired
 } from "../../validation";
 
-import { getStepOptions, createProcessCallStep } from "../../actions/processActions";
+import { getStepOptions, createProcessCallStep } from "../process/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepCreate extends Component {

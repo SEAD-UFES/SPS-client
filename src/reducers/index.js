@@ -4,7 +4,7 @@ import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import profileReducer from "./profileReducer";
 import userReducer from "./userReducer";
-import processReducer from "./processReducer";
+import processReducer from "../components/process/processReducer";
 import courseReducer from "components/course/courseReducer";
 import assignmentReducer from "components/assignment/assignmentReducer";
 import regionReducer from "components/region/regionReducer";

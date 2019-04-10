@@ -8,7 +8,7 @@ import TextFieldGroup from "components/common/TextFieldGroup";
 import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 
-import { getProcess } from "actions/processActions";
+import { getProcess } from "components/process/processActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 import { getPublication, updatePublication } from "components/publication/publicationActions";
 

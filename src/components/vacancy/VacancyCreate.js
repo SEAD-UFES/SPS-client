@@ -5,11 +5,7 @@ import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import {
-  validateAssignment_id,
-  validateProcessCallVacancyForm,
-  validateNumberRequired
-} from "../../validation";
+import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
 import {
   getStepOptions,
@@ -18,7 +14,7 @@ import {
   getRestrictionsOptions,
   getRegionsOptions,
   createProcessCallVacancy
-} from "../../actions/processActions";
+} from "../process/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class VacancyCreate extends Component {
@@ -123,9 +119,7 @@ class VacancyCreate extends Component {
       call_id: this.props.match.params.call_id,
       assignment_id: this.state.assignment_id,
       region_id: this.state.region_id ? this.state.region_id : null,
-      restriction_id: this.state.restriction_id
-        ? this.state.restriction_id
-        : null,
+      restriction_id: this.state.restriction_id ? this.state.restriction_id : null,
       qtd: this.state.qtd,
       reserve: this.state.reserve
     };
@@ -134,11 +128,7 @@ class VacancyCreate extends Component {
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {
-      this.props.createProcessCallVacancy(
-        vacancyData,
-        this.props.match.params.process_id,
-        this.props.history
-      );
+      this.props.createProcessCallVacancy(vacancyData, this.props.match.params.process_id, this.props.history);
     }
   }
 
@@ -146,9 +136,7 @@ class VacancyCreate extends Component {
     const { errors } = this.state;
     const { assignments, restrictions, regions } = this.props;
 
-    const assignmentOptions = [
-      { label: "* Selecione a atribuição", value: "" }
-    ].concat(
+    const assignmentOptions = [{ label: "* Selecione a atribuição", value: "" }].concat(
       assignments
         ? assignments.map(assignment => {
             return {
@@ -159,9 +147,7 @@ class VacancyCreate extends Component {
         : []
     );
 
-    const restrictionsOptions = [
-      { label: "Selecione a restrição (opcional)", value: "" }
-    ].concat(
+    const restrictionsOptions = [{ label: "Selecione a restrição (opcional)", value: "" }].concat(
       restrictions
         ? restrictions.map(restriction => {
             return {
@@ -172,9 +158,7 @@ class VacancyCreate extends Component {
         : []
     );
 
-    const regionsOptions = [
-      { label: "Selecione o polo (opcional)", value: "" }
-    ].concat(
+    const regionsOptions = [{ label: "Selecione o polo (opcional)", value: "" }].concat(
       regions
         ? regions.map(region => {
             return {
@@ -190,10 +174,7 @@ class VacancyCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/processes/${this.props.match.params.process_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4 text-center">Criar oferta de vaga</h1>
@@ -226,24 +207,10 @@ class VacancyCreate extends Component {
                   error={errors.restriction_id}
                 />
 
-                <TextFieldGroup
-                  type="text"
-                  name="qtd"
-                  placeholder="* Quantidade"
-                  value={this.state.qtd}
-                  onChange={this.onChange}
-                  error={errors.qtd}
-                />
+                <TextFieldGroup type="text" name="qtd" placeholder="* Quantidade" value={this.state.qtd} onChange={this.onChange} error={errors.qtd} />
 
                 <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="reserve"
-                    id="reserve"
-                    checked={this.state.reserve}
-                    onChange={this.onCheck}
-                  />
+                  <input className="form-check-input" type="checkbox" name="reserve" id="reserve" checked={this.state.reserve} onChange={this.onCheck} />
                   <label className="form-check-label" htmlFor="reserve">
                     Esta oferta de vagas permite cadastro de reserva.
                   </label>

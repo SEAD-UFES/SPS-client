@@ -9,14 +9,15 @@ import {
   GET_RESTRICTIONS_OPTIONS,
   GET_REGIONS_OPTIONS,
   GET_VACANCY
-} from "../actions/types";
+} from "./processActionTypes";
 
 const initialState = {
+  loading: false,
+  processes: null,
   process: null,
+  //other stuff
   call: null,
   step: null,
-  processes: null,
-  loading: false,
   options: null,
   assignments: null,
   restrictions: null,

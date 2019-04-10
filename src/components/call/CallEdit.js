@@ -14,7 +14,7 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import { createProcessCall, getCall, updateProcessCall } from "../../actions/processActions";
+import { createProcessCall, getCall, updateProcessCall } from "../process/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class CallEdit extends Component {

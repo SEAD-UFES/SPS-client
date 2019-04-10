@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { getUserList } from "../../actions/userActions";
-import { getProcessList } from "../../actions/processActions";
+import { getProcessList } from "./processActions";
 
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";

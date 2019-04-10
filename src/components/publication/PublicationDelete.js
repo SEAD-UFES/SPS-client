@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 
-import { getProcess } from "actions/processActions";
+import { getProcess } from "components/process/processActions";
 import { createPublication } from "./publicationActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 import { getPublication, deletePublication } from "components/publication/publicationActions";

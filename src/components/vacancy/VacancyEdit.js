@@ -16,7 +16,7 @@ import {
   createProcessCallVacancy,
   getVacancy,
   updateProcessCallVacancy
-} from "../../actions/processActions";
+} from "../process/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class VacancyEdit extends Component {

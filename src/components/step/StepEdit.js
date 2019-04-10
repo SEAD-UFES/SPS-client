@@ -16,7 +16,7 @@ import {
   validateProcessCallStepForm,
   validateNumberRequired
 } from "../../validation";
-import { getStepOptions, createProcessCallStep, getStep, updateProcessCallStep } from "../../actions/processActions";
+import { getStepOptions, createProcessCallStep, getStep, updateProcessCallStep } from "../process/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepEdit extends Component {

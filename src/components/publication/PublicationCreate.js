@@ -9,7 +9,7 @@ import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 import FileFieldGroup from "../common/FileFieldGroup";
 
-import { getProcess } from "actions/processActions";
+import { getProcess } from "components/process/processActions";
 import { createPublication } from "./publicationActions";
 import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
 

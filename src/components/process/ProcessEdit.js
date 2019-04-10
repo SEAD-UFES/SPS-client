@@ -10,7 +10,7 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { isEmpty, validateProcessNumber, validateYearRequired, validateDescription, validateProcessForm, validateId } from "../../validation";
 
 import { clearErrors } from "../../actions/errorActions";
-import { getProcess, updateProcess } from "../../actions/processActions";
+import { getProcess, updateProcess } from "./processActions";
 import { getCourses } from "../course/courseActions";
 
 class ProcessEdit extends Component {

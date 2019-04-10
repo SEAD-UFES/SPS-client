@@ -12,7 +12,7 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import { createProcessCall } from "../../actions/processActions";
+import { createProcessCall } from "../process/processActions";
 
 class CallCreate extends Component {
   constructor() {

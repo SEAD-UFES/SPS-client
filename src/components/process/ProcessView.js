@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { getProcess } from "../../actions/processActions";
+import { getProcess } from "./processActions";
 import Spinner from "../common/Spinner";
 import CallTabList from "../call/CallTabList";
 import DrawFilter from "../profile/DrawFilter";

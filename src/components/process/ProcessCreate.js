@@ -9,7 +9,7 @@ import SelectListGroup from "../common/SelectListGroup";
 
 import { validateProcessNumber, validateYearRequired, validateDescription, validateProcessForm, validateId } from "../../validation";
 
-import { createProcess } from "../../actions/processActions";
+import { createProcess } from "./processActions";
 import { getCourses } from "../course/courseActions";
 
 class ProcessCreate extends Component {
