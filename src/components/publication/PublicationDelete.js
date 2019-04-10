@@ -6,7 +6,7 @@ import moment from "moment";
 
 import { getProcess } from "components/process/processActions";
 import { createPublication } from "./publicationActions";
-import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
+import { getPublicationTypes } from "components/publicationType/publicationTypeActions";
 import { getPublication, deletePublication } from "components/publication/publicationActions";
 
 class PublicationDelete extends Component {
@@ -84,7 +84,7 @@ class PublicationDelete extends Component {
   }
 
   componentDidMount() {
-    this.props.getProcessPublicationTypes();
+    this.props.getPublicationTypes();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -111,9 +111,9 @@ class PublicationDelete extends Component {
 
     //load publication on state if needed.
     if (!(this.props.location.state && this.props.location.state.publication)) {
-      if (nextProps.processPublicationsStore) {
-        const publication = nextProps.processPublicationsStore.processPublication;
-        const loading = nextProps.processPublicationsStore.loading;
+      if (nextProps.publicationStore) {
+        const publication = nextProps.publicationStore.processPublication;
+        const loading = nextProps.publicationStore.loading;
         if (publication !== null && loading === false) {
           this.setState({
             id: publication.id,
@@ -142,13 +142,10 @@ class PublicationDelete extends Component {
     //load raw data
     const { errors, selectiveProcess } = this.state;
     const process_id = this.props.match.params.process_id;
-    const { processPublicationTypesStore } = this.props;
+    const { publicationTypeStore } = this.props;
 
     //mounting data structures
-    const processPublicationTypes =
-      processPublicationTypesStore.processPublicationTypes !== null && !processPublicationTypesStore.loading
-        ? processPublicationTypesStore.processPublicationTypes
-        : [];
+    const publicationTypes = publicationTypeStore.publicationTypes !== null && !publicationTypeStore.loading ? publicationTypeStore.publicationTypes : [];
 
     const processes = selectiveProcess ? [selectiveProcess] : [];
 
@@ -173,7 +170,7 @@ class PublicationDelete extends Component {
       return value.id === this.state.step_id;
     });
 
-    const chosenType = processPublicationTypes.filter(value => {
+    const chosenType = publicationTypes.filter(value => {
       return value.id === this.state.publicationType_id;
     });
 
@@ -308,7 +305,7 @@ class PublicationDelete extends Component {
 
 PublicationDelete.proptypes = {
   getProcess: PropTypes.func.isRequired,
-  getProcessPublicationTypes: PropTypes.func.isRequired,
+  getPublicationTypes: PropTypes.func.isRequired,
   createPublication: PropTypes.func.isRequired,
   getPublication: PropTypes.func.isRequired,
   deletePublication: PropTypes.func.isRequired
@@ -316,14 +313,14 @@ PublicationDelete.proptypes = {
 
 const mapStateToProps = state => ({
   process: state.process,
-  processPublicationTypesStore: state.processPublicationTypesStore,
-  processPublicationsStore: state.processPublicationsStore
+  publicationTypeStore: state.publicationTypeStore,
+  publicationStore: state.publicationStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessPublicationTypes,
+    getPublicationTypes,
     createPublication,
     getProcess,
     getPublication,

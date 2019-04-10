@@ -11,7 +11,7 @@ import FileFieldGroup from "../common/FileFieldGroup";
 
 import { getProcess } from "components/process/processActions";
 import { createPublication } from "./publicationActions";
-import { getProcessPublicationTypes } from "components/processPublicationTypes/processPublicationTypesActions";
+import { getPublicationTypes } from "components/publicationType/publicationTypeActions";
 
 import { validateDateRequired, validateName } from "validation";
 import { validatePublicationForm } from "./validatePublicationForm";
@@ -73,7 +73,7 @@ class PublicationCreate extends Component {
   }
 
   componentDidMount() {
-    this.props.getProcessPublicationTypes();
+    this.props.getPublicationTypes();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -215,13 +215,10 @@ class PublicationCreate extends Component {
     //load raw data
     const { errors, selectiveProcess } = this.state;
     const process_id = this.props.match.params.process_id;
-    const { processPublicationTypesStore } = this.props;
+    const { publicationTypeStore } = this.props;
 
     //mounting data structures
-    const processPublicationTypes =
-      processPublicationTypesStore.processPublicationTypes !== null && !processPublicationTypesStore.loading
-        ? processPublicationTypesStore.processPublicationTypes
-        : [];
+    const publicationTypes = publicationTypeStore.publicationTypes !== null && !publicationTypeStore.loading ? publicationTypeStore.publicationTypes : [];
 
     const processes = selectiveProcess ? [selectiveProcess] : [];
 
@@ -256,8 +253,8 @@ class PublicationCreate extends Component {
     );
 
     const processPublicationTypeOptions = [{ label: "* Selecione o tipo de publicação", value: "" }].concat(
-      processPublicationTypes
-        ? processPublicationTypes.map(procPubTypes => {
+      publicationTypes
+        ? publicationTypes.map(procPubTypes => {
             return {
               label: procPubTypes.name,
               value: procPubTypes.id
@@ -409,19 +406,19 @@ class PublicationCreate extends Component {
 
 PublicationCreate.proptypes = {
   getProcess: PropTypes.func.isRequired,
-  getProcessPublicationTypes: PropTypes.func.isRequired,
+  getPublicationTypes: PropTypes.func.isRequired,
   createPublication: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   process: state.process,
-  processPublicationTypesStore: state.processPublicationTypesStore
+  publicationTypeStore: state.publicationTypeStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessPublicationTypes,
+    getPublicationTypes,
     createPublication,
     getProcess
   }

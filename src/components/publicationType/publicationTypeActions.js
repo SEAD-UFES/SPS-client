@@ -1,11 +1,18 @@
-import { GET_ERRORS } from "actions/types";
-import { GET_PROCESSPUBLICATIONTYPE, GET_PROCESSPUBLICATIONTYPES, PROCESSPUBLICATIONTYPES_LOADING } from "./processPublicationTypesActionTypes";
-
 import axios from "axios";
 
-export const createProcessPublicationType = (processPublicationTypeData, callback_ok) => dispatch => {
+import { GET_ERRORS } from "actions/types";
+import { GET_PUBLICATIONTYPE, GET_PUBLICATIONTYPES, PUBLICATIONTYPES_LOADING } from "./publicationTypeActionTypes";
+
+//processPublications loading
+export const setPublicationTypesLoading = () => {
+  return {
+    type: PUBLICATIONTYPES_LOADING
+  };
+};
+
+export const createPublicationType = (publicationTypeData, callback_ok) => dispatch => {
   axios
-    .post("/v1/publicationtypes", processPublicationTypeData)
+    .post("/v1/publicationtypes", publicationTypeData)
     .then(res => {
       callback_ok(res.data.id);
     })
@@ -26,13 +33,13 @@ export const createProcessPublicationType = (processPublicationTypeData, callbac
     });
 };
 
-export const getProcessPublicationType = publication_id => dispatch => {
-  dispatch(setProcessPublicationTypesLoading());
+export const getPublicationType = publicationType_id => dispatch => {
+  dispatch(setPublicationTypesLoading());
   axios
-    .get(`/v1/publicationtypes/${publication_id}`)
+    .get(`/v1/publicationtypes/${publicationType_id}`)
     .then(res =>
       dispatch({
-        type: GET_PROCESSPUBLICATIONTYPE,
+        type: GET_PUBLICATIONTYPE,
         payload: res.data
       })
     )
@@ -44,11 +51,11 @@ export const getProcessPublicationType = publication_id => dispatch => {
     );
 };
 
-export const updateProcessPublicationType = (processPublicationTypeData, callback_ok) => dispatch => {
+export const updatePublicationType = (publicationTypeData, callback_ok) => dispatch => {
   axios
-    .put(`/v1/publicationtypes/${processPublicationTypeData.id}`, processPublicationTypeData)
+    .put(`/v1/publicationtypes/${publicationTypeData.id}`, publicationTypeData)
     .then(res => {
-      callback_ok(processPublicationTypeData.id);
+      callback_ok(publicationTypeData.id);
     })
     .catch(err => {
       if (err.response) {
@@ -67,9 +74,9 @@ export const updateProcessPublicationType = (processPublicationTypeData, callbac
     });
 };
 
-export const deleteProcessPublicationType = (publication_id, callback_ok) => dispatch => {
+export const deletePublicationType = (publicationType_id, callback_ok) => dispatch => {
   axios
-    .delete(`/v1/publicationtypes/${publication_id}`)
+    .delete(`/v1/publicationtypes/${publicationType_id}`)
     .then(res => {
       callback_ok();
     })
@@ -90,20 +97,13 @@ export const deleteProcessPublicationType = (publication_id, callback_ok) => dis
     });
 };
 
-//processPublications loading
-export const setProcessPublicationTypesLoading = () => {
-  return {
-    type: PROCESSPUBLICATIONTYPES_LOADING
-  };
-};
-
-export const getProcessPublicationTypes = () => dispatch => {
-  dispatch(setProcessPublicationTypesLoading());
+export const getPublicationTypes = () => dispatch => {
+  dispatch(setPublicationTypesLoading());
   axios
     .get("/v1/publicationtypes")
     .then(res =>
       dispatch({
-        type: GET_PROCESSPUBLICATIONTYPES,
+        type: GET_PUBLICATIONTYPES,
         payload: res.data
       })
     )

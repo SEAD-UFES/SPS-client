@@ -3,6 +3,13 @@ import { GET_REGION, GET_REGIONS, REGIONS_LOADING } from "./regionActionTypes";
 
 import axios from "axios";
 
+//courses loading
+export const setRegionsLoading = () => {
+  return {
+    type: REGIONS_LOADING
+  };
+};
+
 export const createRegion = (regionData, callback_ok) => dispatch => {
   axios
     .post("/v1/regions", regionData)
@@ -60,13 +67,6 @@ export const deleteRegion = (region_id, callback_ok) => dispatch => {
         payload: err.response.data
       })
     );
-};
-
-//courses loading
-export const setRegionsLoading = () => {
-  return {
-    type: REGIONS_LOADING
-  };
 };
 
 export const getRegions = () => dispatch => {
