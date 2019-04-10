@@ -15,9 +15,9 @@ import permissionReducer from "components/permission/permissionReducer";
 import rolePermissionReducer from "components/rolePermission/rolePermissionReducer";
 import processPublicationTypesReducer from "components/processPublicationTypes/processPublicationTypesReducer";
 import processPublicationsReducer from "components/processPublications/processPublicationsReducer";
-import processCallVacanciesReducer from "components/processCallsVacancies/processCallVacanciesReducer";
 import callReducer from "components/call/callReducer";
 import stepReducer from "components/step/stepReducer";
+import vacancyReducer from "components/vacancy/vacancyReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -35,9 +35,7 @@ export default combineReducers({
   rolePermissionStore: rolePermissionReducer,
   processPublicationTypesStore: processPublicationTypesReducer,
   processPublicationsStore: processPublicationsReducer,
-  processCallVacanciesStore: processCallVacanciesReducer,
+  callStore: callReducer,
   stepStore: stepReducer,
-  callStore: callReducer
-
-  //post: postReducer
+  vacancyStore: vacancyReducer
 });

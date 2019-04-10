@@ -1,10 +1,17 @@
 import axios from "axios";
 
 import { GET_ERRORS } from "actions/types";
-import { GET_VACANCY, VACANCIES_LOADING } from "./vacanciesActionTypes";
+import { GET_VACANCY, VACANCIES_LOADING } from "./vacancyActionTypes";
 
-export const getProcessCallVacancy = vacancy_id => dispatch => {
-  dispatch(setProcessCallVacanciesLoading());
+//vacancies loading
+export const setVacanciesLoading = () => {
+  return {
+    type: VACANCIES_LOADING
+  };
+};
+
+export const getVacancy = vacancy_id => dispatch => {
+  dispatch(setVacanciesLoading());
   axios
     .get(`/v1/vacancies/${vacancy_id}`)
     .then(res =>
@@ -21,7 +28,7 @@ export const getProcessCallVacancy = vacancy_id => dispatch => {
     );
 };
 
-export const deleteProcessCallVacancy = (vacancy_id, callback_ok) => dispatch => {
+export const deleteVacancy = (vacancy_id, callback_ok) => dispatch => {
   axios
     .delete(`/v1/vacancies/${vacancy_id}`)
     .then(res => {
@@ -43,11 +50,4 @@ export const deleteProcessCallVacancy = (vacancy_id, callback_ok) => dispatch =>
         });
       }
     });
-};
-
-//roleAssignments loading
-export const setProcessCallVacanciesLoading = () => {
-  return {
-    type: VACANCIES_LOADING
-  };
 };

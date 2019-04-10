@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Spinner from "components/common/Spinner";
 
-import { getProcessCallVacancy, deleteProcessCallVacancy } from "components/processCallsVacancies/vacanciesActions";
+import { getVacancy, deleteVacancy } from "components/vacancy/vacancyActions";
 
 class VacancyDelete extends Component {
   constructor() {
@@ -17,7 +17,7 @@ class VacancyDelete extends Component {
 
   componentDidMount() {
     if (this.props.match.params.vacancy_id) {
-      this.props.getProcessCallVacancy(this.props.match.params.vacancy_id);
+      this.props.getVacancy(this.props.match.params.vacancy_id);
     }
   }
 
@@ -31,7 +31,7 @@ class VacancyDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteProcessCallVacancy(this.props.match.params.vacancy_id, () => {
+    this.props.deleteVacancy(this.props.match.params.vacancy_id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`);
     });
   }
@@ -157,19 +157,19 @@ class VacancyDelete extends Component {
 }
 
 VacancyDelete.propTypes = {
-  getProcessCallVacancy: PropTypes.func.isRequired,
-  deleteProcessCallVacancy: PropTypes.func.isRequired
+  getVacancy: PropTypes.func.isRequired,
+  deleteVacancy: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  vacancy: state.processCallVacanciesStore.vacancy,
-  loading: state.processCallVacanciesStore.loading
+  vacancy: state.vacancyStore.vacancy,
+  loading: state.vacancyStore.loading
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessCallVacancy,
-    deleteProcessCallVacancy
+    getVacancy,
+    deleteVacancy
   }
 )(VacancyDelete);

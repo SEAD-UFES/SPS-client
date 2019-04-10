@@ -1,4 +1,4 @@
-import { VACANCIES_LOADING, GET_VACANCIES, GET_VACANCY } from "./vacanciesActionTypes";
+import { VACANCIES_LOADING, GET_VACANCIES, GET_VACANCY } from "./vacancyActionTypes";
 
 const initialState = {
   loading: false,

@@ -16,9 +16,9 @@ import StepCreate from "../step/StepCreate";
 import StepEdit from "../step/StepEdit";
 import StepDelete from "../step/StepDelete";
 
-import VacancyCreate from "../processCallsVacancies/VacancyCreate";
-import VacancyEdit from "../processCallsVacancies/VacancyEdit";
-import VacancyDelete from "../processCallsVacancies/VacancyDelete";
+import VacancyCreate from "../vacancy/VacancyCreate";
+import VacancyEdit from "../vacancy/VacancyEdit";
+import VacancyDelete from "../vacancy/VacancyDelete";
 
 import ProcessPublicationCreate from "components/processPublications/ProcessPublicationCreate";
 import ProcessPublicationUpdate from "components/processPublications/ProcessPublicationUpdate";

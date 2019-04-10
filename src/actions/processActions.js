@@ -282,7 +282,7 @@ export const createProcessCallVacancy = (vacancyData, process_id, history) => di
 };
 
 //get ProcessCallVacancy
-export const getProcessCallVacancy = vacancy_id => dispatch => {
+export const getVacancy = vacancy_id => dispatch => {
   axios
     .get(`/v1/vacancies/${vacancy_id}`)
     .then(res => {

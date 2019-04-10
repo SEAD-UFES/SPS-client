@@ -14,7 +14,7 @@ import {
   getRestrictionsOptions,
   getRegionsOptions,
   createProcessCallVacancy,
-  getProcessCallVacancy,
+  getVacancy,
   updateProcessCallVacancy
 } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
@@ -45,7 +45,7 @@ class VacancyEdit extends Component {
     this.props.getRestrictionsOptions();
     this.props.getRegionsOptions();
     if (this.props.match.params.vacancy_id) {
-      this.props.getProcessCallVacancy(this.props.match.params.vacancy_id);
+      this.props.getVacancy(this.props.match.params.vacancy_id);
     }
   }
 
@@ -270,7 +270,7 @@ VacancyEdit.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   getAssignmentOptions: PropTypes.func.isRequired,
-  getProcessCallVacancy: PropTypes.func.isRequired
+  getVacancy: PropTypes.func.isRequired
 };
 
 //Put redux store data on props
@@ -291,7 +291,7 @@ export default connect(
     getRestrictionsOptions,
     getRegionsOptions,
     createProcessCallVacancy,
-    getProcessCallVacancy,
+    getVacancy,
     updateProcessCallVacancy
   }
 )(withRouter(VacancyEdit));
