@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import Spinner from "components/common/Spinner";
 
-import { getProcessCallStep, deleteProcessCallStep } from "components/processCallsSteps/stepsActions";
+import { getStep, deleteStep } from "components/step/stepActions";
 
 class StepDelete extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class StepDelete extends Component {
 
   componentDidMount() {
     if (this.props.match.params.step_id) {
-      this.props.getProcessCallStep(this.props.match.params.step_id);
+      this.props.getStep(this.props.match.params.step_id);
     }
   }
 
@@ -32,7 +32,7 @@ class StepDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteProcessCallStep(this.props.match.params.step_id, () => {
+    this.props.deleteStep(this.props.match.params.step_id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`);
     });
   }
@@ -154,20 +154,20 @@ class StepDelete extends Component {
 }
 
 StepDelete.propTypes = {
-  getProcessCallStep: PropTypes.func.isRequired,
-  deleteProcessCallStep: PropTypes.func.isRequired
+  getStep: PropTypes.func.isRequired,
+  deleteStep: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  step: state.processCallStepsStore.step,
-  loading: state.processCallStepsStore.loading,
+  step: state.stepStore.step,
+  loading: state.stepStore.loading,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
   {
-    getProcessCallStep,
-    deleteProcessCallStep
+    getStep,
+    deleteStep
   }
 )(StepDelete);

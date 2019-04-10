@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+
 import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import profileReducer from "./profileReducer";
@@ -15,10 +16,8 @@ import rolePermissionReducer from "components/rolePermission/rolePermissionReduc
 import processPublicationTypesReducer from "components/processPublicationTypes/processPublicationTypesReducer";
 import processPublicationsReducer from "components/processPublications/processPublicationsReducer";
 import processCallVacanciesReducer from "components/processCallsVacancies/processCallVacanciesReducer";
-import processCallStepsReducer from "components/processCallsSteps/processCallStepsReducer";
 import callReducer from "components/call/callReducer";
-
-//import postReducer from "./postReducer";
+import stepReducer from "components/step/stepReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -37,7 +36,7 @@ export default combineReducers({
   processPublicationTypesStore: processPublicationTypesReducer,
   processPublicationsStore: processPublicationsReducer,
   processCallVacanciesStore: processCallVacanciesReducer,
-  processCallStepsStore: processCallStepsReducer,
+  stepStore: stepReducer,
   callStore: callReducer
 
   //post: postReducer

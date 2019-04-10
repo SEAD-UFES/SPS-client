@@ -1,4 +1,4 @@
-import { STEPS_LOADING, GET_STEPS, GET_STEP } from "./stepsActionTypes";
+import { STEPS_LOADING, GET_STEPS, GET_STEP } from "./stepActionTypes";
 
 const initialState = {
   loading: false,

@@ -1,10 +1,17 @@
 import axios from "axios";
 
 import { GET_ERRORS } from "actions/types";
-import { GET_STEP, STEPS_LOADING } from "./stepsActionTypes";
+import { GET_STEP, STEPS_LOADING } from "./stepActionTypes";
 
-export const getProcessCallStep = step_id => dispatch => {
-  dispatch(setProcessCallStepsLoading());
+//steps loading
+export const setStepLoading = () => {
+  return {
+    type: STEPS_LOADING
+  };
+};
+
+export const getStep = step_id => dispatch => {
+  dispatch(setStepLoading());
   axios
     .get(`/v1/steps/${step_id}`)
     .then(res =>
@@ -21,7 +28,7 @@ export const getProcessCallStep = step_id => dispatch => {
     );
 };
 
-export const deleteProcessCallStep = (step_id, callback_ok) => dispatch => {
+export const deleteStep = (step_id, callback_ok) => dispatch => {
   axios
     .delete(`/v1/steps/${step_id}`)
     .then(res => {
@@ -43,11 +50,4 @@ export const deleteProcessCallStep = (step_id, callback_ok) => dispatch => {
         });
       }
     });
-};
-
-//roleAssignments loading
-export const setProcessCallStepsLoading = () => {
-  return {
-    type: STEPS_LOADING
-  };
 };

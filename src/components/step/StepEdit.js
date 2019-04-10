@@ -16,7 +16,7 @@ import {
   validateProcessCallStepForm,
   validateNumberRequired
 } from "../../validation";
-import { getStepOptions, createProcessCallStep, getProcessCallStep, updateProcessCallStep } from "../../actions/processActions";
+import { getStepOptions, createProcessCallStep, getStep, updateProcessCallStep } from "../../actions/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepEdit extends Component {
@@ -43,7 +43,7 @@ class StepEdit extends Component {
     this.props.clearErrors();
     this.props.getStepOptions();
     if (this.props.match.params.step_id) {
-      this.props.getProcessCallStep(this.props.match.params.step_id);
+      this.props.getStep(this.props.match.params.step_id);
     }
   }
 
@@ -271,7 +271,7 @@ export default connect(
     createProcessCallStep,
     getStepOptions,
     clearErrors,
-    getProcessCallStep,
+    getStep,
     updateProcessCallStep
   }
 )(withRouter(StepEdit));

@@ -12,9 +12,9 @@ import CallCreate from "../call/CallCreate";
 import CallEdit from "../call/CallEdit";
 import CallDelete from "../call/CallDelete";
 
-import StepCreate from "../processCallsSteps/StepCreate";
-import StepEdit from "../processCallsSteps/StepEdit";
-import StepDelete from "../processCallsSteps/StepDelete";
+import StepCreate from "../step/StepCreate";
+import StepEdit from "../step/StepEdit";
+import StepDelete from "../step/StepDelete";
 
 import VacancyCreate from "../processCallsVacancies/VacancyCreate";
 import VacancyEdit from "../processCallsVacancies/VacancyEdit";

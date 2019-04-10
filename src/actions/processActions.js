@@ -179,7 +179,7 @@ export const createProcessCallStep = (stepData, process_id, history) => dispatch
 };
 
 //get ProcessCallStep
-export const getProcessCallStep = step_id => dispatch => {
+export const getStep = step_id => dispatch => {
   axios
     .get(`/v1/steps/${step_id}`)
     .then(res => {
