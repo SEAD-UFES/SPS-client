@@ -10,7 +10,7 @@ import assignmentReducer from "components/assignment/assignmentReducer";
 import regionReducer from "components/region/regionReducer";
 import restrictionReducer from "components/restriction/restrictionReducer";
 import roleTypesReducer from "components/roleTypes/roleTypesReducer";
-import roleAssignmentsReducer from "components/roleAssignments/roleAssignmentsReducer";
+import userRoleReducer from "components/userRole/userRoleReducer";
 import permissionReducer from "components/permission/permissionReducer";
 import rolePermissionReducer from "components/rolePermission/rolePermissionReducer";
 import publicationTypeReducer from "components/publicationType/publicationTypeReducer";
@@ -30,7 +30,7 @@ export default combineReducers({
   regionStore: regionReducer,
   restrictionStore: restrictionReducer,
   roleTypesStore: roleTypesReducer,
-  roleAssignmentsStore: roleAssignmentsReducer,
+  userRoleStore: userRoleReducer,
   permissionStore: permissionReducer,
   rolePermissionStore: rolePermissionReducer,
   publicationTypeStore: publicationTypeReducer,

@@ -31,24 +31,24 @@ class DrawFilter extends Component {
     const filterAdministrator = value => {
       return value.Course === null && value.RoleType.name === "Administrador";
     };
-    const AdminRole = Roles.filter(filterAdministrator);
-    if (AdminRole.length > 0) {
+    const userRoleAdmin = Roles.filter(filterAdministrator);
+    if (userRoleAdmin.length > 0) {
       this.setState({ canDraw: true });
       return null;
     }
 
     //search for permission on global roles
-    const filterGlobalRoleAssignments = value => {
+    const filterGlobalUserRoles = value => {
       return value.Course === null && value.RoleType.name !== "Administrador";
     };
-    const globalRoleAssignments = Roles.filter(filterGlobalRoleAssignments);
+    const globalRoleAssignments = Roles.filter(filterGlobalUserRoles);
     if (globalRoleAssignments.length > 0) {
-      globalRoleAssignments.map(roleAssignment => {
-        if (roleAssignment.RoleType.Permissions.length > 0) {
+      globalRoleAssignments.map(userRole => {
+        if (userRole.RoleType.Permissions.length > 0) {
           const filterPermission = value => {
             return value.name === permission;
           };
-          const permissionFound = roleAssignment.RoleType.Permissions.filter(filterPermission);
+          const permissionFound = userRole.RoleType.Permissions.filter(filterPermission);
           if (permissionFound.length > 0) {
             this.setState({ canDraw: true });
             return null;
@@ -60,17 +60,17 @@ class DrawFilter extends Component {
 
     //search for permission on any courses
     if (options.anyCourse === true) {
-      const filterAllCoursesRoleAssignments = value => {
+      const filterAllCourseUserRoles = value => {
         return value.Course !== null && value.RoleType.name !== "Administrador";
       };
-      const AllCoursesRoleAssignments = Roles.filter(filterAllCoursesRoleAssignments);
-      if (AllCoursesRoleAssignments.length > 0) {
-        AllCoursesRoleAssignments.map(roleAssignment => {
-          if (roleAssignment.RoleType.Permissions.length > 0) {
+      const AllCourseUserRoles = Roles.filter(filterAllCourseUserRoles);
+      if (AllCourseUserRoles.length > 0) {
+        AllCourseUserRoles.map(userRole => {
+          if (userRole.RoleType.Permissions.length > 0) {
             const filterPermission = value => {
               return value.name === permission;
             };
-            const permissionFound = roleAssignment.RoleType.Permissions.filter(filterPermission);
+            const permissionFound = userRole.RoleType.Permissions.filter(filterPermission);
             if (permissionFound.length > 0) {
               this.setState({ canDraw: true });
               return null;
@@ -88,12 +88,12 @@ class DrawFilter extends Component {
       };
       const specificRoleAssignments = Roles.filter(filterSpecificRoleAssignments);
       if (specificRoleAssignments.length > 0) {
-        specificRoleAssignments.map(roleAssignment => {
-          if (roleAssignment.RoleType.Permissions.length > 0) {
+        specificRoleAssignments.map(userRole => {
+          if (userRole.RoleType.Permissions.length > 0) {
             const filterPermission = value => {
               return value.name === permission;
             };
-            const PermissionFound = roleAssignment.RoleType.Permissions.filter(filterPermission);
+            const PermissionFound = userRole.RoleType.Permissions.filter(filterPermission);
             if (PermissionFound.length > 0) {
               this.setState({ canDraw: true });
               return null;

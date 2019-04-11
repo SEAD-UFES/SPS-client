@@ -29,7 +29,7 @@ import UserRoutes from "./components/users/UsersRoutes";
 import ProcessRoutes from "./components/process/ProcessRoutes";
 import ParameterRoutes from "./components/parameter/ParameterRoutes";
 import RoleTypesRoutes from "./components/roleTypes/RoleTypesRoutes";
-import RoleAssignmentsRoutes from "./components/roleAssignments/RoleAssignmentsRoutes";
+import UserRoleRoutes from "./components/userRole/UserRoleRoutes";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -83,7 +83,7 @@ class App extends Component {
 
               <PrivateRoute path="/roletypes" component={RoleTypesRoutes} />
 
-              <PrivateRoute path="/roleassignments" component={RoleAssignmentsRoutes} />
+              <PrivateRoute path="/roleassignments" component={UserRoleRoutes} />
             </Switch>
 
             <Footer />

@@ -1,6 +1,6 @@
 import { isEmpty, validateName } from "validation";
 
-export const validateRoleAssignmentForm = data => {
+export const validateUserRoleForm = data => {
   let errors = {};
   let field = {};
 

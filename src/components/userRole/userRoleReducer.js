@@ -1,33 +1,29 @@
-import {
-  ROLEASSIGNMENTS_LOADING,
-  GET_ROLEASSIGNMENTS,
-  GET_ROLEASSIGNMENT
-} from "./roleAssignmentsActionTypes";
+import { USERROLES_LOADING, GET_USERROLES, GET_USERROLE } from "./userRoleActionTypes";
 
 const initialState = {
   loading: false,
-  roleAssignments: null,
-  roleAssignment: null
+  userRoles: null,
+  userRole: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ROLEASSIGNMENTS_LOADING:
+    case USERROLES_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_ROLEASSIGNMENTS:
+    case GET_USERROLES:
       return {
         ...state,
         loading: false,
-        roleAssignments: action.payload
+        userRoles: action.payload
       };
-    case GET_ROLEASSIGNMENT:
+    case GET_USERROLE:
       return {
         ...state,
         loading: false,
-        roleAssignment: action.payload
+        userRole: action.payload
       };
     default:
       return state;

@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import PropAssignments from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { isEmpty } from "validation";
-import { getRoleAssignments } from "./roleAssignmentsActions";
+import { getUserRoles } from "./userRoleActions";
 import Spinner from "components/common/Spinner";
 
-class RoleAssignmentsList extends Component {
+class UserRoleList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       sortMethod: "",
       sortReverse: false,
-      roleAssignmentsList: [],
+      userRoleList: [],
       errors: []
     };
 
@@ -22,17 +22,17 @@ class RoleAssignmentsList extends Component {
   }
 
   componentDidMount() {
-    this.props.getRoleAssignments();
+    this.props.getUserRoles();
   }
 
   componentWillReceiveProps(nextProps) {
     //atualizar lista
-    if (nextProps.roleAssignmentsStore.roleAssignments) {
+    if (nextProps.userRoleStore.userRoles) {
       this.setState(
         {
           sortMethod: "",
           sortReverse: false,
-          roleAssignmentsList: nextProps.roleAssignmentsStore.roleAssignments
+          userRoleList: nextProps.userRoleStore.userRoles
         },
         () => {
           this.sortBy("user", { reverse: false });
@@ -44,7 +44,7 @@ class RoleAssignmentsList extends Component {
   sortBy(key = "user", options) {
     let sortMethod = this.state.sortMethod;
     let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.roleAssignmentsList];
+    let arrayCopy = [...this.state.userRoleList];
 
     //Determinar se é ordem é forçada.
     if (options && !isEmpty(options.reverse)) {
@@ -63,10 +63,8 @@ class RoleAssignmentsList extends Component {
     };
 
     const compareByRoleType = (a, b) => {
-      if (a.RoleType.name.toLowerCase() < b.RoleType.name.toLowerCase())
-        return -1;
-      if (a.RoleType.name.toLowerCase() > b.RoleType.name.toLowerCase())
-        return 1;
+      if (a.RoleType.name.toLowerCase() < b.RoleType.name.toLowerCase()) return -1;
+      if (a.RoleType.name.toLowerCase() > b.RoleType.name.toLowerCase()) return 1;
       return 0;
     };
 
@@ -99,7 +97,7 @@ class RoleAssignmentsList extends Component {
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
-      roleAssignmentsList: arrayCopy
+      userRoleList: arrayCopy
     });
   }
 
@@ -115,66 +113,41 @@ class RoleAssignmentsList extends Component {
   }
 
   render() {
-    const { roleAssignmentsStore } = this.props;
-    const { roleAssignmentsList } = this.state;
+    const { userRoleStore } = this.props;
+    const { userRoleList } = this.state;
 
-    const roleAssignmentsTable =
-      roleAssignmentsStore.roleAssignments === null ||
-      roleAssignmentsStore.loading ? (
+    const userRolesTable =
+      userRoleStore.userRoles === null || userRoleStore.loading ? (
         <Spinner />
-      ) : roleAssignmentsList.length > 0 ? (
+      ) : userRoleList.length > 0 ? (
         <div>
           <h4 className="mb-2">Lista de atribuições de papel</h4>
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("user")}>
-                  Usuário {this.orderIcon("user")}
-                </th>
-                <th onClick={() => this.sortBy("role")}>
-                  Atribuição {this.orderIcon("role")}
-                </th>
-                <th onClick={() => this.sortBy("course")}>
-                  Curso {this.orderIcon("course")}
-                </th>
+                <th onClick={() => this.sortBy("user")}>Usuário {this.orderIcon("user")}</th>
+                <th onClick={() => this.sortBy("role")}>Atribuição {this.orderIcon("role")}</th>
+                <th onClick={() => this.sortBy("course")}>Curso {this.orderIcon("course")}</th>
                 <th>
-                  <Link
-                    className="text-success"
-                    to={`${this.props.match.url}/create`}
-                  >
+                  <Link className="text-success" to={`${this.props.match.url}/create`}>
                     <i className="fas fa-plus-circle" />
                   </Link>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {roleAssignmentsList.map(roleAssignment => {
+              {userRoleList.map(userRole => {
                 return (
-                  <tr key={roleAssignment.id}>
+                  <tr key={userRole.id}>
                     <td>
-                      <Link to={`/users/${roleAssignment.User.id}`}>
-                        {roleAssignment.User.login}
-                      </Link>
+                      <Link to={`/users/${userRole.User.id}`}>{userRole.User.login}</Link>
                     </td>
                     <td>
-                      <Link to={`/roletypes/${roleAssignment.RoleType.id}`}>
-                        {roleAssignment.RoleType.name}
-                      </Link>
+                      <Link to={`/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
                     </td>
+                    <td>{userRole.Course ? userRole.Course.name : <span className="text-muted">n/a</span>}</td>
                     <td>
-                      {roleAssignment.Course ? (
-                        roleAssignment.Course.name
-                      ) : (
-                        <span className="text-muted">n/a</span>
-                      )}
-                    </td>
-                    <td>
-                      <Link
-                        className="text-danger"
-                        to={`${this.props.match.url}/${
-                          roleAssignment.id
-                        }/delete`}
-                      >
+                      <Link className="text-danger" to={`${this.props.match.url}/${userRole.id}/delete`}>
                         <i className="fas fa-times-circle" />
                       </Link>
                     </td>
@@ -206,16 +179,14 @@ class RoleAssignmentsList extends Component {
     );
 
     return (
-      <div className="assignments">
+      <div className="userRole-list">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <h1 className="display-4">Atribuições de papel</h1>
-              <p className="lead text-muted">
-                Atribuições de papel a usuários do sistema
-              </p>
+              <p className="lead text-muted">Atribuições de papel a usuários do sistema</p>
               {addButton}
-              {roleAssignmentsTable}
+              {userRolesTable}
             </div>
           </div>
         </div>
@@ -224,17 +195,17 @@ class RoleAssignmentsList extends Component {
   }
 }
 
-RoleAssignmentsList.proptypes = {
-  getRoleAssignments: PropAssignments.func.isRequired
+UserRoleList.proptypes = {
+  getUserRoles: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  roleAssignmentsStore: state.roleAssignmentsStore
+  userRoleStore: state.userRoleStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getRoleAssignments
+    getUserRoles
   }
-)(RoleAssignmentsList);
+)(UserRoleList);

@@ -7,14 +7,14 @@ import SelectListGroup from "components/common/SelectListGroup";
 import { isEmpty } from "validation";
 
 import { validateName } from "validation/";
-import { validateRoleAssignmentForm } from "./validateRoleAssignmentForm";
+import { validateUserRoleForm } from "./validateUserRoleForm";
 
-import { createRoleAssignment } from "./roleAssignmentsActions";
+import { createUserRole } from "./userRoleActions";
 import { getUsersMinimal } from "actions/userActions";
 import { getRoleTypes } from "components/roleTypes/roleTypesActions";
 import { getCourses } from "components/course/courseActions";
 
-class RoleAssignmentCreate extends Component {
+class UserRoleCreate extends Component {
   constructor() {
     super();
     this.state = {
@@ -75,17 +75,17 @@ class RoleAssignmentCreate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const roleAssignmentData = {
+    const userRoleData = {
       user_id: this.state.user_id,
       roleType_id: this.state.roleType_id,
       course_id: !isEmpty(this.state.course_id) ? this.state.course_id : null
     };
 
-    const valRoleAssignment = validateRoleAssignmentForm(roleAssignmentData);
-    if (!valRoleAssignment.isValid) {
-      this.setState({ errors: valRoleAssignment.errors });
+    const valUserRole = validateUserRoleForm(userRoleData);
+    if (!valUserRole.isValid) {
+      this.setState({ errors: valUserRole.errors });
     } else {
-      this.props.createRoleAssignment(roleAssignmentData, () => {
+      this.props.createUserRole(userRoleData, () => {
         this.props.history.push(`/roleassignments`);
       });
     }
@@ -93,7 +93,7 @@ class RoleAssignmentCreate extends Component {
 
   render() {
     const { errors } = this.state;
-    const users = this.props.usersStore.usersMinimal;
+    const users = this.props.userStore.usersMinimal;
     const { roleTypes } = this.props.roleTypesStore;
     const { courses } = this.props.courseStore;
 
@@ -149,7 +149,7 @@ class RoleAssignmentCreate extends Component {
       </div>
     );
 
-    const roleassignmentForm = (
+    const userroleForm = (
       <form noValidate onSubmit={this.onSubmit}>
         <div className="form-group">
           <SelectListGroup
@@ -185,7 +185,7 @@ class RoleAssignmentCreate extends Component {
     );
 
     return (
-      <div className="roleassignments-create">
+      <div className="userRole-create">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -196,7 +196,7 @@ class RoleAssignmentCreate extends Component {
               <p className="lead text-center">Dê entrada nos dados básicos</p>
 
               {alertsList}
-              {roleassignmentForm}
+              {userroleForm}
             </div>
           </div>
         </div>
@@ -205,13 +205,13 @@ class RoleAssignmentCreate extends Component {
   }
 }
 
-RoleAssignmentCreate.propTypes = {
-  createRoleAssignment: PropTypes.func.isRequired
+UserRoleCreate.propTypes = {
+  createUserRole: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  roleAssignmentsStore: state.roleAssignmentsStore,
-  usersStore: state.user,
+  userRoleStore: state.userRoleStore,
+  userStore: state.user,
   roleTypesStore: state.roleTypesStore,
   courseStore: state.courseStore
 });
@@ -219,9 +219,9 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    createRoleAssignment,
+    createUserRole,
     getUsersMinimal,
     getRoleTypes,
     getCourses
   }
-)(RoleAssignmentCreate);
+)(UserRoleCreate);

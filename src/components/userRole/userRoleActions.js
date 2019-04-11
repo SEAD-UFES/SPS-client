@@ -1,11 +1,11 @@
 import { GET_ERRORS } from "actions/types";
-import { GET_ROLEASSIGNMENT, GET_ROLEASSIGNMENTS, ROLEASSIGNMENTS_LOADING } from "./roleAssignmentsActionTypes";
+import { GET_USERROLE, GET_USERROLES, USERROLES_LOADING } from "./userRoleActionTypes";
 
 import axios from "axios";
 
-export const createRoleAssignment = (roleAssignmentData, callback_ok) => dispatch => {
+export const createUserRole = (userRoleData, callback_ok) => dispatch => {
   axios
-    .post("/v1/roles", roleAssignmentData)
+    .post("/v1/roles", userRoleData)
     .then(res => {
       callback_ok(res.data.id);
     })
@@ -26,13 +26,13 @@ export const createRoleAssignment = (roleAssignmentData, callback_ok) => dispatc
     });
 };
 
-export const getRoleAssignment = roleAssignment_id => dispatch => {
-  dispatch(setRoleAssignmentsLoading());
+export const getUserRole = userRole_id => dispatch => {
+  dispatch(setUserRolesLoading());
   axios
-    .get(`/v1/roles/${roleAssignment_id}`)
+    .get(`/v1/roles/${userRole_id}`)
     .then(res =>
       dispatch({
-        type: GET_ROLEASSIGNMENT,
+        type: GET_USERROLE,
         payload: res.data
       })
     )
@@ -44,11 +44,11 @@ export const getRoleAssignment = roleAssignment_id => dispatch => {
     );
 };
 
-export const updateRoleAssignment = (roleAssignmentData, callback_ok) => dispatch => {
+export const updateUserRole = (userRoleData, callback_ok) => dispatch => {
   axios
-    .put(`/v1/roles/${roleAssignmentData.id}`, roleAssignmentData)
+    .put(`/v1/roles/${userRoleData.id}`, userRoleData)
     .then(res => {
-      callback_ok(roleAssignmentData.id);
+      callback_ok(userRoleData.id);
     })
     .catch(err => {
       if (err.response) {
@@ -67,9 +67,9 @@ export const updateRoleAssignment = (roleAssignmentData, callback_ok) => dispatc
     });
 };
 
-export const deleteRoleAssignment = (roleAssignment_id, callback_ok) => dispatch => {
+export const deleteUserRole = (userRole_id, callback_ok) => dispatch => {
   axios
-    .delete(`/v1/roles/${roleAssignment_id}`)
+    .delete(`/v1/roles/${userRole_id}`)
     .then(res => {
       callback_ok();
     })
@@ -90,20 +90,20 @@ export const deleteRoleAssignment = (roleAssignment_id, callback_ok) => dispatch
     });
 };
 
-//roleAssignments loading
-export const setRoleAssignmentsLoading = () => {
+//userRoles loading
+export const setUserRolesLoading = () => {
   return {
-    type: ROLEASSIGNMENTS_LOADING
+    type: USERROLES_LOADING
   };
 };
 
-export const getRoleAssignments = () => dispatch => {
-  dispatch(setRoleAssignmentsLoading());
+export const getUserRoles = () => dispatch => {
+  dispatch(setUserRolesLoading());
   axios
     .get("/v1/roles")
     .then(res =>
       dispatch({
-        type: GET_ROLEASSIGNMENTS,
+        type: GET_USERROLES,
         payload: res.data
       })
     )

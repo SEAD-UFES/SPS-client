@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getRoleAssignment, deleteRoleAssignment } from "./roleAssignmentsActions";
+import { getUserRole, deleteUserRole } from "./userRoleActions";
 import Spinner from "components/common/Spinner";
 
-class RoleAssignmentDelete extends Component {
+class UserRoleDelete extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,8 +17,8 @@ class RoleAssignmentDelete extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.roleassignment_id) {
-      this.props.getRoleAssignment(this.props.match.params.roleassignment_id);
+    if (this.props.match.params.userrole_id) {
+      this.props.getUserRole(this.props.match.params.userrole_id);
     }
   }
 
@@ -31,17 +31,17 @@ class RoleAssignmentDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.deleteRoleAssignment(this.props.match.params.roleassignment_id, () => {
+    this.props.deleteUserRole(this.props.match.params.userrole_id, () => {
       this.props.history.push(`/roleassignments`);
     });
   }
 
   render() {
-    const { roleAssignmentsStore } = this.props;
+    const { userRoleStore } = this.props;
     const { errors } = this.state;
 
     const infoTable =
-      roleAssignmentsStore.roleAssignment === null || roleAssignmentsStore.loading ? (
+      userRoleStore.userRole === null || userRoleStore.loading ? (
         <Spinner />
       ) : (
         <div>
@@ -52,27 +52,25 @@ class RoleAssignmentDelete extends Component {
                 <td>
                   <strong>Id:</strong>
                 </td>
-                <td>{roleAssignmentsStore.roleAssignment.id}</td>
+                <td>{userRoleStore.userRole.id}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Login:</strong>
                 </td>
-                <td>{roleAssignmentsStore.roleAssignment.User.login}</td>
+                <td>{userRoleStore.userRole.User.login}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Papel:</strong>
                 </td>
-                <td>{roleAssignmentsStore.roleAssignment.RoleType.name}</td>
+                <td>{userRoleStore.userRole.RoleType.name}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Curso:</strong>
                 </td>
-                <td>
-                  {roleAssignmentsStore.roleAssignment.Course ? roleAssignmentsStore.roleAssignment.Course.name : <span className="text-muted">n/a</span>}
-                </td>
+                <td>{userRoleStore.userRole.Course ? userRoleStore.userRole.Course.name : <span className="text-muted">n/a</span>}</td>
               </tr>
             </tbody>
           </table>
@@ -99,11 +97,11 @@ class RoleAssignmentDelete extends Component {
     );
 
     return (
-      <div className="roleassignments">
+      <div className="userRole-delete">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/roleassignments/${this.props.match.params.roleassignment_id}`} className="btn btn-light">
+              <Link to={`/roleassignments/${this.props.match.params.userrole_id}`} className="btn btn-light">
                 Voltar para lista de atribuição de papeis
               </Link>
 
@@ -138,19 +136,19 @@ class RoleAssignmentDelete extends Component {
   }
 }
 
-RoleAssignmentDelete.propTypes = {
-  getRoleAssignment: PropTypes.func.isRequired,
-  deleteRoleAssignment: PropTypes.func.isRequired
+UserRoleDelete.propTypes = {
+  getUserRole: PropTypes.func.isRequired,
+  deleteUserRole: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  roleAssignmentsStore: state.roleAssignmentsStore
+  userRoleStore: state.userRoleStore
 });
 
 export default connect(
   mapStateToProps,
   {
-    getRoleAssignment,
-    deleteRoleAssignment
+    getUserRole,
+    deleteUserRole
   }
-)(RoleAssignmentDelete);
+)(UserRoleDelete);
