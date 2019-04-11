@@ -11,7 +11,7 @@ import { validateUserRoleForm } from "./validateUserRoleForm";
 
 import { createUserRole } from "./userRoleActions";
 import { getUsersMinimal } from "actions/userActions";
-import { getRoleTypes } from "components/roleTypes/roleTypesActions";
+import { getRoleTypes } from "components/roleType/roleTypeActions";
 import { getCourses } from "components/course/courseActions";
 
 class UserRoleCreate extends Component {

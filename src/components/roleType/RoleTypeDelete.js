@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getRoleType } from "./roleTypesActions";
+import { getRoleType } from "./roleTypeActions";
 import Spinner from "components/common/Spinner";
-import { deleteRoleType } from "./roleTypesActions";
+import { deleteRoleType } from "./roleTypeActions";
 
 class RoleTypeDelete extends Component {
   constructor() {
@@ -95,16 +95,11 @@ class RoleTypeDelete extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link
-                to={`/roletypes/${this.props.match.params.roletype_id}`}
-                className="btn btn-light"
-              >
+              <Link to={`/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
                 Voltar para tipo de papel
               </Link>
 
-              <h1 className="display-4 mb-4 text-center">
-                Excluir tipo de Papel
-              </h1>
+              <h1 className="display-4 mb-4 text-center">Excluir tipo de Papel</h1>
 
               {alertsList}
 
@@ -114,12 +109,7 @@ class RoleTypeDelete extends Component {
 
               <div className="row">
                 <div className="col">
-                  <input
-                    type="button"
-                    value="Excluir"
-                    className="btn btn-danger btn-block mt-4"
-                    onClick={this.onSubmit}
-                  />
+                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
                 </div>
                 <div className="col">
                   <input
@@ -127,9 +117,7 @@ class RoleTypeDelete extends Component {
                     value="Cancelar"
                     className="btn btn-secondary btn-block mt-4"
                     onClick={() => {
-                      this.props.history.push(
-                        `/roletypes/${roleTypesStore.roleType.id}`
-                      );
+                      this.props.history.push(`/roletypes/${roleTypesStore.roleType.id}`);
                     }}
                   />
                 </div>

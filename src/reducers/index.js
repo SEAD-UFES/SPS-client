@@ -9,7 +9,7 @@ import courseReducer from "components/course/courseReducer";
 import assignmentReducer from "components/assignment/assignmentReducer";
 import regionReducer from "components/region/regionReducer";
 import restrictionReducer from "components/restriction/restrictionReducer";
-import roleTypesReducer from "components/roleTypes/roleTypesReducer";
+import roleTypesReducer from "components/roleType/roleTypeReducer";
 import userRoleReducer from "components/userRole/userRoleReducer";
 import permissionReducer from "components/permission/permissionReducer";
 import rolePermissionReducer from "components/rolePermission/rolePermissionReducer";

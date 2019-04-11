@@ -1,11 +1,14 @@
-import { GET_ERRORS } from "actions/types";
-import {
-  GET_ROLETYPE,
-  GET_ROLETYPES,
-  ROLETYPES_LOADING
-} from "./roleTypesActionTypes";
-
 import axios from "axios";
+
+import { GET_ERRORS } from "actions/types";
+import { GET_ROLETYPE, GET_ROLETYPES, ROLETYPES_LOADING } from "./roleTypeActionTypes";
+
+//roleTypes loading
+export const setRoleTypesLoading = () => {
+  return {
+    type: ROLETYPES_LOADING
+  };
+};
 
 export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
   axios
@@ -92,13 +95,6 @@ export const deleteRoleType = (roleType_id, callback_ok) => dispatch => {
         });
       }
     });
-};
-
-//roleTypes loading
-export const setRoleTypesLoading = () => {
-  return {
-    type: ROLETYPES_LOADING
-  };
 };
 
 export const getRoleTypes = () => dispatch => {

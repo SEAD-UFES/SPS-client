@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 import SelectListGroup from "components/common/SelectListGroup";
 import { isEmpty, validateName } from "validation";
-import { validatePermAssigForm } from "./validatePermAssigForm";
+import { validateRolePermissionForm } from "./validateRolePermissionForm";
 
-import { getRoleTypes } from "./roleTypesActions";
+import { getRoleTypes } from "../roleType/roleTypeActions";
 import { getPermissions } from "components/permission/permissionActions";
 import { createRolePermission } from "components/rolePermission/rolePermissionActions";
 
-class RoleTypePermAssigCreate extends Component {
+class rolePermissionCreate extends Component {
   constructor() {
     super();
     this.state = {
@@ -89,7 +89,7 @@ class RoleTypePermAssigCreate extends Component {
       permission_id: this.state.permissionType_id
     };
 
-    const valRoleType = validatePermAssigForm(rolePermissionData);
+    const valRoleType = validateRolePermissionForm(rolePermissionData);
     if (!valRoleType.isValid) {
       this.setState({ errors: valRoleType.errors });
     } else {
@@ -173,7 +173,7 @@ class RoleTypePermAssigCreate extends Component {
     );
 
     return (
-      <div className="roleassignments-create-permassig">
+      <div className="rolePermission-create">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -193,7 +193,7 @@ class RoleTypePermAssigCreate extends Component {
   }
 }
 
-RoleTypePermAssigCreate.propTypes = {
+rolePermissionCreate.propTypes = {
   getRoleTypes: PropTypes.func.isRequired
 };
 
@@ -209,4 +209,4 @@ export default connect(
     getPermissions,
     createRolePermission
   }
-)(RoleTypePermAssigCreate);
+)(rolePermissionCreate);

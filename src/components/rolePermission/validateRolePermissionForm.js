@@ -1,7 +1,7 @@
 import { isEmpty, validateName } from "validation/";
 
 // Register validation
-export const validatePermAssigForm = data => {
+export const validateRolePermissionForm = data => {
   let errors = {};
   let field = {};
 

@@ -28,7 +28,7 @@ import ProfileRoutes from "./components/profile/ProfileRoutes";
 import UserRoutes from "./components/users/UsersRoutes";
 import ProcessRoutes from "./components/process/ProcessRoutes";
 import ParameterRoutes from "./components/parameter/ParameterRoutes";
-import RoleTypesRoutes from "./components/roleTypes/RoleTypesRoutes";
+import RoleTypesRoutes from "./components/roleType/RoleTypeRoutes";
 import UserRoleRoutes from "./components/userRole/UserRoleRoutes";
 
 //Check for token

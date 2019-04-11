@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getRoleTypes } from "./roleTypesActions";
+import { getRoleTypes } from "./roleTypeActions";
 import { compareBy } from "utils/compareBy";
 import Spinner from "components/common/Spinner";
 
@@ -91,12 +91,8 @@ class RoleTypesList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>
-                  Nome {this.orderIcon("name")}
-                </th>
-                <th onClick={() => this.sortBy("description")}>
-                  Descrição {this.orderIcon("description")}
-                </th>
+                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
                 <th>
                   <Link className="text-success" to="/roletypes/create">
                     <i className="fas fa-plus-circle" />
@@ -111,22 +107,13 @@ class RoleTypesList extends Component {
                     <td>{roleType.name}</td>
                     <td>{roleType.description}</td>
                     <td>
-                      <Link
-                        className="text-success"
-                        to={`/roletypes/${roleType.id}`}
-                      >
+                      <Link className="text-success" to={`/roletypes/${roleType.id}`}>
                         <i className="fas fa-eye" />
                       </Link>{" "}
-                      <Link
-                        className="text-info"
-                        to={`/roletypes/${roleType.id}/update`}
-                      >
+                      <Link className="text-info" to={`/roletypes/${roleType.id}/update`}>
                         <i className="fas fa-cog" />
                       </Link>{" "}
-                      <Link
-                        className="text-danger"
-                        to={`/roletypes/${roleType.id}/delete`}
-                      >
+                      <Link className="text-danger" to={`/roletypes/${roleType.id}/delete`}>
                         <i className="fas fa-times-circle" />
                       </Link>
                     </td>
@@ -163,9 +150,7 @@ class RoleTypesList extends Component {
           <div className="row">
             <div className="col-md-12">
               <h1 className="display-4">Tipos de papel</h1>
-              <p className="lead text-muted">
-                Papéis que podem ser atribuidos a usuários dentro do sistema
-              </p>
+              <p className="lead text-muted">Papéis que podem ser atribuidos a usuários dentro do sistema</p>
               {addButton}
               {roleTypesTable}
             </div>

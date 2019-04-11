@@ -9,11 +9,7 @@ import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 import { validateName } from "validation/";
 import { validateRoleTypeForm } from "./validateRoleTypeForm";
 
-import {
-  createRoleType,
-  getRoleType,
-  updateRoleType
-} from "./roleTypesActions";
+import { createRoleType, getRoleType, updateRoleType } from "./roleTypeActions";
 
 class RoleTypeCreateUpdate extends Component {
   constructor() {
@@ -138,14 +134,7 @@ class RoleTypeCreateUpdate extends Component {
     const roletypeForm = (
       <form noValidate onSubmit={this.onSubmit}>
         <div className="form-group">
-          <TextFieldGroup
-            type="text"
-            name="name"
-            placeholder="* Nome"
-            value={this.state.name}
-            onChange={this.onChange}
-            error={errors.name}
-          />
+          <TextFieldGroup type="text" name="name" placeholder="* Nome" value={this.state.name} onChange={this.onChange} error={errors.name} />
 
           <TextAreaFieldGroup
             type="text"
@@ -169,16 +158,8 @@ class RoleTypeCreateUpdate extends Component {
               <Link to="/roletypes" className="btn btn-light">
                 Voltar para lista de tipos de papel
               </Link>
-              <h1 className="display-4 text-center">
-                {this.state.mode === "create"
-                  ? "Criar tipo de papel"
-                  : "Editar tipo de papel"}
-              </h1>
-              <p className="lead text-center">
-                {this.state.mode === "create"
-                  ? "Dê entrada nos dados básicos"
-                  : "Altere os dados básicos"}
-              </p>
+              <h1 className="display-4 text-center">{this.state.mode === "create" ? "Criar tipo de papel" : "Editar tipo de papel"}</h1>
+              <p className="lead text-center">{this.state.mode === "create" ? "Dê entrada nos dados básicos" : "Altere os dados básicos"}</p>
 
               {alertsList}
               {roletypeForm}

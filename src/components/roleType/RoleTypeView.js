@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getRoleType } from "./roleTypesActions";
+import { getRoleType } from "./roleTypeActions";
 import Spinner from "components/common/Spinner";
 
 class RoleTypeView extends Component {

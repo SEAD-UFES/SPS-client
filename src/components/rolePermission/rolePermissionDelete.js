@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Spinner from "components/common/Spinner";
 import { getRolePermission, deleteRolePermission } from "components/rolePermission/rolePermissionActions";
 
-class RoleTypePermAssigDelete extends Component {
+class rolePermissionDelete extends Component {
   constructor() {
     super();
     this.state = {
@@ -148,7 +148,7 @@ class RoleTypePermAssigDelete extends Component {
   }
 }
 
-RoleTypePermAssigDelete.propTypes = {
+rolePermissionDelete.propTypes = {
   getRolePermission: PropTypes.func.isRequired
 };
 
@@ -162,4 +162,4 @@ export default connect(
     getRolePermission,
     deleteRolePermission
   }
-)(RoleTypePermAssigDelete);
+)(rolePermissionDelete);

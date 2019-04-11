@@ -1,8 +1,4 @@
-import {
-  ROLETYPES_LOADING,
-  GET_ROLETYPES,
-  GET_ROLETYPE
-} from "./roleTypesActionTypes";
+import { ROLETYPES_LOADING, GET_ROLETYPES, GET_ROLETYPE } from "./roleTypeActionTypes";
 
 const initialState = {
   loading: false,
