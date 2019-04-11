@@ -5,7 +5,7 @@ import axios from "axios";
 
 export const createUserRole = (userRoleData, callback_ok) => dispatch => {
   axios
-    .post("/v1/roles", userRoleData)
+    .post("/v1/userroles", userRoleData)
     .then(res => {
       callback_ok(res.data.id);
     })
@@ -29,7 +29,7 @@ export const createUserRole = (userRoleData, callback_ok) => dispatch => {
 export const getUserRole = userRole_id => dispatch => {
   dispatch(setUserRolesLoading());
   axios
-    .get(`/v1/roles/${userRole_id}`)
+    .get(`/v1/userroles/${userRole_id}`)
     .then(res =>
       dispatch({
         type: GET_USERROLE,
@@ -46,7 +46,7 @@ export const getUserRole = userRole_id => dispatch => {
 
 export const updateUserRole = (userRoleData, callback_ok) => dispatch => {
   axios
-    .put(`/v1/roles/${userRoleData.id}`, userRoleData)
+    .put(`/v1/userroles/${userRoleData.id}`, userRoleData)
     .then(res => {
       callback_ok(userRoleData.id);
     })
@@ -69,7 +69,7 @@ export const updateUserRole = (userRoleData, callback_ok) => dispatch => {
 
 export const deleteUserRole = (userRole_id, callback_ok) => dispatch => {
   axios
-    .delete(`/v1/roles/${userRole_id}`)
+    .delete(`/v1/userroles/${userRole_id}`)
     .then(res => {
       callback_ok();
     })
@@ -100,7 +100,7 @@ export const setUserRolesLoading = () => {
 export const getUserRoles = () => dispatch => {
   dispatch(setUserRolesLoading());
   axios
-    .get("/v1/roles")
+    .get("/v1/userroles")
     .then(res =>
       dispatch({
         type: GET_USERROLES,

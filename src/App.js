@@ -28,7 +28,7 @@ import ProfileRoutes from "./components/profile/ProfileRoutes";
 import UserRoutes from "./components/user/UserRoutes";
 import ProcessRoutes from "./components/process/ProcessRoutes";
 import ParameterRoutes from "./components/parameter/ParameterRoutes";
-import RoleTypesRoutes from "./components/roleType/RoleTypeRoutes";
+import RoleTypeRoutes from "./components/roleType/RoleTypeRoutes";
 import UserRoleRoutes from "./components/userRole/UserRoleRoutes";
 
 //Check for token
@@ -81,7 +81,7 @@ class App extends Component {
 
               <PrivateRoute path="/parameters" component={ParameterRoutes} />
 
-              <PrivateRoute path="/roletypes" component={RoleTypesRoutes} />
+              <PrivateRoute path="/roletypes" component={RoleTypeRoutes} />
 
               <PrivateRoute path="/roleassignments" component={UserRoleRoutes} />
             </Switch>
