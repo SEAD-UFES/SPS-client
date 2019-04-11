@@ -4,7 +4,7 @@ import { Switch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 
 import Users from "./UserList";
-import UserProfile from "./UserProfile";
+import UserView from "./UserView";
 import UserEditUser from "./UserEditUser";
 import UserEditPerson from "./UserEditPerson";
 import UserCreate from "./UserCreate";
@@ -17,7 +17,7 @@ export default class UsersRoutes extends Component {
 
         <PrivateRoute exact path={`${this.props.match.path}/create`} component={UserCreate} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/:id`} component={UserProfile} />
+        <PrivateRoute exact path={`${this.props.match.path}/:id`} component={UserView} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/edit-user`} component={UserEditUser} />
 

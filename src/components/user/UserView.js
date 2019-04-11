@@ -7,7 +7,7 @@ import moment from "moment";
 import { getUser } from "../../actions/userActions";
 import Spinner from "../common/Spinner";
 
-class UserProfile extends Component {
+class UserView extends Component {
   componentDidMount() {
     if (this.props.match.params.id) {
       this.props.getUser(this.props.match.params.id);
@@ -23,24 +23,15 @@ class UserProfile extends Component {
     } else {
       userContent = (
         <div>
-          <p className="lead text-muted">
-            {user.Person
-              ? `${user.Person.name} ${user.Person.surname}`
-              : "Sem nome"}
-          </p>
+          <p className="lead text-muted">{user.Person ? `${user.Person.name} ${user.Person.surname}` : "Sem nome"}</p>
 
           {/* <!-- Profile Actions --> */}
           <div className="btn-group mb-4" role="group">
             <Link to={`/users/${user.id}/edit-user`} className="btn btn-light">
-              <i className="fas fa-user-circle text-info mr-1" /> Editar dados
-              de acesso
+              <i className="fas fa-user-circle text-info mr-1" /> Editar dados de acesso
             </Link>
-            <Link
-              to={`/users/${user.id}/edit-person`}
-              className="btn btn-light"
-            >
-              <i className="fas fa-user-circle text-info mr-1" /> Editar dados
-              pessoais
+            <Link to={`/users/${user.id}/edit-person`} className="btn btn-light">
+              <i className="fas fa-user-circle text-info mr-1" /> Editar dados pessoais
             </Link>
           </div>
 
@@ -97,12 +88,7 @@ class UserProfile extends Component {
                     </p>
                   </div>
                   <div className="col-md-9">
-                    <p>
-                      {moment(
-                        user.Person.birthdate,
-                        "YYYY-MM-DD HH:mm:ss"
-                      ).format("DD/MM/YYYY")}
-                    </p>
+                    <p>{moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</p>
                   </div>
                 </div>
               ) : (
@@ -221,7 +207,7 @@ class UserProfile extends Component {
   }
 }
 
-UserProfile.propTypes = {
+UserView.propTypes = {
   getUser: PropTypes.func.isRequired
 };
 
@@ -234,4 +220,4 @@ export default connect(
   {
     getUser
   }
-)(UserProfile);
+)(UserView);
