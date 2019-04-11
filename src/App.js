@@ -25,7 +25,7 @@ import Dashboard from "./components/profile/Dashboard";
 
 //Route components
 import ProfileRoutes from "./components/profile/ProfileRoutes";
-import UserRoutes from "./components/users/UsersRoutes";
+import UserRoutes from "./components/user/UserRoutes";
 import ProcessRoutes from "./components/process/ProcessRoutes";
 import ParameterRoutes from "./components/parameter/ParameterRoutes";
 import RoleTypesRoutes from "./components/roleType/RoleTypeRoutes";

@@ -7,7 +7,7 @@ import { getUserList } from "../../actions/userActions";
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 
-class Users extends Component {
+class UserList extends Component {
   constructor(props) {
     super(props);
 
@@ -54,11 +54,7 @@ class Users extends Component {
                 {users.users.map(user => {
                   return (
                     <tr key={user.id}>
-                      <td>
-                        {user.Person
-                          ? `${user.Person.name} ${user.Person.surname}`
-                          : `Sem nome`}
-                      </td>
+                      <td>{user.Person ? `${user.Person.name} ${user.Person.surname}` : `Sem nome`}</td>
 
                       <td>{user.login}</td>
 
@@ -74,11 +70,7 @@ class Users extends Component {
                 })}
               </tbody>
             </table>
-            <Pagination
-              currentPage={users.info.currentPage}
-              numberOfPages={users.info.numberOfPages}
-              onChangePage={this.onChangePage}
-            />
+            <Pagination currentPage={users.info.currentPage} numberOfPages={users.info.numberOfPages} onChangePage={this.onChangePage} />
           </div>
         );
       }
@@ -108,7 +100,7 @@ class Users extends Component {
   }
 }
 
-Users.propTypes = {
+UserList.propTypes = {
   getUserList: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
 };
@@ -120,4 +112,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getUserList }
-)(Users);
+)(UserList);
