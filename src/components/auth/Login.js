@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { loginUser } from "../../actions/authActions";
-import { getCurrentProfile } from "../../actions/profileActions";
+import { getCurrentProfile } from "../profile/profileActions";
 import { clearErrors } from "../../actions/errorActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
@@ -62,8 +62,7 @@ class Login extends Component {
           errors.login = "Login não encontrado ou senha inválida";
           break;
         case "auth-06":
-          errors.login =
-            "Erro interno no servidor, contate os administradores.";
+          errors.login = "Erro interno no servidor, contate os administradores.";
           break;
         case "auth-07":
           errors.login = "A autenticação falhou.";

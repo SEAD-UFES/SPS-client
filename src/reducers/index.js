@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
-import profileReducer from "./profileReducer";
+import profileReducer from "../components/profile/profileReducer";
 import userReducer from "./userReducer";
 import processReducer from "../components/process/processReducer";
 import courseReducer from "components/course/courseReducer";

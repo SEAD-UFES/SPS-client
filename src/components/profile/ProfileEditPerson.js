@@ -6,19 +6,8 @@ import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import {
-  validateName,
-  validateSurname,
-  validateDate,
-  validateCpfRequired,
-  isEmpty,
-  validateProfileEditPersonForm
-} from "../../validation";
-import {
-  getCurrentProfile,
-  getPeopleOptions,
-  updateProfilePerson
-} from "../../actions/profileActions";
+import { validateName, validateSurname, validateDate, validateCpfRequired, isEmpty, validateProfileEditPersonForm } from "../../validation";
+import { getCurrentProfile, getPeopleOptions, updateProfilePerson } from "./profileActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class ProfileEditPerson extends Component {
@@ -52,9 +41,7 @@ class ProfileEditPerson extends Component {
   componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
     if (!isEmpty(nextProps.errors)) {
-      if (
-        nextProps.errors.devMessage.errors[0].message === "cpf must be unique"
-      ) {
+      if (nextProps.errors.devMessage.errors[0].message === "cpf must be unique") {
         let errors = { ...this.state.errors };
         errors.cpf = "cpf já cadastrado na base de dados";
         this.setState({ errors: errors });
@@ -67,35 +54,15 @@ class ProfileEditPerson extends Component {
 
       //preenchendo de person se existirem
       if (profile.person) {
-        profile.person.name = !isEmpty(profile.person.name)
-          ? profile.person.name
-          : "";
-        profile.person.surname = !isEmpty(profile.person.surname)
-          ? profile.person.surname
-          : "";
-        profile.person.birthdate = !isEmpty(profile.person.birthdate)
-          ? moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
-              "YYYY-MM-DD"
-            )
-          : "";
-        profile.person.nationality = !isEmpty(profile.person.nationality)
-          ? profile.person.nationality
-          : "";
-        profile.person.rgNumber = !isEmpty(profile.person.rgNumber)
-          ? profile.person.rgNumber
-          : "";
-        profile.person.rgDispatcher = !isEmpty(profile.person.rgDispatcher)
-          ? profile.person.rgDispatcher
-          : "";
-        profile.person.ethnicity = !isEmpty(profile.person.ethnicity)
-          ? profile.person.ethnicity
-          : "";
-        profile.person.gender = !isEmpty(profile.person.gender)
-          ? profile.person.gender
-          : "";
-        profile.person.civilStatus = !isEmpty(profile.person.civilStatus)
-          ? profile.person.civilStatus
-          : "";
+        profile.person.name = !isEmpty(profile.person.name) ? profile.person.name : "";
+        profile.person.surname = !isEmpty(profile.person.surname) ? profile.person.surname : "";
+        profile.person.birthdate = !isEmpty(profile.person.birthdate) ? moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD") : "";
+        profile.person.nationality = !isEmpty(profile.person.nationality) ? profile.person.nationality : "";
+        profile.person.rgNumber = !isEmpty(profile.person.rgNumber) ? profile.person.rgNumber : "";
+        profile.person.rgDispatcher = !isEmpty(profile.person.rgDispatcher) ? profile.person.rgDispatcher : "";
+        profile.person.ethnicity = !isEmpty(profile.person.ethnicity) ? profile.person.ethnicity : "";
+        profile.person.gender = !isEmpty(profile.person.gender) ? profile.person.gender : "";
+        profile.person.civilStatus = !isEmpty(profile.person.civilStatus) ? profile.person.civilStatus : "";
 
         //Atualizando estado do componente
         this.setState({
@@ -189,11 +156,7 @@ class ProfileEditPerson extends Component {
         }
       };
 
-      this.props.updateProfilePerson(
-        profile.user.id,
-        updatepersonData,
-        this.props.history
-      );
+      this.props.updateProfilePerson(profile.user.id, updatepersonData, this.props.history);
     }
   }
 
@@ -223,9 +186,7 @@ class ProfileEditPerson extends Component {
         : []
     );
 
-    const civilStateOptions = [
-      { label: "Escolha estado civil", value: "" }
-    ].concat(
+    const civilStateOptions = [{ label: "Escolha estado civil", value: "" }].concat(
       options
         ? options.civilStatus.values.map(color => {
             return {
@@ -245,18 +206,9 @@ class ProfileEditPerson extends Component {
                 Voltar para perfil
               </Link>
               <h1 className="display-4 text-center">Editar perfil</h1>
-              <p className="lead text-center">
-                Atualize suas informações pessoais
-              </p>
+              <p className="lead text-center">Atualize suas informações pessoais</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="* Nome"
-                  type="text"
-                  name="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
+                <TextFieldGroup placeholder="* Nome" type="text" name="name" value={this.state.name} onChange={this.onChange} error={errors.name} />
 
                 <TextFieldGroup
                   placeholder="* Sobrenome"
@@ -277,14 +229,7 @@ class ProfileEditPerson extends Component {
                   error={errors.birthdate}
                 />
 
-                <TextFieldGroup
-                  placeholder="* C.P.F."
-                  type="text"
-                  name="cpf"
-                  value={this.state.cpf}
-                  onChange={this.onChange}
-                  error={errors.cpf}
-                />
+                <TextFieldGroup placeholder="* C.P.F." type="text" name="cpf" value={this.state.cpf} onChange={this.onChange} error={errors.cpf} />
 
                 <TextFieldGroup
                   placeholder="Nacionalidade"
@@ -346,11 +291,7 @@ class ProfileEditPerson extends Component {
                   error={errors.civilStatus}
                 />
 
-                <input
-                  value="Enviar"
-                  type="submit"
-                  className="btn btn-info btn-block mt-4"
-                />
+                <input value="Enviar" type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>

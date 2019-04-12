@@ -4,17 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import {
-  validateEmailRequired,
-  validatePassword,
-  validatePasswordCheck,
-  validateProfileEditUserForm,
-  isEmpty
-} from "../../validation";
-import {
-  getCurrentProfile,
-  updateProfileUser
-} from "../../actions/profileActions";
+import { validateEmailRequired, validatePassword, validatePasswordCheck, validateProfileEditUserForm, isEmpty } from "../../validation";
+import { getCurrentProfile, updateProfileUser } from "./profileActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class ProfileEditUser extends Component {
@@ -73,10 +64,7 @@ class ProfileEditUser extends Component {
       case "password":
         valResult = validatePassword(e.target.value);
         //validate the field password Check to
-        let pass2Val = validatePasswordCheck(
-          this.state.password2,
-          e.target.value
-        );
+        let pass2Val = validatePasswordCheck(this.state.password2, e.target.value);
         if (!pass2Val.isValid) {
           errors = { ...errors, password2: pass2Val.error };
         } else {
@@ -121,10 +109,7 @@ class ProfileEditUser extends Component {
           }
           //validate password2
           if (this.state.password || this.state.password2) {
-            let pass2Val = validatePasswordCheck(
-              this.state.password2,
-              this.state.password
-            );
+            let pass2Val = validatePasswordCheck(this.state.password2, this.state.password);
             if (!pass2Val.isValid) {
               errors = { ...errors, password2: pass2Val.error };
             } else {
@@ -174,11 +159,7 @@ class ProfileEditUser extends Component {
 
       const profile = this.props.profile.profile;
 
-      this.props.updateProfileUser(
-        profile.user.id,
-        updateUserData,
-        this.props.history
-      );
+      this.props.updateProfileUser(profile.user.id, updateUserData, this.props.history);
     }
   }
 
@@ -193,9 +174,7 @@ class ProfileEditUser extends Component {
                 Voltar para perfil
               </Link>
               <h1 className="display-4 text-center">Editar perfil</h1>
-              <p className="lead text-center">
-                Atualize suas informações de acesso
-              </p>
+              <p className="lead text-center">Atualize suas informações de acesso</p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="* Endereço de email"
@@ -241,11 +220,7 @@ class ProfileEditUser extends Component {
                   </label>
                 </div>
 
-                <input
-                  value="Enviar"
-                  type="submit"
-                  className="btn btn-info btn-block mt-4"
-                />
+                <input value="Enviar" type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>

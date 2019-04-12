@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { getCurrentProfile } from "../../actions/profileActions";
+import { getCurrentProfile } from "./profileActions";
 import Spinner from "../common/Spinner";
-//import ProfileActions from "./ProfileActions";
 
 class Profile extends Component {
   componentDidMount() {
@@ -24,9 +23,11 @@ class Profile extends Component {
     const { profile, loading } = this.props.profile;
 
     const userData =
-      profile !== null && !loading && profile.user ? (
+      profile === null || profile.loading ? (
+        <Spinner />
+      ) : (
         <div>
-          <h4 className="mb-2">Dados de usuário</h4>
+          <h4 className="mb-3">Dados de usuário</h4>
 
           <div className="row">
             <div className="col-md-3">
@@ -35,19 +36,16 @@ class Profile extends Component {
               </p>
             </div>
             <div className="col-md-9">
-              <p>{profile.user.login}</p>
+              <p>{profile.login}</p>
             </div>
           </div>
-        </div>
-      ) : (
-        <div>
-          <h4 className="mb-2">Dados de usuário</h4>
-          <p>Erro ao exibir dados de usuário</p>
         </div>
       );
 
     const personData =
-      profile !== null && !loading && profile.person ? (
+      profile === null || profile.loading ? (
+        <Spinner />
+      ) : profile.Person ? (
         <div>
           <h4 className="mb-3">Dados de pessoais</h4>
 
@@ -72,12 +70,7 @@ class Profile extends Component {
                 </p>
               </div>
               <div className="col-md-9">
-                <p>
-                  {moment(
-                    profile.person.birthdate,
-                    "YYYY-MM-DD HH:mm:ss"
-                  ).format("DD/MM/YYYY")}
-                </p>
+                <p>{moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</p>
               </div>
             </div>
           ) : (
@@ -187,21 +180,15 @@ class Profile extends Component {
       if (Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
-            <p className="lead text-muted">
-              {profile.person
-                ? profile.person.name + " " + profile.person.surname
-                : profile.user.login}
-            </p>
+            <p className="lead text-muted">{profile.person ? profile.person.name + " " + profile.person.surname : profile.login}</p>
 
             {/* <!-- Profile Actions --> */}
             <div className="btn-group mb-4" role="group">
               <Link to="/profile/edit-user" className="btn btn-light">
-                <i className="fas fa-user-circle text-info mr-1" /> Editar dados
-                de acesso
+                <i className="fas fa-user-circle text-info mr-1" /> Editar dados de acesso
               </Link>
               <Link to="/profile/edit-person" className="btn btn-light">
-                <i className="fas fa-user-circle text-info mr-1" /> Editar dados
-                pessoais
+                <i className="fas fa-user-circle text-info mr-1" /> Editar dados pessoais
               </Link>
             </div>
 

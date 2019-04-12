@@ -1,13 +1,15 @@
 import axios from "axios";
 
-import {
-  GET_PROFILE,
-  PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE,
-  GET_ERRORS,
-  CLEAR_ERRORS,
-  GET_PEOPLE_OPTIONS
-} from "./types";
+import { GET_ERRORS, CLEAR_ERRORS } from "../../actions/types";
+
+import { GET_PROFILE, PROFILE_LOADING, CLEAR_PROFILE, GET_PROFILE_OPTIONS } from "./profileActionTypes";
+
+//Profile loading
+export const setProfileLoading = () => {
+  return {
+    type: PROFILE_LOADING
+  };
+};
 
 //Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -45,11 +47,7 @@ export const updateProfileUser = (userId, userData, history) => dispatch => {
 };
 
 //Update profile person data
-export const updateProfilePerson = (
-  userId,
-  personData,
-  history
-) => dispatch => {
+export const updateProfilePerson = (userId, personData, history) => dispatch => {
   axios
     .put(`/v1/me`, personData, history)
     .then(res => {
@@ -70,7 +68,7 @@ export const getPeopleOptions = () => dispatch => {
     .get("/v1/people/options")
     .then(res =>
       dispatch({
-        type: GET_PEOPLE_OPTIONS,
+        type: GET_PROFILE_OPTIONS,
         payload: res.data
       })
     )
@@ -82,16 +80,9 @@ export const getPeopleOptions = () => dispatch => {
     );
 };
 
-//Profile loading
-export const setProfileLoading = () => {
-  return {
-    type: PROFILE_LOADING
-  };
-};
-
 //Clear profile
 export const clearCurrentProfile = () => {
   return {
-    type: CLEAR_CURRENT_PROFILE
+    type: CLEAR_PROFILE
   };
 };
