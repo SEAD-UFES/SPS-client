@@ -11,15 +11,15 @@ class DrawFilter extends Component {
   }
 
   componentWillMount() {
-    const { profile, loading } = this.props.profile;
+    const { profile, loading } = this.props.profileStore;
     if (profile !== null && loading !== true) {
       this.canDraw(profile.UserRoles, this.props.permission, { course_id: this.props.course_id, anyCourse: this.props.anyCourse });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.profile) {
-      const { profile, loading } = nextProps.profile;
+    if (nextProps.profileStore) {
+      const { profile, loading } = nextProps.profileStore;
       if (profile !== null && loading !== true) {
         this.canDraw(profile.UserRoles, this.props.permission, { course_id: this.props.course_id, anyCourse: this.props.anyCourse });
       }
@@ -115,7 +115,7 @@ DrawFilter.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profileStore: state.profileStore
 });
 
 export default connect(
