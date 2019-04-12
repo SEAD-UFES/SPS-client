@@ -29,7 +29,7 @@ export default combineReducers({
   assignmentStore: assignmentReducer,
   regionStore: regionReducer,
   restrictionStore: restrictionReducer,
-  roleTypesStore: roleTypesReducer,
+  roleTypeStore: roleTypesReducer,
   userRoleStore: userRoleReducer,
   permissionStore: permissionReducer,
   rolePermissionStore: rolePermissionReducer,

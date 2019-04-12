@@ -37,11 +37,11 @@ class RoleTypeDelete extends Component {
   }
 
   render() {
-    const { roleTypesStore } = this.props;
+    const { roleTypeStore } = this.props;
     const { errors } = this.state;
 
     const infoTable =
-      roleTypesStore.roleType === null || roleTypesStore.loading ? (
+      roleTypeStore.roleType === null || roleTypeStore.loading ? (
         <Spinner />
       ) : (
         <div>
@@ -52,19 +52,19 @@ class RoleTypeDelete extends Component {
                 <td>
                   <strong>Id:</strong>
                 </td>
-                <td>{roleTypesStore.roleType.id}</td>
+                <td>{roleTypeStore.roleType.id}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Nome:</strong>
                 </td>
-                <td>{roleTypesStore.roleType.name}</td>
+                <td>{roleTypeStore.roleType.name}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Descrição:</strong>
                 </td>
-                <td>{roleTypesStore.roleType.description}</td>
+                <td>{roleTypeStore.roleType.description}</td>
               </tr>
             </tbody>
           </table>
@@ -117,7 +117,7 @@ class RoleTypeDelete extends Component {
                     value="Cancelar"
                     className="btn btn-secondary btn-block mt-4"
                     onClick={() => {
-                      this.props.history.push(`/roletypes/${roleTypesStore.roleType.id}`);
+                      this.props.history.push(`/roletypes/${roleTypeStore.roleType.id}`);
                     }}
                   />
                 </div>
@@ -136,7 +136,7 @@ RoleTypeDelete.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  roleTypesStore: state.roleTypesStore
+  roleTypeStore: state.roleTypeStore
 });
 
 export default connect(

@@ -27,12 +27,12 @@ class RoleTypesList extends Component {
 
   componentWillReceiveProps(nextProps) {
     //atualizar lista
-    if (nextProps.roleTypesStore.roleTypes) {
+    if (nextProps.roleTypeStore.roleTypes) {
       this.setState(
         {
           sortMethod: "",
           sortReverse: false,
-          roleTypesList: nextProps.roleTypesStore.roleTypes
+          roleTypesList: nextProps.roleTypeStore.roleTypes
         },
         () => this.sortBy("name", { reverse: false })
       );
@@ -79,11 +79,11 @@ class RoleTypesList extends Component {
   }
 
   render() {
-    const { roleTypesStore } = this.props;
+    const { roleTypeStore } = this.props;
     const { roleTypesList } = this.state;
 
     const roleTypesTable =
-      roleTypesStore.roleTypes === null || roleTypesStore.loading ? (
+      roleTypeStore.roleTypes === null || roleTypeStore.loading ? (
         <Spinner />
       ) : roleTypesList.length > 0 ? (
         <div>
@@ -166,7 +166,7 @@ RoleTypesList.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  roleTypesStore: state.roleTypesStore
+  roleTypeStore: state.roleTypeStore
 });
 
 export default connect(

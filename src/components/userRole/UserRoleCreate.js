@@ -94,7 +94,7 @@ class UserRoleCreate extends Component {
   render() {
     const { errors } = this.state;
     const users = this.props.userStore.usersMinimal;
-    const { roleTypes } = this.props.roleTypesStore;
+    const { roleTypes } = this.props.roleTypeStore;
     const { courses } = this.props.courseStore;
 
     const userOptions = [{ label: "* Selecione o usuário", value: "" }].concat(
@@ -212,7 +212,7 @@ UserRoleCreate.propTypes = {
 const mapStateToProps = state => ({
   userRoleStore: state.userRoleStore,
   userStore: state.user,
-  roleTypesStore: state.roleTypesStore,
+  roleTypeStore: state.roleTypeStore,
   courseStore: state.courseStore
 });
 

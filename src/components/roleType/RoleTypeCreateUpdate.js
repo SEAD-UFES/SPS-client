@@ -46,8 +46,8 @@ class RoleTypeCreateUpdate extends Component {
     }
 
     //Load data on form
-    if (nextProps.roleTypesStore.roleType !== null) {
-      const roleType = nextProps.roleTypesStore.roleType;
+    if (nextProps.roleTypeStore.roleType !== null) {
+      const roleType = nextProps.roleTypeStore.roleType;
       this.setState({
         id: roleType.id,
         name: roleType.name,
@@ -178,7 +178,7 @@ RoleTypeCreateUpdate.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  roleTypesStore: state.roleTypesStore
+  roleTypeStore: state.roleTypeStore
 });
 
 export default connect(

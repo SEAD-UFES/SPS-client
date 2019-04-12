@@ -102,7 +102,7 @@ class rolePermissionCreate extends Component {
   render() {
     const { errors } = this.state;
     const permissions = this.props.permissionStore.permissions;
-    const roleTypes = !isEmpty(this.state.roleType) ? [this.state.roleType] : this.props.roleTypesStore.roleTypes;
+    const roleTypes = !isEmpty(this.state.roleType) ? [this.state.roleType] : this.props.roleTypeStore.roleTypes;
 
     const roleTypeOptions = [{ label: "* Selecione a papel", value: "" }].concat(
       roleTypes
@@ -198,7 +198,7 @@ rolePermissionCreate.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  roleTypesStore: state.roleTypesStore,
+  roleTypeStore: state.roleTypeStore,
   permissionStore: state.permissionStore
 });
 

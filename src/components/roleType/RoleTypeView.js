@@ -29,10 +29,10 @@ class RoleTypeView extends Component {
   }
 
   render() {
-    const { roleTypesStore } = this.props;
+    const { roleTypeStore } = this.props;
 
     const infoTable =
-      roleTypesStore.roleType === null || roleTypesStore.loading ? (
+      roleTypeStore.roleType === null || roleTypeStore.loading ? (
         <Spinner />
       ) : (
         <div>
@@ -43,13 +43,13 @@ class RoleTypeView extends Component {
                 <td>
                   <strong>Nome:</strong>
                 </td>
-                <td>{roleTypesStore.roleType.name}</td>
+                <td>{roleTypeStore.roleType.name}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Descrição:</strong>
                 </td>
-                <td>{roleTypesStore.roleType.description}</td>
+                <td>{roleTypeStore.roleType.description}</td>
               </tr>
             </tbody>
           </table>
@@ -57,14 +57,14 @@ class RoleTypeView extends Component {
       );
 
     const permissionsTable =
-      roleTypesStore.roleType === null || roleTypesStore.loading ? (
+      roleTypeStore.roleType === null || roleTypeStore.loading ? (
         <Spinner />
       ) : (
         <div>
           <h4 className="mb-2">Lista de permissões atribuidas</h4>
-          {roleTypesStore.roleType.name === "Administrador" ? (
+          {roleTypeStore.roleType.name === "Administrador" ? (
             <p>Administradores podem tudo.</p>
-          ) : roleTypesStore.roleType.Permissions.length > 0 ? (
+          ) : roleTypeStore.roleType.Permissions.length > 0 ? (
             <table className="table">
               <thead>
                 <tr>
@@ -74,7 +74,7 @@ class RoleTypeView extends Component {
                       className="text-success"
                       to={{
                         pathname: `${this.props.match.url}/create-permassig`,
-                        state: { roleType: roleTypesStore.roleType }
+                        state: { roleType: roleTypeStore.roleType }
                       }}
                     >
                       <i className="fas fa-plus-circle" />
@@ -83,7 +83,7 @@ class RoleTypeView extends Component {
                 </tr>
               </thead>
               <tbody>
-                {roleTypesStore.roleType.Permissions.map(permission => {
+                {roleTypeStore.roleType.Permissions.map(permission => {
                   return (
                     <tr key={permission.id}>
                       <td>{permission.name}</td>
@@ -91,10 +91,10 @@ class RoleTypeView extends Component {
                         <Link
                           className="text-danger"
                           to={{
-                            pathname: `/roletypes/${roleTypesStore.roleType.id}/delete-permassig/${permission.RolePermission.id}`,
+                            pathname: `/roletypes/${roleTypeStore.roleType.id}/delete-permassig/${permission.RolePermission.id}`,
                             state: {
-                              roleType: roleTypesStore.roleType,
-                              rolePermission: this.buildPermissionAssignment(roleTypesStore.roleType, permission)
+                              roleType: roleTypeStore.roleType,
+                              rolePermission: this.buildPermissionAssignment(roleTypeStore.roleType, permission)
                             }
                           }}
                         >
@@ -114,7 +114,7 @@ class RoleTypeView extends Component {
                   className="text-success"
                   to={{
                     pathname: `${this.props.match.url}/create-permassig`,
-                    state: { roleType: roleTypesStore.roleType }
+                    state: { roleType: roleTypeStore.roleType }
                   }}
                 >
                   <i className="fas fa-plus-circle" /> Adicionar
@@ -149,7 +149,7 @@ RoleTypeView.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  roleTypesStore: state.roleTypesStore
+  roleTypeStore: state.roleTypeStore
 });
 
 export default connect(
