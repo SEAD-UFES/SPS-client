@@ -141,7 +141,7 @@ class RestrictionList extends Component {
                       <td>{restriction.description ? restriction.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
                         <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${restriction.id}`}>
-                          <i className="far fa-edit" />
+                          <i className="fas fa-cog" />
                         </button>
                         <RestrictionModalForm
                           targetName={`editModal-${restriction.id}`}
@@ -150,8 +150,13 @@ class RestrictionList extends Component {
                           editFunction={this.props.updateRestriction}
                           reloadFunction={this.props.getRestrictions}
                         />{" "}
-                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${restriction.id}`}>
-                          <i className="far fa-trash-alt text-danger" />
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-danger"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${restriction.id}`}
+                        >
+                          <i className="fas fa-times-circle" />
                         </button>
                         <RestrictionModalDelete
                           targetName={`deleteModal-${restriction.id}`}

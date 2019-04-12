@@ -141,7 +141,7 @@ class RegionList extends Component {
                       <td>{region.description ? region.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
                         <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${region.id}`}>
-                          <i className="far fa-edit" />
+                          <i className="fas fa-cog" />
                         </button>
                         <RegionModalForm
                           targetName={`editModal-${region.id}`}
@@ -150,8 +150,8 @@ class RegionList extends Component {
                           editFunction={this.props.updateRegion}
                           reloadFunction={this.props.getRegions}
                         />{" "}
-                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${region.id}`}>
-                          <i className="far fa-trash-alt text-danger" />
+                        <button type="button" className="btn btn-link buttonAsLink text-danger" data-toggle="modal" data-target={`#deleteModal-${region.id}`}>
+                          <i className="fas fa-times-circle" />
                         </button>
                         <RegionsModalDelete
                           targetName={`deleteModal-${region.id}`}

@@ -141,7 +141,7 @@ class CourseList extends Component {
                       <td>{course.description ? course.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
                         <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${course.id}`}>
-                          <i className="far fa-edit" />
+                          <i className="fas fa-cog" />
                         </button>
                         <CourseModalForm
                           targetName={`editModal-${course.id}`}
@@ -150,8 +150,8 @@ class CourseList extends Component {
                           editFunction={this.props.updateCourse}
                           reloadFunction={this.props.getCourses}
                         />{" "}
-                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${course.id}`}>
-                          <i className="far fa-trash-alt text-danger" />
+                        <button type="button" className="btn btn-link buttonAsLink text-danger" data-toggle="modal" data-target={`#deleteModal-${course.id}`}>
+                          <i className="fas fa-times-circle" />
                         </button>
                         <CourseModalDelete
                           targetName={`deleteModal-${course.id}`}

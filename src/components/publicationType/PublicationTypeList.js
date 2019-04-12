@@ -149,7 +149,7 @@ class ProcessPublicationTypesList extends Component {
                           data-toggle="modal"
                           data-target={`#editModal-${publicationType.id}`}
                         >
-                          <i className="far fa-edit" />
+                          <i className="fas fa-cog" />
                         </button>
                         <PublicationTypeModalForm
                           targetName={`editModal-${publicationType.id}`}
@@ -158,8 +158,13 @@ class ProcessPublicationTypesList extends Component {
                           editFunction={this.props.updatePublicationType}
                           reloadFunction={this.props.getPublicationTypes}
                         />{" "}
-                        <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${publicationType.id}`}>
-                          <i className="far fa-trash-alt text-danger" />
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-danger"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${publicationType.id}`}
+                        >
+                          <i className="fas fa-times-circle" />
                         </button>
                         <PublicationTypeModalDelete
                           targetName={`deleteModal-${publicationType.id}`}
