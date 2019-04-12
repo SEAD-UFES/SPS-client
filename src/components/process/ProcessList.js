@@ -33,11 +33,10 @@ class ProcessList extends Component {
   }
 
   render() {
-    const { processes, loading2 } = this.props.process;
-    //const { users, loading } = { users: [], loading: false };
+    const { processes, loading } = this.props.process;
     let usersContent;
 
-    if (processes === null || loading2) {
+    if (processes === null || loading) {
       usersContent = <Spinner />;
     } else {
       if (processes.selectiveProcesses.length > 0) {
