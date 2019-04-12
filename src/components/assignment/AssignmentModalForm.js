@@ -8,7 +8,7 @@ import { isEmpty, validateName } from "../../validation";
 import { validateAssignmentForm } from "./validateAssignmentForm";
 import { clearErrors } from "../../actions/errorActions";
 
-class AssignmentsModalForm extends Component {
+class AssignmentModalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -177,7 +177,7 @@ class AssignmentsModalForm extends Component {
   }
 }
 
-AssignmentsModalForm.proptypes = {
+AssignmentModalForm.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -189,4 +189,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { clearErrors }
-)(AssignmentsModalForm);
+)(AssignmentModalForm);

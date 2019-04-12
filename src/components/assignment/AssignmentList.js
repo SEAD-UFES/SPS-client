@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { clearErrors } from "../../actions/errorActions";
 import { getAssignments, createAssignment, updateAssignment, deleteAssignment } from "./assignmentActions";
 import { compareBy } from "utils/compareBy";
-import AssignmentsModalForm from "./AssignmentModalForm";
-import AssignmentsModalDelete from "./AssignmentModalDelete";
+import AssignmentModalForm from "./AssignmentModalForm";
+import AssignmentModalDelete from "./AssignmentModalDelete";
 
 class AssignmentList extends Component {
   constructor(props) {
@@ -115,7 +115,7 @@ class AssignmentList extends Component {
           </button>
         </div>
 
-        <AssignmentsModalForm mode="add" targetName="addModal" addFunction={this.props.createAssignment} reloadFunction={this.props.getAssignments} />
+        <AssignmentModalForm mode="add" targetName="addModal" addFunction={this.props.createAssignment} reloadFunction={this.props.getAssignments} />
       </div>
     );
 
@@ -143,7 +143,7 @@ class AssignmentList extends Component {
                         <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${assignment.id}`}>
                           <i className="far fa-edit" />
                         </button>
-                        <AssignmentsModalForm
+                        <AssignmentModalForm
                           targetName={`editModal-${assignment.id}`}
                           mode="edit"
                           item={assignment}
@@ -153,7 +153,7 @@ class AssignmentList extends Component {
                         <button type="button" className="btn btn-link buttonAsLink" data-toggle="modal" data-target={`#deleteModal-${assignment.id}`}>
                           <i className="far fa-trash-alt text-danger" />
                         </button>
-                        <AssignmentsModalDelete
+                        <AssignmentModalDelete
                           targetName={`deleteModal-${assignment.id}`}
                           item={assignment}
                           deleteFunction={this.props.deleteAssignment}
