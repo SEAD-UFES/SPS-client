@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import authReducer from "../components/auth/authReducer";
 import errorReducer from "./errorReducer";
+import authReducer from "../components/auth/authReducer";
 import profileReducer from "../components/profile/profileReducer";
 import userReducer from "./userReducer";
 import processReducer from "../components/process/processReducer";
@@ -20,9 +20,9 @@ import stepReducer from "components/step/stepReducer";
 import vacancyReducer from "components/vacancy/vacancyReducer";
 
 export default combineReducers({
-  auth: authReducer,
   errors: errorReducer,
-  profile: profileReducer,
+  auth: authReducer,
+  profileStore: profileReducer,
   user: userReducer,
   processStore: processReducer,
   courseStore: courseReducer,

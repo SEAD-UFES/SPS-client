@@ -10,7 +10,7 @@ import avatar from "../../img/none.png";
 class Navbar extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      if (this.props.profile.profile === null) {
+      if (this.props.profileStore.profile === null) {
         this.props.getCurrentProfile();
       }
     }
@@ -18,7 +18,7 @@ class Navbar extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      if (nextProps.profile.loading === false && nextProps.profile.profile === null) {
+      if (nextProps.profileStore.loading === false && nextProps.profileStore.profile === null) {
         this.props.getCurrentProfile();
       }
     }
@@ -32,7 +32,7 @@ class Navbar extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
-    const { loading, profile } = this.props.profile;
+    const { loading, profile } = this.props.profileStore;
 
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
@@ -119,13 +119,13 @@ Navbar.propTypes = {
   clearCurrentProfile: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profileStore: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  auth: state.auth, //last auth because the auth on root reducer?
-  profile: state.profile
+  auth: state.auth, //get authStore from main reducer
+  profileStore: state.profileStore
 });
 
 export default connect(
