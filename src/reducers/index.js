@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import authReducer from "./authReducer";
+import authReducer from "../components/auth/authReducer";
 import errorReducer from "./errorReducer";
 import profileReducer from "../components/profile/profileReducer";
 import userReducer from "./userReducer";

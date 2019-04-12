@@ -11,7 +11,7 @@ import jwt_decode from "jwt-decode";
 //Local imports
 import store from "./store/store"; //Importa o store criado nesse arquivo.
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./components/auth/authActions";
 import { clearCurrentProfile } from "./components/profile/profileActions";
 import PrivateRoute from "./components/common/PrivateRoute";
 
