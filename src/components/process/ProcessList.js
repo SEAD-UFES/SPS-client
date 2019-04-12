@@ -33,7 +33,7 @@ class ProcessList extends Component {
   }
 
   render() {
-    const { processes, loading } = this.props.process;
+    const { processes, loading } = this.props.processStore;
     let usersContent;
 
     if (processes === null || loading) {
@@ -42,7 +42,7 @@ class ProcessList extends Component {
       if (processes.selectiveProcesses.length > 0) {
         usersContent = (
           <div>
-            <h4 className="mb-2">Usuários</h4>
+            <h4 className="mb-2">Processos</h4>
             <table className="table">
               <thead>
                 <tr>
@@ -117,7 +117,7 @@ ProcessList.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.user,
-  process: state.process
+  processStore: state.processStore
 });
 
 export default connect(

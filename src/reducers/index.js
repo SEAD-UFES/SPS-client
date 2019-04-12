@@ -24,7 +24,7 @@ export default combineReducers({
   errors: errorReducer,
   profile: profileReducer,
   user: userReducer,
-  process: processReducer,
+  processStore: processReducer,
   courseStore: courseReducer,
   assignmentStore: assignmentReducer,
   regionStore: regionReducer,
