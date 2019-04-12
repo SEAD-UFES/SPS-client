@@ -47,7 +47,11 @@ class UserList extends Component {
                   <th>Nome/Sobrenome</th>
                   <th>Login/Email</th>
                   <th>Status</th>
-                  <th />
+                  <th>
+                    <Link className="text-success" to={`${this.props.match.url}/create`}>
+                      <i className="fas fa-plus-circle" />
+                    </Link>
+                  </th>
                 </tr>
               </thead>
               <tbody>
