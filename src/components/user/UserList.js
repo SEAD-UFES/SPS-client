@@ -62,7 +62,7 @@ class UserList extends Component {
 
                       <td>
                         <Link className="text-success" to={`/users/${user.id}`}>
-                          <i className="fas fa-info-circle" />
+                          <i className="fas fa-eye" />
                         </Link>
                       </td>
                     </tr>
