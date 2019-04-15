@@ -9,9 +9,10 @@ import SelectListGroup from "../common/SelectListGroup";
 
 import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
-import { getAssignmentOptions, getRestrictionsOptions } from "../process/processActions";
+import { getAssignmentOptions } from "../process/processActions";
 import { getVacancy, updateVacancy } from "./vacancyActions";
 import { getRegions } from "components/region/regionActions";
+import { getRestrictions } from "components/restriction/restrictionActions";
 
 import { clearErrors } from "../../actions/errorActions";
 
@@ -38,7 +39,7 @@ class VacancyEdit extends Component {
   componentDidMount() {
     this.props.clearErrors();
     this.props.getAssignmentOptions();
-    this.props.getRestrictionsOptions();
+    this.props.getRestrictions();
     this.props.getRegions();
     if (this.props.match.params.vacancy_id) {
       this.props.getVacancy(this.props.match.params.vacancy_id);
@@ -272,7 +273,7 @@ VacancyEdit.proptypes = {
 const mapStateToProps = state => ({
   errors: state.errors,
   assignments: state.processStore.assignments,
-  restrictions: state.processStore.restrictions,
+  restrictions: state.restrictionStore.restrictions,
   regions: state.regionStore.regions,
   vacancy: state.vacancyStore.vacancy
 });
@@ -285,7 +286,7 @@ export default connect(
     getVacancy,
     updateVacancy,
     getAssignmentOptions,
-    getRestrictionsOptions,
+    getRestrictions,
     getRegions
   }
 )(withRouter(VacancyEdit));

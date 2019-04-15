@@ -3,6 +3,13 @@ import { GET_RESTRICTION, GET_RESTRICTIONS, RESTRICTIONS_LOADING } from "./restr
 
 import axios from "axios";
 
+//courses loading
+export const setRestrictionsLoading = () => {
+  return {
+    type: RESTRICTIONS_LOADING
+  };
+};
+
 export const createRestriction = (restrictionData, callback_ok) => dispatch => {
   axios
     .post("/v1/restrictions", restrictionData)
@@ -60,13 +67,6 @@ export const deleteRestriction = (restriction_id, callback_ok) => dispatch => {
         payload: err.response.data
       })
     );
-};
-
-//courses loading
-export const setRestrictionsLoading = () => {
-  return {
-    type: RESTRICTIONS_LOADING
-  };
 };
 
 export const getRestrictions = () => dispatch => {
