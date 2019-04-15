@@ -1,15 +1,7 @@
 import axios from "axios";
 
 import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
-import {
-  GET_PROCESS,
-  GET_PROCESSES,
-  PROCESS_LOADING,
-  GET_STEPTYPES_OPTIONS,
-  GET_ASSIGNMENTS_OPTIONS,
-  GET_RESTRICTIONS_OPTIONS,
-  GET_REGIONS_OPTIONS
-} from "./processActionTypes";
+import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_STEPTYPES_OPTIONS, GET_ASSIGNMENTS_OPTIONS, GET_RESTRICTIONS_OPTIONS } from "./processActionTypes";
 
 //create Process
 export const createProcess = (processData, history) => dispatch => {
@@ -142,23 +134,6 @@ export const getRestrictionsOptions = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: { options: "Don't load the restrictions options" }
-      })
-    );
-};
-
-export const getRegionsOptions = () => dispatch => {
-  axios
-    .get("/v1/regions")
-    .then(res =>
-      dispatch({
-        type: GET_REGIONS_OPTIONS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: { options: "Don't load the regions options" }
       })
     );
 };

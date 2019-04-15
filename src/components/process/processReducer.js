@@ -1,12 +1,4 @@
-import {
-  PROCESS_LOADING,
-  GET_PROCESS,
-  GET_PROCESSES,
-  GET_STEPTYPES_OPTIONS,
-  GET_ASSIGNMENTS_OPTIONS,
-  GET_RESTRICTIONS_OPTIONS,
-  GET_REGIONS_OPTIONS
-} from "./processActionTypes";
+import { PROCESS_LOADING, GET_PROCESS, GET_PROCESSES, GET_STEPTYPES_OPTIONS, GET_ASSIGNMENTS_OPTIONS, GET_RESTRICTIONS_OPTIONS } from "./processActionTypes";
 
 const initialState = {
   loading: false,
@@ -52,11 +44,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         restrictions: action.payload
-      };
-    case GET_REGIONS_OPTIONS:
-      return {
-        ...state,
-        regions: action.payload
       };
 
     default:

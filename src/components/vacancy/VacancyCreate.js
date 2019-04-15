@@ -7,8 +7,9 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
-import { getStepOptions, getAssignmentOptions, getRestrictionsOptions, getRegionsOptions } from "../process/processActions";
+import { getStepOptions, getAssignmentOptions, getRestrictionsOptions } from "../process/processActions";
 import { createVacancy } from "./vacancyActions";
+import { getRegions } from "components/region/regionActions";
 
 import { clearErrors } from "../../actions/errorActions";
 
@@ -36,7 +37,7 @@ class VacancyCreate extends Component {
     this.props.clearErrors();
     this.props.getAssignmentOptions();
     this.props.getRestrictionsOptions();
-    this.props.getRegionsOptions();
+    this.props.getRegions();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -235,7 +236,7 @@ const mapStateToProps = state => ({
   options: state.processStore.options,
   assignments: state.processStore.assignments,
   restrictions: state.processStore.restrictions,
-  regions: state.processStore.regions
+  regions: state.regionStore.regions
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
@@ -246,7 +247,7 @@ export default connect(
     clearErrors,
     getAssignmentOptions,
     getRestrictionsOptions,
-    getRegionsOptions,
+    getRegions,
     createVacancy
   }
 )(withRouter(VacancyCreate));
