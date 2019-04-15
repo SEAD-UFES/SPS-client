@@ -15,7 +15,7 @@ class UserView extends Component {
   }
 
   render() {
-    const { user, loading } = this.props.user;
+    const { user, loading } = this.props.userStore;
 
     let userContent;
     if (user === null || loading) {
@@ -212,7 +212,7 @@ UserView.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  userStore: state.userStore
 });
 
 export default connect(

@@ -30,7 +30,7 @@ class UserList extends Component {
   }
 
   render() {
-    const { users, loading } = this.props.user;
+    const { users, loading } = this.props.userStore;
     //const { users, loading } = { users: [], loading: false };
     let usersContent;
 
@@ -106,11 +106,11 @@ class UserList extends Component {
 
 UserList.propTypes = {
   getUserList: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  userStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  userStore: state.userStore
 });
 
 export default connect(

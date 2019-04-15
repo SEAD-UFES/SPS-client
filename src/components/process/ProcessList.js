@@ -112,11 +112,11 @@ class ProcessList extends Component {
 ProcessList.propTypes = {
   getUserList: PropTypes.func.isRequired,
   getProcessList: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  userStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.user,
+  userStore: state.userStore,
   processStore: state.processStore
 });
 

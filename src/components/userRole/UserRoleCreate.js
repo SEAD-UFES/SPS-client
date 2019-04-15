@@ -211,7 +211,7 @@ UserRoleCreate.propTypes = {
 
 const mapStateToProps = state => ({
   userRoleStore: state.userRoleStore,
-  userStore: state.user,
+  userStore: state.userStore,
   roleTypeStore: state.roleTypeStore,
   courseStore: state.courseStore
 });

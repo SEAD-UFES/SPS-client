@@ -23,7 +23,7 @@ export default combineReducers({
   errors: errorReducer,
   authStore: authReducer,
   profileStore: profileReducer,
-  user: userReducer,
+  userStore: userReducer,
   processStore: processReducer,
   courseStore: courseReducer,
   assignmentStore: assignmentReducer,

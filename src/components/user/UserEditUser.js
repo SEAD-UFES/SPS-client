@@ -4,13 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import {
-  validateEmailRequired,
-  validatePassword,
-  validatePasswordCheck,
-  validateProfileEditUserForm,
-  isEmpty
-} from "../../validation";
+import { validateEmailRequired, validatePassword, validatePasswordCheck, validateProfileEditUserForm, isEmpty } from "../../validation";
 import { clearErrors } from "../../actions/errorActions";
 import { getUser, updateUser } from "../../actions/userActions";
 
@@ -50,8 +44,8 @@ class UserEditUser extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.user.user) {
-      const user = nextProps.user.user;
+    if (isEmpty(nextProps.errors) && nextProps.userStore.user) {
+      const user = nextProps.userStore.user;
 
       const login = !isEmpty(user.login) ? user.login : "";
       const active = user.authorized ? true : false;
@@ -75,10 +69,7 @@ class UserEditUser extends Component {
       case "password":
         valResult = validatePassword(e.target.value);
         //validate the field password Check to
-        let pass2Val = validatePasswordCheck(
-          this.state.password2,
-          e.target.value
-        );
+        let pass2Val = validatePasswordCheck(this.state.password2, e.target.value);
         if (!pass2Val.isValid) {
           errors = { ...errors, password2: pass2Val.error };
         } else {
@@ -123,10 +114,7 @@ class UserEditUser extends Component {
           }
           //validate password2
           if (this.state.password || this.state.password2) {
-            let pass2Val = validatePasswordCheck(
-              this.state.password2,
-              this.state.password
-            );
+            let pass2Val = validatePasswordCheck(this.state.password2, this.state.password);
             if (!pass2Val.isValid) {
               errors = { ...errors, password2: pass2Val.error };
             } else {
@@ -172,7 +160,7 @@ class UserEditUser extends Component {
         updateUserData.password = this.state.password;
       }
 
-      const user = this.props.user.user;
+      const user = this.props.userStore.user;
 
       this.props.updateUser(user.id, updateUserData, this.props.history);
     }
@@ -180,7 +168,7 @@ class UserEditUser extends Component {
 
   render() {
     const { errors } = this.state;
-    const { user, loading } = this.props.user;
+    const { user, loading } = this.props.userStore;
 
     let userLink;
     if (user === null || loading) {
@@ -198,9 +186,7 @@ class UserEditUser extends Component {
                 Voltar para perfil
               </Link>
               <h1 className="display-4 text-center">Editar perfil</h1>
-              <p className="lead text-center">
-                Atualize suas informações de acesso
-              </p>
+              <p className="lead text-center">Atualize suas informações de acesso</p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="* Endereço de email"
@@ -213,14 +199,7 @@ class UserEditUser extends Component {
                 />
 
                 <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="active"
-                    id="active"
-                    checked={this.state.active}
-                    onChange={this.onCheck}
-                  />
+                  <input className="form-check-input" type="checkbox" name="active" id="active" checked={this.state.active} onChange={this.onCheck} />
                   <label className="form-check-label" htmlFor="active">
                     Usuário ativo.
                   </label>
@@ -260,11 +239,7 @@ class UserEditUser extends Component {
                   </label>
                 </div>
 
-                <input
-                  value="Enviar"
-                  type="submit"
-                  className="btn btn-info btn-block mt-4"
-                />
+                <input value="Enviar" type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>
@@ -277,13 +252,13 @@ class UserEditUser extends Component {
 UserEditUser.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   getUser: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  user: state.user,
+  userStore: state.userStore,
   errors: state.errors
 });
 

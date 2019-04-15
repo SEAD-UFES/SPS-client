@@ -6,20 +6,9 @@ import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import {
-  validateName,
-  validateSurname,
-  validateDate,
-  validateCpfRequired,
-  isEmpty,
-  validateProfileEditPersonForm
-} from "../../validation";
+import { validateName, validateSurname, validateDate, validateCpfRequired, isEmpty, validateProfileEditPersonForm } from "../../validation";
 import { clearErrors } from "../../actions/errorActions";
-import {
-  getUser,
-  updatePerson,
-  getUserPeopleOptions
-} from "../../actions/userActions";
+import { getUser, updatePerson, getUserPeopleOptions } from "../../actions/userActions";
 
 class UserEditPerson extends Component {
   constructor(props) {
@@ -54,9 +43,7 @@ class UserEditPerson extends Component {
   componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
     if (!isEmpty(nextProps.errors)) {
-      if (
-        nextProps.errors.devMessage.errors[0].message === "cpf must be unique"
-      ) {
+      if (nextProps.errors.devMessage.errors[0].message === "cpf must be unique") {
         let errors = { ...this.state.errors };
         errors.cpf = "cpf já cadastrado na base de dados";
         this.setState({ errors: errors });
@@ -64,38 +51,20 @@ class UserEditPerson extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.user.user) {
-      const user = nextProps.user.user;
+    if (isEmpty(nextProps.errors) && nextProps.userStore.user) {
+      const user = nextProps.userStore.user;
 
       //preenchendo campos caso não existam
       if (user.Person) {
         user.Person.name = !isEmpty(user.Person.name) ? user.Person.name : "";
-        user.Person.surname = !isEmpty(user.Person.surname)
-          ? user.Person.surname
-          : "";
-        user.Person.birthdate = !isEmpty(user.Person.birthdate)
-          ? moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format(
-              "YYYY-MM-DD"
-            )
-          : "";
-        user.Person.nationality = !isEmpty(user.Person.nationality)
-          ? user.Person.nationality
-          : "";
-        user.Person.rgNumber = !isEmpty(user.Person.rgNumber)
-          ? user.Person.rgNumber
-          : "";
-        user.Person.rgDispatcher = !isEmpty(user.Person.rgDispatcher)
-          ? user.Person.rgDispatcher
-          : "";
-        user.Person.ethnicity = !isEmpty(user.Person.ethnicity)
-          ? user.Person.ethnicity
-          : "";
-        user.Person.gender = !isEmpty(user.Person.gender)
-          ? user.Person.gender
-          : "";
-        user.Person.civilStatus = !isEmpty(user.Person.civilStatus)
-          ? user.Person.civilStatus
-          : "";
+        user.Person.surname = !isEmpty(user.Person.surname) ? user.Person.surname : "";
+        user.Person.birthdate = !isEmpty(user.Person.birthdate) ? moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD") : "";
+        user.Person.nationality = !isEmpty(user.Person.nationality) ? user.Person.nationality : "";
+        user.Person.rgNumber = !isEmpty(user.Person.rgNumber) ? user.Person.rgNumber : "";
+        user.Person.rgDispatcher = !isEmpty(user.Person.rgDispatcher) ? user.Person.rgDispatcher : "";
+        user.Person.ethnicity = !isEmpty(user.Person.ethnicity) ? user.Person.ethnicity : "";
+        user.Person.gender = !isEmpty(user.Person.gender) ? user.Person.gender : "";
+        user.Person.civilStatus = !isEmpty(user.Person.civilStatus) ? user.Person.civilStatus : "";
 
         //Atualizando estado do componente
         this.setState({
@@ -178,7 +147,7 @@ class UserEditPerson extends Component {
 
   render() {
     const { errors } = this.state;
-    const options = this.props.user.options;
+    const options = this.props.userStore.options;
 
     const colorOptions = [{ label: "Escolha cor/etnia", value: "" }].concat(
       options
@@ -202,9 +171,7 @@ class UserEditPerson extends Component {
         : []
     );
 
-    const civilStateOptions = [
-      { label: "Escolha estado civil", value: "" }
-    ].concat(
+    const civilStateOptions = [{ label: "Escolha estado civil", value: "" }].concat(
       options
         ? options.civilStatus.values.map(color => {
             return {
@@ -224,18 +191,9 @@ class UserEditPerson extends Component {
                 Voltar para perfil
               </Link>
               <h1 className="display-4 text-center">Editar perfil</h1>
-              <p className="lead text-center">
-                Atualize suas informações pessoais
-              </p>
+              <p className="lead text-center">Atualize suas informações pessoais</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="* Nome"
-                  type="text"
-                  name="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
+                <TextFieldGroup placeholder="* Nome" type="text" name="name" value={this.state.name} onChange={this.onChange} error={errors.name} />
 
                 <TextFieldGroup
                   placeholder="* Sobrenome"
@@ -256,14 +214,7 @@ class UserEditPerson extends Component {
                   error={errors.birthdate}
                 />
 
-                <TextFieldGroup
-                  placeholder="* C.P.F."
-                  type="text"
-                  name="cpf"
-                  value={this.state.cpf}
-                  onChange={this.onChange}
-                  error={errors.cpf}
-                />
+                <TextFieldGroup placeholder="* C.P.F." type="text" name="cpf" value={this.state.cpf} onChange={this.onChange} error={errors.cpf} />
 
                 <TextFieldGroup
                   placeholder="Nacionalidade"
@@ -325,11 +276,7 @@ class UserEditPerson extends Component {
                   error={errors.civilStatus}
                 />
 
-                <input
-                  value="Enviar"
-                  type="submit"
-                  className="btn btn-info btn-block mt-4"
-                />
+                <input value="Enviar" type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>
@@ -344,14 +291,12 @@ UserEditPerson.propsTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   getPeopleOptions: PropTypes.func.isRequired,
   getUserPeopleOptions: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.user,
-  profile: state.profile,
+  userStore: state.userStore,
   errors: state.errors
 });
 

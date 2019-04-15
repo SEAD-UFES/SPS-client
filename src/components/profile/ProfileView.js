@@ -12,15 +12,9 @@ class Profile extends Component {
     this.props.getCurrentProfile();
   }
 
-  onDeleteClick(e) {
-    e.preventDefault();
-    console.log("delete");
-    //this.props.deleteAccount();
-  }
-
   render() {
-    const { user } = this.props.auth;
-    const { profile, loading } = this.props.profile;
+    const { user } = this.props.authStore;
+    const { profile, loading } = this.props.profileStore;
 
     const userData =
       profile === null || profile.loading ? (
@@ -225,13 +219,13 @@ class Profile extends Component {
 Profile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   //deleteAccount: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  authStore: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
-  auth: state.auth
+  profileStore: state.profileStore,
+  authStore: state.authStore
 });
 
 export default connect(
