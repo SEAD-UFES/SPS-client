@@ -15,7 +15,8 @@ import {
   validateNumberRequired
 } from "../../validation";
 
-import { getStepOptions, createProcessCallStep } from "../process/processActions";
+import { getStepOptions } from "../process/processActions";
+import { createStep } from "./stepActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepCreate extends Component {
@@ -120,7 +121,7 @@ class StepCreate extends Component {
     if (!valStep.isValid) {
       this.setState({ errors: valStep.errors });
     } else {
-      this.props.createProcessCallStep(StepData, this.props.match.params.process_id, this.props.history);
+      this.props.createStep(StepData, this.props.match.params.process_id, this.props.history);
     }
   }
 
@@ -219,7 +220,7 @@ class StepCreate extends Component {
 
 // "registerUser" and "auth" are required to the Register component
 StepCreate.proptypes = {
-  createProcessCallStep: PropTypes.func.isRequired,
+  createStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
@@ -228,11 +229,11 @@ StepCreate.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  options: state.process.options
+  options: state.processStore.options
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCallStep, getStepOptions, clearErrors }
+  { createStep, getStepOptions, clearErrors }
 )(withRouter(StepCreate));

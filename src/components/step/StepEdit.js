@@ -16,7 +16,8 @@ import {
   validateProcessCallStepForm,
   validateNumberRequired
 } from "../../validation";
-import { getStepOptions, createProcessCallStep, getStep, updateProcessCallStep } from "../process/processActions";
+import { getStepOptions } from "../process/processActions";
+import { getStep, updateStep } from "./stepActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepEdit extends Component {
@@ -66,8 +67,8 @@ class StepEdit extends Component {
     }
 
     //loading step values on state
-    if (isEmpty(nextProps.errors) && nextProps.process.step) {
-      const step = nextProps.process.step;
+    if (isEmpty(nextProps.errors) && nextProps.stepStore.step) {
+      const step = nextProps.stepStore.step;
       this.setState({
         number: step.number,
         stepType_id: step.stepType_id,
@@ -137,8 +138,7 @@ class StepEdit extends Component {
     if (!valStep.isValid) {
       this.setState({ errors: valStep.errors });
     } else {
-      console.log("ready!");
-      this.props.updateProcessCallStep(this.props.match.params.process_id, this.props.match.params.step_id, StepData, this.props.history);
+      this.props.updateStep(this.props.match.params.process_id, this.props.match.params.step_id, StepData, this.props.history);
     }
   }
 
@@ -250,9 +250,9 @@ class StepEdit extends Component {
 
 // "registerUser" and "auth" are required to the Register component
 StepEdit.proptypes = {
-  createProcessCallStep: PropTypes.func.isRequired,
+  getStep: PropTypes.func.isRequired,
+  updateStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
-  updateProcessCallStep: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -260,18 +260,17 @@ StepEdit.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  options: state.process.options,
-  process: state.process
+  options: state.processStore.options,
+  stepStore: state.stepStore
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
   {
-    createProcessCallStep,
     getStepOptions,
     clearErrors,
     getStep,
-    updateProcessCallStep
+    updateStep
   }
 )(withRouter(StepEdit));

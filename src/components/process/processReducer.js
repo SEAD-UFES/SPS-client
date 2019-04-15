@@ -3,7 +3,6 @@ import {
   GET_PROCESS,
   GET_PROCESSES,
   GET_STEPTYPES_OPTIONS,
-  GET_STEP,
   GET_ASSIGNMENTS_OPTIONS,
   GET_RESTRICTIONS_OPTIONS,
   GET_REGIONS_OPTIONS,
@@ -15,7 +14,6 @@ const initialState = {
   processes: null,
   process: null,
   //other stuff
-  step: null,
   options: null,
   assignments: null,
   restrictions: null,
@@ -34,12 +32,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         process: action.payload,
-        loading: false
-      };
-    case GET_STEP:
-      return {
-        ...state,
-        step: action.payload,
         loading: false
       };
     case GET_PROCESSES:

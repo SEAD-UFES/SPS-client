@@ -6,7 +6,6 @@ import {
   GET_PROCESSES,
   PROCESS_LOADING,
   GET_STEPTYPES_OPTIONS,
-  GET_STEP,
   GET_ASSIGNMENTS_OPTIONS,
   GET_RESTRICTIONS_OPTIONS,
   GET_REGIONS_OPTIONS,
@@ -106,54 +105,6 @@ export const getStepOptions = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: { options: "Don't load the steptypes options" }
-      })
-    );
-};
-
-//create ProcessCallStep
-export const createProcessCallStep = (stepData, process_id, history) => dispatch => {
-  axios
-    .post("/v1/steps", stepData)
-    .then(res => {
-      history.push(`/processes/${process_id}`);
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-//get ProcessCallStep
-export const getStep = step_id => dispatch => {
-  axios
-    .get(`/v1/steps/${step_id}`)
-    .then(res => {
-      dispatch({
-        type: GET_STEP,
-        payload: res.data
-      });
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-//update ProcessCallStep
-export const updateProcessCallStep = (process_id, step_id, stepData, history) => dispatch => {
-  axios
-    .put(`/v1/steps/${step_id}`, stepData)
-    .then(res => {
-      history.push(`/processes/${process_id}`);
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
       })
     );
 };

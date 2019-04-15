@@ -7,14 +7,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
-import {
-  getStepOptions,
-  createProcessCallStep,
-  getAssignmentOptions,
-  getRestrictionsOptions,
-  getRegionsOptions,
-  createProcessCallVacancy
-} from "../process/processActions";
+import { getStepOptions, getAssignmentOptions, getRestrictionsOptions, getRegionsOptions, createProcessCallVacancy } from "../process/processActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class VacancyCreate extends Component {
@@ -228,7 +221,6 @@ class VacancyCreate extends Component {
 
 // "registerUser" and "auth" are required to the Register component
 VacancyCreate.proptypes = {
-  createProcessCallStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
@@ -248,7 +240,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    createProcessCallStep,
     getStepOptions,
     clearErrors,
     getAssignmentOptions,

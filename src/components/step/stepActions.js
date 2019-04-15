@@ -10,6 +10,20 @@ export const setStepLoading = () => {
   };
 };
 
+export const createStep = (stepData, process_id, history) => dispatch => {
+  axios
+    .post("/v1/steps", stepData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 export const getStep = step_id => dispatch => {
   dispatch(setStepLoading());
   axios
@@ -20,6 +34,20 @@ export const getStep = step_id => dispatch => {
         payload: res.data
       })
     )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const updateStep = (process_id, step_id, stepData, history) => dispatch => {
+  axios
+    .put(`/v1/steps/${step_id}`, stepData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
