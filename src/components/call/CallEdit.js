@@ -14,7 +14,7 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import { createProcessCall, getCall, updateProcessCall } from "../process/processActions";
+import { createCall, getCall, updateCall } from "./callActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class CallEdit extends Component {
@@ -60,8 +60,8 @@ class CallEdit extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.process.call) {
-      const call = nextProps.process.call;
+    if (isEmpty(nextProps.errors) && nextProps.callStore.call) {
+      const call = nextProps.callStore.call;
       this.setState({
         number: call.number,
         enrollmentOpeningDate: moment(call.enrollmentOpeningDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
@@ -174,7 +174,7 @@ class CallEdit extends Component {
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      this.props.updateProcessCall(this.props.match.params.call_id, callData, this.props.history);
+      this.props.updateCall(this.props.match.params.call_id, callData, this.props.history);
     }
   }
 
@@ -250,7 +250,7 @@ class CallEdit extends Component {
 
 // Call Edit props
 CallEdit.proptypes = {
-  createProcessCall: PropTypes.func.isRequired,
+  createCall: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -258,11 +258,11 @@ CallEdit.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  process: state.process
+  callStore: state.callStore
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCall, getCall, updateProcessCall, clearErrors }
+  { createCall, getCall, updateCall, clearErrors }
 )(withRouter(CallEdit));

@@ -1,8 +1,7 @@
 import {
-  GET_PROCESS,
-  GET_CALL,
-  GET_PROCESSES,
   PROCESS_LOADING,
+  GET_PROCESS,
+  GET_PROCESSES,
   GET_STEPTYPES_OPTIONS,
   GET_STEP,
   GET_ASSIGNMENTS_OPTIONS,
@@ -36,12 +35,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         process: action.payload,
-        loading: false
-      };
-    case GET_CALL:
-      return {
-        ...state,
-        call: action.payload,
         loading: false
       };
     case GET_STEP:

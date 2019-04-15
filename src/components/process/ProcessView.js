@@ -17,7 +17,7 @@ class ProcessView extends Component {
   }
 
   render() {
-    const { process, loading } = this.props.process;
+    const { process, loading } = this.props.processStore;
 
     const infoTable =
       process === null || loading ? (
@@ -215,7 +215,7 @@ ProcessView.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  process: state.process
+  processStore: state.processStore
 });
 
 export default connect(

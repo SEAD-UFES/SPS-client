@@ -10,6 +10,20 @@ export const setCallsLoading = () => {
   };
 };
 
+export const createCall = (callData, history) => dispatch => {
+  axios
+    .post("/v1/calls", callData)
+    .then(res => {
+      history.push(`/processes/${callData.selectiveProcess_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 export const getCall = call_id => dispatch => {
   dispatch(setCallsLoading());
   axios
@@ -20,6 +34,20 @@ export const getCall = call_id => dispatch => {
         payload: res.data
       })
     )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const updateCall = (callId, callData, history) => dispatch => {
+  axios
+    .put(`/v1/calls/${callId}`, callData)
+    .then(res => {
+      history.push(`/processes/${callData.selectiveProcess_id}`);
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

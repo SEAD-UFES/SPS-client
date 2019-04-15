@@ -12,7 +12,7 @@ import {
   validateEndingDate
 } from "../../validation";
 
-import { createProcessCall } from "../process/processActions";
+import { createCall } from "./callActions";
 
 class CallCreate extends Component {
   constructor() {
@@ -165,7 +165,7 @@ class CallCreate extends Component {
         //course_id: ""
       };
 
-      this.props.createProcessCall(callData, this.props.history);
+      this.props.createCall(callData, this.props.history);
     }
   }
 
@@ -226,7 +226,7 @@ class CallCreate extends Component {
 }
 
 CallCreate.proptypes = {
-  createProcessCall: PropTypes.func.isRequired,
+  createCall: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -238,5 +238,5 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcessCall }
+  { createCall }
 )(withRouter(CallCreate));
