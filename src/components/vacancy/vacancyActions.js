@@ -10,6 +10,20 @@ export const setVacanciesLoading = () => {
   };
 };
 
+export const createVacancy = (vacancyData, process_id, history) => dispatch => {
+  axios
+    .post("/v1/vacancies", vacancyData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 export const getVacancy = vacancy_id => dispatch => {
   dispatch(setVacanciesLoading());
   axios
@@ -20,6 +34,20 @@ export const getVacancy = vacancy_id => dispatch => {
         payload: res.data
       })
     )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const updateVacancy = (process_id, vacancy_id, vacancyData, history) => dispatch => {
+  axios
+    .put(`/v1/vacancies/${vacancy_id}`, vacancyData)
+    .then(res => {
+      history.push(`/processes/${process_id}`);
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

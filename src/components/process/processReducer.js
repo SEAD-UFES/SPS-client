@@ -5,8 +5,7 @@ import {
   GET_STEPTYPES_OPTIONS,
   GET_ASSIGNMENTS_OPTIONS,
   GET_RESTRICTIONS_OPTIONS,
-  GET_REGIONS_OPTIONS,
-  GET_VACANCY
+  GET_REGIONS_OPTIONS
 } from "./processActionTypes";
 
 const initialState = {
@@ -17,8 +16,7 @@ const initialState = {
   options: null,
   assignments: null,
   restrictions: null,
-  regions: null,
-  vacancy: null
+  regions: null
 };
 
 export default function(state = initialState, action) {
@@ -59,12 +57,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         regions: action.payload
-      };
-
-    case GET_VACANCY:
-      return {
-        ...state,
-        vacancy: action.payload
       };
 
     default:

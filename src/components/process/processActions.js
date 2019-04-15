@@ -8,8 +8,7 @@ import {
   GET_STEPTYPES_OPTIONS,
   GET_ASSIGNMENTS_OPTIONS,
   GET_RESTRICTIONS_OPTIONS,
-  GET_REGIONS_OPTIONS,
-  GET_VACANCY
+  GET_REGIONS_OPTIONS
 } from "./processActionTypes";
 
 //create Process
@@ -160,54 +159,6 @@ export const getRegionsOptions = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: { options: "Don't load the regions options" }
-      })
-    );
-};
-
-//create ProcessCallVacancy
-export const createProcessCallVacancy = (vacancyData, process_id, history) => dispatch => {
-  axios
-    .post("/v1/vacancies", vacancyData)
-    .then(res => {
-      history.push(`/processes/${process_id}`);
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-//get ProcessCallVacancy
-export const getVacancy = vacancy_id => dispatch => {
-  axios
-    .get(`/v1/vacancies/${vacancy_id}`)
-    .then(res => {
-      dispatch({
-        type: GET_VACANCY,
-        payload: res.data
-      });
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-//update ProcessCallVacancy
-export const updateProcessCallVacancy = (process_id, vacancy_id, vacancyData, history) => dispatch => {
-  axios
-    .put(`/v1/vacancies/${vacancy_id}`, vacancyData)
-    .then(res => {
-      history.push(`/processes/${process_id}`);
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
       })
     );
 };

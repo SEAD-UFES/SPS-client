@@ -9,14 +9,8 @@ import SelectListGroup from "../common/SelectListGroup";
 
 import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
-import {
-  getAssignmentOptions,
-  getRestrictionsOptions,
-  getRegionsOptions,
-  createProcessCallVacancy,
-  getVacancy,
-  updateProcessCallVacancy
-} from "../process/processActions";
+import { getAssignmentOptions, getRestrictionsOptions, getRegionsOptions } from "../process/processActions";
+import { getVacancy, updateVacancy } from "./vacancyActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class VacancyEdit extends Component {
@@ -145,7 +139,7 @@ class VacancyEdit extends Component {
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {
-      this.props.updateProcessCallVacancy(this.props.match.params.process_id, this.props.match.params.vacancy_id, vacancyData, this.props.history);
+      this.props.updateVacancy(this.props.match.params.process_id, this.props.match.params.vacancy_id, vacancyData, this.props.history);
     }
   }
 
@@ -265,7 +259,6 @@ class VacancyEdit extends Component {
 
 // "registerUser" and "auth" are required to the Register component
 VacancyEdit.proptypes = {
-  createProcessCallStep: PropTypes.func.isRequired,
   getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
@@ -276,10 +269,10 @@ VacancyEdit.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  assignments: state.process.assignments,
-  restrictions: state.process.restrictions,
-  regions: state.process.regions,
-  vacancy: state.process.vacancy
+  assignments: state.processStore.assignments,
+  restrictions: state.processStore.restrictions,
+  regions: state.processStore.regions,
+  vacancy: state.vacancyStore.vacancy
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
@@ -287,11 +280,10 @@ export default connect(
   mapStateToProps,
   {
     clearErrors,
+    getVacancy,
+    updateVacancy,
     getAssignmentOptions,
     getRestrictionsOptions,
-    getRegionsOptions,
-    createProcessCallVacancy,
-    getVacancy,
-    updateProcessCallVacancy
+    getRegionsOptions
   }
 )(withRouter(VacancyEdit));
