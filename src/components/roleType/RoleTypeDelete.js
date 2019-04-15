@@ -32,7 +32,7 @@ class RoleTypeDelete extends Component {
 
   onSubmit() {
     this.props.deleteRoleType(this.props.match.params.roletype_id, () => {
-      this.props.history.push(`/roletypes`);
+      this.props.history.push(`/parameters/roletypes`);
     });
   }
 
@@ -95,7 +95,7 @@ class RoleTypeDelete extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
+              <Link to={`/parameters/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
                 Voltar para tipo de papel
               </Link>
 
@@ -117,7 +117,7 @@ class RoleTypeDelete extends Component {
                     value="Cancelar"
                     className="btn btn-secondary btn-block mt-4"
                     onClick={() => {
-                      this.props.history.push(`/roletypes/${roleTypeStore.roleType.id}`);
+                      this.props.history.push(`/parameters/roletypes/${roleTypeStore.roleType.id}`);
                     }}
                   />
                 </div>

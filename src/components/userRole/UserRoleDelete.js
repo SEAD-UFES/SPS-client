@@ -32,7 +32,7 @@ class UserRoleDelete extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.deleteUserRole(this.props.match.params.userrole_id, () => {
-      this.props.history.push(`/roleassignments`);
+      this.props.history.push(`/parameters/roleassignments`);
     });
   }
 
@@ -101,7 +101,7 @@ class UserRoleDelete extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/roleassignments/${this.props.match.params.userrole_id}`} className="btn btn-light">
+              <Link to={`/parameters/roleassignments`} className="btn btn-light">
                 Voltar para lista de atribuição de papeis
               </Link>
 
@@ -123,7 +123,7 @@ class UserRoleDelete extends Component {
                     value="Cancelar"
                     className="btn btn-secondary btn-block mt-4"
                     onClick={() => {
-                      this.props.history.push(`/roleassignments`);
+                      this.props.history.push(`/parameters/roleassignments`);
                     }}
                   />
                 </div>

@@ -143,7 +143,7 @@ class UserRoleList extends Component {
                       <Link to={`/users/${userRole.User.id}`}>{userRole.User.login}</Link>
                     </td>
                     <td>
-                      <Link to={`/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
+                      <Link to={`/parameters/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
                     </td>
                     <td>{userRole.Course ? userRole.Course.name : <span className="text-muted">n/a</span>}</td>
                     <td>
@@ -161,7 +161,7 @@ class UserRoleList extends Component {
         <div>
           <p>
             Sem atribuições de papel cadastrados.{" "}
-            <Link className="text-success" to="/roleassignments/create">
+            <Link className="text-success" to={`${this.props.match.url}/create`}>
               <i className="fas fa-plus-circle" />
               Adicionar
             </Link>
@@ -171,7 +171,7 @@ class UserRoleList extends Component {
 
     const addButton = (
       <div className="btn-group mb-4" role="group">
-        <Link to="/roleassignments/create" className="btn btn-light">
+        <Link to={`${this.props.match.url}/create`} className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar atribuição de papel
         </Link>

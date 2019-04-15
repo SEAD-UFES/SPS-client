@@ -99,11 +99,11 @@ class RoleTypeCreateUpdate extends Component {
     } else {
       if (this.state.mode === "create") {
         this.props.createRoleType(roleTypeData, roletype_id => {
-          this.props.history.push(`/roletypes/${roletype_id}`);
+          this.props.history.push(`/parameters/roletypes/${roletype_id}`);
         });
       } else {
         this.props.updateRoleType(roleTypeData, roletype_id => {
-          this.props.history.push(`/roletypes/${roletype_id}`);
+          this.props.history.push(`/parameters/roletypes/${roletype_id}`);
         });
       }
     }
@@ -155,7 +155,7 @@ class RoleTypeCreateUpdate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/roletypes" className="btn btn-light">
+              <Link to="/parameters/roletypes" className="btn btn-light">
                 Voltar para lista de tipos de papel
               </Link>
               <h1 className="display-4 text-center">{this.state.mode === "create" ? "Criar tipo de papel" : "Editar tipo de papel"}</h1>

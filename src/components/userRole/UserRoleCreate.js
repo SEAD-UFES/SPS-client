@@ -189,7 +189,7 @@ class UserRoleCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/roleassignments" className="btn btn-light">
+              <Link to="/parameters/roleassignments" className="btn btn-light">
                 Voltar para lista de atribuições de papel
               </Link>
               <h1 className="display-4 text-center">Criar atribuição de papel</h1>

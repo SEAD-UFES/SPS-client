@@ -107,13 +107,13 @@ class RoleTypesList extends Component {
                     <td>{roleType.name}</td>
                     <td>{roleType.description}</td>
                     <td>
-                      <Link className="text-success" to={`/roletypes/${roleType.id}`}>
+                      <Link className="text-success" to={`/parameters/roletypes/${roleType.id}`}>
                         <i className="fas fa-eye" />
                       </Link>{" "}
-                      <Link className="text-info" to={`/roletypes/${roleType.id}/update`}>
+                      <Link className="text-info" to={`/parameters/roletypes/${roleType.id}/update`}>
                         <i className="fas fa-cog" />
                       </Link>{" "}
-                      <Link className="text-danger" to={`/roletypes/${roleType.id}/delete`}>
+                      <Link className="text-danger" to={`/parameters/roletypes/${roleType.id}/delete`}>
                         <i className="fas fa-times-circle" />
                       </Link>
                     </td>
@@ -127,7 +127,7 @@ class RoleTypesList extends Component {
         <div>
           <p>
             Sem tipos de papel cadastrados.{" "}
-            <Link className="text-success" to="/roletypes/create">
+            <Link className="text-success" to={`${this.props.match.url}/create`}>
               <i className="fas fa-plus-circle" />
               Adicionar
             </Link>
@@ -137,7 +137,7 @@ class RoleTypesList extends Component {
 
     const addButton = (
       <div className="btn-group mb-4" role="group">
-        <Link to="/roletypes/create" className="btn btn-light">
+        <Link to={`${this.props.match.url}/create`} className="btn btn-light">
           <i className="fas fa-user-circle text-info mr-1" />
           Adicionar tipo de papel
         </Link>

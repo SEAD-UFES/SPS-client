@@ -94,7 +94,7 @@ class rolePermissionCreate extends Component {
       this.setState({ errors: valRoleType.errors });
     } else {
       this.props.createRolePermission(rolePermissionData, () => {
-        this.props.history.push(`/roletypes/${this.state.roleType_id}`);
+        this.props.history.push(`/parameters/roletypes/${this.state.roleType_id}`);
       });
     }
   }
@@ -177,7 +177,7 @@ class rolePermissionCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
+              <Link to={`/parameters/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
                 Voltar para tipo de papel
               </Link>
               <h1 className="display-4 text-center">Criar atribuição de permissão</h1>

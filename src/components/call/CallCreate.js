@@ -225,7 +225,6 @@ class CallCreate extends Component {
   }
 }
 
-// "registerUser" and "auth" are required to the Register component
 CallCreate.proptypes = {
   createProcessCall: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired

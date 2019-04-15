@@ -41,7 +41,7 @@ class rolePermissionDelete extends Component {
 
   onSubmit() {
     this.props.deleteRolePermission(this.props.match.params.permissionassignment_id, () => {
-      this.props.history.push(`/roletypes/${this.props.match.params.roletype_id}`);
+      this.props.history.push(`/parameters/roletypes/${this.props.match.params.roletype_id}`);
     });
   }
 
@@ -113,7 +113,7 @@ class rolePermissionDelete extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
+              <Link to={`/parameters/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
                 Voltar para tipo de papel
               </Link>
 
@@ -135,7 +135,7 @@ class rolePermissionDelete extends Component {
                     value="Cancelar"
                     className="btn btn-secondary btn-block mt-4"
                     onClick={() => {
-                      this.props.history.push(`/roletypes/xxx`);
+                      this.props.history.goBack();
                     }}
                   />
                 </div>

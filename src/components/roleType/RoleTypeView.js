@@ -91,7 +91,7 @@ class RoleTypeView extends Component {
                         <Link
                           className="text-danger"
                           to={{
-                            pathname: `/roletypes/${roleTypeStore.roleType.id}/delete-permassig/${permission.RolePermission.id}`,
+                            pathname: `/parameters/roletypes/${roleTypeStore.roleType.id}/delete-permassig/${permission.RolePermission.id}`,
                             state: {
                               roleType: roleTypeStore.roleType,
                               rolePermission: this.buildPermissionAssignment(roleTypeStore.roleType, permission)
@@ -130,7 +130,7 @@ class RoleTypeView extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <Link to="/roletypes" className="btn btn-light">
+              <Link to="/parameters/roletypes" className="btn btn-light">
                 Voltar para lista de tipos de papel
               </Link>
               <h1 className="display-4 mb-4">Tipo de Papel</h1>
