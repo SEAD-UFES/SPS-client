@@ -21,7 +21,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.authStore.isAuthenticated) {
       this.props.clearErrors();
       if (this.props.location.prevLocation) {
         this.props.history.push(this.props.location.prevLocation.from.pathname);
@@ -32,7 +32,7 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
+    if (nextProps.authStore.isAuthenticated) {
       this.props.clearErrors();
       if (this.props.location.prevLocation) {
         this.props.history.push(this.props.location.prevLocation.from.pathname);
@@ -162,13 +162,13 @@ class Login extends Component {
 Login.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  authStore: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  auth: state.auth, //last auth because the auth on root reducer?
+  authStore: state.authStore, //last auth because the auth on root reducer?
   errors: state.errors
 });
 

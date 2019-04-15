@@ -21,7 +21,7 @@ import vacancyReducer from "components/vacancy/vacancyReducer";
 
 export default combineReducers({
   errors: errorReducer,
-  auth: authReducer,
+  authStore: authReducer,
   profileStore: profileReducer,
   user: userReducer,
   processStore: processReducer,

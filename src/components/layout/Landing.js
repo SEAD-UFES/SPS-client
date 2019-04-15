@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 class Landing extends Component {
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.authStore.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
   }
@@ -18,11 +18,7 @@ class Landing extends Component {
             <div className="row">
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">SEAD Processos Seletivos</h1>
-                <p className="lead">
-                  {" "}
-                  Secretaria de Educação a Distância da Universidade Federal do
-                  Espirito Santo
-                </p>
+                <p className="lead"> Secretaria de Educação a Distância da Universidade Federal do Espirito Santo</p>
                 <hr />
                 <Link to="/processes" className="btn btn-lg btn-info mr-2">
                   Processos Seletivos
@@ -43,11 +39,11 @@ class Landing extends Component {
 }
 
 Landing.propTypes = {
-  auth: PropTypes.object.isRequired
+  authStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  authSore: state.authStore
 });
 
 export default connect(mapStateToProps)(Landing);

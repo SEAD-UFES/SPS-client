@@ -248,7 +248,7 @@ class CallEdit extends Component {
   }
 }
 
-// "registerUser" and "auth" are required to the Register component
+// Call Edit props
 CallEdit.proptypes = {
   createProcessCall: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,

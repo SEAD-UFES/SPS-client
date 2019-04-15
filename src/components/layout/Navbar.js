@@ -9,7 +9,7 @@ import avatar from "../../img/none.png";
 
 class Navbar extends Component {
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.authStore.isAuthenticated) {
       if (this.props.profileStore.profile === null) {
         this.props.getCurrentProfile();
       }
@@ -17,7 +17,7 @@ class Navbar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
+    if (nextProps.authStore.isAuthenticated) {
       if (nextProps.profileStore.loading === false && nextProps.profileStore.profile === null) {
         this.props.getCurrentProfile();
       }
@@ -31,7 +31,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated } = this.props.authStore;
     const { loading, profile } = this.props.profileStore;
 
     const guestLinks = (
@@ -118,13 +118,13 @@ Navbar.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   clearCurrentProfile: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  authStore: PropTypes.object.isRequired,
   profileStore: PropTypes.object.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  auth: state.auth, //get authStore from main reducer
+  authStore: state.authStore, //get authStore from main reducer
   profileStore: state.profileStore
 });
 

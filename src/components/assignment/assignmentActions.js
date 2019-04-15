@@ -1,7 +1,14 @@
+import axios from "axios";
+
 import { GET_ERRORS } from "../../actions/types";
 import { GET_ASSIGNMENT, GET_ASSIGNMENTS, ASSIGNMENTS_LOADING } from "./assignmentActionTypes";
 
-import axios from "axios";
+//assignments loading
+export const setAssignmentsLoading = () => {
+  return {
+    type: ASSIGNMENTS_LOADING
+  };
+};
 
 export const createAssignment = (assignmentData, callback_ok) => dispatch => {
   axios
@@ -60,13 +67,6 @@ export const deleteAssignment = (assignment_id, callback_ok) => dispatch => {
         payload: err.response.data
       })
     );
-};
-
-//courses loading
-export const setAssignmentsLoading = () => {
-  return {
-    type: ASSIGNMENTS_LOADING
-  };
 };
 
 export const getAssignments = () => dispatch => {
