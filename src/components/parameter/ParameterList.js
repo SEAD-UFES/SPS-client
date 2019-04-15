@@ -14,10 +14,10 @@ export default class ParameterList extends Component {
                   <Link to={`${this.props.match.path}/courses`}>Cursos</Link>
                 </li>
                 <li className="list-group-item">
-                  <Link to={`/roletypes`}>Papéis</Link>
+                  <Link to={`${this.props.match.path}/roletypes`}>Papéis</Link>
                 </li>
                 <li className="list-group-item">
-                  <Link to={`/roleassignments`}>Atribuições de papel</Link>
+                  <Link to={`${this.props.match.path}/roleassignments`}>Atribuições de papel</Link>
                 </li>
                 <li className="list-group-item">
                   <Link to={`${this.props.match.path}/regions`}>Regiões</Link>

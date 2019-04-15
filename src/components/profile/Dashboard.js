@@ -12,7 +12,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { profile, loading } = this.props.profile;
+    const { profile, loading } = this.props.profileStore;
 
     //const { user } = { user: { name: "Fernando" } };
     // const { profile, loading } = {
@@ -70,7 +70,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  profile: state.profile
+  profileStore: state.profileStore
 });
 
 export default connect(
