@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { getUser } from "../../actions/userActions";
+import { getUser } from "./userActions";
 import Spinner from "../common/Spinner";
 
 class UserView extends Component {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { getUserList } from "../../actions/userActions";
+import { getUserList } from "./userActions";
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { validateEmailRequired, validatePassword, validatePasswordCheck, validateProfileEditUserForm, isEmpty } from "../../validation";
 import { clearErrors } from "../../actions/errorActions";
-import { getUser, updateUser } from "../../actions/userActions";
+import { getUser, updateUser } from "./userActions";
 
 class UserEditUser extends Component {
   constructor(props) {

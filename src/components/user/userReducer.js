@@ -1,10 +1,4 @@
-import {
-  GET_USER,
-  GET_USERS,
-  GET_USERS_MINIMAL,
-  USER_LOADING,
-  GET_USER_PEOPLE_OPTIONS
-} from "../actions/types";
+import { GET_USER, GET_USERS, USERS_LOADING, GET_USER_PEOPLE_OPTIONS, GET_USERS_MINIMAL } from "./userActionTypes";
 
 const initialState = {
   user: null,
@@ -16,7 +10,7 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case USER_LOADING:
+    case USERS_LOADING:
       return {
         ...state,
         loading: true

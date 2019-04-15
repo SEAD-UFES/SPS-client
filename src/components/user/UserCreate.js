@@ -15,7 +15,7 @@ import {
   validateRegisterForm
 } from "../../validation";
 
-import { createUser } from "../../actions/userActions";
+import { createUser } from "./userActions";
 
 class UserCreate extends Component {
   constructor() {
@@ -63,10 +63,7 @@ class UserCreate extends Component {
         break;
       case "password":
         valResult = validatePassword(e.target.value);
-        let pass2Val = validatePasswordCheck(
-          this.state.password2,
-          e.target.value
-        );
+        let pass2Val = validatePasswordCheck(this.state.password2, e.target.value);
         if (!pass2Val.isValid) {
           errors = { ...errors, password2: pass2Val.error };
         } else {
@@ -139,30 +136,9 @@ class UserCreate extends Component {
               <h1 className="display-4 text-center">Criar usuário</h1>
               <p className="lead text-center">Dê entrada nos dados básicos</p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  type="text"
-                  name="name"
-                  placeholder="Nome"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
-                <TextFieldGroup
-                  type="text"
-                  name="surname"
-                  placeholder="Sobrenome"
-                  value={this.state.surname}
-                  onChange={this.onChange}
-                  error={errors.surname}
-                />
-                <TextFieldGroup
-                  type="text"
-                  name="cpf"
-                  placeholder="C.P.F."
-                  value={this.state.cpf}
-                  onChange={this.onChange}
-                  error={errors.cpf}
-                />
+                <TextFieldGroup type="text" name="name" placeholder="Nome" value={this.state.name} onChange={this.onChange} error={errors.name} />
+                <TextFieldGroup type="text" name="surname" placeholder="Sobrenome" value={this.state.surname} onChange={this.onChange} error={errors.surname} />
+                <TextFieldGroup type="text" name="cpf" placeholder="C.P.F." value={this.state.cpf} onChange={this.onChange} error={errors.cpf} />
                 <TextFieldGroup
                   type="text"
                   name="email"

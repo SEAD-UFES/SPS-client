@@ -10,7 +10,7 @@ import { validateName } from "validation/";
 import { validateUserRoleForm } from "./validateUserRoleForm";
 
 import { createUserRole } from "./userRoleActions";
-import { getUsersMinimal } from "actions/userActions";
+import { getUsersMinimal } from "components/user/userActions";
 import { getRoleTypes } from "components/roleType/roleTypeActions";
 import { getCourses } from "components/course/courseActions";
 

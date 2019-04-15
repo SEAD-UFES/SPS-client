@@ -1,14 +1,7 @@
 import axios from "axios";
 
-import {
-  GET_USER,
-  GET_USERS,
-  USER_LOADING,
-  CLEAR_ERRORS,
-  GET_ERRORS,
-  GET_USER_PEOPLE_OPTIONS,
-  GET_USERS_MINIMAL
-} from "./types";
+import { CLEAR_ERRORS, GET_ERRORS } from "../../actions/types";
+import { GET_USER, GET_USERS, USERS_LOADING, GET_USER_PEOPLE_OPTIONS, GET_USERS_MINIMAL } from "./userActionTypes";
 
 //create user
 export const createUser = (userData, history) => dispatch => {
@@ -98,7 +91,7 @@ export const updatePerson = (userId, personData, history) => dispatch => {
 //User loading
 export const setUserLoading = () => {
   return {
-    type: USER_LOADING
+    type: USERS_LOADING
   };
 };
 

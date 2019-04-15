@@ -8,7 +8,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { validateName, validateSurname, validateDate, validateCpfRequired, isEmpty, validateProfileEditPersonForm } from "../../validation";
 import { clearErrors } from "../../actions/errorActions";
-import { getUser, updatePerson, getUserPeopleOptions } from "../../actions/userActions";
+import { getUser, updatePerson, getUserPeopleOptions } from "./userActions";
 
 class UserEditPerson extends Component {
   constructor(props) {
