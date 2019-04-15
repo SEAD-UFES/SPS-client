@@ -7,10 +7,11 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
-import { getStepOptions, getAssignmentOptions } from "../process/processActions";
+import { getStepOptions } from "../process/processActions";
 import { createVacancy } from "./vacancyActions";
 import { getRegions } from "components/region/regionActions";
 import { getRestrictions } from "components/restriction/restrictionActions";
+import { getAssignments } from "components/assignment/assignmentActions";
 
 import { clearErrors } from "../../actions/errorActions";
 
@@ -36,7 +37,7 @@ class VacancyCreate extends Component {
 
   componentDidMount() {
     this.props.clearErrors();
-    this.props.getAssignmentOptions();
+    this.props.getAssignments();
     this.props.getRestrictions();
     this.props.getRegions();
   }
@@ -228,14 +229,14 @@ VacancyCreate.proptypes = {
   getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  getAssignmentOptions: PropTypes.func.isRequired
+  getAssignments: PropTypes.func.isRequired
 };
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
   options: state.processStore.options,
-  assignments: state.processStore.assignments,
+  assignments: state.assignmentStore.assignments,
   restrictions: state.restrictionStore.restrictions,
   regions: state.regionStore.regions
 });
@@ -246,7 +247,7 @@ export default connect(
   {
     getStepOptions,
     clearErrors,
-    getAssignmentOptions,
+    getAssignments,
     getRestrictions,
     getRegions,
     createVacancy

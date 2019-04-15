@@ -1,4 +1,4 @@
-import { PROCESS_LOADING, GET_PROCESS, GET_PROCESSES, GET_STEPTYPES_OPTIONS, GET_ASSIGNMENTS_OPTIONS } from "./processActionTypes";
+import { PROCESS_LOADING, GET_PROCESS, GET_PROCESSES, GET_STEPTYPES_OPTIONS } from "./processActionTypes";
 
 const initialState = {
   loading: false,
@@ -6,7 +6,6 @@ const initialState = {
   process: null,
   //other stuff
   options: null,
-  assignments: null,
   regions: null
 };
 
@@ -34,12 +33,6 @@ export default function(state = initialState, action) {
         ...state,
         options: action.payload
       };
-    case GET_ASSIGNMENTS_OPTIONS:
-      return {
-        ...state,
-        assignments: action.payload
-      };
-
     default:
       return state;
   }

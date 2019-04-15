@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
-import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_STEPTYPES_OPTIONS, GET_ASSIGNMENTS_OPTIONS } from "./processActionTypes";
+import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_STEPTYPES_OPTIONS } from "./processActionTypes";
 
 //create Process
 export const createProcess = (processData, history) => dispatch => {
@@ -96,27 +96,6 @@ export const getStepOptions = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: { options: "Don't load the steptypes options" }
-      })
-    );
-};
-
-//#####################################################################
-//Vancancy actions
-
-//load assignment options
-export const getAssignmentOptions = () => dispatch => {
-  axios
-    .get("/v1/assignments")
-    .then(res =>
-      dispatch({
-        type: GET_ASSIGNMENTS_OPTIONS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: { options: "Don't load the assignments options" }
       })
     );
 };
