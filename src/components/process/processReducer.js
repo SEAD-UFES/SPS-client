@@ -15,7 +15,6 @@ const initialState = {
   processes: null,
   process: null,
   //other stuff
-  call: null,
   step: null,
   options: null,
   assignments: null,
