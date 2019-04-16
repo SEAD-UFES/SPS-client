@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import CallView from "./CallView";
+import DrawFilter from "components/profile/DrawFilter";
 
 class CallTabList extends Component {
   activeCallId(calls) {
@@ -40,9 +41,11 @@ class CallTabList extends Component {
           );
         })}
         <li className="nav-item" key="call-add">
-          <Link className="nav-link text-success" to={`/processes/${this.props.process_id}/calls/create`}>
-            <i className="fas fa-plus-circle" />
-          </Link>
+          <DrawFilter permission="chamada criar" course_id={this.props.course_id}>
+            <Link className="nav-link text-success" to={`/processes/${this.props.process_id}/calls/create`}>
+              <i className="fas fa-plus-circle" />
+            </Link>
+          </DrawFilter>
         </li>
       </ul>
     );
@@ -59,6 +62,7 @@ class CallTabList extends Component {
               aria-labelledby={`call-${call.id}-tab`}
             >
               <CallView
+                course_id={this.props.course_id}
                 call={call}
                 publications={this.props.publications.filter(value => {
                   return value.call_id === call.id;

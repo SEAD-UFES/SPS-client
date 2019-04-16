@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
+import DrawFilter from "components/profile/DrawFilter";
+
 class CallView extends Component {
   getCallStatus() {
     const call = this.props.call;
@@ -21,21 +23,29 @@ class CallView extends Component {
 
     const callActions = (
       <div className="btn-group mb-4" role="group">
-        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`} className="btn btn-light">
-          <i className="fas fa-user-circle text-info mr-1" /> Editar Chamada
-        </Link>
-        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/steps/create`} className="btn btn-light">
-          <i className="fas fa-user-circle text-info mr-1" />
-          Adicionar Etapa
-        </Link>
-        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`} className="btn btn-light">
-          <i className="fas fa-user-circle text-info mr-1" />
-          Adicionar Vaga
-        </Link>
-        <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`} className="btn btn-light">
-          <i className="fas fa-user-circle text-info mr-1" />
-          Adicionar Publicação
-        </Link>
+        <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+          <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`} className="btn btn-light">
+            <i className="fas fa-user-circle text-info mr-1" /> Editar Chamada
+          </Link>
+        </DrawFilter>
+        <DrawFilter permission="etapa criar" course_id={this.props.course_id}>
+          <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/steps/create`} className="btn btn-light">
+            <i className="fas fa-user-circle text-info mr-1" />
+            Adicionar Etapa
+          </Link>
+        </DrawFilter>
+        <DrawFilter permission="vaga criar" course_id={this.props.course_id}>
+          <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`} className="btn btn-light">
+            <i className="fas fa-user-circle text-info mr-1" />
+            Adicionar Vaga
+          </Link>
+        </DrawFilter>
+        <DrawFilter permission="publication_create" course_id={this.props.course_id}>
+          <Link to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`} className="btn btn-light">
+            <i className="fas fa-user-circle text-info mr-1" />
+            Adicionar Publicação
+          </Link>
+        </DrawFilter>
       </div>
     );
 
@@ -44,9 +54,11 @@ class CallView extends Component {
         <h4 className="mb-2">
           Informações da chamada{" "}
           <small>
-            <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-              <i className="fas fa-cog" />
-            </Link>
+            <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+              <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                <i className="fas fa-cog" />
+              </Link>
+            </DrawFilter>
           </small>
         </h4>
         <table className="table">
@@ -72,9 +84,11 @@ class CallView extends Component {
           </td>
           <td>{moment(step.resultDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
           <td>
-            <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
-              <i className="fas fa-cog" />
-            </Link>
+            <DrawFilter permission="etapa editar" course_id={this.props.course_id}>
+              <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
+                <i className="fas fa-cog" />
+              </Link>
+            </DrawFilter>
           </td>
         </tr>
       );
@@ -92,9 +106,11 @@ class CallView extends Component {
             {moment(step.limitAppealDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
           </td>
           <td>
-            <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
-              <i className="fas fa-cog" />
-            </Link>
+            <DrawFilter permission="etapa editar" course_id={this.props.course_id}>
+              <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
+                <i className="fas fa-cog" />
+              </Link>
+            </DrawFilter>
           </td>
         </tr>
       );
@@ -108,9 +124,11 @@ class CallView extends Component {
           </td>
           <td>{moment(step.resultAfterAppealDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
           <td>
-            <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
-              <i className="fas fa-cog" />
-            </Link>
+            <DrawFilter permission="etapa editar" course_id={this.props.course_id}>
+              <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${step.call_id}/steps/${step.id}/edit`}>
+                <i className="fas fa-cog" />
+              </Link>
+            </DrawFilter>
           </td>
         </tr>
       );
@@ -126,9 +144,11 @@ class CallView extends Component {
               <th>Evento</th>
               <th>Data/Periodo</th>
               <th>
-                <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/steps/create`}>
-                  <i className="fas fa-plus-circle" />
-                </Link>
+                <DrawFilter permission="etapa criar" course_id={this.props.course_id}>
+                  <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/steps/create`}>
+                    <i className="fas fa-plus-circle" />
+                  </Link>
+                </DrawFilter>
               </th>
             </tr>
           </thead>
@@ -140,9 +160,11 @@ class CallView extends Component {
                 {moment(call.enrollmentClosingDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}
               </td>
               <td>
-                <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-                  <i className="fas fa-cog" />
-                </Link>
+                <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+                  <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                    <i className="fas fa-cog" />
+                  </Link>
+                </DrawFilter>
               </td>
             </tr>
 
@@ -154,9 +176,11 @@ class CallView extends Component {
               <td>Finalização da Chamada</td>
               <td>{moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</td>
               <td>
-                <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-                  <i className="fas fa-cog" />
-                </Link>
+                <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+                  <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                    <i className="fas fa-cog" />
+                  </Link>
+                </DrawFilter>
               </td>
             </tr>
           </tbody>
@@ -177,9 +201,11 @@ class CallView extends Component {
                 <th>Vagas</th>
                 <th>Reserva</th>
                 <th>
-                  <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`}>
-                    <i className="fas fa-plus-circle" />
-                  </Link>
+                  <DrawFilter permission="vaga criar" course_id={this.props.course_id}>
+                    <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`}>
+                      <i className="fas fa-plus-circle" />
+                    </Link>
+                  </DrawFilter>
                 </th>
               </tr>
             </thead>
@@ -193,9 +219,11 @@ class CallView extends Component {
                     <td>{vacancy.qtd}</td>
                     <td>{vacancy.reserve ? "C.R." : "Não"}</td>
                     <td>
-                      <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
-                        <i className="fas fa-cog" />
-                      </Link>
+                      <DrawFilter permission="vaga editar" course_id={this.props.course_id}>
+                        <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
+                          <i className="fas fa-cog" />
+                        </Link>
+                      </DrawFilter>
                     </td>
                   </tr>
                 );
@@ -205,10 +233,12 @@ class CallView extends Component {
         ) : (
           <p>
             Esta chamada não possui ofertas de vagas cadastradas.{" "}
-            <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`}>
-              <i className="fas fa-plus-circle" />
-              Adicionar
-            </Link>
+            <DrawFilter permission="vaga criar" course_id={this.props.course_id}>
+              <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/create`}>
+                <i className="fas fa-plus-circle" />
+                Adicionar
+              </Link>
+            </DrawFilter>
           </p>
         )}
       </div>
@@ -231,14 +261,16 @@ class CallView extends Component {
         {this.props.publications.length > 0 ? (
           <div>
             <p className="ml-4 mt-3">
-              <Link
-                className="text-success"
-                to={{
-                  pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`
-                }}
-              >
-                <i className="fas fa-plus-circle" /> Adicionar
-              </Link>
+              <DrawFilter permission="publication_create" course_id={this.props.course_id}>
+                <Link
+                  className="text-success"
+                  to={{
+                    pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`
+                  }}
+                >
+                  <i className="fas fa-plus-circle" /> Adicionar
+                </Link>
+              </DrawFilter>
             </p>
 
             <ul className="timeline">
@@ -253,15 +285,17 @@ class CallView extends Component {
                       {moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}{" "}
                       {publication.step_id ? `| Etapa ${stepNumber(publication.step_id)} ` : ""}| {publication.PublicationType.name}
                     </a>{" "}
-                    <Link
-                      className="text-info"
-                      to={{
-                        pathname: `/processes/${publication.selectiveProcess_id}/calls/${publication.call_id}/publications/${publication.id}/update`,
-                        state: { publication: publication }
-                      }}
-                    >
-                      <i className="fas fa-cog" />
-                    </Link>
+                    <DrawFilter permission="publication_update" course_id={this.props.course_id}>
+                      <Link
+                        className="text-info"
+                        to={{
+                          pathname: `/processes/${publication.selectiveProcess_id}/calls/${publication.call_id}/publications/${publication.id}/update`,
+                          state: { publication: publication }
+                        }}
+                      >
+                        <i className="fas fa-cog" />
+                      </Link>
+                    </DrawFilter>
                     {publication.description ? <p>{publication.description}</p> : ""}
                   </li>
                 );
@@ -271,10 +305,12 @@ class CallView extends Component {
         ) : (
           <p>
             Sem publicações de chamada cadastradas.{" "}
-            <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`}>
-              <i className="fas fa-plus-circle" />
-              Adicionar
-            </Link>
+            <DrawFilter permission="publication_create" course_id={this.props.course_id}>
+              <Link className="text-success" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/publications/create`}>
+                <i className="fas fa-plus-circle" />
+                Adicionar
+              </Link>
+            </DrawFilter>
           </p>
         )}
       </div>

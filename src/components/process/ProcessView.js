@@ -105,7 +105,7 @@ class ProcessView extends Component {
         <div>
           <h4 className="mb-2">Chamadas do processo</h4>
           {process.Calls.length > 0 ? (
-            <CallTabList process_id={process.id} calls={process.Calls} publications={process.Publications} />
+            <CallTabList process_id={process.id} course_id={process.Course.id} calls={process.Calls} publications={process.Publications} />
           ) : (
             <p>
               Sem chamadas cadastradas.{" "}
@@ -211,7 +211,8 @@ class ProcessView extends Component {
 }
 
 ProcessView.propTypes = {
-  getProcess: PropTypes.func.isRequired
+  getProcess: PropTypes.func.isRequired,
+  processStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
