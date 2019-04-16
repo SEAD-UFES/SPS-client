@@ -1,7 +1,14 @@
 import axios from "axios";
 
 import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
-import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_STEPTYPES_OPTIONS } from "./processActionTypes";
+import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING } from "./processActionTypes";
+
+//Process loading
+export const setProcessLoading = () => {
+  return {
+    type: PROCESS_LOADING
+  };
+};
 
 //create Process
 export const createProcess = (processData, history) => dispatch => {
@@ -70,32 +77,4 @@ export const updateProcess = (processId, processData, history) => dispatch => {
         payload: err.response.data
       });
     });
-};
-
-//Process loading
-export const setProcessLoading = () => {
-  return {
-    type: PROCESS_LOADING
-  };
-};
-
-//#####################################################################
-//Step actions
-
-//load step options
-export const getStepOptions = () => dispatch => {
-  axios
-    .get("/v1/steptypes")
-    .then(res =>
-      dispatch({
-        type: GET_STEPTYPES_OPTIONS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: { options: "Don't load the steptypes options" }
-      })
-    );
 };

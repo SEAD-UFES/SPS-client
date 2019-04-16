@@ -2,8 +2,8 @@ import { STEPTYPES_LOADING, GET_STEPTYPES, GET_STEPTYPE } from "./stepTypeAction
 
 const initialState = {
   loading: false,
-  roleType: null,
-  roleTypes: null
+  stepType: null,
+  stepTypes: null
 };
 
 export default function(state = initialState, action) {
@@ -17,13 +17,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        roleTypes: action.payload
+        stepTypes: action.payload
       };
     case GET_STEPTYPE:
       return {
         ...state,
         loading: false,
-        roleType: action.payload
+        stepType: action.payload
       };
     default:
       return state;

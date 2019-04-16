@@ -261,7 +261,6 @@ class VacancyEdit extends Component {
 
 // "registerUser" and "auth" are required to the Register component
 VacancyEdit.proptypes = {
-  getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   getAssignments: PropTypes.func.isRequired,

@@ -17,6 +17,7 @@ import publicationTypeReducer from "components/publicationType/publicationTypeRe
 import publicationReducer from "components/publication/publicationReducer";
 import callReducer from "components/call/callReducer";
 import stepReducer from "components/step/stepReducer";
+import stepTypeReducer from "components/stepType/stepTypeReducer";
 import vacancyReducer from "components/vacancy/vacancyReducer";
 
 export default combineReducers({
@@ -33,9 +34,10 @@ export default combineReducers({
   userRoleStore: userRoleReducer,
   permissionStore: permissionReducer,
   rolePermissionStore: rolePermissionReducer,
-  publicationTypeStore: publicationTypeReducer,
   publicationStore: publicationReducer,
+  publicationTypeStore: publicationTypeReducer,
   callStore: callReducer,
   stepStore: stepReducer,
+  stepTypeStore: stepTypeReducer,
   vacancyStore: vacancyReducer
 });

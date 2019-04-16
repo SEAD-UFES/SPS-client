@@ -16,9 +16,9 @@ import {
   validateProcessCallStepForm,
   validateNumberRequired
 } from "../../validation";
-import { getStepOptions } from "../process/processActions";
 import { getStep, updateStep } from "./stepActions";
 import { clearErrors } from "../../actions/errorActions";
+import { getStepTypes } from "components/stepType/stepTypeActions";
 
 class StepEdit extends Component {
   constructor() {
@@ -42,7 +42,7 @@ class StepEdit extends Component {
 
   componentDidMount() {
     this.props.clearErrors();
-    this.props.getStepOptions();
+    this.props.getStepTypes();
     if (this.props.match.params.step_id) {
       this.props.getStep(this.props.match.params.step_id);
     }
@@ -252,7 +252,7 @@ class StepEdit extends Component {
 StepEdit.proptypes = {
   getStep: PropTypes.func.isRequired,
   updateStep: PropTypes.func.isRequired,
-  getStepOptions: PropTypes.func.isRequired,
+  getStepTypes: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -260,7 +260,7 @@ StepEdit.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  options: state.processStore.options,
+  options: state.stepTypeStore.stepTypes,
   stepStore: state.stepStore
 });
 
@@ -268,7 +268,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    getStepOptions,
+    getStepTypes,
     clearErrors,
     getStep,
     updateStep

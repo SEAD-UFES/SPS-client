@@ -7,7 +7,6 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
 
-import { getStepOptions } from "../process/processActions";
 import { createVacancy } from "./vacancyActions";
 import { getRegions } from "components/region/regionActions";
 import { getRestrictions } from "components/restriction/restrictionActions";
@@ -226,7 +225,6 @@ class VacancyCreate extends Component {
 
 // "registerUser" and "auth" are required to the Register component
 VacancyCreate.proptypes = {
-  getStepOptions: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   getAssignments: PropTypes.func.isRequired
@@ -245,7 +243,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    getStepOptions,
     clearErrors,
     getAssignments,
     getRestrictions,

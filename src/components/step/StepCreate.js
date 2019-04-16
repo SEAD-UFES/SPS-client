@@ -15,8 +15,8 @@ import {
   validateNumberRequired
 } from "../../validation";
 
-import { getStepOptions } from "../process/processActions";
 import { createStep } from "./stepActions";
+import { getStepTypes } from "components/stepType/stepTypeActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class StepCreate extends Component {
@@ -41,7 +41,7 @@ class StepCreate extends Component {
 
   componentDidMount() {
     this.props.clearErrors();
-    this.props.getStepOptions();
+    this.props.getStepTypes();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -221,7 +221,7 @@ class StepCreate extends Component {
 // "registerUser" and "auth" are required to the Register component
 StepCreate.proptypes = {
   createStep: PropTypes.func.isRequired,
-  getStepOptions: PropTypes.func.isRequired,
+  getStepTypes: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -229,11 +229,11 @@ StepCreate.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errors,
-  options: state.processStore.options
+  options: state.stepTypeStore.stepTypes
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createStep, getStepOptions, clearErrors }
+  { createStep, getStepTypes, clearErrors }
 )(withRouter(StepCreate));
