@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../common/PrivateRoute";
 
@@ -9,6 +9,8 @@ import RoleTypeView from "components/roleType/RoleTypeView";
 import RoleTypeDelete from "components/roleType/RoleTypeDelete";
 import rolePermissionCreate from "components/rolePermission/rolePermissionCreate";
 import rolePermissionDelete from "components/rolePermission/rolePermissionDelete";
+
+import NotFound from "components/common/NotFound";
 
 export default class RoleTypesRoutes extends Component {
   render() {
@@ -27,6 +29,8 @@ export default class RoleTypesRoutes extends Component {
         <PrivateRoute exact path={`${this.props.match.path}/:roletype_id/create-permassig`} component={rolePermissionCreate} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:roletype_id/delete-permassig/:permissionassignment_id`} component={rolePermissionDelete} />
+
+        <Route component={NotFound} />
       </Switch>
     );
   }

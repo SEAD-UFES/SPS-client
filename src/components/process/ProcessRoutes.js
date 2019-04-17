@@ -24,6 +24,8 @@ import PublicationCreate from "components/publication/PublicationCreate";
 import PublicationUpdate from "components/publication/PublicationUpdate";
 import PublicationDelete from "components/publication/PublicationDelete";
 
+import NotFound from "components/common/NotFound";
+
 export default class ProcessRoutes extends Component {
   render() {
     return (
@@ -65,6 +67,8 @@ export default class ProcessRoutes extends Component {
         <PrivateRoute exact path={`${this.props.match.path}/:process_id/publications/:publication_id/delete`} component={PublicationDelete} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/delete`} component={PublicationDelete} />
+
+        <Route component={NotFound} />
       </Switch>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../common/PrivateRoute";
 
@@ -14,6 +14,8 @@ import RoleTypeRoutes from "components/roleType/RoleTypeRoutes";
 import UserRoleRoutes from "components/userRole/UserRoleRoutes";
 
 import ParameterList from "./ParameterList";
+
+import NotFound from "components/common/NotFound";
 
 export default class ParametersRoutes extends Component {
   render() {
@@ -36,6 +38,8 @@ export default class ParametersRoutes extends Component {
         <PrivateRoute path={`${this.props.match.path}/roleassignments`} component={UserRoleRoutes} />
 
         <PrivateRoute path={`${this.props.match.path}/steptypes`} component={StepTypeList} />
+
+        <Route component={NotFound} />
       </Switch>
     );
   }

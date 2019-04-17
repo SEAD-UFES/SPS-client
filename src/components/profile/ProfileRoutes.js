@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "../common/PrivateRoute";
 
 import Profile from "./ProfileView";
 import ProfileEditUser from "./ProfileEditUser";
 import ProfileEditPerson from "./ProfileEditPerson";
+import NotFound from "components/common/NotFound";
 
 export default class ProfileRoutes extends Component {
   render() {
@@ -16,6 +17,8 @@ export default class ProfileRoutes extends Component {
         <PrivateRoute exact path={`${this.props.match.path}/edit-user`} component={ProfileEditUser} />
 
         <PrivateRoute exact path={`${this.props.match.path}/edit-person`} component={ProfileEditPerson} />
+
+        <Route component={NotFound} />
       </Switch>
     );
   }
