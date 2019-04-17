@@ -161,7 +161,7 @@ StepDelete.propTypes = {
 const mapStateToProps = state => ({
   step: state.stepStore.step,
   loading: state.stepStore.loading,
-  errors: state.errors
+  errors: state.errorStore
 });
 
 export default connect(

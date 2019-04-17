@@ -259,7 +259,7 @@ StepEdit.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errors: state.errors,
+  errors: state.errorStore,
   options: state.stepTypeStore.stepTypes,
   stepStore: state.stepStore
 });

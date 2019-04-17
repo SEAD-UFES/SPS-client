@@ -183,7 +183,7 @@ RestrictionModalForm.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errorStore
 });
 
 export default connect(

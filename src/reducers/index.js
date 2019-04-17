@@ -21,7 +21,7 @@ import stepTypeReducer from "components/stepType/stepTypeReducer";
 import vacancyReducer from "components/vacancy/vacancyReducer";
 
 export default combineReducers({
-  errors: errorReducer,
+  errorStore: errorReducer,
   authStore: authReducer,
   profileStore: profileReducer,
   userStore: userReducer,

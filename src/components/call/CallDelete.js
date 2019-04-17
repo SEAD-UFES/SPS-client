@@ -132,7 +132,7 @@ CallDelete.propTypes = {
 const mapStateToProps = state => ({
   call: state.callStore.call,
   loading: state.callStore.loading,
-  errors: state.errors
+  errors: state.errorStore
 });
 
 export default connect(

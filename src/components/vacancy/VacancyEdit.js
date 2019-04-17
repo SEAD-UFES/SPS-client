@@ -269,7 +269,7 @@ VacancyEdit.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errors: state.errors,
+  errors: state.errorStore,
   assignments: state.assignmentStore.assignments,
   restrictions: state.restrictionStore.restrictions,
   regions: state.regionStore.regions,

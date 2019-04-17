@@ -311,7 +311,7 @@ ProfileEditPerson.propsTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  errors: state.errors
+  errors: state.errorStore
 });
 
 export default connect(

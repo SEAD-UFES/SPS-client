@@ -232,7 +232,7 @@ CallCreate.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errorStore
 });
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store

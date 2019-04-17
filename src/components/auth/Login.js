@@ -169,7 +169,7 @@ Login.propTypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   authStore: state.authStore, //last auth because the auth on root reducer?
-  errors: state.errors
+  errors: state.errorStore
 });
 
 export default connect(
