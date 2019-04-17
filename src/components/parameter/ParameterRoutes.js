@@ -8,6 +8,8 @@ import CourseList from "../course/CourseList";
 import RegionList from "../region/RegionList";
 import RestrictionList from "components/restriction/RestrictionList";
 import PublicationTypeList from "components/publicationType/PublicationTypeList";
+import StepTypeList from "components/stepType/StepTypeList";
+
 import RoleTypeRoutes from "components/roleType/RoleTypeRoutes";
 import UserRoleRoutes from "components/userRole/UserRoleRoutes";
 
@@ -32,6 +34,8 @@ export default class ParametersRoutes extends Component {
         <PrivateRoute path={`${this.props.match.path}/roletypes`} component={RoleTypeRoutes} />
 
         <PrivateRoute path={`${this.props.match.path}/roleassignments`} component={UserRoleRoutes} />
+
+        <PrivateRoute path={`${this.props.match.path}/steptypes`} component={StepTypeList} />
       </Switch>
     );
   }

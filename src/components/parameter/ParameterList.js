@@ -31,6 +31,9 @@ export default class ParameterList extends Component {
                 <li className="list-group-item">
                   <Link to={`${this.props.match.path}/publicationtypes`}>Tipos de publicação</Link>
                 </li>
+                <li className="list-group-item">
+                  <Link to={`${this.props.match.path}/steptypes`}>Tipos de etapa</Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -18,8 +18,9 @@ export const createStepType = (stepTypeData, callback_ok) => dispatch => {
     })
     .catch(err => {
       if (err.response) {
-        let errors = err.response.data;
+        let errors = {};
         errors.serverError = true;
+        errors.data = err.response.data;
         dispatch({
           type: GET_ERRORS,
           payload: errors
