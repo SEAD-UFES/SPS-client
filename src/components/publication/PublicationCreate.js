@@ -34,7 +34,7 @@ class PublicationCreate extends Component {
       file: null,
       fileUrl: null,
 
-      selectiveProcess: "",
+      selectiveProcess: null,
       lock_process: false,
       lock_call: false,
 
@@ -194,12 +194,8 @@ class PublicationCreate extends Component {
       description: this.state.description ? this.state.description : null,
       publicationType_id: this.state.publicationType_id,
       file: this.state.file,
-      valid: this.state.valid,
-      //Course to check permission
-      course_id: this.state.selectiveProcess.Course.id
+      valid: this.state.valid
     };
-
-    console.log(publicationData);
 
     const valRoleType = validatePublicationForm(publicationData);
     if (!valRoleType.isValid) {

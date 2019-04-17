@@ -10,6 +10,11 @@ export const validateStepTypeForm = data => {
     errors.name = field.error;
   }
 
+  field = validateName(data.description);
+  if (!field.isValid) {
+    errors.description = field.error;
+  }
+
   return {
     errors: errors,
     isValid: isEmpty(errors)
