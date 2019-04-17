@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../auth/authActions";
 import { getCurrentProfile, clearCurrentProfile } from "../profile/profileActions";
 import avatar from "../../img/none.png";
+import DrawFilter from "components/profile/DrawFilter";
 
 class Navbar extends Component {
   componentDidMount() {
@@ -85,24 +86,30 @@ class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="mobile-nav">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/users">
-                  {" "}
-                  Usuários
-                </Link>
-              </li>
+              <DrawFilter permission="usuários listar">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/users">
+                    {" "}
+                    Usuários
+                  </Link>
+                </li>
+              </DrawFilter>
+
               <li className="nav-item">
                 <Link className="nav-link" to="/processes">
                   {" "}
                   Processos
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/parameters">
-                  {" "}
-                  Parâmetros
-                </Link>
-              </li>
+
+              <DrawFilter permission="parameter_list">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/parameters">
+                    {" "}
+                    Parâmetros
+                  </Link>
+                </li>
+              </DrawFilter>
             </ul>
 
             {isAuthenticated ? authLinks : guestLinks}
