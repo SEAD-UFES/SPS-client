@@ -14,7 +14,7 @@ export default class UsersRoutes extends Component {
   render() {
     return (
       <Switch>
-        <PrivateRoute exact path={`${this.props.match.path}`} component={Users} />
+        <PrivateRoute exact path={`${this.props.match.path}`} component={Users} permission="usuários listar" />
 
         <PrivateRoute exact path={`${this.props.match.path}/create`} component={UserCreate} />
 

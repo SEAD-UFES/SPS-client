@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { permissionCheck } from "./permissionCheck";
 
 class DrawFilter extends Component {
   constructor() {
@@ -27,6 +28,12 @@ class DrawFilter extends Component {
   }
 
   canDraw(userRoles, permission, options) {
+    if (permissionCheck(userRoles, permission, options)) {
+      this.setState({ canDraw: true });
+    }
+  }
+
+  canDraw2(userRoles, permission, options) {
     //search for admin global role
     const filterAdministrator = value => {
       return value.Course === null && value.RoleType.name === "Administrador";
