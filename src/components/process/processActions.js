@@ -26,10 +26,16 @@ export const createProcess = (processData, history) => dispatch => {
 };
 
 //get Process
-export const getProcess = process_id => dispatch => {
+export const getProcess = (process_id, options = {}) => dispatch => {
+  let url = `/v1/selectiveprocesses/${process_id}`;
+
+  if (options.public === true) {
+    url = `/v1/selectiveprocesses/${process_id}/public`;
+  }
+
   dispatch(setProcessLoading());
   axios
-    .get(`/v1/selectiveprocesses/${process_id}`)
+    .get(`${url}`)
     .then(res =>
       dispatch({
         type: GET_PROCESS,
@@ -44,25 +50,6 @@ export const getProcess = process_id => dispatch => {
     );
 };
 
-//get Process List
-export const getProcessList = (page = 1, limit = 10) => dispatch => {
-  dispatch(setProcessLoading());
-  axios
-    .get(`/v1/selectiveprocesses?page=${page}&limit=${limit}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROCESSES,
-        payload: res.data
-      })
-    )
-    .catch(err => {
-      dispatch({
-        type: GET_PROCESSES,
-        payload: null
-      });
-    });
-};
-
 //update Process Data
 export const updateProcess = (processId, processData, history) => dispatch => {
   axios
@@ -75,6 +62,39 @@ export const updateProcess = (processId, processData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
+      });
+    });
+};
+
+//get Process List
+export const getProcessList = (options = {}) => dispatch => {
+  let url = "/v1/selectiveprocesses";
+
+  if (!options.page) {
+    options.page = 1;
+  }
+
+  if (!options.limit) {
+    options.limit = 10;
+  }
+
+  if (options.public === true) {
+    url = "/v1/selectiveprocesses/public";
+  }
+
+  dispatch(setProcessLoading());
+  axios
+    .get(`${url}?page=${options.page}&limit=${options.limit}`)
+    .then(res =>
+      dispatch({
+        type: GET_PROCESSES,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch({
+        type: GET_PROCESSES,
+        payload: null
       });
     });
 };

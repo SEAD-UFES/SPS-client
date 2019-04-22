@@ -22,7 +22,11 @@ class ProcessList extends Component {
   }
 
   componentDidMount() {
-    this.props.getProcessList();
+    if (this.props.authStore.isAuthenticated) {
+      this.props.getProcessList();
+    } else {
+      this.props.getProcessList({ public: true });
+    }
   }
 
   //componentWillReceiveProps(nextProps) {}
@@ -112,11 +116,12 @@ class ProcessList extends Component {
 ProcessList.propTypes = {
   getUserList: PropTypes.func.isRequired,
   getProcessList: PropTypes.func.isRequired,
-  userStore: PropTypes.object.isRequired
+  authStore: PropTypes.object.isRequired,
+  processStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  userStore: state.userStore,
+  authStore: state.authStore,
   processStore: state.processStore
 });
 

@@ -12,7 +12,11 @@ import DrawFilter from "../profile/DrawFilter";
 class ProcessView extends Component {
   componentDidMount() {
     if (this.props.match.params.id) {
-      this.props.getProcess(this.props.match.params.id);
+      if (this.props.authStore.isAuthenticated) {
+        this.props.getProcess(this.props.match.params.id);
+      } else {
+        this.props.getProcess(this.props.match.params.id, { public: true });
+      }
     }
   }
 
@@ -214,11 +218,13 @@ class ProcessView extends Component {
 
 ProcessView.propTypes = {
   getProcess: PropTypes.func.isRequired,
-  processStore: PropTypes.object.isRequired
+  processStore: PropTypes.object.isRequired,
+  authStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  processStore: state.processStore
+  processStore: state.processStore,
+  authStore: state.authStore
 });
 
 export default connect(
