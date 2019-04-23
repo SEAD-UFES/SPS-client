@@ -1,10 +1,4 @@
-import {
-  isEmpty,
-  validateName,
-  validateSurname,
-  validateCpfRequired,
-  validateDate
-} from "../";
+import { isEmpty, validateName, validateSurname, validateCpfRequired, validateDate } from "../../validation";
 
 // Register validation
 export const validateProfileEditPersonForm = data => {

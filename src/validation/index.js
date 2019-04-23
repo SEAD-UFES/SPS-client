@@ -11,7 +11,3 @@ export { validateProcessNumber } from "./validateProcessNumber";
 export { validateDescription } from "./validateDescription";
 export { validateNumberRequired } from "./validateNumber";
 export { validateFileType } from "./validateFileType";
-
-//Form Validations
-export { validateProfileEditUserForm } from "./formValidation/validateProfileEditUserForm";
-export { validateProfileEditPersonForm } from "./formValidation/validateProfileEditPersonForm";

@@ -6,7 +6,8 @@ import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import { validateName, validateSurname, validateDate, validateCpfRequired, isEmpty, validateProfileEditPersonForm } from "../../validation";
+import { validateName, validateSurname, validateDate, validateCpfRequired, isEmpty } from "../../validation";
+import { validateProfileEditPersonForm } from "./validateProfileEditPersonForm";
 import { getCurrentProfile, getPeopleOptions, updateProfilePerson } from "./profileActions";
 import { clearErrors } from "../../actions/errorActions";
 

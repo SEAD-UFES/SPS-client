@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import { validateEmailRequired, validatePassword, validatePasswordCheck, validateProfileEditUserForm, isEmpty } from "../../validation";
+import { validateEmailRequired, validatePassword, validatePasswordCheck, isEmpty } from "../../validation";
+import { validateProfileEditUserForm } from "components/profile/validateProfileEditUserForm";
 import { clearErrors } from "../../actions/errorActions";
 import { getUser, updateUser } from "./userActions";
 

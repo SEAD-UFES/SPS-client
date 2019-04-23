@@ -1,9 +1,4 @@
-import {
-  isEmpty,
-  validateEmailRequired,
-  validatePassword,
-  validatePasswordCheck
-} from "../";
+import { isEmpty, validateEmailRequired, validatePassword, validatePasswordCheck } from "../../validation";
 
 // Register validation
 export const validateProfileEditUserForm = data => {
