@@ -6,16 +6,15 @@ import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
+import { isEmpty, validateNumberRequired } from "../../validation";
 import {
-  isEmpty,
   validateStepType_id,
   validateResultDate,
   validateOpenAppealDate,
   validateLimitAppealDate,
   validateResultAfterAppealDate,
-  validateProcessCallStepForm,
-  validateNumberRequired
-} from "../../validation";
+  validateStepForm
+} from "./validateStepForm";
 import { getStep, updateStep } from "./stepActions";
 import { clearErrors } from "../../actions/errorActions";
 import { getStepTypes } from "components/stepType/stepTypeActions";
@@ -134,7 +133,7 @@ class StepEdit extends Component {
       resultAfterAppealDate: this.state.resultAfterAppealDate
     };
 
-    const valStep = validateProcessCallStepForm(StepData);
+    const valStep = validateStepForm(StepData);
     if (!valStep.isValid) {
       this.setState({ errors: valStep.errors });
     } else {

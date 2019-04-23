@@ -18,11 +18,11 @@ export { validateProfileEditUserForm } from "./formValidation/validateProfileEdi
 export { validateProfileEditPersonForm } from "./formValidation/validateProfileEditPersonForm";
 export { validateProcessForm } from "./formValidation/validateProcessForm";
 export {
-  validateProcessCallStepForm,
+  validateStepForm,
   validateStepType_id,
   validateResultDate,
   validateOpenAppealDate,
   validateLimitAppealDate,
   validateResultAfterAppealDate
-} from "./formValidation/validateProcessCallStepForm";
+} from "../components/step/validateStepForm";
 export { validateAssignment_id, validateProcessCallVacancyForm } from "./formValidation/validateProcessCallVacancyForm";

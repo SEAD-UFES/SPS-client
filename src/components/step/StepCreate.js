@@ -5,15 +5,15 @@ import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
+import { validateNumberRequired } from "../../validation";
 import {
   validateStepType_id,
   validateResultDate,
   validateOpenAppealDate,
   validateLimitAppealDate,
   validateResultAfterAppealDate,
-  validateProcessCallStepForm,
-  validateNumberRequired
-} from "../../validation";
+  validateStepForm
+} from "./validateStepForm";
 
 import { createStep } from "./stepActions";
 import { getStepTypes } from "components/stepType/stepTypeActions";
@@ -117,7 +117,7 @@ class StepCreate extends Component {
       resultAfterAppealDate: this.state.resultAfterAppealDate
     };
 
-    const valStep = validateProcessCallStepForm(StepData);
+    const valStep = validateStepForm(StepData);
     if (!valStep.isValid) {
       this.setState({ errors: valStep.errors });
     } else {

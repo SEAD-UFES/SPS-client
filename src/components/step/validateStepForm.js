@@ -1,9 +1,9 @@
 import moment from "moment";
 import Validator from "validator";
-import { isEmpty, validateDate, validateNumberRequired } from "../";
+import { isEmpty, validateDate, validateNumberRequired } from "../../validation";
 
 //####################################################################################//
-export const validateProcessCallStepForm = data => {
+export const validateStepForm = data => {
   let errors = {};
   let field = {};
 
@@ -17,42 +17,22 @@ export const validateProcessCallStepForm = data => {
     errors.stepType_id = field.error;
   }
 
-  field = validateResultDate(
-    data.resultDate,
-    data.openAppealDate,
-    data.limitAppealDate,
-    data.resultAfterAppealDate
-  );
+  field = validateResultDate(data.resultDate, data.openAppealDate, data.limitAppealDate, data.resultAfterAppealDate);
   if (!field.isValid) {
     errors.resultDate = field.error;
   }
 
-  field = validateOpenAppealDate(
-    data.resultDate,
-    data.openAppealDate,
-    data.limitAppealDate,
-    data.resultAfterAppealDate
-  );
+  field = validateOpenAppealDate(data.resultDate, data.openAppealDate, data.limitAppealDate, data.resultAfterAppealDate);
   if (!field.isValid) {
     errors.openAppealDate = field.error;
   }
 
-  field = validateLimitAppealDate(
-    data.resultDate,
-    data.openAppealDate,
-    data.limitAppealDate,
-    data.resultAfterAppealDate
-  );
+  field = validateLimitAppealDate(data.resultDate, data.openAppealDate, data.limitAppealDate, data.resultAfterAppealDate);
   if (!field.isValid) {
     errors.limitAppealDate = field.error;
   }
 
-  field = validateResultAfterAppealDate(
-    data.resultDate,
-    data.openAppealDate,
-    data.limitAppealDate,
-    data.resultAfterAppealDate
-  );
+  field = validateResultAfterAppealDate(data.resultDate, data.openAppealDate, data.limitAppealDate, data.resultAfterAppealDate);
   if (!field.isValid) {
     errors.resultAfterAppealDate = field.error;
   }
@@ -76,13 +56,7 @@ export const validateStepType_id = stepType_id => {
 };
 
 //####################################################################################//
-export const validateResultDate = (
-  resultDate,
-  openAppealDate,
-  limitAppealDate,
-  resultAfterAppealDate,
-  required = true
-) => {
+export const validateResultDate = (resultDate, openAppealDate, limitAppealDate, resultAfterAppealDate, required = true) => {
   let error = "";
   let field = {};
 
@@ -101,27 +75,17 @@ export const validateResultDate = (
   //Feito no servidor
 
   //!vem antes da abertura de recurso
-  if (
-    !isEmpty(openAppealDate) &&
-    moment(resultDate, "YYYY-MM-DD") > moment(openAppealDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(openAppealDate) && moment(resultDate, "YYYY-MM-DD") > moment(openAppealDate, "YYYY-MM-DD")) {
     error = "Data do resultado maior que data de abertura de recurso.";
   }
 
   //!vem antes do encerramento de recurso
-  if (
-    !isEmpty(limitAppealDate) &&
-    moment(resultDate, "YYYY-MM-DD") > moment(limitAppealDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(limitAppealDate) && moment(resultDate, "YYYY-MM-DD") > moment(limitAppealDate, "YYYY-MM-DD")) {
     error = "Data do resultado maior que data de encerramento de recurso.";
   }
 
   //!vem antes do resultado pós recurso
-  if (
-    !isEmpty(resultAfterAppealDate) &&
-    moment(resultDate, "YYYY-MM-DD") >
-      moment(resultAfterAppealDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(resultAfterAppealDate) && moment(resultDate, "YYYY-MM-DD") > moment(resultAfterAppealDate, "YYYY-MM-DD")) {
     error = "Data do resultado maior que data de resultado pós recurso.";
   }
 
@@ -132,13 +96,7 @@ export const validateResultDate = (
 };
 
 //####################################################################################//
-export const validateOpenAppealDate = (
-  resultDate,
-  openAppealDate,
-  limitAppealDate,
-  resultAfterAppealDate,
-  required = true
-) => {
+export const validateOpenAppealDate = (resultDate, openAppealDate, limitAppealDate, resultAfterAppealDate, required = true) => {
   let error = "";
   let field = {};
 
@@ -157,30 +115,18 @@ export const validateOpenAppealDate = (
   //Feito no servidor
 
   //!vem depois do resultado da etapa
-  if (
-    !isEmpty(resultDate) &&
-    moment(openAppealDate, "YYYY-MM-DD") < moment(resultDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(resultDate) && moment(openAppealDate, "YYYY-MM-DD") < moment(resultDate, "YYYY-MM-DD")) {
     error = "Data de abertura de recurso menor que data de resultado.";
   }
 
   //vem antes do limite de recursos
-  if (
-    !isEmpty(limitAppealDate) &&
-    moment(openAppealDate, "YYYY-MM-DD") > moment(limitAppealDate, "YYYY-MM-DD")
-  ) {
-    error =
-      "Data de abertura de recurso maior que data de encerramento de recurso.";
+  if (!isEmpty(limitAppealDate) && moment(openAppealDate, "YYYY-MM-DD") > moment(limitAppealDate, "YYYY-MM-DD")) {
+    error = "Data de abertura de recurso maior que data de encerramento de recurso.";
   }
 
   //!vem antes do resultado pós recurso
-  if (
-    !isEmpty(resultAfterAppealDate) &&
-    moment(openAppealDate, "YYYY-MM-DD") >
-      moment(resultAfterAppealDate, "YYYY-MM-DD")
-  ) {
-    error =
-      "Data de abertura de recurso maior que data de resultado pós recurso.";
+  if (!isEmpty(resultAfterAppealDate) && moment(openAppealDate, "YYYY-MM-DD") > moment(resultAfterAppealDate, "YYYY-MM-DD")) {
+    error = "Data de abertura de recurso maior que data de resultado pós recurso.";
   }
 
   return {
@@ -190,13 +136,7 @@ export const validateOpenAppealDate = (
 };
 
 //####################################################################################//
-export const validateLimitAppealDate = (
-  resultDate,
-  openAppealDate,
-  limitAppealDate,
-  resultAfterAppealDate,
-  required = true
-) => {
+export const validateLimitAppealDate = (resultDate, openAppealDate, limitAppealDate, resultAfterAppealDate, required = true) => {
   let error = "";
   let field = {};
 
@@ -215,27 +155,17 @@ export const validateLimitAppealDate = (
   //Feito no servidor
 
   //!vem depois do resultado da etapa
-  if (
-    !isEmpty(resultDate) &&
-    moment(limitAppealDate, "YYYY-MM-DD") < moment(resultDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(resultDate) && moment(limitAppealDate, "YYYY-MM-DD") < moment(resultDate, "YYYY-MM-DD")) {
     error = "Data limite de recurso menor que data de resultado.";
   }
 
   //!vem depois do inicio de recursos
-  if (
-    !isEmpty(openAppealDate) &&
-    moment(limitAppealDate, "YYYY-MM-DD") < moment(openAppealDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(openAppealDate) && moment(limitAppealDate, "YYYY-MM-DD") < moment(openAppealDate, "YYYY-MM-DD")) {
     error = "Data limite de recurso menor que data de abertura de recurso.";
   }
 
   //!vem antes do resultado pós recurso
-  if (
-    !isEmpty(resultAfterAppealDate) &&
-    moment(limitAppealDate, "YYYY-MM-DD") >
-      moment(resultAfterAppealDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(resultAfterAppealDate) && moment(limitAppealDate, "YYYY-MM-DD") > moment(resultAfterAppealDate, "YYYY-MM-DD")) {
     error = "Data limite de recurso maior que data de resultado pós recurso.";
   }
 
@@ -246,13 +176,7 @@ export const validateLimitAppealDate = (
 };
 
 //####################################################################################//
-export const validateResultAfterAppealDate = (
-  resultDate,
-  openAppealDate,
-  limitAppealDate,
-  resultAfterAppealDate,
-  required = true
-) => {
+export const validateResultAfterAppealDate = (resultDate, openAppealDate, limitAppealDate, resultAfterAppealDate, required = true) => {
   let error = "";
   let field = {};
 
@@ -271,30 +195,17 @@ export const validateResultAfterAppealDate = (
   //Feito no servidor
 
   //!vem depois do resultado da etapa
-  if (
-    !isEmpty(resultDate) &&
-    moment(resultAfterAppealDate, "YYYY-MM-DD") <
-      moment(resultDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(resultDate) && moment(resultAfterAppealDate, "YYYY-MM-DD") < moment(resultDate, "YYYY-MM-DD")) {
     error = "Data de resultado pós recurso menor que data de resultado.";
   }
 
   //!vem depois do inicio de recursos
-  if (
-    !isEmpty(openAppealDate) &&
-    moment(resultAfterAppealDate, "YYYY-MM-DD") <
-      moment(openAppealDate, "YYYY-MM-DD")
-  ) {
-    error =
-      "Data de resultado pós recurso menor que data de abertura de recurso.";
+  if (!isEmpty(openAppealDate) && moment(resultAfterAppealDate, "YYYY-MM-DD") < moment(openAppealDate, "YYYY-MM-DD")) {
+    error = "Data de resultado pós recurso menor que data de abertura de recurso.";
   }
 
   //!vem depois do resultado pós recurso
-  if (
-    !isEmpty(limitAppealDate) &&
-    moment(resultAfterAppealDate, "YYYY-MM-DD") <
-      moment(limitAppealDate, "YYYY-MM-DD")
-  ) {
+  if (!isEmpty(limitAppealDate) && moment(resultAfterAppealDate, "YYYY-MM-DD") < moment(limitAppealDate, "YYYY-MM-DD")) {
     error = "Data de resultado pós recurso menor que data limite de recurso.";
   }
 
