@@ -3,8 +3,9 @@ import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
 import { GET_ERRORS } from "../../actions/types";
-
 import { SET_CURRENT_USER } from "./authActionTypes";
+
+import { clearCurrentProfile } from "components/profile/profileActions";
 
 //Register
 export const registerUser = (userData, history) => dispatch => {
@@ -63,4 +64,7 @@ export const logoutUser = () => dispatch => {
 
   //set current user to {}
   dispatch(setCurrentUser({}));
+
+  //clear profile data
+  clearCurrentProfile();
 };

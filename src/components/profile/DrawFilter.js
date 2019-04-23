@@ -24,6 +24,11 @@ class DrawFilter extends Component {
       if (profile !== null && loading !== true) {
         this.canDraw(profile.UserRoles, this.props.permission, { course_id: this.props.course_id, anyCourse: this.props.anyCourse });
       }
+
+      //user made logout and clear the profile case
+      if (profile === null) {
+        this.setState({ canDraw: false });
+      }
     }
   }
 

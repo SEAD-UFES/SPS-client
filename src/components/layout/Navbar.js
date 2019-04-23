@@ -22,6 +22,11 @@ class Navbar extends Component {
       if (nextProps.profileStore.loading === false && nextProps.profileStore.profile === null) {
         this.props.getCurrentProfile();
       }
+    } else {
+      if (nextProps.profileStore.loading === false && nextProps.profileStore.profile === null) {
+        console.log("tentanto render reload");
+        this.forceUpdate();
+      }
     }
   }
 

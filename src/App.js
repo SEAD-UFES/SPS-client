@@ -78,7 +78,7 @@ class App extends Component {
 
               <Route path="/processes" component={ProcessRoutes} />
 
-              <PrivateRoute path="/parameters" component={ParameterRoutes} />
+              <PrivateRoute path="/parameters" component={ParameterRoutes} permission="parameter_list" />
 
               <Route component={NotFound} />
             </Switch>
