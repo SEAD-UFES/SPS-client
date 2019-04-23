@@ -7,7 +7,8 @@ import { isEmpty } from "../../validation";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 
-import { validateAssignment_id, validateProcessCallVacancyForm, validateNumberRequired } from "../../validation";
+import { validateNumberRequired } from "../../validation";
+import { validateAssignment_id, validateVacancyForm } from "./validateVacancyForm";
 
 import { getVacancy, updateVacancy } from "./vacancyActions";
 import { getRegions } from "components/region/regionActions";
@@ -137,7 +138,7 @@ class VacancyEdit extends Component {
       reserve: this.state.reserve
     };
 
-    const valVacancy = validateProcessCallVacancyForm(vacancyData);
+    const valVacancy = validateVacancyForm(vacancyData);
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {

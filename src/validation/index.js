@@ -17,12 +17,3 @@ export { validateRegisterForm } from "./formValidation/validateRegisterForm";
 export { validateProfileEditUserForm } from "./formValidation/validateProfileEditUserForm";
 export { validateProfileEditPersonForm } from "./formValidation/validateProfileEditPersonForm";
 export { validateProcessForm } from "./formValidation/validateProcessForm";
-export {
-  validateStepForm,
-  validateStepType_id,
-  validateResultDate,
-  validateOpenAppealDate,
-  validateLimitAppealDate,
-  validateResultAfterAppealDate
-} from "../components/step/validateStepForm";
-export { validateAssignment_id, validateProcessCallVacancyForm } from "./formValidation/validateProcessCallVacancyForm";

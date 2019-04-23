@@ -1,8 +1,8 @@
 import Validator from "validator";
-import { isEmpty, validateNumberRequired } from "../";
+import { isEmpty, validateNumberRequired } from "../../validation";
 
 //####################################################################################//
-export const validateProcessCallVacancyForm = data => {
+export const validateVacancyForm = data => {
   let errors = {};
   let field = {};
 
