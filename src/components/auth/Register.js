@@ -4,16 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import {
-  isEmpty,
-  validateName,
-  validateSurname,
-  validateCpfRequired,
-  validateEmailRequired,
-  validatePassword,
-  validatePasswordCheck,
-  validateRegisterForm
-} from "../../validation";
+import { isEmpty, validateName, validateSurname, validateCpfRequired, validateEmailRequired, validatePassword, validatePasswordCheck } from "../../validation";
+import { validateRegisterForm } from "./validateRegisterForm";
 
 import { registerUser } from "./authActions";
 
