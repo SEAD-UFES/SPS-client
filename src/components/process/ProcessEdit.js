@@ -7,7 +7,8 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import { isEmpty, validateProcessNumber, validateYearRequired, validateDescription, validateProcessForm, validateId } from "../../validation";
+import { isEmpty, validateProcessNumber, validateYearRequired, validateDescription, validateId } from "../../validation";
+import { validateProcessForm } from "./validateProcessForm";
 
 import { clearErrors } from "../../actions/errorActions";
 import { getProcess, updateProcess } from "./processActions";

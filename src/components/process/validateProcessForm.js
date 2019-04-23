@@ -1,10 +1,4 @@
-import {
-  isEmpty,
-  validateProcessNumber,
-  validateYearRequired,
-  validateDescription,
-  validateId
-} from "../";
+import { isEmpty, validateProcessNumber, validateYearRequired, validateDescription, validateId } from "../../validation";
 
 // Register validation
 export const validateProcessForm = data => {

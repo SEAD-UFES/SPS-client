@@ -16,4 +16,3 @@ export { validateFileType } from "./validateFileType";
 export { validateRegisterForm } from "./formValidation/validateRegisterForm";
 export { validateProfileEditUserForm } from "./formValidation/validateProfileEditUserForm";
 export { validateProfileEditPersonForm } from "./formValidation/validateProfileEditPersonForm";
-export { validateProcessForm } from "./formValidation/validateProcessForm";
