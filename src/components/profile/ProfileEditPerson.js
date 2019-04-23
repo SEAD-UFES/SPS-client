@@ -49,8 +49,8 @@ class ProfileEditPerson extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
-      const profile = nextProps.profile.profile;
+    if (isEmpty(nextProps.errors) && nextProps.profileStore.profile) {
+      const profile = nextProps.profileStore.profile;
 
       //preenchendo de person se existirem
       if (profile.person) {
@@ -162,7 +162,7 @@ class ProfileEditPerson extends Component {
 
   render() {
     const { errors } = this.state;
-    const options = this.props.profile.options;
+    const options = this.props.profileStore.options;
 
     const colorOptions = [{ label: "Escolha cor/etnia", value: "" }].concat(
       options
@@ -304,13 +304,13 @@ class ProfileEditPerson extends Component {
 ProfileEditPerson.propsTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   getPeopleOptions: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
+  profileStore: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
+  profileStore: state.profileStore,
   errors: state.errorStore
 });
 

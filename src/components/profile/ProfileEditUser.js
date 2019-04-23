@@ -41,10 +41,10 @@ class ProfileEditUser extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.profile.profile) {
-      const profile = nextProps.profile.profile;
+    if (isEmpty(nextProps.errors) && nextProps.profileStore.profile) {
+      const profile = nextProps.profileStore.profile;
 
-      const login = !isEmpty(profile.user.login) ? profile.user.login : "";
+      const login = !isEmpty(profile.login) ? profile.login : "";
 
       //Set state
       this.setState({
@@ -234,12 +234,12 @@ ProfileEditUser.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   updateProfileUser: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
+  profileStore: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
+  profileStore: state.profileStore,
   errors: state.errorStore
 });
 
