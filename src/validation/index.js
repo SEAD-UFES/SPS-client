@@ -13,6 +13,5 @@ export { validateNumberRequired } from "./validateNumber";
 export { validateFileType } from "./validateFileType";
 
 //Form Validations
-export { validateRegisterForm } from "../components/auth/validateRegisterForm";
 export { validateProfileEditUserForm } from "./formValidation/validateProfileEditUserForm";
 export { validateProfileEditPersonForm } from "./formValidation/validateProfileEditPersonForm";
