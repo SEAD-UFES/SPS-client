@@ -4,13 +4,7 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import {
-  validateNumberRequired,
-  validateProcessCallForm,
-  validateEnrollmentOpeningDate,
-  validateEnrollmentClosingDate,
-  validateEndingDate
-} from "../../validation";
+import { validateNumberRequired, validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "../../validation";
 
 import { createCall } from "./callActions";
 
@@ -151,7 +145,7 @@ class CallCreate extends Component {
       //course_id: ""
     };
 
-    const valCall = validateProcessCallForm(tmpCallData);
+    const valCall = validateCallForm(tmpCallData);
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {

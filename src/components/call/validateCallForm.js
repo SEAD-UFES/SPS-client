@@ -2,7 +2,7 @@ import moment from "moment";
 import { isEmpty, validateNumberRequired, validateDateRequired } from "../../validation";
 
 // create call validation
-export const validateProcessCallForm = data => {
+export const validateCallForm = data => {
   let errors = {};
   let field = {};
 

@@ -8,7 +8,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import {
   isEmpty,
   validateNumberRequired,
-  validateProcessCallForm,
+  validateCallForm,
   validateEnrollmentOpeningDate,
   validateEnrollmentClosingDate,
   validateEndingDate
@@ -170,7 +170,7 @@ class CallEdit extends Component {
       endingDate: this.state.endingDate
     };
 
-    const valCall = validateProcessCallForm(callData);
+    const valCall = validateCallForm(callData);
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {

@@ -17,12 +17,7 @@ export { validateRegisterForm } from "./formValidation/validateRegisterForm";
 export { validateProfileEditUserForm } from "./formValidation/validateProfileEditUserForm";
 export { validateProfileEditPersonForm } from "./formValidation/validateProfileEditPersonForm";
 export { validateProcessForm } from "./formValidation/validateProcessForm";
-export {
-  validateProcessCallForm,
-  validateEnrollmentOpeningDate,
-  validateEnrollmentClosingDate,
-  validateEndingDate
-} from "../components/call/validateProcessCallForm";
+export { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "../components/call/validateCallForm";
 export {
   validateProcessCallStepForm,
   validateStepType_id,
