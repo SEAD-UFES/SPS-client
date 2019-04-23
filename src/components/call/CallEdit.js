@@ -5,14 +5,8 @@ import { withRouter, Link } from "react-router-dom";
 import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import {
-  isEmpty,
-  validateNumberRequired,
-  validateCallForm,
-  validateEnrollmentOpeningDate,
-  validateEnrollmentClosingDate,
-  validateEndingDate
-} from "../../validation";
+import { isEmpty, validateNumberRequired } from "../../validation";
+import { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "./validateCallForm";
 
 import { createCall, getCall, updateCall } from "./callActions";
 import { clearErrors } from "../../actions/errorActions";

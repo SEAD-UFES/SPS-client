@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import { validateNumberRequired, validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "../../validation";
+import { validateNumberRequired } from "../../validation";
+import { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "./validateCallForm";
 
 import { createCall } from "./callActions";
 
