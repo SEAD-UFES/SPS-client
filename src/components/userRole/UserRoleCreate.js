@@ -86,7 +86,7 @@ class UserRoleCreate extends Component {
       this.setState({ errors: valUserRole.errors });
     } else {
       this.props.createUserRole(userRoleData, () => {
-        this.props.history.push(`/roleassignments`);
+        this.props.history.goBack();
       });
     }
   }
