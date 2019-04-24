@@ -24,8 +24,6 @@ class ProcessList extends Component {
   componentDidMount() {
     if (this.props.authStore.isAuthenticated) {
       this.props.getProcessList();
-    } else {
-      this.props.getProcessList({ public: true });
     }
   }
 

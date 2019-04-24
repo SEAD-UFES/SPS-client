@@ -26,12 +26,8 @@ export const createProcess = (processData, history) => dispatch => {
 };
 
 //get Process
-export const getProcess = (process_id, options = {}) => dispatch => {
+export const getProcess = process_id => dispatch => {
   let url = `/v1/selectiveprocesses/${process_id}`;
-
-  if (options.public === true) {
-    url = `/v1/selectiveprocesses/${process_id}/public`;
-  }
 
   dispatch(setProcessLoading());
   axios
@@ -76,10 +72,6 @@ export const getProcessList = (options = {}) => dispatch => {
 
   if (!options.limit) {
     options.limit = 10;
-  }
-
-  if (options.public === true) {
-    url = "/v1/selectiveprocesses/public";
   }
 
   dispatch(setProcessLoading());
