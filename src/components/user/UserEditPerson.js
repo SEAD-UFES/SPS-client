@@ -43,8 +43,8 @@ class UserEditPerson extends Component {
 
   componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
-    if (!isEmpty(nextProps.errors)) {
-      if (nextProps.errors.devMessage.errors[0].message === "cpf must be unique") {
+    if (!isEmpty(nextProps.errorStore)) {
+      if (nextProps.errorStore.devMessage.errors[0].message === "cpf must be unique") {
         let errors = { ...this.state.errors };
         errors.cpf = "cpf já cadastrado na base de dados";
         this.setState({ errors: errors });
@@ -141,7 +141,7 @@ class UserEditPerson extends Component {
     if (!valProfileEditPerson.isValid) {
       this.setState({ errors: valProfileEditPerson.errors });
     } else {
-      const user = this.props.user.user;
+      const user = this.props.userStore.user;
       this.props.updatePerson(user.id, personData, this.props.history);
     }
   }
@@ -188,7 +188,7 @@ class UserEditPerson extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/profile" className="btn btn-light">
+              <Link to="/users" className="btn btn-light">
                 Voltar para perfil
               </Link>
               <h1 className="display-4 text-center">Editar perfil</h1>
@@ -293,7 +293,8 @@ UserEditPerson.propsTypes = {
   getPeopleOptions: PropTypes.func.isRequired,
   getUserPeopleOptions: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  options: PropTypes.object.isRequired
+  options: PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
