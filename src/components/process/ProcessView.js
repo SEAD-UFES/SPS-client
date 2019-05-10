@@ -14,6 +14,8 @@ class ProcessView extends Component {
     if (this.props.match.params.id) {
       if (this.props.authStore.isAuthenticated) {
         this.props.getProcess(this.props.match.params.id);
+      } else {
+        this.props.getProcess(this.props.match.params.id);
       }
     }
   }
