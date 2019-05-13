@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import TextFieldGroup from "components/common/TextFieldGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
+import CheckBoxFieldGroup from "components/common/CheckBoxFieldGroup";
 
 import { validateName } from "validation/";
 import { validateRoleTypeForm } from "./validateRoleTypeForm";
@@ -18,11 +19,13 @@ class RoleTypeCreateUpdate extends Component {
       id: null,
       name: "",
       description: "",
+      global: false,
       errors: [],
       mode: "create"
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -51,6 +54,7 @@ class RoleTypeCreateUpdate extends Component {
       this.setState({
         id: roleType.id,
         name: roleType.name,
+        global: roleType.global,
         description: roleType.description
       });
     }
@@ -84,12 +88,19 @@ class RoleTypeCreateUpdate extends Component {
     });
   }
 
+  onCheck(e) {
+    this.setState({
+      [e.target.name]: !this.state[e.target.name]
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
     const roleTypeData = {
       id: this.state.id,
       name: this.state.name,
+      global: this.state.global,
       description: this.state.description
     };
 
@@ -144,6 +155,8 @@ class RoleTypeCreateUpdate extends Component {
             onChange={this.onChange}
             error={errors.description}
           />
+
+          <CheckBoxFieldGroup id="global" name="global" value="Papel global" checked={this.state.global} onChange={this.onCheck} />
 
           <input type="submit" className="btn btn-info btn-block mt-4" />
         </div>

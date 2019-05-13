@@ -20,11 +20,13 @@ class UserRoleCreate extends Component {
     this.state = {
       user_id: "",
       roleType_id: "",
+      global: false,
       course_id: "",
       errors: []
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onCheck = this.onCheck.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -170,14 +172,16 @@ class UserRoleCreate extends Component {
             error={errors.roleType_id}
           />
 
-          <SelectListGroup
-            placeholder="* Selecione o curso"
-            name="course_id"
-            value={this.state.course_id}
-            options={courseOptions}
-            onChange={this.onChange}
-            error={errors.course_id}
-          />
+          {!this.state.global ? (
+            <SelectListGroup
+              placeholder="* Selecione o curso"
+              name="course_id"
+              value={this.state.course_id}
+              options={courseOptions}
+              onChange={this.onChange}
+              error={errors.course_id}
+            />
+          ) : null}
 
           <input type="submit" className="btn btn-info btn-block mt-4" />
         </div>

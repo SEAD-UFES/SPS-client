@@ -51,6 +51,12 @@ class RoleTypeView extends Component {
                 </td>
                 <td>{roleTypeStore.roleType.description}</td>
               </tr>
+              <tr>
+                <td>
+                  <strong>Escopo:</strong>
+                </td>
+                <td>{roleTypeStore.roleType.global ? "Global" : "Curso"}</td>
+              </tr>
             </tbody>
           </table>
         </div>

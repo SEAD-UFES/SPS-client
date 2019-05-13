@@ -54,7 +54,22 @@ class RoleTypesList extends Component {
       }
     }
 
-    arrayCopy.sort(compareBy(key));
+    const compareByScope = (a, b) => {
+      const A = a.global ? "g" : "c";
+      const B = b.global ? "g" : "c";
+
+      if (A.toLowerCase() < B.toLowerCase()) return -1;
+      if (A.toLowerCase() > B.toLowerCase()) return 1;
+      return 0;
+    };
+
+    switch (key) {
+      case "scope":
+        arrayCopy.sort(compareByScope);
+        break;
+      default:
+        arrayCopy.sort(compareBy(key));
+    }
 
     if (sortReverse) {
       arrayCopy.reverse();
@@ -93,8 +108,9 @@ class RoleTypesList extends Component {
               <tr>
                 <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
                 <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
+                <th onClick={() => this.sortBy("scope")}>Escopo {this.orderIcon("scope")}</th>
                 <th>
-                  <Link className="text-success" to="/roletypes/create">
+                  <Link className="text-success" to="/parameters/roletypes/create">
                     <i className="fas fa-plus-circle" />
                   </Link>
                 </th>
@@ -106,6 +122,7 @@ class RoleTypesList extends Component {
                   <tr key={roleType.id}>
                     <td>{roleType.name}</td>
                     <td>{roleType.description}</td>
+                    <td>{roleType.global ? "Global" : "Curso"}</td>
                     <td>
                       <Link className="text-success" to={`/parameters/roletypes/${roleType.id}`}>
                         <i className="fas fa-eye" />

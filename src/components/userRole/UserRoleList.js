@@ -69,8 +69,8 @@ class UserRoleList extends Component {
     };
 
     const compareByCourse = (a, b) => {
-      const A = !isEmpty(a.Course) ? a.Course.name : "";
-      const B = !isEmpty(b.Course) ? b.Course.name : "";
+      const A = a.RoleType.global ? "Papel global" : !isEmpty(a.Course) ? a.Course.name : "";
+      const B = b.RoleType.global ? "Papel global" : !isEmpty(b.Course) ? b.Course.name : "";
 
       if (A.toLowerCase() < B.toLowerCase()) return -1;
       if (A.toLowerCase() > B.toLowerCase()) return 1;
@@ -145,7 +145,7 @@ class UserRoleList extends Component {
                     <td>
                       <Link to={`/parameters/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
                     </td>
-                    <td>{userRole.Course ? userRole.Course.name : <span className="text-muted">n/a</span>}</td>
+                    <td>{userRole.RoleType.global ? "Papel global" : userRole.Course ? userRole.Course.name : <span className="text-muted">n/a</span>}</td>
                     <td>
                       <Link className="text-danger" to={`${this.props.match.url}/${userRole.id}/delete`}>
                         <i className="fas fa-times-circle" />

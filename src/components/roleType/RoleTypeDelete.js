@@ -66,6 +66,12 @@ class RoleTypeDelete extends Component {
                 </td>
                 <td>{roleTypeStore.roleType.description}</td>
               </tr>
+              <tr>
+                <td>
+                  <strong>Escopo:</strong>
+                </td>
+                <td>{roleTypeStore.roleType.global ? "Global" : "Curso"}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -117,7 +123,7 @@ class RoleTypeDelete extends Component {
                     value="Cancelar"
                     className="btn btn-secondary btn-block mt-4"
                     onClick={() => {
-                      this.props.history.push(`/parameters/roletypes/${roleTypeStore.roleType.id}`);
+                      this.props.history.goBack();
                     }}
                   />
                 </div>
