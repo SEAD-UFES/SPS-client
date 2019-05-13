@@ -39,7 +39,7 @@ const globalUserRolesCheck = (userRoles, permission, options) => {
   let havePermission = false;
 
   const filterGlobalUserRoles = value => {
-    return value.Course === null && value.RoleType.name !== "Administrador";
+    return value.RoleType.global === true && value.RoleType.name !== "Administrador";
   };
 
   const globalRoleAssignments = userRoles.filter(filterGlobalUserRoles);
