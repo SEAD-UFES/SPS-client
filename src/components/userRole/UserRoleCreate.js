@@ -44,6 +44,20 @@ class UserRoleCreate extends Component {
     }
   }
 
+  setGlobal(roleType_id) {
+    const { roleTypes } = this.props.roleTypeStore;
+    if (roleTypes) {
+      const roleType_found = roleTypes.find(rt => {
+        return rt.id === roleType_id;
+      });
+      if (roleType_found && roleType_found.global) {
+        this.setState({ global: true, course_id: "" });
+      } else {
+        this.setState({ global: false });
+      }
+    }
+  }
+
   onChange(e) {
     //local validation of fields:
     let errors = this.state.errors;
@@ -54,6 +68,7 @@ class UserRoleCreate extends Component {
         break;
       case "roleType_id":
         valResult = validateName(e.target.value);
+        this.setGlobal(e.target.value);
         break;
       case "course_id":
         break;
@@ -73,6 +88,8 @@ class UserRoleCreate extends Component {
       errors: errors
     });
   }
+
+  onCheck(e) {}
 
   onSubmit(e) {
     e.preventDefault();
@@ -114,7 +131,7 @@ class UserRoleCreate extends Component {
       roleTypes
         ? roleTypes.map(roleType => {
             return {
-              label: roleType.name,
+              label: `${roleType.name}${roleType.global ? ` - Global` : ``}`,
               value: roleType.id
             };
           })

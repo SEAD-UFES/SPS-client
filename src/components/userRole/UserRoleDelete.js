@@ -70,7 +70,15 @@ class UserRoleDelete extends Component {
                 <td>
                   <strong>Curso:</strong>
                 </td>
-                <td>{userRoleStore.userRole.Course ? userRoleStore.userRole.Course.name : <span className="text-muted">n/a</span>}</td>
+                <td>
+                  {userRoleStore.userRole.RoleType.global ? (
+                    "Papel Global"
+                  ) : userRoleStore.userRole.Course ? (
+                    userRoleStore.userRole.Course.name
+                  ) : (
+                    <span className="text-muted">n/a</span>
+                  )}
+                </td>
               </tr>
             </tbody>
           </table>
