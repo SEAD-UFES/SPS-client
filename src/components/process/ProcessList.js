@@ -9,18 +9,36 @@ import { getProcessList } from "./processActions";
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 import DrawFilter from "components/profile/DrawFilter";
-import TextFieldGroup from "components/common/TextFieldGroup";
+// import TextFieldGroup from "components/common/TextFieldGroup";
 import { validateYearRequired } from "../../validation";
-import SelectListGroup from "../common/SelectListGroup";
+// import SelectListGroup from "../common/SelectListGroup";
+import FilterFieldGroup from "components/common/FilterFieldGroup";
 
 class ProcessList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      //processes state
       pageOfItems: [],
-      formFilters: { option: "", year: "" },
-      appliedFilters: { year: [] },
+
+      //filter state
+      // formFilters: { option: "", year: "" },
+      // valueOptions: [],
+      // appliedFilters: { year: [] },
+
+      // formFilters2: { option: "", value: "" },
+      // appliedFilters2: [],
+
+      avaliableFilters: { number: ["001", "002", "003"], year: ["2017", "2018", "2019"] },
+      appliedFilters: { number: [], year: [] },
+
+      filters: {
+        number: [{ value: "001", applied: false }, { value: "002", applied: true }, { value: "003", applied: false }],
+        year: [{ value: "2017", applied: false }, { value: "2018", applied: true }, { value: "2019", applied: false }]
+      },
+
+      //error state
       errors: {}
     };
 
@@ -28,6 +46,10 @@ class ProcessList extends Component {
     this.onChangeFilter = this.onChangeFilter.bind(this);
     this.addFilter = this.addFilter.bind(this);
     this.removeFilter = this.removeFilter.bind(this);
+
+    // this.onChangeFilter2 = this.onChangeFilter2.bind(this);
+    // this.addFilter2 = this.addFilter2.bind(this);
+    // this.removeFilter2 = this.removeFilter2.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +93,10 @@ class ProcessList extends Component {
     });
   }
 
+  updateFilters = filters => {
+    this.setState({ appliedFilters: filters });
+  };
+
   addFilter(e) {
     e.preventDefault();
 
@@ -101,13 +127,16 @@ class ProcessList extends Component {
 
   render() {
     const { processes, loading } = this.props.processStore;
-    const errors = this.state.errors;
-    const appliedFilters = this.state.appliedFilters;
+    // const errors = this.state.errors;
+    // const appliedFilters = this.state.appliedFilters;
+    // const appliedFilters2 = this.state.appliedFilters2;
     let usersContent;
 
-    const options = [{ label: "Item", value: "" }, { label: "Número", value: "number" }, { label: "Ano", value: "year" }];
+    // const options = [{ label: "Item", value: "" }, { label: "Número", value: "number" }, { label: "Ano", value: "year" }];
 
-    const yearOptions = [{ label: "Ano", value: "" }, { label: "2017", value: "2017" }, { label: "2018", value: "2018" }, { label: "2019", value: "2019" }];
+    // const numberOptions = [{ label: "Número", value: "" }];
+    // const yearOptions = [{ label: "Ano", value: "" }];
+    // const courseOptions = [{ label: "Curso", value: "" }];
 
     const filterBox = (
       <div className="card mb-2">
@@ -117,7 +146,15 @@ class ProcessList extends Component {
           </a>
           {": "}
 
-          {appliedFilters.year.map((year, key) => {
+          {/* {appliedFilters2.map((filter, key) => {
+            return (
+              <span key={key} className="badge badge-info mr-1">
+                {filter.option} : {filter.value} <i onClick={() => {}} className="fas fa-times-circle" style={{ cursor: "pointer" }} />
+              </span>
+            );
+          })} */}
+
+          {/* {appliedFilters.year.map((year, key) => {
             return (
               <span key={key} className="badge badge-info mr-1">
                 {year}{" "}
@@ -130,23 +167,41 @@ class ProcessList extends Component {
                 />
               </span>
             );
-          })}
+          })} */}
         </div>
 
         <div id="collapse1" className="panel-collapse collapse">
           <div className="card-body">
             <form onSubmit={this.addFilter}>
-              {/* <TextFieldGroup
-                type="text"
-                name="year"
-                placeholder="Filtrar por ano"
-                value={this.state.formFilters.year}
+              <FilterFieldGroup
+                label="Número"
+                filters={this.state.filters.number}
+                avaliableFilters={this.state.avaliableFilters.number}
+                appliedFilters={this.state.appliedFilters.number}
+              />
+              <FilterFieldGroup
+                label="Ano"
+                filters={this.state.filters.year}
+                avaliableFilters={this.state.avaliableFilters.year}
+                appliedFilters={this.state.appliedFilters.year}
+              />
+
+              {/* <SelectListGroup name="year" value={this.state.formFilters.year} options={yearOptions} onChange={this.onChangeFilter} error={errors.year} /> */}
+              {/* <SelectListGroup
+                name="course"
+                value={this.state.formFilters.course}
+                options={courseOptions}
                 onChange={this.onChangeFilter}
-                error={errors.year}
+                error={errors.course}
               /> */}
 
-              <SelectListGroup name="options" value={this.state.formFilters.option} options={options} onChange={this.onChangeFilter} error={errors.options} />
-              <SelectListGroup name="year" value={this.state.formFilters.year} options={yearOptions} onChange={this.onChangeFilter} error={errors.course_id} />
+              {/* <SelectListGroup
+                name="value"
+                value={this.state.formFilters.value}
+                options={this.state.valueOptions}
+                onChange={this.onChangeFilter2}
+                error={errors.valueOptions}
+              /> */}
 
               <div className="text-right d-none">
                 <input ref="filterSubmit" type="submit" value="Adicionar filtros" className="btn btn-info" />
@@ -161,7 +216,7 @@ class ProcessList extends Component {
                 onClick={() => {
                   this.refs.filterSubmit.click();
                 }}
-                value="Adicionar filtros"
+                value="Aplicar filtros"
                 className="btn btn-info"
               />
             </div>
