@@ -22,20 +22,17 @@ class ProcessList extends Component {
       //processes state
       pageOfItems: [],
 
-      //filter state
-      // formFilters: { option: "", year: "" },
-      // valueOptions: [],
-      // appliedFilters: { year: [] },
-
-      // formFilters2: { option: "", value: "" },
-      // appliedFilters2: [],
-
-      avaliableFilters: { number: ["001", "002", "003"], year: ["2017", "2018", "2019"] },
-      appliedFilters: { number: [], year: [] },
-
       filters: {
-        number: [{ value: "001", applied: false }, { value: "002", applied: true }, { value: "003", applied: false }],
-        year: [{ value: "2017", applied: false }, { value: "2018", applied: true }, { value: "2019", applied: false }]
+        number: [
+          { value: "001", marked: false, applied: false },
+          { value: "002", marked: false, applied: false },
+          { value: "003", marked: false, applied: false }
+        ],
+        year: [
+          { value: "2017", marked: false, applied: false },
+          { value: "2018", marked: false, applied: false },
+          { value: "2019", marked: false, applied: false }
+        ]
       },
 
       //error state
@@ -43,13 +40,6 @@ class ProcessList extends Component {
     };
 
     this.onChangePage = this.onChangePage.bind(this);
-    this.onChangeFilter = this.onChangeFilter.bind(this);
-    this.addFilter = this.addFilter.bind(this);
-    this.removeFilter = this.removeFilter.bind(this);
-
-    // this.onChangeFilter2 = this.onChangeFilter2.bind(this);
-    // this.addFilter2 = this.addFilter2.bind(this);
-    // this.removeFilter2 = this.removeFilter2.bind(this);
   }
 
   componentDidMount() {
@@ -66,145 +56,145 @@ class ProcessList extends Component {
     this.props.getProcessList(page, pageSize);
   }
 
-  onChangeFilter(e) {
-    let filters = this.state.formFilters;
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+  markFilter = (id, item) => {
+    let list = this.state.filters[id];
 
-    switch (e.target.name) {
-      case "year":
-        valResult = validateYearRequired(e.target.value);
-        filters.year = e.target.value;
-        break;
-      default:
-        break;
-    }
-
-    if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
-    } else {
-      delete errors[e.target.name];
-    }
-
-    //Atualizando os estados do campo e dos erros
-    this.setState({
-      formFilters: filters,
-      errors: errors
+    let registro = list.find(it => {
+      return it.value === item;
     });
-  }
+    registro.marked = !registro.marked;
 
-  updateFilters = filters => {
-    this.setState({ appliedFilters: filters });
+    let filters = this.state.filters;
+    filters[id] = list;
+    this.setState({ filters: filters });
   };
 
-  addFilter(e) {
+  removeFilter = (id, item) => {
+    let list = this.state.filters[id];
+
+    let registro = list.find(it => {
+      return it.value === item;
+    });
+    registro.marked = false;
+    registro.applied = false;
+
+    let filters = this.state.filters;
+    filters[id] = list;
+    this.setState({ filters: filters });
+  };
+
+  applyFilters = e => {
     e.preventDefault();
 
-    let new_formFilters = this.state.formFilters;
-    let new_appliedFilters = this.state.appliedFilters;
+    let filters = this.state.filters;
+    let indexes = Object.keys(filters);
 
-    if (new_formFilters.year !== "") {
-      new_appliedFilters.year.push(new_formFilters.year);
+    for (let index of indexes) {
+      let filter = filters[index];
+      filter.map(item => {
+        item.applied = item.marked;
+        return null;
+      });
     }
 
-    this.setState({
-      appliedFilters: new_appliedFilters
-    });
-  }
+    this.setState({ filters: filters });
+  };
 
-  removeFilter(item, value) {
-    let new_appliedFilters = this.state.appliedFilters;
+  clearFilters = e => {
+    e.preventDefault();
 
-    const index = new_appliedFilters[item].indexOf(value);
-    if (index > -1) {
-      new_appliedFilters[item].splice(index, 1);
+    let filters = this.state.filters;
+    let indexes = Object.keys(filters);
+
+    for (let index of indexes) {
+      let filter = filters[index];
+      filter.map(item => {
+        item.marked = false;
+        item.applied = false;
+        return null;
+      });
     }
 
-    this.setState({
-      appliedFilters: new_appliedFilters
-    });
-  }
+    this.setState({ filters: filters });
+  };
+
+  cancelFilters = e => {
+    e.preventDefault();
+
+    let filters = this.state.filters;
+    let indexes = Object.keys(filters);
+
+    for (let index of indexes) {
+      let filter = filters[index];
+      filter.map(item => {
+        item.marked = item.applied;
+        return null;
+      });
+    }
+
+    this.setState({ filters: filters });
+  };
 
   render() {
     const { processes, loading } = this.props.processStore;
-    // const errors = this.state.errors;
-    // const appliedFilters = this.state.appliedFilters;
-    // const appliedFilters2 = this.state.appliedFilters2;
+    const { filters } = this.state;
     let usersContent;
 
-    // const options = [{ label: "Item", value: "" }, { label: "Número", value: "number" }, { label: "Ano", value: "year" }];
+    const renderFilterBadges = filters => {
+      let indexes = Object.keys(filters);
 
-    // const numberOptions = [{ label: "Número", value: "" }];
-    // const yearOptions = [{ label: "Ano", value: "" }];
-    // const courseOptions = [{ label: "Curso", value: "" }];
+      let resultFilters = [];
 
-    const filterBox = (
-      <div className="card mb-2">
-        <div className="card-header">
-          <a data-toggle="collapse" href="#collapse1">
-            Filtros
-          </a>
-          {": "}
-
-          {/* {appliedFilters2.map((filter, key) => {
+      for (let index of indexes) {
+        let filter = filters[index];
+        let resultFilter = filter
+          .filter(it => {
+            return it.applied === true;
+          })
+          .map((item, key) => {
             return (
               <span key={key} className="badge badge-info mr-1">
-                {filter.option} : {filter.value} <i onClick={() => {}} className="fas fa-times-circle" style={{ cursor: "pointer" }} />
-              </span>
-            );
-          })} */}
-
-          {/* {appliedFilters.year.map((year, key) => {
-            return (
-              <span key={key} className="badge badge-info mr-1">
-                {year}{" "}
+                {item.value}{" "}
                 <i
                   onClick={() => {
-                    this.removeFilter("year", year);
+                    this.removeFilter(index, item.value);
                   }}
                   className="fas fa-times-circle"
                   style={{ cursor: "pointer" }}
                 />
               </span>
             );
-          })} */}
+          });
+        resultFilters.push(resultFilter);
+      }
+
+      return resultFilters;
+    };
+
+    const filterBox = (
+      <div className="card mb-2">
+        <div className="card-header">
+          <button className="btn btn-info mr-2" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+            <i className="fas fa-filter" />
+          </button>
+
+          {renderFilterBadges(filters)
+            .map(filter => {
+              return filter;
+            })
+            .map(item => {
+              return item;
+            })}
         </div>
 
         <div id="collapse1" className="panel-collapse collapse">
           <div className="card-body">
             <form onSubmit={this.addFilter}>
-              <FilterFieldGroup
-                label="Número"
-                filters={this.state.filters.number}
-                avaliableFilters={this.state.avaliableFilters.number}
-                appliedFilters={this.state.appliedFilters.number}
-              />
-              <FilterFieldGroup
-                label="Ano"
-                filters={this.state.filters.year}
-                avaliableFilters={this.state.avaliableFilters.year}
-                appliedFilters={this.state.appliedFilters.year}
-              />
+              <FilterFieldGroup id="number" label="Número" items={this.state.filters.number} onChange={this.markFilter} />
+              <FilterFieldGroup id="year" label="Ano" items={this.state.filters.year} onChange={this.markFilter} />
 
-              {/* <SelectListGroup name="year" value={this.state.formFilters.year} options={yearOptions} onChange={this.onChangeFilter} error={errors.year} /> */}
-              {/* <SelectListGroup
-                name="course"
-                value={this.state.formFilters.course}
-                options={courseOptions}
-                onChange={this.onChangeFilter}
-                error={errors.course}
-              /> */}
-
-              {/* <SelectListGroup
-                name="value"
-                value={this.state.formFilters.value}
-                options={this.state.valueOptions}
-                onChange={this.onChangeFilter2}
-                error={errors.valueOptions}
-              /> */}
-
-              <div className="text-right d-none">
-                <input ref="filterSubmit" type="submit" value="Adicionar filtros" className="btn btn-info" />
+              <div className="d-none">
+                <input ref="filterSubmit" type="submit" onClick={this.applyFilters} value="Aplicar filtros" className="btn btn-info" />
               </div>
             </form>
           </div>
@@ -217,8 +207,10 @@ class ProcessList extends Component {
                   this.refs.filterSubmit.click();
                 }}
                 value="Aplicar filtros"
-                className="btn btn-info"
+                className="btn btn-info ml-1  mb-1"
               />
+              <input type="button" onClick={this.clearFilters} value="Limpar filtros" className="btn btn-info ml-1 mb-1" />
+              <input type="button" onClick={this.cancelFilters} value="Cancelar" className="btn btn-info ml-1  mb-1" />
             </div>
           </div>
         </div>

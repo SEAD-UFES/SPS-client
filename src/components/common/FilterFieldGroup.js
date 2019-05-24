@@ -5,38 +5,16 @@ import PropTypes from "prop-types";
 class FilterFieldGroup extends React.Component {
   constructor() {
     super();
-    this.state = {
-      markedFilters: [],
-      avaliableFilters: [],
-      appliedFilters: []
-    };
+
+    this.onCheck = this.onCheck.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({
-      filters: this.props.filters,
-      avaliableFilters: this.props.avaliableFilters,
-      appliedFilters: this.props.appliedFilters
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.filters) {
-      this.setState({ filters: nextProps.filters });
-    }
-
-    if (nextProps.avaliableFilters) {
-      this.setState({ avaliableFilters: nextProps.avaliableFilters });
-    }
-
-    if (nextProps.appliedFilters) {
-      this.setState({ appliedFilters: nextProps.appliedFilters });
-    }
+  onCheck(e) {
+    this.props.onChange(this.props.id, e.target.name);
   }
 
   render() {
-    const { label } = this.props;
-    const { markedFilters, avaliableFilters, filters } = this.state;
+    const { label, items } = this.props;
 
     return (
       <div className="form-group dropdown cq-dropdown" data-name="statuses">
@@ -49,24 +27,30 @@ class FilterFieldGroup extends React.Component {
           aria-expanded="true"
         >
           {label}:{" "}
-          {filters.length > 0
-            ? filters
-                .filter(filter => {
-                  filter.apllied = true;
+          {items.find(it => {
+            return it.marked === true;
+          })
+            ? items
+                .filter(item => {
+                  return item.marked === true;
                 })
-                .map((filter, key) => {
-                  return <span key={key}>{filter}</span>;
+                .map((item, key) => {
+                  return (
+                    <span className="badge badge-info mr-1" key={key}>
+                      {item.value}
+                    </span>
+                  );
                 })
-            : "Sem filtros aplicados."}
+            : ""}
           <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="btndropdown">
-          {filters.length > 0
-            ? filters.map((filter, key) => {
+          {items.length > 0
+            ? items.map((item, key) => {
                 return (
                   <li className="dropdown-item" key={key}>
                     <label className="radio-btn">
-                      <input type="checkbox" name={filter.value} defaultChecked={filter.applied} /> {filter.value}
+                      <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} /> {item.value}
                     </label>
                   </li>
                 );
