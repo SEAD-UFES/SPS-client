@@ -41,29 +41,6 @@ class GraduationTypeList extends Component {
     }
   }
 
-  // onChange(e) {
-  //   //validação local dos campos
-  //   let errors = this.state.errors;
-  //   let valResult = { error: "", isValid: true };
-  //   switch (e.target.name) {
-  //     case "name":
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   if (!valResult.isValid) {
-  //     errors = { ...errors, [e.target.name]: valResult.error };
-  //   } else {
-  //     delete errors[e.target.name];
-  //   }
-
-  //   //Atualizando os estados do campos e dos erros
-  //   this.setState({
-  //     [e.target.name]: e.target.value,
-  //     errors: errors
-  //   });
-  // }
-
   sortBy(key = "name", options) {
     let sortMethod = this.state.sortMethod;
     let sortReverse = this.state.sortReverse;

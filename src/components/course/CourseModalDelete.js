@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { isEmpty } from "../../validation";
 import { clearErrors } from "../../actions/errorActions";
 import Alert from "../../components/common/Alert";
+import AlertError from "../../components/common/AlertError";
 
 class CourseModalDelete extends Component {
   constructor(props) {
@@ -80,10 +81,15 @@ class CourseModalDelete extends Component {
               </button>
             </div>
             <div className="modal-body">
+              <AlertError errors={errors} />
               <Alert message={errors.course} />
               <p>
                 <strong>Id: </strong>
                 {this.props.item.id}
+              </p>
+              <p>
+                <strong>Nível: </strong>
+                {this.props.item.GraduationType.name}
               </p>
               <p>
                 <strong>Nome: </strong>

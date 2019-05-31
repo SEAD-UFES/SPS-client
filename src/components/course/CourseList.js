@@ -7,6 +7,7 @@ import { getCourses, createCourse, updateCourse, deleteCourse } from "./courseAc
 import { compareBy } from "utils/compareBy";
 import CourseModalForm from "./CourseModalForm";
 import CourseModalDelete from "./CourseModalDelete";
+import { getGraduationTypes } from "components/graduationType/graduationTypeActions";
 
 class CourseList extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class CourseList extends Component {
   componentDidMount() {
     this.props.clearErrors();
     this.props.getCourses();
+    this.props.getGraduationTypes();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -105,6 +107,8 @@ class CourseList extends Component {
 
   render() {
     const { coursesList } = this.state;
+    const { graduationTypes } = this.props.graduationTypeStore;
+    console.log(graduationTypes);
 
     //Add item - form
     const addItemTool = (
@@ -115,7 +119,13 @@ class CourseList extends Component {
           </button>
         </div>
 
-        <CourseModalForm mode="add" targetName="addModal" addFunction={this.props.createCourse} reloadFunction={this.props.getCourses} />
+        <CourseModalForm
+          mode="add"
+          targetName="addModal"
+          addFunction={this.props.createCourse}
+          reloadFunction={this.props.getCourses}
+          graduationTypes={graduationTypes}
+        />
       </div>
     );
 
@@ -127,6 +137,7 @@ class CourseList extends Component {
           <table className="table">
             <thead>
               <tr>
+                <th onClick={() => this.sortBy("level")}>Nível {this.orderIcon("level")}</th>
                 <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
                 <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
                 <th>Opções</th>
@@ -137,6 +148,7 @@ class CourseList extends Component {
                 coursesList.map(course => {
                   return (
                     <tr key={course.id}>
+                      <td>{course.GraduationType.name}</td>
                       <td>{course.name}</td>
                       <td>{course.description ? course.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
@@ -204,6 +216,7 @@ CourseList.proptypes = {
 };
 
 const mapStateToProps = state => ({
+  graduationTypeStore: state.graduationTypeStore,
   courseStore: state.courseStore
 });
 
@@ -214,6 +227,7 @@ export default connect(
     getCourses,
     createCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getGraduationTypes
   }
 )(CourseList);

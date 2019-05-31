@@ -10,10 +10,20 @@ export const createCourse = (courseData, callback_ok) => dispatch => {
       callback_ok();
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (err.response) {
+        let errors = {};
+        errors.serverError = true;
+        errors.data = err.response.data;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
     });
 };
 
@@ -41,10 +51,20 @@ export const updateCourse = (courseData, callback_ok) => dispatch => {
       callback_ok();
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (err.response) {
+        let errors = {};
+        errors.serverError = true;
+        errors.data = err.response.data;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
     });
 };
 
@@ -54,12 +74,22 @@ export const deleteCourse = (course_id, callback_ok) => dispatch => {
     .then(res => {
       callback_ok();
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      if (err.response) {
+        let errors = {};
+        errors.serverError = true;
+        errors.data = err.response.data;
+        dispatch({
+          type: GET_ERRORS,
+          payload: errors
+        });
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { anotherError: true }
+        });
+      }
+    });
 };
 
 //courses loading

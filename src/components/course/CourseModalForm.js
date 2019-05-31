@@ -7,6 +7,8 @@ import TextFieldAreaGroup from "../common/TextAreaFieldGroup";
 import { isEmpty, validateName } from "../../validation";
 import { validateCourseForm } from "./validateCourseForm";
 import { clearErrors } from "../../actions/errorActions";
+import SelectListGroup from "../common/SelectListGroup";
+import { getGraduationTypes } from "components/graduationType/graduationTypeActions";
 
 class CourseModalForm extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class CourseModalForm extends Component {
       id: this.props.item ? this.props.item.id : null,
       name: this.props.item ? this.props.item.name : "",
       description: this.props.item ? (this.props.item.description ? this.props.item.description : "") : "",
+      graduationType_id: this.props.item ? (this.props.item.GraduationType ? this.props.item.GraduationType.id : "") : "",
       //errors
       errors: []
     };
@@ -28,6 +31,7 @@ class CourseModalForm extends Component {
   }
 
   componentDidMount() {
+    //aplly close on this modal. script
     window.$(`#${this.props.targetName}`).on("hidden.bs.modal", this.resetState);
   }
 
@@ -58,6 +62,9 @@ class CourseModalForm extends Component {
     let errors = this.state.errors;
     let valResult = { error: "", isValid: true };
     switch (e.target.name) {
+      case "graduationType_id":
+        valResult = validateName(e.target.value);
+        break;
       case "name":
         valResult = validateName(e.target.value);
         break;
@@ -86,7 +93,8 @@ class CourseModalForm extends Component {
     const courseData = {
       id: this.state.id,
       name: this.state.name,
-      description: this.state.description
+      description: this.state.description,
+      graduationType_id: this.state.graduationType_id
     };
 
     //Form validation:
@@ -98,7 +106,7 @@ class CourseModalForm extends Component {
       if (this.state.mode === "add") {
         this.props.addFunction(courseData, () => {
           window.$(`#${this.props.targetName}`).modal("hide");
-          this.setState({ name: "", description: "" });
+          this.setState({ name: "", description: "", graduationType_id: "" });
           this.props.reloadFunction();
         });
       }
@@ -118,6 +126,7 @@ class CourseModalForm extends Component {
       id: this.props.item ? this.props.item.id : null,
       name: this.props.item ? this.props.item.name : "",
       description: this.props.item ? (this.props.item.description ? this.props.item.description : "") : "",
+      graduationType_id: this.props.item ? (this.props.item.GraduationType ? this.props.item.GraduationType.id : "") : "",
       //errors
       errors: []
     });
@@ -126,6 +135,19 @@ class CourseModalForm extends Component {
 
   render() {
     const { errors } = this.state;
+    const graduationTypes = this.props.graduationTypes;
+
+    const graduationTypeOptions = [{ label: "Escolha o nível de graduação...", value: "" }].concat(
+      graduationTypes
+        ? graduationTypes.map(graduationType => {
+            return {
+              label: `${graduationType.name}`,
+              value: graduationType.id
+            };
+          })
+        : []
+    );
+
     return (
       <div
         className="modal fade"
@@ -149,6 +171,15 @@ class CourseModalForm extends Component {
               <form className="">
                 <div className="">
                   <div className="form-group">
+                    <SelectListGroup
+                      placeholder="* Escolha o nível de graduação"
+                      name="graduationType_id"
+                      value={this.state.graduationType_id}
+                      options={graduationTypeOptions}
+                      onChange={this.onChange}
+                      error={errors.graduationType_id}
+                    />
+
                     <TextFieldGroup type="text" name="name" placeholder="* Nome" value={this.state.name} onChange={this.onChange} error={errors.name} />
 
                     <TextFieldAreaGroup
