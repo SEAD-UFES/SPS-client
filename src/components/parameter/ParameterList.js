@@ -34,6 +34,9 @@ export default class ParameterList extends Component {
                 <li className="list-group-item">
                   <Link to={`${this.props.match.path}/steptypes`}>Tipos de etapa</Link>
                 </li>
+                <li className="list-group-item">
+                  <Link to={`${this.props.match.path}/graduationtypes`}>Níveis de graduação</Link>
+                </li>
               </ul>
             </div>
           </div>

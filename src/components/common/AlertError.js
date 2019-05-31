@@ -9,21 +9,17 @@ class AlertError extends Component {
 
     return show ? (
       <div>
-        {
-          (serverError = this.props.errors.serverError ? (
-            <div class="alert alert-danger" role="alert">
-              <strong>Erro!</strong> Erro do servidor
-            </div>
-          ) : null)
-        }
+        {this.props.errors.serverError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro do servidor
+          </div>
+        ) : null}
 
-        {
-          (anotherError = this.props.errors.anotherError ? (
-            <div class="alert alert-danger" role="alert">
-              <strong>Erro!</strong> Erro desconhecido
-            </div>
-          ) : null)
-        }
+        {this.props.errors.anotherError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro desconhecido
+          </div>
+        ) : null}
       </div>
     ) : null;
   }

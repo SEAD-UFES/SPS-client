@@ -9,6 +9,7 @@ import RegionList from "../region/RegionList";
 import RestrictionList from "components/restriction/RestrictionList";
 import PublicationTypeList from "components/publicationType/PublicationTypeList";
 import StepTypeList from "components/stepType/StepTypeList";
+import GraduationTypeList from "components/graduationType/GraduationTypeList";
 
 import RoleTypeRoutes from "components/roleType/RoleTypeRoutes";
 import UserRoleRoutes from "components/userRole/UserRoleRoutes";
@@ -38,6 +39,8 @@ export default class ParametersRoutes extends Component {
         <PrivateRoute path={`${this.props.match.path}/roleassignments`} component={UserRoleRoutes} />
 
         <PrivateRoute path={`${this.props.match.path}/steptypes`} component={StepTypeList} />
+
+        <PrivateRoute path={`${this.props.match.path}/graduationtypes`} component={GraduationTypeList} />
 
         <Route component={NotFound} />
       </Switch>

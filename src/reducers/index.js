@@ -19,6 +19,7 @@ import callReducer from "components/call/callReducer";
 import stepReducer from "components/step/stepReducer";
 import stepTypeReducer from "components/stepType/stepTypeReducer";
 import vacancyReducer from "components/vacancy/vacancyReducer";
+import graduationTypeReducer from "components/graduationType/graduationTypeReducer";
 
 export default combineReducers({
   errorStore: errorReducer,
@@ -39,5 +40,6 @@ export default combineReducers({
   callStore: callReducer,
   stepStore: stepReducer,
   stepTypeStore: stepTypeReducer,
-  vacancyStore: vacancyReducer
+  vacancyStore: vacancyReducer,
+  graduationTypeStore: graduationTypeReducer
 });
