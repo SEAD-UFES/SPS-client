@@ -67,7 +67,7 @@ class ProcessList extends Component {
   }
 
   onChangePage(page, pageSize) {
-    this.props.getProcessList(page, pageSize);
+    this.props.getProcessList({ page: page, limit: pageSize });
   }
 
   markFilter = (id, item) => {

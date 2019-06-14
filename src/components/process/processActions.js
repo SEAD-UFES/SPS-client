@@ -91,7 +91,7 @@ export const getProcessList = (options = {}) => dispatch => {
     });
 };
 
-//get Process List
+//get Process Filters
 export const getProcessFilters = () => dispatch => {
   let url = "/v1/selectiveprocesses/filters";
 
