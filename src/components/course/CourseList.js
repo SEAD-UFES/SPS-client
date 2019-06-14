@@ -161,6 +161,7 @@ class CourseList extends Component {
                           item={course}
                           editFunction={this.props.updateCourse}
                           reloadFunction={this.props.getCourses}
+                          graduationTypes={graduationTypes}
                         />{" "}
                         <button type="button" className="btn btn-link buttonAsLink text-danger" data-toggle="modal" data-target={`#deleteModal-${course.id}`}>
                           <i className="fas fa-times-circle" />
@@ -176,17 +177,17 @@ class CourseList extends Component {
                   );
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
-              )}
+                  <tr>
+                    <td colSpan="3">Sem itens para exibir</td>
+                  </tr>
+                )}
             </tbody>
           </table>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
-        )}
+            <tr>
+              <td colSpan="3">Sem itens para exibir</td>
+            </tr>
+          )}
       </div>
     );
 
