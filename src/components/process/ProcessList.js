@@ -228,8 +228,8 @@ class ProcessList extends Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Número</th>
-                  <th>Ano</th>
+                  <th>Número/Ano</th>
+                  <th>Nível</th>
                   <th>Curso</th>
                   <th>Status</th>
                   <th>
@@ -244,9 +244,9 @@ class ProcessList extends Component {
               <tbody>
                 {processes.selectiveProcesses.map(process => {
                   return (
-                    <tr key={process.id}>
-                      <td>{process.number}</td>
-                      <td>{process.year}</td>
+                    <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
+                      <td>{process.number}/{process.year}</td>
+                      <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
                       <td>{process.Course.name}</td>
                       <td>{process.visible ? "Visível" : "Oculto"}</td>
                       <td>
