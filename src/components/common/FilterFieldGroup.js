@@ -31,36 +31,41 @@ class FilterFieldGroup extends React.Component {
             return it.marked === true;
           })
             ? items
-                .filter(item => {
-                  return item.marked === true;
-                })
-                .map((item, key) => {
-                  return (
-                    <span className="badge badge-info mr-1" key={key}>
-                      {item.value}
-                    </span>
-                  );
-                })
+              .filter(item => {
+                return item.marked === true;
+              })
+              .map((item, key) => {
+                return (
+                  <span className="badge badge-info mr-1" key={key}>
+                    {item.label}
+                  </span>
+                );
+              })
             : ""}
           <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="btndropdown">
           {items.length > 0
             ? items.map((item, key) => {
-                return (
-                  <li className="dropdown-item" key={key}>
-                    <label className="radio-btn">
-                      <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} /> {item.value}
-                    </label>
-                  </li>
-                );
-              })
+              return (
+                <li className="dropdown-item" key={key}>
+                  <label className="radio-btn">
+                    <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} /> {item.label}
+                  </label>
+                </li>
+              );
+            })
             : ""}
         </ul>
       </div>
     );
   }
 }
+
+
+FilterFieldGroup.defaultProps = {
+  items: []
+};
 
 FilterFieldGroup.propTypes = {
   label: PropTypes.string.isRequired

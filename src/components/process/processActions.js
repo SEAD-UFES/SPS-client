@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
-import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING } from "./processActionTypes";
+import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_PROCESS_FILTERS } from "./processActionTypes";
 
 //Process loading
 export const setProcessLoading = () => {
@@ -87,6 +87,27 @@ export const getProcessList = (options = {}) => dispatch => {
       dispatch({
         type: GET_PROCESSES,
         payload: null
+      });
+    });
+};
+
+//get Process List
+export const getProcessFilters = () => dispatch => {
+  let url = "/v1/selectiveprocesses/filters";
+
+  dispatch(setProcessLoading());
+  axios
+    .get(`${url}`)
+    .then(res =>
+      dispatch({
+        type: GET_PROCESS_FILTERS,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       });
     });
 };

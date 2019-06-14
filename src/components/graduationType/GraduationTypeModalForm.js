@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-
 import { isEmpty, validateName } from "../../validation";
 import { validateGraduationTypeForm } from "./validateGraduationTypeForm";
 import { clearErrors } from "../../actions/errorActions";

@@ -1,12 +1,13 @@
-import { PROCESS_LOADING, GET_PROCESS, GET_PROCESSES } from "./processActionTypes";
+import { PROCESS_LOADING, GET_PROCESS, GET_PROCESSES, GET_PROCESS_FILTERS } from "./processActionTypes";
 
 const initialState = {
   loading: false,
   processes: null,
-  process: null
+  process: null,
+  filters: []
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case PROCESS_LOADING:
       return {
@@ -24,6 +25,11 @@ export default function(state = initialState, action) {
         ...state,
         processes: action.payload,
         loading: false
+      };
+    case GET_PROCESS_FILTERS:
+      return {
+        ...state,
+        filters: action.payload,
       };
     default:
       return state;

@@ -4,14 +4,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { getUserList } from "../user/userActions";
-import { getProcessList } from "./processActions";
-
+import { getProcessList, getProcessFilters } from "./processActions";
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 import DrawFilter from "components/profile/DrawFilter";
-// import TextFieldGroup from "components/common/TextFieldGroup";
-import { validateYearRequired } from "../../validation";
-// import SelectListGroup from "../common/SelectListGroup";
 import FilterFieldGroup from "components/common/FilterFieldGroup";
 
 class ProcessList extends Component {
@@ -22,18 +18,7 @@ class ProcessList extends Component {
       //processes state
       pageOfItems: [],
 
-      filters: {
-        number: [
-          { value: "001", marked: false, applied: false },
-          { value: "002", marked: false, applied: false },
-          { value: "003", marked: false, applied: false }
-        ],
-        year: [
-          { value: "2017", marked: false, applied: false },
-          { value: "2018", marked: false, applied: false },
-          { value: "2019", marked: false, applied: false }
-        ]
-      },
+      filters: {},
 
       //error state
       errors: {}
@@ -48,9 +33,38 @@ class ProcessList extends Component {
     } else {
       this.props.getProcessList();
     }
+    this.props.getProcessFilters();
   }
 
-  //componentWillReceiveProps(nextProps) {}
+  componentWillReceiveProps(nextProps) {
+    //building filters object on state
+    if (nextProps.filters) {
+      const filters = nextProps.filters;
+      let indexes = Object.keys(filters);
+      let state_filters = {};
+
+      for (let index of indexes) {
+        const filter = filters[index];
+        let state_filter = [];
+
+        if (filter.length > 0) {
+          if (typeof filter[0] !== "object") {
+            state_filter = filter.map(item => {
+              return { label: item, value: item, marked: false, applied: false };
+            });
+          } else {
+            state_filter = filter.map(item => {
+              return { label: item.name, value: item.id, marked: false, applied: false };
+            });
+          }
+        }
+
+        state_filters[index] = state_filter;
+      }
+
+      this.setState({ filters: state_filters });
+    }
+  }
 
   onChangePage(page, pageSize) {
     this.props.getProcessList(page, pageSize);
@@ -154,7 +168,7 @@ class ProcessList extends Component {
           .map((item, key) => {
             return (
               <span key={key} className="badge badge-info mr-1">
-                {item.value}{" "}
+                {item.label}{" "}
                 <i
                   onClick={() => {
                     this.removeFilter(index, item.value);
@@ -190,8 +204,11 @@ class ProcessList extends Component {
         <div id="collapse1" className="panel-collapse collapse">
           <div className="card-body">
             <form onSubmit={this.addFilter}>
-              <FilterFieldGroup id="number" label="Número" items={this.state.filters.number} onChange={this.markFilter} />
-              <FilterFieldGroup id="year" label="Ano" items={this.state.filters.year} onChange={this.markFilter} />
+              <FilterFieldGroup id="numbers" label="Número" items={this.state.filters.numbers} onChange={this.markFilter} />
+              <FilterFieldGroup id="years" label="Ano" items={this.state.filters.years} onChange={this.markFilter} />
+              <FilterFieldGroup id="graduationTypes" label="Nível" items={this.state.filters.graduationTypes} onChange={this.markFilter} />
+              <FilterFieldGroup id="courses" label="Curso" items={this.state.filters.courses} onChange={this.markFilter} />
+              <FilterFieldGroup id="assignments" label="Atribuição" items={this.state.filters.assignments} onChange={this.markFilter} />
 
               <div className="d-none">
                 <input ref="filterSubmit" type="submit" onClick={this.applyFilters} value="Aplicar filtros" className="btn btn-info" />
@@ -245,7 +262,9 @@ class ProcessList extends Component {
                 {processes.selectiveProcesses.map(process => {
                   return (
                     <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
-                      <td>{process.number}/{process.year}</td>
+                      <td>
+                        {process.number}/{process.year}
+                      </td>
                       <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
                       <td>{process.Course.name}</td>
                       <td>{process.visible ? "Visível" : "Oculto"}</td>
@@ -300,10 +319,11 @@ ProcessList.propTypes = {
 
 const mapStateToProps = state => ({
   authStore: state.authStore,
-  processStore: state.processStore
+  processStore: state.processStore,
+  filters: state.processStore.filters
 });
 
 export default connect(
   mapStateToProps,
-  { getUserList, getProcessList }
+  { getUserList, getProcessList, getProcessFilters }
 )(ProcessList);

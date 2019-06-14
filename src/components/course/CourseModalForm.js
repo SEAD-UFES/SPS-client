@@ -8,7 +8,6 @@ import { isEmpty, validateName } from "../../validation";
 import { validateCourseForm } from "./validateCourseForm";
 import { clearErrors } from "../../actions/errorActions";
 import SelectListGroup from "../common/SelectListGroup";
-import { getGraduationTypes } from "components/graduationType/graduationTypeActions";
 
 class CourseModalForm extends Component {
   constructor(props) {
@@ -140,11 +139,11 @@ class CourseModalForm extends Component {
     const graduationTypeOptions = [{ label: "Escolha o nível de graduação...", value: "" }].concat(
       graduationTypes
         ? graduationTypes.map(graduationType => {
-            return {
-              label: `${graduationType.name}`,
-              value: graduationType.id
-            };
-          })
+          return {
+            label: `${graduationType.name}`,
+            value: graduationType.id
+          };
+        })
         : []
     );
 
