@@ -48,8 +48,8 @@ class ProcessEdit extends Component {
     }
 
     //(Preenchendo / Atualizando) dados do formulario
-    if (isEmpty(nextProps.errors) && nextProps.process.process) {
-      const process = nextProps.process.process;
+    if (isEmpty(nextProps.errors) && nextProps.processStore.process) {
+      const process = nextProps.processStore.process;
       this.setState({
         number: process.number,
         year: process.year,
@@ -134,11 +134,11 @@ class ProcessEdit extends Component {
     const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
       courseStore.courses
         ? courseStore.courses.map(course => {
-            return {
-              label: course.name,
-              value: course.id
-            };
-          })
+          return {
+            label: course.name,
+            value: course.id
+          };
+        })
         : []
     );
 
@@ -204,7 +204,7 @@ ProcessEdit.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errorStore,
-  process: state.process,
+  processStore: state.processStore,
   courseStore: state.courseStore
 });
 
