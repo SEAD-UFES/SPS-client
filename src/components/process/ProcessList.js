@@ -9,6 +9,8 @@ import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 import DrawFilter from "components/profile/DrawFilter";
 import FilterFieldGroup from "components/common/FilterFieldGroup";
+import { buildFilterStrings } from "utils/buildFilterOptions";
+import { isEmpty } from "validation";
 
 class ProcessList extends Component {
   constructor(props) {
@@ -38,7 +40,13 @@ class ProcessList extends Component {
 
   componentWillReceiveProps(nextProps) {
     //building filters object on state
-    if (nextProps.filters) {
+    //console.log("state", this.state);
+    //console.log("old props", this.props.filters);
+    //console.log("new props", nextProps.filters);
+    //console.log(Object.keys(nextProps.filters).toString(), Object.keys(this.props.filters).toString());
+    //console.log("filters:", this.state.filters);
+    if (!isEmpty(nextProps.filters) && isEmpty(this.state.filters)) {
+      //console.log("entrei");
       const filters = nextProps.filters;
       let indexes = Object.keys(filters);
       let state_filters = {};
@@ -61,7 +69,6 @@ class ProcessList extends Component {
 
         state_filters[index] = state_filter;
       }
-
       this.setState({ filters: state_filters });
     }
   }
@@ -94,7 +101,9 @@ class ProcessList extends Component {
 
     let filters = this.state.filters;
     filters[id] = list;
-    this.setState({ filters: filters });
+    this.setState({ filters: filters }, () => {
+      this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    });
   };
 
   applyFilters = e => {
@@ -111,7 +120,9 @@ class ProcessList extends Component {
       });
     }
 
-    this.setState({ filters: filters });
+    this.setState({ filters: filters }, () => {
+      this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    });
   };
 
   clearFilters = e => {
@@ -129,7 +140,9 @@ class ProcessList extends Component {
       });
     }
 
-    this.setState({ filters: filters });
+    this.setState({ filters: filters }, () => {
+      this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    });
   };
 
   cancelFilters = e => {
@@ -152,9 +165,10 @@ class ProcessList extends Component {
   render() {
     const { processes, loading } = this.props.processStore;
     const { filters } = this.state;
-    let usersContent;
 
     const renderFilterBadges = filters => {
+      //console.log(" renderBadges filters:", filters);
+
       let indexes = Object.keys(filters);
 
       let resultFilters = [];
@@ -234,55 +248,50 @@ class ProcessList extends Component {
       </div>
     );
 
-    if (processes === null || loading) {
-      usersContent = <Spinner />;
-    } else {
-      if (processes.selectiveProcesses.length > 0) {
-        usersContent = (
-          <div>
-            <h4 className="mb-2">Processos</h4>
-            {filterBox}
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Número/Ano</th>
-                  <th>Nível</th>
-                  <th>Curso</th>
-                  <th>Status</th>
-                  <th>
-                    <DrawFilter permission="processo seletivo criar" anyCourse={true}>
-                      <Link className="text-success" to={`${this.props.match.url}/create`}>
-                        <i className="fas fa-plus-circle" />
+    const processTable =
+      processes === null || loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Número/Ano</th>
+                <th>Nível</th>
+                <th>Curso</th>
+                <th>Status</th>
+                <th>
+                  <DrawFilter permission="processo seletivo criar" anyCourse={true}>
+                    <Link className="text-success" to={`${this.props.match.url}/create`}>
+                      <i className="fas fa-plus-circle" />
+                    </Link>
+                  </DrawFilter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {processes.selectiveProcesses.map(process => {
+                return (
+                  <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
+                    <td>
+                      {process.number}/{process.year}
+                    </td>
+                    <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
+                    <td>{process.Course.name}</td>
+                    <td>{process.visible ? "Visível" : "Oculto"}</td>
+                    <td>
+                      <Link className="text-success" to={`/processes/${process.id}`}>
+                        <i className="fas fa-eye" />
                       </Link>
-                    </DrawFilter>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {processes.selectiveProcesses.map(process => {
-                  return (
-                    <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
-                      <td>
-                        {process.number}/{process.year}
-                      </td>
-                      <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
-                      <td>{process.Course.name}</td>
-                      <td>{process.visible ? "Visível" : "Oculto"}</td>
-                      <td>
-                        <Link className="text-success" to={`/processes/${process.id}`}>
-                          <i className="fas fa-eye" />
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <Pagination currentPage={processes.info.currentPage} numberOfPages={processes.info.numberOfPages} onChangePage={this.onChangePage} />
-          </div>
-        );
-      }
-    }
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <Pagination currentPage={processes.info.currentPage} numberOfPages={processes.info.numberOfPages} onChangePage={this.onChangePage} />
+        </div>
+      );
 
     return (
       <div className="user-list">
@@ -301,7 +310,9 @@ class ProcessList extends Component {
                 </DrawFilter>
               </div>
 
-              {usersContent}
+              <h4 className="mb-2">Processos</h4>
+              {filterBox}
+              {processTable}
             </div>
           </div>
         </div>

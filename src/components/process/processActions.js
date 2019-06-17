@@ -69,14 +69,39 @@ export const getProcessList = (options = {}) => dispatch => {
   if (!options.page) {
     options.page = 1;
   }
+  url = url + `?page=${options.page}`;
 
+  //base parameters
   if (!options.limit) {
     options.limit = 10;
   }
+  url = url + `&limit=${options.limit}`;
 
+  if (options.numbers) {
+    url = url + `&numbers=${options.numbers}`;
+  }
+
+  //filters
+  if (options.years) {
+    url = url + `&years=${options.years}`;
+  }
+
+  if (options.graduationTypes) {
+    url = url + `&graduationTypes=${options.graduationTypes}`;
+  }
+
+  if (options.courses) {
+    url = url + `&courses=${options.courses}`;
+  }
+
+  if (options.assignments) {
+    url = url + `&assignments=${options.assignments}`;
+  }
+
+  console.log(url);
   dispatch(setProcessLoading());
   axios
-    .get(`${url}?page=${options.page}&limit=${options.limit}`)
+    .get(`${url}`)
     .then(res =>
       dispatch({
         type: GET_PROCESSES,
