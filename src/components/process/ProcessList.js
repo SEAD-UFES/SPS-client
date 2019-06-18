@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { getUserList } from "../user/userActions";
-import { getProcessList, getProcessFilters } from "./processActions";
+import { getProcessList, getProcessFilters, setProcessFilters } from "./processActions";
 import Spinner from "../common/Spinner";
 import Pagination from "../common/Pagination";
 import DrawFilter from "components/profile/DrawFilter";
@@ -31,67 +31,41 @@ class ProcessList extends Component {
 
   componentDidMount() {
     if (this.props.authStore.isAuthenticated) {
-      this.props.getProcessList();
+      this.props.getProcessList({ ...buildFilterStrings(this.props.filters) });
     } else {
-      this.props.getProcessList();
+      this.props.getProcessList({ ...buildFilterStrings(this.props.filters) });
     }
-    this.props.getProcessFilters();
-  }
 
-  componentWillReceiveProps(nextProps) {
-    //building filters object on state
-    //console.log("state", this.state);
-    //console.log("old props", this.props.filters);
-    //console.log("new props", nextProps.filters);
-    //console.log(Object.keys(nextProps.filters).toString(), Object.keys(this.props.filters).toString());
-    //console.log("filters:", this.state.filters);
-    if (!isEmpty(nextProps.filters) && isEmpty(this.state.filters)) {
-      //console.log("entrei");
-      const filters = nextProps.filters;
-      let indexes = Object.keys(filters);
-      let state_filters = {};
-
-      for (let index of indexes) {
-        const filter = filters[index];
-        let state_filter = [];
-
-        if (filter.length > 0) {
-          if (typeof filter[0] !== "object") {
-            state_filter = filter.map(item => {
-              return { label: item, value: item, marked: false, applied: false };
-            });
-          } else {
-            state_filter = filter.map(item => {
-              return { label: item.name, value: item.id, marked: false, applied: false };
-            });
-          }
-        }
-
-        state_filters[index] = state_filter;
-      }
-      this.setState({ filters: state_filters });
+    //load filters only if dont have yet
+    if (isEmpty(this.props.filters)) {
+      this.props.getProcessFilters();
     }
   }
+
+  componentWillReceiveProps(nextProps) {}
 
   onChangePage(page, pageSize) {
-    this.props.getProcessList({ page: page, limit: pageSize });
+    this.props.getProcessList({ page: page, limit: pageSize, ...buildFilterStrings(this.props.filters) });
   }
 
   markFilter = (id, item) => {
-    let list = this.state.filters[id];
+    //let list = this.state.filters[id];
+    let list = JSON.parse(JSON.stringify(this.props.filters[id]));
 
     let registro = list.find(it => {
       return it.value === item;
     });
     registro.marked = !registro.marked;
 
-    let filters = this.state.filters;
+    let filters = JSON.parse(JSON.stringify(this.props.filters));
     filters[id] = list;
-    this.setState({ filters: filters });
+    //this.setState({ filters: filters });
+    this.props.setProcessFilters(filters);
   };
 
   removeFilter = (id, item) => {
-    let list = this.state.filters[id];
+    //let list = this.state.filters[id];
+    let list = JSON.parse(JSON.stringify(this.props.filters[id]));
 
     let registro = list.find(it => {
       return it.value === item;
@@ -99,17 +73,19 @@ class ProcessList extends Component {
     registro.marked = false;
     registro.applied = false;
 
-    let filters = this.state.filters;
+    let filters = JSON.parse(JSON.stringify(this.props.filters));
     filters[id] = list;
-    this.setState({ filters: filters }, () => {
-      this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
-    });
+    // this.setState({ filters: filters }, () => {
+    //   this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    // });
+    this.props.setProcessFilters(filters);
+    this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
   };
 
   applyFilters = e => {
     e.preventDefault();
 
-    let filters = this.state.filters;
+    let filters = JSON.parse(JSON.stringify(this.props.filters));
     let indexes = Object.keys(filters);
 
     for (let index of indexes) {
@@ -120,15 +96,19 @@ class ProcessList extends Component {
       });
     }
 
-    this.setState({ filters: filters }, () => {
-      this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
-    });
+    // this.setState({ filters: filters }, () => {
+    //   this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    // });
+    this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    this.props.setProcessFilters(filters);
+    this.refs.filterButton.click();
   };
 
   clearFilters = e => {
     e.preventDefault();
 
-    let filters = this.state.filters;
+    //let filters = this.state.filters;
+    let filters = JSON.parse(JSON.stringify(this.props.filters));
     let indexes = Object.keys(filters);
 
     for (let index of indexes) {
@@ -140,15 +120,19 @@ class ProcessList extends Component {
       });
     }
 
-    this.setState({ filters: filters }, () => {
-      this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
-    });
+    // this.setState({ filters: filters }, () => {
+    //   this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(this.state.filters) });
+    // });
+    this.props.getProcessList({ page: 1, limit: 10, ...buildFilterStrings(filters) });
+    this.props.setProcessFilters(filters);
+    this.refs.filterButton.click();
   };
 
   cancelFilters = e => {
     e.preventDefault();
 
-    let filters = this.state.filters;
+    //let filters = this.state.filters;
+    let filters = JSON.parse(JSON.stringify(this.props.filters));
     let indexes = Object.keys(filters);
 
     for (let index of indexes) {
@@ -159,12 +143,16 @@ class ProcessList extends Component {
       });
     }
 
-    this.setState({ filters: filters });
+    //this.setState({ filters: filters });
+
+    this.props.setProcessFilters(filters);
+    this.refs.filterButton.click();
   };
 
   render() {
     const { processes, loading } = this.props.processStore;
-    const { filters } = this.state;
+    //const { filters } = this.state;
+    const { filters } = this.props;
 
     const renderFilterBadges = filters => {
       //console.log(" renderBadges filters:", filters);
@@ -202,7 +190,15 @@ class ProcessList extends Component {
     const filterBox = (
       <div className="card mb-2">
         <div className="card-header">
-          <button className="btn btn-info mr-2" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+          <button
+            ref="filterButton"
+            className="btn btn-info mr-2"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapse1"
+            aria-expanded="false"
+            aria-controls="collapse1"
+          >
             <i className="fas fa-filter" />
           </button>
 
@@ -218,11 +214,11 @@ class ProcessList extends Component {
         <div id="collapse1" className="panel-collapse collapse">
           <div className="card-body">
             <form onSubmit={this.addFilter}>
-              <FilterFieldGroup id="numbers" label="Número" items={this.state.filters.numbers} onChange={this.markFilter} />
-              <FilterFieldGroup id="years" label="Ano" items={this.state.filters.years} onChange={this.markFilter} />
-              <FilterFieldGroup id="graduationTypes" label="Nível" items={this.state.filters.graduationTypes} onChange={this.markFilter} />
-              <FilterFieldGroup id="courses" label="Curso" items={this.state.filters.courses} onChange={this.markFilter} />
-              <FilterFieldGroup id="assignments" label="Atribuição" items={this.state.filters.assignments} onChange={this.markFilter} />
+              <FilterFieldGroup id="numbers" label="Número" items={filters.numbers} onChange={this.markFilter} />
+              <FilterFieldGroup id="years" label="Ano" items={filters.years} onChange={this.markFilter} />
+              <FilterFieldGroup id="graduationTypes" label="Nível" items={filters.graduationTypes} onChange={this.markFilter} />
+              <FilterFieldGroup id="courses" label="Curso" items={filters.courses} onChange={this.markFilter} />
+              <FilterFieldGroup id="assignments" label="Atribuição" items={filters.assignments} onChange={this.markFilter} />
 
               <div className="d-none">
                 <input ref="filterSubmit" type="submit" onClick={this.applyFilters} value="Aplicar filtros" className="btn btn-info" />
@@ -336,5 +332,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUserList, getProcessList, getProcessFilters }
+  { getUserList, getProcessList, getProcessFilters, setProcessFilters }
 )(ProcessList);
