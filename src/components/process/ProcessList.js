@@ -270,7 +270,9 @@ class ProcessList extends Component {
                 return (
                   <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
                     <td>
-                      {process.number}/{process.year}
+                      <Link to={`/processes/${process.id}`}>
+                        {process.number}/{process.year}
+                      </Link>
                     </td>
                     <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
                     <td>{process.Course.name}</td>
