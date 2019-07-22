@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_VACANCY, VACANCIES_LOADING } from "./vacancyActionTypes";
@@ -11,7 +11,7 @@ export const setVacanciesLoading = () => {
 };
 
 export const createVacancy = (vacancyData, process_id, history) => dispatch => {
-  axios
+  spsApi
     .post("/v1/vacancies", vacancyData)
     .then(res => {
       history.push(`/processes/${process_id}`);
@@ -26,7 +26,7 @@ export const createVacancy = (vacancyData, process_id, history) => dispatch => {
 
 export const getVacancy = vacancy_id => dispatch => {
   dispatch(setVacanciesLoading());
-  axios
+  spsApi
     .get(`/v1/vacancies/${vacancy_id}`)
     .then(res =>
       dispatch({
@@ -43,7 +43,7 @@ export const getVacancy = vacancy_id => dispatch => {
 };
 
 export const updateVacancy = (process_id, vacancy_id, vacancyData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/vacancies/${vacancy_id}`, vacancyData)
     .then(res => {
       history.push(`/processes/${process_id}`);
@@ -57,7 +57,7 @@ export const updateVacancy = (process_id, vacancy_id, vacancyData, history) => d
 };
 
 export const deleteVacancy = (vacancy_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/vacancies/${vacancy_id}`)
     .then(res => {
       callback_ok();
