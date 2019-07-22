@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_STEP, STEPS_LOADING } from "./stepActionTypes";
@@ -11,7 +11,7 @@ export const setStepLoading = () => {
 };
 
 export const createStep = (stepData, process_id, history) => dispatch => {
-  axios
+  spsApi
     .post("/v1/steps", stepData)
     .then(res => {
       history.push(`/processes/${process_id}`);
@@ -26,7 +26,7 @@ export const createStep = (stepData, process_id, history) => dispatch => {
 
 export const getStep = step_id => dispatch => {
   dispatch(setStepLoading());
-  axios
+  spsApi
     .get(`/v1/steps/${step_id}`)
     .then(res =>
       dispatch({
@@ -43,7 +43,7 @@ export const getStep = step_id => dispatch => {
 };
 
 export const updateStep = (process_id, step_id, stepData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/steps/${step_id}`, stepData)
     .then(res => {
       history.push(`/processes/${process_id}`);
@@ -57,7 +57,7 @@ export const updateStep = (process_id, step_id, stepData, history) => dispatch =
 };
 
 export const deleteStep = (step_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/steps/${step_id}`)
     .then(res => {
       callback_ok();
