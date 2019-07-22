@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_CALL, CALLS_LOADING } from "./callActionTypes";
@@ -11,7 +11,7 @@ export const setCallsLoading = () => {
 };
 
 export const createCall = (callData, history) => dispatch => {
-  axios
+  spsApi
     .post("/v1/calls", callData)
     .then(res => {
       history.push(`/processes/${callData.selectiveProcess_id}`);
@@ -26,7 +26,7 @@ export const createCall = (callData, history) => dispatch => {
 
 export const getCall = call_id => dispatch => {
   dispatch(setCallsLoading());
-  axios
+  spsApi
     .get(`/v1/calls/${call_id}`)
     .then(res =>
       dispatch({
@@ -43,7 +43,7 @@ export const getCall = call_id => dispatch => {
 };
 
 export const updateCall = (callId, callData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/calls/${callId}`, callData)
     .then(res => {
       history.push(`/processes/${callData.selectiveProcess_id}`);
@@ -57,7 +57,7 @@ export const updateCall = (callId, callData, history) => dispatch => {
 };
 
 export const deleteCall = (call_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/calls/${call_id}`)
     .then(res => {
       callback_ok();
