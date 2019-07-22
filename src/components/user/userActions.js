@@ -1,11 +1,11 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { CLEAR_ERRORS, GET_ERRORS } from "../../actions/types";
 import { GET_USER, GET_USERS, USERS_LOADING, GET_USER_PEOPLE_OPTIONS, GET_USERS_MINIMAL } from "./userActionTypes";
 
 //create user
 export const createUser = (userData, history) => dispatch => {
-  axios
+  spsApi
     .post("/v1/register", userData)
     .then(res => {
       history.push(`/users/${res.data.id}`);
@@ -21,7 +21,7 @@ export const createUser = (userData, history) => dispatch => {
 //Get User
 export const getUser = user_id => dispatch => {
   dispatch(setUserLoading());
-  axios
+  spsApi
     .get(`/v1/users/${user_id}`)
     .then(res =>
       dispatch({
@@ -40,7 +40,7 @@ export const getUser = user_id => dispatch => {
 //Get User List
 export const getUserList = (page = 1, limit = 10) => dispatch => {
   dispatch(setUserLoading());
-  axios
+  spsApi
     .get(`/v1/users?page=${page}&limit=${limit}`)
     .then(res =>
       dispatch({
@@ -58,7 +58,7 @@ export const getUserList = (page = 1, limit = 10) => dispatch => {
 
 //Update User Data
 export const updateUser = (userId, userData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/users/${userId}`, userData)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
@@ -74,7 +74,7 @@ export const updateUser = (userId, userData, history) => dispatch => {
 
 //Update Person Data
 export const updatePerson = (userId, personData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/people/${userId}`, personData, history)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
@@ -97,7 +97,7 @@ export const setUserLoading = () => {
 
 //load people options
 export const getUserPeopleOptions = () => dispatch => {
-  axios
+  spsApi
     .get("/v1/people/options")
     .then(res =>
       dispatch({
@@ -116,7 +116,7 @@ export const getUserPeopleOptions = () => dispatch => {
 //Get User Minimal
 export const getUsersMinimal = () => dispatch => {
   dispatch(setUserLoading());
-  axios
+  spsApi
     .get(`/v1/users/minimal`)
     .then(res =>
       dispatch({
