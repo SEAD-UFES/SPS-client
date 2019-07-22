@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_PUBLICATIONTYPE, GET_PUBLICATIONTYPES, PUBLICATIONTYPES_LOADING } from "./publicationTypeActionTypes";
@@ -11,7 +11,7 @@ export const setPublicationTypesLoading = () => {
 };
 
 export const createPublicationType = (publicationTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/publicationtypes", publicationTypeData)
     .then(res => {
       callback_ok(res.data.id);
@@ -35,7 +35,7 @@ export const createPublicationType = (publicationTypeData, callback_ok) => dispa
 
 export const getPublicationType = publicationType_id => dispatch => {
   dispatch(setPublicationTypesLoading());
-  axios
+  spsApi
     .get(`/v1/publicationtypes/${publicationType_id}`)
     .then(res =>
       dispatch({
@@ -52,7 +52,7 @@ export const getPublicationType = publicationType_id => dispatch => {
 };
 
 export const updatePublicationType = (publicationTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/publicationtypes/${publicationTypeData.id}`, publicationTypeData)
     .then(res => {
       callback_ok(publicationTypeData.id);
@@ -75,7 +75,7 @@ export const updatePublicationType = (publicationTypeData, callback_ok) => dispa
 };
 
 export const deletePublicationType = (publicationType_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/publicationtypes/${publicationType_id}`)
     .then(res => {
       callback_ok();
@@ -99,7 +99,7 @@ export const deletePublicationType = (publicationType_id, callback_ok) => dispat
 
 export const getPublicationTypes = () => dispatch => {
   dispatch(setPublicationTypesLoading());
-  axios
+  spsApi
     .get("/v1/publicationtypes")
     .then(res =>
       dispatch({
