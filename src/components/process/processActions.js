@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
 import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_PROCESS_FILTERS } from "./processActionTypes";
@@ -12,7 +12,7 @@ export const setProcessLoading = () => {
 
 //create Process
 export const createProcess = (processData, history) => dispatch => {
-  axios
+  spsApi
     .post("/v1/selectiveprocesses", processData)
     .then(res => {
       history.push(`/processes/${res.data.id}`);
@@ -30,7 +30,7 @@ export const getProcess = process_id => dispatch => {
   let url = `/v1/selectiveprocesses/${process_id}`;
 
   dispatch(setProcessLoading());
-  axios
+  spsApi
     .get(`${url}`)
     .then(res =>
       dispatch({
@@ -48,7 +48,7 @@ export const getProcess = process_id => dispatch => {
 
 //update Process Data
 export const updateProcess = (processId, processData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/selectiveprocesses/${processId}`, processData)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
@@ -100,7 +100,7 @@ export const getProcessList = (options = {}) => dispatch => {
   }
 
   dispatch(setProcessLoading());
-  axios
+  spsApi
     .get(`${url}`)
     .then(res =>
       dispatch({
@@ -121,7 +121,7 @@ export const getProcessFilters = () => dispatch => {
   let url = "/v1/selectiveprocesses/filters";
   //console.log("getProcessFilters");
   dispatch(setProcessLoading());
-  axios
+  spsApi
     .get(`${url}`)
     .then(res => {
       //Build filters on right format
