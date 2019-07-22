@@ -31,7 +31,8 @@ import ParameterRoutes from "./components/parameter/ParameterRoutes";
 import NotFound from "./components/common/NotFound";
 
 //Check for token
-if (localStorage.jwtToken) {
+
+if (localStorage.jwtToken && typeof localStorage.jwtToken !== "undefined") {
   //Set auth token header auth
   setAuthToken(localStorage.jwtToken);
 
@@ -53,6 +54,8 @@ if (localStorage.jwtToken) {
     //redirect to login page (replaced by PrivateRoute)
     //window.location.href = "/login";
   }
+} else {
+  store.dispatch(logoutUser());
 }
 
 class App extends Component {
