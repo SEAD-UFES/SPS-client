@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_STEPTYPE, GET_STEPTYPES, STEPTYPES_LOADING } from "./stepTypeActionTypes";
@@ -11,7 +11,7 @@ export const setStepTypesLoading = () => {
 };
 
 export const createStepType = (stepTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/steptypes", stepTypeData)
     .then(res => {
       callback_ok(res.data.id);
@@ -36,7 +36,7 @@ export const createStepType = (stepTypeData, callback_ok) => dispatch => {
 
 export const getStepType = roleType_id => dispatch => {
   dispatch(setStepTypesLoading());
-  axios
+  spsApi
     .get(`/v1/steptypes/${roleType_id}`)
     .then(res =>
       dispatch({
@@ -53,7 +53,7 @@ export const getStepType = roleType_id => dispatch => {
 };
 
 export const updateStepType = (stepTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/steptypes/${stepTypeData.id}`, stepTypeData)
     .then(res => {
       callback_ok(stepTypeData.id);
@@ -76,7 +76,7 @@ export const updateStepType = (stepTypeData, callback_ok) => dispatch => {
 };
 
 export const deleteStepType = (roleType_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/steptypes/${roleType_id}`)
     .then(res => {
       callback_ok();
@@ -100,7 +100,7 @@ export const deleteStepType = (roleType_id, callback_ok) => dispatch => {
 
 export const getStepTypes = () => dispatch => {
   dispatch(setStepTypesLoading());
-  axios
+  spsApi
     .get("/v1/steptypes")
     .then(res =>
       dispatch({
