@@ -1,7 +1,7 @@
+import spsApi from "apis/spsServer";
+
 import { GET_ERRORS } from "actions/types";
 import { GET_RESTRICTION, GET_RESTRICTIONS, RESTRICTIONS_LOADING } from "./restrictionActionTypes";
-
-import axios from "axios";
 
 //courses loading
 export const setRestrictionsLoading = () => {
@@ -11,7 +11,7 @@ export const setRestrictionsLoading = () => {
 };
 
 export const createRestriction = (restrictionData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/restrictions", restrictionData)
     .then(res => {
       callback_ok();
@@ -25,7 +25,7 @@ export const createRestriction = (restrictionData, callback_ok) => dispatch => {
 };
 
 export const getRestriction = restriction_id => dispatch => {
-  axios
+  spsApi
     .get(`/v1/restrictions/${restriction_id}`)
     .then(res =>
       dispatch({
@@ -42,7 +42,7 @@ export const getRestriction = restriction_id => dispatch => {
 };
 
 export const updateRestriction = (restrictionData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/restrictions/${restrictionData.id}`, restrictionData)
     .then(res => {
       callback_ok();
@@ -56,7 +56,7 @@ export const updateRestriction = (restrictionData, callback_ok) => dispatch => {
 };
 
 export const deleteRestriction = (restriction_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/restrictions/${restriction_id}`)
     .then(res => {
       callback_ok();
@@ -71,7 +71,7 @@ export const deleteRestriction = (restriction_id, callback_ok) => dispatch => {
 
 export const getRestrictions = () => dispatch => {
   dispatch(setRestrictionsLoading());
-  axios
+  spsApi
     .get("/v1/restrictions")
     .then(res =>
       dispatch({
