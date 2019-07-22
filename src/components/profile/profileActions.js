@@ -1,7 +1,6 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS, CLEAR_ERRORS } from "../../actions/types";
-
 import { GET_PROFILE, PROFILE_LOADING, CLEAR_PROFILE, GET_PROFILE_OPTIONS } from "./profileActionTypes";
 
 //Profile loading
@@ -14,7 +13,7 @@ export const setProfileLoading = () => {
 //Get current profile
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
-  axios
+  spsApi
     .get("/v1/me")
     .then(res =>
       dispatch({
@@ -32,7 +31,7 @@ export const getCurrentProfile = () => dispatch => {
 
 //Update profile user data
 export const updateProfileUser = (userId, userData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/me`, userData)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
@@ -48,7 +47,7 @@ export const updateProfileUser = (userId, userData, history) => dispatch => {
 
 //Update profile person data
 export const updateProfilePerson = (userId, personData, history) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/me`, personData, history)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS });
@@ -64,7 +63,7 @@ export const updateProfilePerson = (userId, personData, history) => dispatch => 
 
 //Update profile person options
 export const getPeopleOptions = () => dispatch => {
-  axios
+  spsApi
     .get("/v1/people/options")
     .then(res =>
       dispatch({
