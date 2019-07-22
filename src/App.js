@@ -54,8 +54,6 @@ if (localStorage.jwtToken && typeof localStorage.jwtToken !== "undefined") {
     //redirect to login page (replaced by PrivateRoute)
     //window.location.href = "/login";
   }
-} else {
-  store.dispatch(logoutUser());
 }
 
 class App extends Component {
