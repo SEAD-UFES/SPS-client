@@ -1,4 +1,5 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
+
 import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
@@ -9,7 +10,7 @@ import { clearCurrentProfile } from "components/profile/profileActions";
 
 //Register
 export const registerUser = (userData, history) => dispatch => {
-  axios
+  spsApi
     .post("/v1/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
@@ -22,7 +23,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 //Login
 export const loginUser = userData => dispatch => {
-  axios
+  spsApi
     .post("/v1/auth", userData)
     .then(res => {
       const { access_token } = res.data;
