@@ -1,10 +1,10 @@
+import spsApi from "apis/spsServer";
+
 import { GET_ERRORS } from "actions/types";
 import { GET_USERROLE, GET_USERROLES, USERROLES_LOADING } from "./userRoleActionTypes";
 
-import axios from "axios";
-
 export const createUserRole = (userRoleData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/userroles", userRoleData)
     .then(res => {
       callback_ok(res.data.id);
@@ -28,7 +28,7 @@ export const createUserRole = (userRoleData, callback_ok) => dispatch => {
 
 export const getUserRole = userRole_id => dispatch => {
   dispatch(setUserRolesLoading());
-  axios
+  spsApi
     .get(`/v1/userroles/${userRole_id}`)
     .then(res =>
       dispatch({
@@ -45,7 +45,7 @@ export const getUserRole = userRole_id => dispatch => {
 };
 
 export const updateUserRole = (userRoleData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/userroles/${userRoleData.id}`, userRoleData)
     .then(res => {
       callback_ok(userRoleData.id);
@@ -68,7 +68,7 @@ export const updateUserRole = (userRoleData, callback_ok) => dispatch => {
 };
 
 export const deleteUserRole = (userRole_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/userroles/${userRole_id}`)
     .then(res => {
       callback_ok();
@@ -99,7 +99,7 @@ export const setUserRolesLoading = () => {
 
 export const getUserRoles = () => dispatch => {
   dispatch(setUserRolesLoading());
-  axios
+  spsApi
     .get("/v1/userroles")
     .then(res =>
       dispatch({
