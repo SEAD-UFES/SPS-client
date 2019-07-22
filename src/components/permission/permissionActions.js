@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import {
@@ -15,7 +15,7 @@ export const setPermissionsLoading = () => {
 
 export const getPermissions = () => dispatch => {
   dispatch(setPermissionsLoading());
-  axios
+  spsApi
     .get("/v1/permissions")
     .then(res =>
       dispatch({
