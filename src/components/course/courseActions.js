@@ -1,10 +1,10 @@
+import spsApi from "apis/spsServer";
+
 import { GET_ERRORS } from "../../actions/types";
 import { GET_COURSE, GET_COURSES, COURSES_LOADING } from "./courseActionTypes";
 
-import axios from "axios";
-
 export const createCourse = (courseData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/courses", courseData)
     .then(res => {
       callback_ok();
@@ -28,7 +28,7 @@ export const createCourse = (courseData, callback_ok) => dispatch => {
 };
 
 export const getCourse = course_id => dispatch => {
-  axios
+  spsApi
     .get(`/v1/courses/${course_id}`)
     .then(res =>
       dispatch({
@@ -45,7 +45,7 @@ export const getCourse = course_id => dispatch => {
 };
 
 export const updateCourse = (courseData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/courses/${courseData.id}`, courseData)
     .then(res => {
       callback_ok();
@@ -69,7 +69,7 @@ export const updateCourse = (courseData, callback_ok) => dispatch => {
 };
 
 export const deleteCourse = (course_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/courses/${course_id}`)
     .then(res => {
       callback_ok();
@@ -101,7 +101,7 @@ export const setCoursesLoading = () => {
 
 export const getCourses = () => dispatch => {
   dispatch(setCoursesLoading());
-  axios
+  spsApi
     .get("/v1/courses")
     .then(res =>
       dispatch({
