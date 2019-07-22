@@ -1,11 +1,11 @@
+import spsApi from "apis/spsServer";
+
 import { GET_ERRORS } from "actions/types";
 import {
   GET_ROLEPERMISSION,
   //GET_ROLEPERMISSIONS,
   ROLEPERMISSIONS_LOADING
 } from "./rolePermissionActionTypes";
-
-import axios from "axios";
 
 export const setRolePermissionLoading = () => {
   return {
@@ -14,7 +14,7 @@ export const setRolePermissionLoading = () => {
 };
 
 export const createRolePermission = (rolePermissionData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/rolepermissions", rolePermissionData)
     .then(res => {
       callback_ok();
@@ -38,7 +38,7 @@ export const createRolePermission = (rolePermissionData, callback_ok) => dispatc
 
 export const getRolePermission = rolePermission_id => dispatch => {
   dispatch(setRolePermissionLoading());
-  axios
+  spsApi
     .get(`/v1/rolepermissions/${rolePermission_id}`)
     .then(res => {
       dispatch({
@@ -55,7 +55,7 @@ export const getRolePermission = rolePermission_id => dispatch => {
 };
 
 export const deleteRolePermission = (rolePermission_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/rolepermissions/${rolePermission_id}`)
     .then(res => {
       callback_ok();
