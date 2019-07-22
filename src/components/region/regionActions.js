@@ -1,7 +1,7 @@
+import spsApi from "apis/spsServer";
+
 import { GET_ERRORS } from "../../actions/types";
 import { GET_REGION, GET_REGIONS, REGIONS_LOADING } from "./regionActionTypes";
-
-import axios from "axios";
 
 //courses loading
 export const setRegionsLoading = () => {
@@ -11,7 +11,7 @@ export const setRegionsLoading = () => {
 };
 
 export const createRegion = (regionData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/regions", regionData)
     .then(res => {
       callback_ok();
@@ -25,7 +25,7 @@ export const createRegion = (regionData, callback_ok) => dispatch => {
 };
 
 export const getRegion = region_id => dispatch => {
-  axios
+  spsApi
     .get(`/v1/regions/${region_id}`)
     .then(res =>
       dispatch({
@@ -42,7 +42,7 @@ export const getRegion = region_id => dispatch => {
 };
 
 export const updateRegion = (regionData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/regions/${regionData.id}`, regionData)
     .then(res => {
       callback_ok();
@@ -56,7 +56,7 @@ export const updateRegion = (regionData, callback_ok) => dispatch => {
 };
 
 export const deleteRegion = (region_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/regions/${region_id}`)
     .then(res => {
       callback_ok();
@@ -71,7 +71,7 @@ export const deleteRegion = (region_id, callback_ok) => dispatch => {
 
 export const getRegions = () => dispatch => {
   dispatch(setRegionsLoading());
-  axios
+  spsApi
     .get("/v1/regions")
     .then(res =>
       dispatch({
