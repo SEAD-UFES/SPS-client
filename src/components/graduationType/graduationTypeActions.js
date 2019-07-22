@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_GRADUATIONTYPE, GET_GRADUATIONTYPES, GRADUATIONTYPES_LOADING } from "./graduationTypeActionTypes";
@@ -11,7 +11,7 @@ export const setGraduationTypesLoading = () => {
 };
 
 export const createGraduationType = (graduationTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/graduationtypes", graduationTypeData)
     .then(res => {
       callback_ok(res.data.id);
@@ -36,7 +36,7 @@ export const createGraduationType = (graduationTypeData, callback_ok) => dispatc
 
 export const getGraduationType = graduationType_id => dispatch => {
   dispatch(setGraduationTypesLoading());
-  axios
+  spsApi
     .get(`/v1/graduationtypes/${graduationType_id}`)
     .then(res =>
       dispatch({
@@ -53,7 +53,7 @@ export const getGraduationType = graduationType_id => dispatch => {
 };
 
 export const updateGraduationType = (graduationTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/graduationtypes/${graduationTypeData.id}`, graduationTypeData)
     .then(res => {
       callback_ok(graduationTypeData.id);
@@ -76,7 +76,7 @@ export const updateGraduationType = (graduationTypeData, callback_ok) => dispatc
 };
 
 export const deleteGraduationType = (graduationType_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/graduationtypes/${graduationType_id}`)
     .then(res => {
       callback_ok();
@@ -100,7 +100,7 @@ export const deleteGraduationType = (graduationType_id, callback_ok) => dispatch
 
 export const getGraduationTypes = () => dispatch => {
   dispatch(setGraduationTypesLoading());
-  axios
+  spsApi
     .get("/v1/graduationtypes")
     .then(res =>
       dispatch({
