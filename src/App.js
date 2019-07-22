@@ -31,7 +31,6 @@ import ParameterRoutes from "./components/parameter/ParameterRoutes";
 import NotFound from "./components/common/NotFound";
 
 //Check for token
-
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== "undefined") {
   //Set auth token header auth
   setAuthToken(localStorage.jwtToken);

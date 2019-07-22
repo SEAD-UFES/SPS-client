@@ -1,4 +1,5 @@
 import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "../../actions/types";
 import { GET_ASSIGNMENT, GET_ASSIGNMENTS, ASSIGNMENTS_LOADING } from "./assignmentActionTypes";
@@ -11,7 +12,7 @@ export const setAssignmentsLoading = () => {
 };
 
 export const createAssignment = (assignmentData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/assignments", assignmentData)
     .then(res => {
       callback_ok();
@@ -25,7 +26,7 @@ export const createAssignment = (assignmentData, callback_ok) => dispatch => {
 };
 
 export const getAssignment = assignment_id => dispatch => {
-  axios
+  spsApi
     .get(`/v1/assignments/${assignment_id}`)
     .then(res =>
       dispatch({
@@ -42,7 +43,7 @@ export const getAssignment = assignment_id => dispatch => {
 };
 
 export const updateAssignment = (assignmentData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/assignments/${assignmentData.id}`, assignmentData)
     .then(res => {
       callback_ok();
@@ -56,7 +57,7 @@ export const updateAssignment = (assignmentData, callback_ok) => dispatch => {
 };
 
 export const deleteAssignment = (assignment_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/assignments/${assignment_id}`)
     .then(res => {
       callback_ok();
@@ -71,7 +72,7 @@ export const deleteAssignment = (assignment_id, callback_ok) => dispatch => {
 
 export const getAssignments = () => dispatch => {
   dispatch(setAssignmentsLoading());
-  axios
+  spsApi
     .get("/v1/assignments")
     .then(res =>
       dispatch({
