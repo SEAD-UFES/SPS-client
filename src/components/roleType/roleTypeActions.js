@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import { GET_ROLETYPE, GET_ROLETYPES, ROLETYPES_LOADING } from "./roleTypeActionTypes";
@@ -11,7 +11,7 @@ export const setRoleTypesLoading = () => {
 };
 
 export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .post("/v1/roletypes", roleTypeData)
     .then(res => {
       callback_ok(res.data.id);
@@ -35,7 +35,7 @@ export const createRoleType = (roleTypeData, callback_ok) => dispatch => {
 
 export const getRoleType = roleType_id => dispatch => {
   dispatch(setRoleTypesLoading());
-  axios
+  spsApi
     .get(`/v1/roletypes/${roleType_id}`)
     .then(res =>
       dispatch({
@@ -52,7 +52,7 @@ export const getRoleType = roleType_id => dispatch => {
 };
 
 export const updateRoleType = (roleTypeData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/roletypes/${roleTypeData.id}`, roleTypeData)
     .then(res => {
       callback_ok(roleTypeData.id);
@@ -75,7 +75,7 @@ export const updateRoleType = (roleTypeData, callback_ok) => dispatch => {
 };
 
 export const deleteRoleType = (roleType_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/roletypes/${roleType_id}`)
     .then(res => {
       callback_ok();
@@ -99,7 +99,7 @@ export const deleteRoleType = (roleType_id, callback_ok) => dispatch => {
 
 export const getRoleTypes = () => dispatch => {
   dispatch(setRoleTypesLoading());
-  axios
+  spsApi
     .get("/v1/roletypes")
     .then(res =>
       dispatch({
