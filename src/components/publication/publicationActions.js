@@ -1,4 +1,4 @@
-import axios from "axios";
+import spsApi from "apis/spsServer";
 
 import { GET_ERRORS } from "actions/types";
 import {
@@ -38,7 +38,7 @@ export const createPublication = (PublicationData, callback_ok) => dispatch => {
 
   formData.append("file", PublicationData.file);
 
-  axios
+  spsApi
     .post("/v1/publications", formData)
     .then(res => {
       callback_ok(res.data.id);
@@ -62,7 +62,7 @@ export const createPublication = (PublicationData, callback_ok) => dispatch => {
 
 export const getPublication = publication_id => dispatch => {
   dispatch(setPublicationsLoading());
-  axios
+  spsApi
     .get(`/v1/publications/${publication_id}`)
     .then(res =>
       dispatch({
@@ -88,7 +88,7 @@ export const getPublication = publication_id => dispatch => {
 };
 
 export const updatePublication = (PublicationData, callback_ok) => dispatch => {
-  axios
+  spsApi
     .put(`/v1/publications/${PublicationData.id}`, PublicationData)
     .then(res => {
       callback_ok(PublicationData.id);
@@ -111,7 +111,7 @@ export const updatePublication = (PublicationData, callback_ok) => dispatch => {
 };
 
 export const deletePublication = (publication_id, callback_ok) => dispatch => {
-  axios
+  spsApi
     .delete(`/v1/publications/${publication_id}`)
     .then(res => {
       callback_ok();
