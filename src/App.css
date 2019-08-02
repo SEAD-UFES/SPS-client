@@ -96,17 +96,17 @@ ul.timeline > li:before {
 /*#### Codigo para a paginação ####*/
 
 a {
-  color: #22c0e8;
+  color: #17a2b8;
 }
 
 .pagination > li > button {
-  color: #22c0e8 !important;
+  color: #17a2b8 !important;
 }
 
 .pagination > li.active > button {
   color: white !important;
-  background-color: #22c0e8 !important;
-  border-color: #22c0e8 !important;
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
 }
 
 /*##########################################*/
