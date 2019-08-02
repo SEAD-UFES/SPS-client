@@ -102,6 +102,7 @@ a {
 .pagination > li > button {
   color: #22c0e8 !important;
 }
+
 .pagination > li.active > button {
   color: white !important;
   background-color: #22c0e8 !important;
