@@ -107,7 +107,7 @@ class Pagination extends React.Component {
 
         {pager.pages.map((page, index) => (
           <li key={index} className={`page-item ${pager.currentPage === page ? "active" : ""}`}>
-            <button className="page-link" onClick={() => this.setPage(page)}>
+            <button className="page-link teste" onClick={() => this.setPage(page)}>
               {page}
             </button>
           </li>
