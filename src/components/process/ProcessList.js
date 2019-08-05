@@ -149,6 +149,68 @@ class ProcessList extends Component {
     this.refs.filterButton.click();
   };
 
+  renderAdd() {
+    return (
+      <React.Fragment>
+        <DrawFilter permission="processo seletivo criar" anyCourse={true}>
+          <div className="btn-group" role="group">
+            <Link to={`${this.props.match.url}/create`} className="btn btn-info">
+              <i className="fas fa-user-circle text-light mr-1" />
+              Adicionar processo
+            </Link>
+          </div>
+        </DrawFilter>
+      </React.Fragment>
+    );
+  }
+
+  renderTable(processes) {
+    return (
+      <div>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>Número/Ano</th>
+              <th>Nível</th>
+              <th>Curso</th>
+              <th>
+                <DrawFilter permission="processo seletivo criar" anyCourse={true}>
+                  <Link className="text-success" to={`${this.props.match.url}/create`}>
+                    <i className="fas fa-plus-circle" />
+                  </Link>
+                </DrawFilter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {processes.selectiveProcesses.map(process => {
+              return (
+                <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
+                  <td>
+                    <Link to={`${this.props.match.url}/${process.id}`}>
+                      {process.number}/{process.year}
+                    </Link>
+                  </td>
+                  <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
+                  <td>{process.Course.name}</td>
+                  <td>
+                    <Link className="text-success" to={`/processes/${process.id}`}>
+                      <i className="fas fa-eye" />
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  renderPagination(processes) {
+    return <Pagination currentPage={processes.info.currentPage} numberOfPages={processes.info.numberOfPages} onChangePage={this.onChangePage} />;
+  }
+
   render() {
     const { processes, loading } = this.props.processStore;
     //const { filters } = this.state;
@@ -244,52 +306,8 @@ class ProcessList extends Component {
       </div>
     );
 
-    const processTable =
-      processes === null || loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Número/Ano</th>
-                <th>Nível</th>
-                <th>Curso</th>
-                <th>Status</th>
-                <th>
-                  <DrawFilter permission="processo seletivo criar" anyCourse={true}>
-                    <Link className="text-success" to={`${this.props.match.url}/create`}>
-                      <i className="fas fa-plus-circle" />
-                    </Link>
-                  </DrawFilter>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {processes.selectiveProcesses.map(process => {
-                return (
-                  <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
-                    <td>
-                      <Link to={`/processes/${process.id}`}>
-                        {process.number}/{process.year}
-                      </Link>
-                    </td>
-                    <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
-                    <td>{process.Course.name}</td>
-                    <td>{process.visible ? "Visível" : "Oculto"}</td>
-                    <td>
-                      <Link className="text-success" to={`/processes/${process.id}`}>
-                        <i className="fas fa-eye" />
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <Pagination currentPage={processes.info.currentPage} numberOfPages={processes.info.numberOfPages} onChangePage={this.onChangePage} />
-        </div>
-      );
+    const processTable = processes === null || loading ? <Spinner /> : this.renderTable(processes);
+    const pagination = processes === null || loading ? null : this.renderPagination(processes);
 
     return (
       <div className="user-list">
@@ -299,18 +317,12 @@ class ProcessList extends Component {
               <h1 className="display-4">Lista de processos</h1>
               <p className="lead text-muted" />
 
-              <div className="btn-group mb-4" role="group">
-                <DrawFilter permission="processo seletivo criar" anyCourse={true}>
-                  <Link to="/processes/create" className="btn btn-light">
-                    <i className="fas fa-user-circle text-info mr-1" />
-                    Adicionar processo
-                  </Link>
-                </DrawFilter>
-              </div>
+              <div className="mb-2">{this.renderAdd()}</div>
 
               <h4 className="mb-2">Processos</h4>
               {filterBox}
               {processTable}
+              {pagination}
             </div>
           </div>
         </div>
