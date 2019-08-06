@@ -20,56 +20,57 @@ class ProcessView extends Component {
     }
   }
 
+  renderInfoTable(process) {
+    return (
+      <div>
+        <h4 className="mb-2">
+          Informações do processo{" "}
+          <small>
+            <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
+              <Link className="text-info" to={`/processes/${process.id}/edit`}>
+                <i className="fas fa-cog" />
+              </Link>
+            </DrawFilter>
+          </small>
+        </h4>
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>
+                <strong>Número/Ano:</strong>
+              </td>
+              <td>
+                {process.number}/{process.year}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Curso:</strong>
+              </td>
+              <td>{process.Course.name}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Visibilidade:</strong>
+              </td>
+              <td>{process.visible ? "Processo visível" : "Processo oculto"}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Descrição:</strong>
+              </td>
+              <td>{process.description}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   render() {
     const { process, loading } = this.props.processStore;
 
-    const infoTable =
-      process === null || loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          <h4 className="mb-2">
-            Informações do processo{" "}
-            <small>
-              <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
-                <Link className="text-info" to={`/processes/${process.id}/edit`}>
-                  <i className="fas fa-cog" />
-                </Link>
-              </DrawFilter>
-            </small>
-          </h4>
-          <table className="table">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Número/Ano:</strong>
-                </td>
-                <td>
-                  {process.number}/{process.year}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Curso:</strong>
-                </td>
-                <td>{process.Course.name}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Visibilidade:</strong>
-                </td>
-                <td>{process.visible ? "Processo visível" : "Processo oculto"}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Descrição:</strong>
-                </td>
-                <td>{process.description}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      );
+    const infoTable = process === null || loading ? <Spinner /> : this.renderInfoTable(process);
 
     const processActions =
       process === null || loading ? (

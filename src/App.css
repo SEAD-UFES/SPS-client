@@ -111,6 +111,16 @@ a {
 
 /*##########################################*/
 
+/*#### Remover linha de cima da tabela ####*/
+.table > tbody > tr:first-child > td {
+  border-top: none;
+}
+
+.table > thead > tr:first-child > th {
+  border-top: none;
+}
+/*##########################################*/
+
 /*#### Codigo original create-react-app ####*/
 /*
 .App {

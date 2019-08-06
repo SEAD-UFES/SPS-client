@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { createPublicationType, getPublicationTypes, deletePublicationType } from "./publicationTypeActions";
+import { createPublicationType, getPublicationTypes, deletePublicationType, updatePublicationType } from "./publicationTypeActions";
 import { clearErrors } from "actions/errorActions";
 import { compareBy } from "utils/compareBy";
 import PublicationTypeModalForm from "./PublicationTypeModalForm";
@@ -211,7 +211,8 @@ class ProcessPublicationTypesList extends Component {
 ProcessPublicationTypesList.proptypes = {
   getPublicationTypes: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  createPublicationType: PropTypes.func.isRequired
+  createPublicationType: PropTypes.func.isRequired,
+  updatePublicationType: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -224,6 +225,7 @@ export default connect(
     getPublicationTypes,
     clearErrors,
     createPublicationType,
-    deletePublicationType
+    deletePublicationType,
+    updatePublicationType
   }
 )(ProcessPublicationTypesList);
