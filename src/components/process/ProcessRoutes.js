@@ -5,8 +5,11 @@ import PrivateRoute from "../common/PrivateRoute";
 
 import ProcessList from "./ProcessList";
 import ProcessCreate from "./ProcessCreate";
+import ProcessView_v1 from "./ProcessView_v1";
+import ProcessEdit_v1 from "./ProcessEdit_v1";
+
+//V2
 import ProcessView from "./ProcessView";
-import ProcessView2 from "./ProcessView_v2";
 import ProcessEdit from "./ProcessEdit";
 
 import CallCreate from "../call/CallCreate";
@@ -37,9 +40,13 @@ export default class ProcessRoutes extends Component {
 
         <Route exact path={`${this.props.match.path}/:id`} component={ProcessView} />
 
-        <Route exact path={`${this.props.match.path}/v2/:id`} component={ProcessView2} />
+        {/* V1 */}
+        <Route exact path={`${this.props.match.path}/v1/:id`} component={ProcessView_v1} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/edit`} component={ProcessEdit} />
+
+        {/* V1 */}
+        <PrivateRoute exact path={`${this.props.match.path}/v1/:id/edit`} component={ProcessEdit_v1} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/calls/create`} component={CallCreate} />
 
