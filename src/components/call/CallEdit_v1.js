@@ -172,62 +172,6 @@ class CallEdit extends Component {
     }
   }
 
-  renderForm(errors) {
-    return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar chamada</h4>
-        </div>
-
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="number"
-              label="Número: *"
-              placeholder="Número da chamada"
-              value={this.state.number}
-              onChange={this.onChange}
-              error={errors.number}
-            />
-
-            <TextFieldGroup
-              placeholder="Início das inscrições"
-              type="date"
-              label="Incrições - início: *"
-              name="enrollmentOpeningDate"
-              value={this.state.enrollmentOpeningDate}
-              onChange={this.onChange}
-              error={errors.enrollmentOpeningDate}
-            />
-
-            <TextFieldGroup
-              placeholder="Encerramento das inscrições"
-              type="date"
-              label="Incrições - final: *"
-              name="enrollmentClosingDate"
-              value={this.state.enrollmentClosingDate}
-              onChange={this.onChange}
-              error={errors.enrollmentClosingDate}
-            />
-
-            <TextFieldGroup
-              placeholder="Encerramento da chamada"
-              type="date"
-              label="Encerramento: *"
-              name="endingDate"
-              value={this.state.endingDate}
-              onChange={this.onChange}
-              error={errors.endingDate}
-            />
-
-            <input type="submit" className="btn btn-info btn-block mt-4" />
-          </form>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     const { errors } = this.state;
 
@@ -248,12 +192,47 @@ class CallEdit extends Component {
       <div className="register">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-8 m-auto">
               <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
-              <h1 className="display-4">Chamada</h1>
-              {this.renderForm(errors)}
+              <h1 className="display-4 text-center">Editar chamada</h1>
+              <p className="lead text-center">Altere os dados da chamada</p>
+              <form noValidate onSubmit={this.onSubmit}>
+                <TextFieldGroup type="text" name="number" placeholder="* Número" value={this.state.number} onChange={this.onChange} error={errors.number} />
+
+                <h6>Início das inscrições</h6>
+                <TextFieldGroup
+                  placeholder="Início das inscrições"
+                  type="date"
+                  name="enrollmentOpeningDate"
+                  value={this.state.enrollmentOpeningDate}
+                  onChange={this.onChange}
+                  error={errors.enrollmentOpeningDate}
+                />
+
+                <h6>Encerramento das inscrições</h6>
+                <TextFieldGroup
+                  placeholder="Encerramento das inscrições"
+                  type="date"
+                  name="enrollmentClosingDate"
+                  value={this.state.enrollmentClosingDate}
+                  onChange={this.onChange}
+                  error={errors.enrollmentClosingDate}
+                />
+
+                <h6>Final da chamada</h6>
+                <TextFieldGroup
+                  placeholder="Encerramento da chamada"
+                  type="date"
+                  name="endingDate"
+                  value={this.state.endingDate}
+                  onChange={this.onChange}
+                  error={errors.endingDate}
+                />
+
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+              </form>
               {deleteButton}
             </div>
           </div>
