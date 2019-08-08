@@ -398,16 +398,6 @@ class PublicationUpdate extends Component {
         : []
     );
 
-    const deleteButton = (
-      <DrawFilter permission="publication_delete">
-        <div className="text-right mt-2 mb-2">
-          <Link className="text-danger" to={{ pathname: `/processes/${this.state.selectiveProcess_id}/publications/${this.state.id}/delete` }}>
-            <i className="fas fa-times-circle" /> Excluir esta publicação
-          </Link>
-        </div>
-      </DrawFilter>
-    );
-
     return (
       <div className="publication-update">
         <div className="container">
@@ -417,9 +407,8 @@ class PublicationUpdate extends Component {
                 Voltar para processo seletivo
               </Link>
               <h1 className="display-4">Publicação</h1>
-              {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
               {alertsList}
-              {deleteButton}
+              {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
             </div>
           </div>
         </div>

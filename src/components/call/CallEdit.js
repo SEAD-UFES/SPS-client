@@ -232,19 +232,23 @@ class CallEdit extends Component {
   render() {
     const { errors } = this.state;
 
-    const deleteButton = (
-      <DrawFilter permission="chamada apagar">
-        <div className="text-right mt-2 mb-2">
-          <Link
-            className="text-danger"
-            to={{
-              pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/delete`
-            }}
-          >
-            <i className="fas fa-times-circle" /> Excluir chamada
-          </Link>
-        </div>
-      </DrawFilter>
+    const alertsList = (
+      <div>
+        {errors.serverError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro do servidor
+          </div>
+        ) : (
+          ""
+        )}
+        {errors.anotherError ? (
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro!</strong> Erro desconhecido
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     );
 
     return (
@@ -256,8 +260,8 @@ class CallEdit extends Component {
                 Voltar para o processo
               </Link>
               <h1 className="display-4">Chamada</h1>
+              {alertsList}
               {this.renderForm(errors)}
-              {deleteButton}
             </div>
           </div>
         </div>
