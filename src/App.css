@@ -93,6 +93,7 @@ ul.timeline > li:before {
   font: inherit;
 }
 
+/*##########################################*/
 /*#### Codigo para a paginação ####*/
 
 a {
@@ -108,9 +109,9 @@ a {
   background-color: #17a2b8 !important;
   border-color: #17a2b8 !important;
 }
-
 /*##########################################*/
 
+/*##########################################*/
 /*#### Remover linha de cima da tabela ####*/
 .table > tbody > tr:first-child > td {
   border-top: none;

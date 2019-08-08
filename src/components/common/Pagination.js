@@ -92,7 +92,7 @@ class Pagination extends React.Component {
     }
 
     return (
-      <ul className="pagination justify-content-center">
+      <ul className="pagination justify-content-center mb-0">
         <li className={`page-item ${pager.currentPage === 1 ? "disabled" : ""}`}>
           <button className="page-link" onClick={() => this.setPage(1)}>
             <i className="fas fa-step-backward" />
