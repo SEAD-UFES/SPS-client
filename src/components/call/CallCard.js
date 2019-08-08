@@ -40,9 +40,14 @@ export default class CallCard extends Component {
                 </td>
                 <td>{this.getCallStatus(call)}</td>
                 <td>
-                  <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+                  <DrawFilter permission="chamada editar" course_id={process.Course.id}>
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                       <i className="fas fa-cog" />
+                    </Link>
+                  </DrawFilter>{" "}
+                  <DrawFilter permission="chamada apagar" course_id={process.Course.id}>
+                    <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
+                      <i className="fas fa-times-circle" />
                     </Link>
                   </DrawFilter>
                 </td>

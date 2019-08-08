@@ -10,6 +10,7 @@ import { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClos
 
 import { createCall, getCall, updateCall } from "./callActions";
 import { clearErrors } from "../../actions/errorActions";
+import DrawFilter from "components/profile/DrawFilter";
 
 class CallEdit extends Component {
   constructor() {
@@ -232,16 +233,18 @@ class CallEdit extends Component {
     const { errors } = this.state;
 
     const deleteButton = (
-      <div className="text-right mt-2 mb-2">
-        <Link
-          className="text-danger"
-          to={{
-            pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/delete`
-          }}
-        >
-          <i className="fas fa-times-circle" /> Excluir chamada
-        </Link>
-      </div>
+      <DrawFilter permission="chamada apagar">
+        <div className="text-right mt-2 mb-2">
+          <Link
+            className="text-danger"
+            to={{
+              pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/delete`
+            }}
+          >
+            <i className="fas fa-times-circle" /> Excluir chamada
+          </Link>
+        </div>
+      </DrawFilter>
     );
 
     return (

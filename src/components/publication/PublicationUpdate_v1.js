@@ -4,12 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 
-import { spsServerUrl } from "apis/spsServer";
 import TextFieldGroup from "components/common/TextFieldGroup";
 import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
-import CheckBoxFieldGroup from "components/common/CheckBoxFieldGroup";
-import DrawFilter from "components/profile/DrawFilter";
 
 import { getProcess } from "components/process/processActions";
 import { getPublicationTypes } from "components/publicationType/publicationTypeActions";
@@ -205,114 +202,6 @@ class PublicationUpdate extends Component {
     }
   }
 
-  renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions) {
-    return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar publicação</h4>
-        </div>
-
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="date"
-              name="creation_date"
-              label="Lançamento: *"
-              placeholder="Data da publicação"
-              value={this.state.creation_date}
-              onChange={this.onChange}
-              error={errors.creation_date}
-            />
-
-            <SelectListGroup
-              placeholder="* Selecione o tipo de publicação"
-              name="publicationType_id"
-              label="Tipo: *"
-              value={this.state.publicationType_id}
-              options={processPublicationTypeOptions}
-              onChange={this.onChange}
-              error={errors.publicationType_id}
-            />
-
-            <SelectListGroup
-              placeholder="* Selecione o processo seletivo"
-              name="selectiveProcess_id"
-              label="Curso: *"
-              value={this.state.selectiveProcess_id}
-              options={processOptions}
-              onChange={this.onChange}
-              error={errors.selectiveProcess_id}
-              disabled={this.state.lock_process ? true : false}
-            />
-
-            {this.state.selectiveProcess_id ? (
-              <SelectListGroup
-                placeholder="* Selecione a chamada"
-                name="call_id"
-                label="Chamada: *"
-                value={this.state.call_id}
-                options={callOptions}
-                onChange={this.onChange}
-                error={errors.call_id}
-                disabled={this.state.lock_call ? true : false}
-              />
-            ) : (
-              ""
-            )}
-
-            {this.state.call_id ? (
-              <SelectListGroup
-                placeholder="* Selecione a etapa"
-                name="step_id"
-                label="Etapa: *"
-                value={this.state.step_id}
-                options={stepOptions}
-                onChange={this.onChange}
-                error={errors.step_id}
-              />
-            ) : (
-              ""
-            )}
-
-            <TextAreaFieldGroup
-              type="text"
-              name="description"
-              label="Observações:"
-              placeholder="Observações sobre a publicação"
-              value={this.state.description}
-              onChange={this.onChange}
-              error={errors.description}
-            />
-
-            <div className="form-group row">
-              <label className="col-lg-2 col-form-label form-control-label font-weight-bold">Arquivo:</label>
-              <div className="col-lg-10">
-                <div className="mt-2">
-                  <a className="" href={`${spsServerUrl}/v1/publications/download/${this.state.fileName}`}>
-                    <i className="fas fa-file" /> {this.state.fileName}
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <CheckBoxFieldGroup
-              id="valid-checkbox"
-              name="valid"
-              text="Validade:"
-              value="Este documento é a versão mais recente de seu tipo."
-              checked={this.state.valid}
-              error={errors.valid}
-              info="Documentos mais antigos devem ser atualizados manualmente."
-              onChange={this.onCheck}
-            />
-
-            <input type="submit" className="btn btn-info btn-block mt-4" />
-          </form>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     //load raw data
     const { errors, selectiveProcess } = this.state;
@@ -398,27 +287,107 @@ class PublicationUpdate extends Component {
         : []
     );
 
-    const deleteButton = (
-      <DrawFilter permission="publication_delete">
-        <div className="text-right mt-2 mb-2">
-          <Link className="text-danger" to={{ pathname: `/processes/${this.state.selectiveProcess_id}/publications/${this.state.id}/delete` }}>
-            <i className="fas fa-times-circle" /> Excluir esta publicação
-          </Link>
+    const publicationForm = (
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="date"
+          name="creation_date"
+          placeholder="* Data de criação"
+          value={this.state.creation_date}
+          onChange={this.onChange}
+          error={errors.creation_date}
+        />
+
+        <SelectListGroup
+          placeholder="* Selecione o processo seletivo"
+          name="selectiveProcess_id"
+          value={this.state.selectiveProcess_id}
+          options={processOptions}
+          onChange={this.onChange}
+          error={errors.selectiveProcess_id}
+          disabled={this.state.lock_process ? true : false}
+        />
+
+        {this.state.selectiveProcess_id ? (
+          <SelectListGroup
+            placeholder="* Selecione a chamada"
+            name="call_id"
+            value={this.state.call_id}
+            options={callOptions}
+            onChange={this.onChange}
+            error={errors.call_id}
+          />
+        ) : (
+          ""
+        )}
+
+        {this.state.call_id ? (
+          <SelectListGroup
+            placeholder="* Selecione a etapa"
+            name="step_id"
+            value={this.state.step_id}
+            options={stepOptions}
+            onChange={this.onChange}
+            error={errors.step_id}
+          />
+        ) : (
+          ""
+        )}
+
+        <TextAreaFieldGroup
+          type="text"
+          name="description"
+          placeholder="Observações sobre a publicação"
+          value={this.state.description}
+          onChange={this.onChange}
+          error={errors.description}
+        />
+
+        <SelectListGroup
+          placeholder="* Selecione o tipo de publicação"
+          name="publicationType_id"
+          value={this.state.publicationType_id}
+          options={processPublicationTypeOptions}
+          onChange={this.onChange}
+          error={errors.publicationType_id}
+        />
+
+        <div className="mt-4 mb-4">
+          <a href={`http://localhost:3000/v1/publications/download/${this.state.fileName}`}>
+            <i className="fas fa-file" /> {this.state.fileName}
+          </a>
         </div>
-      </DrawFilter>
+
+        <div className="form-check mb-4">
+          <input className="form-check-input" type="checkbox" name="valid" id="valid" checked={this.state.valid} onChange={this.onCheck} />
+          <label className="form-check-label" htmlFor="valid">
+            Documento atualizado
+          </label>
+        </div>
+
+        <input type="submit" className="btn btn-info btn-block mt-4" />
+      </form>
     );
 
+    const deleteButton = (
+      <div className="text-right mt-2 mb-2">
+        <Link className="text-danger" to={{ pathname: `/processes/${this.state.selectiveProcess_id}/publications/${this.state.id}/delete` }}>
+          <i className="fas fa-times-circle" /> Excluir esta publicação
+        </Link>
+      </div>
+    );
     return (
       <div className="publication-update">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-8 m-auto">
               <Link to={`/processes/${process_id}`} className="btn btn-light">
                 Voltar para processo seletivo
               </Link>
-              <h1 className="display-4">Publicação</h1>
-              {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
+              <h1 className="display-4 text-center">Editar publicação</h1>
+              <p className="lead text-center">Altere os dados básicos</p>
               {alertsList}
+              {publicationForm}
               {deleteButton}
             </div>
           </div>
@@ -436,7 +405,7 @@ PublicationUpdate.proptypes = {
 };
 
 const mapStateToProps = state => ({
-  process: state.processStore,
+  process: state.process,
   publicationTypeStore: state.publicationTypeStore,
   publicationStore: state.publicationStore
 });

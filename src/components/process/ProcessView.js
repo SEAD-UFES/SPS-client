@@ -79,11 +79,11 @@ class ProcessView extends Component {
   }
 
   renderCalls(process) {
-    return <CallCard process={process} />;
+    return <CallCard process={process} course_id={process.id} />;
   }
 
   renderPublications(process) {
-    return <PublicationCard process={process} />;
+    return <PublicationCard process={process} course_id={process.id} />;
   }
 
   render() {

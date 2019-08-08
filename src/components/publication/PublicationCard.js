@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
+import { spsServerUrl } from "apis/spsServer";
 import DrawFilter from "../profile/DrawFilter";
 
-export default class CallCard extends Component {
+export default class PublicationCard extends Component {
   renderPublicationLevel(process, publication) {
     let result = "Edital";
 
@@ -59,7 +60,7 @@ export default class CallCard extends Component {
                     <a
                       className={publication.valid ? "" : "isDisabled"}
                       onClick={publication.valid ? e => {} : e => e.preventDefault()}
-                      href={publication.valid ? `http://localhost:3000/v1/publications/download/${publication.file}` : ""}
+                      href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ""}
                     >
                       <i class="fas fa-file-download" />
                     </a>{" "}
@@ -69,6 +70,14 @@ export default class CallCard extends Component {
                         to={{ pathname: `/processes/${process.id}/publications/${publication.id}/update`, state: { publication: publication } }}
                       >
                         <i className="fas fa-cog" />
+                      </Link>
+                    </DrawFilter>{" "}
+                    <DrawFilter permission="publication_delete" course_id={process.Course.id}>
+                      <Link
+                        className="text-danger"
+                        to={{ pathname: `/processes/${process.id}/publications/${publication.id}/delete`, state: { publication: publication } }}
+                      >
+                        <i className="fas fa-times-circle" />
                       </Link>
                     </DrawFilter>
                   </td>
