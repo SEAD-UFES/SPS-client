@@ -9,7 +9,6 @@ import TextFieldGroup from "components/common/TextFieldGroup";
 import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 import CheckBoxFieldGroup from "components/common/CheckBoxFieldGroup";
-import DrawFilter from "components/profile/DrawFilter";
 
 import { getProcess } from "components/process/processActions";
 import { getPublicationTypes } from "components/publicationType/publicationTypeActions";

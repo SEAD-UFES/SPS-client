@@ -62,7 +62,7 @@ export default class PublicationCard extends Component {
                       onClick={publication.valid ? e => {} : e => e.preventDefault()}
                       href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ""}
                     >
-                      <i class="fas fa-file-download" />
+                      <i className="fas fa-file-download" />
                     </a>{" "}
                     <DrawFilter permission="publication_update" course_id={process.Course.id}>
                       <Link

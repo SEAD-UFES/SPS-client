@@ -10,7 +10,6 @@ import { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClos
 
 import { createCall, getCall, updateCall } from "./callActions";
 import { clearErrors } from "../../actions/errorActions";
-import DrawFilter from "components/profile/DrawFilter";
 
 class CallEdit extends Component {
   constructor() {

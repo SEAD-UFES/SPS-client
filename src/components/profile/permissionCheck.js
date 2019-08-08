@@ -6,6 +6,7 @@ export const permissionCheck = (userRoles, permission, options) => {
 
   //search for permission on global roles
   if (globalUserRolesCheck(userRoles, permission, options)) {
+    console.log("é global e pode fazer isso...");
     return true;
   }
 
@@ -95,7 +96,7 @@ const specificCourseCheck = (userRoles, permission, options) => {
   //search for permission on specific course roles
   if (options.course_id) {
     const filterSpecificRoleAssignments = value => {
-      return value.Course.id === options.course_id;
+      return value.Course && value.Course.id === options.course_id;
     };
     const specificRoleAssignments = userRoles.filter(filterSpecificRoleAssignments);
     if (specificRoleAssignments.length > 0) {
