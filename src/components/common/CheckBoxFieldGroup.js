@@ -5,8 +5,8 @@ const CheckBoxFieldGroup = ({ id, name, text, value, checked, error, info, onCha
   return (
     <div className="row">
       <span className="col-lg-2 col-form-label form-control-label font-weight-bold">{text}</span>
-      <div className="col-lg-10 align-self-center">
-        <div className="form-check">
+      <div className="col-lg-10">
+        <div className="form-check mt-2">
           <input className="form-check-input" type="checkbox" name={name} id={id} checked={checked} onChange={onChange} />
           <label className="form-check-label" htmlFor="id">
             {value}

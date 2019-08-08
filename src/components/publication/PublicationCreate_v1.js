@@ -8,7 +8,6 @@ import TextFieldGroup from "components/common/TextFieldGroup";
 import SelectListGroup from "components/common/SelectListGroup";
 import TextAreaFieldGroup from "components/common/TextAreaFieldGroup";
 import FileFieldGroup from "../common/FileFieldGroup";
-import CheckBoxFieldGroup from "components/common/CheckBoxFieldGroup";
 
 import { getProcess } from "components/process/processActions";
 import { createPublication } from "./publicationActions";
@@ -208,105 +207,6 @@ class PublicationCreate extends Component {
     }
   }
 
-  renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions) {
-    return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Criar publicação</h4>
-        </div>
-
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="date"
-              name="creation_date"
-              label="Lançamento: *"
-              placeholder="Data da publicação"
-              value={this.state.creation_date}
-              onChange={this.onChange}
-              error={errors.creation_date}
-            />
-
-            <SelectListGroup
-              placeholder="* Selecione o tipo de publicação"
-              name="publicationType_id"
-              label="Tipo: *"
-              value={this.state.publicationType_id}
-              options={processPublicationTypeOptions}
-              onChange={this.onChange}
-              error={errors.publicationType_id}
-            />
-
-            <SelectListGroup
-              placeholder="* Selecione o processo seletivo"
-              name="selectiveProcess_id"
-              label="Curso: *"
-              value={this.state.selectiveProcess_id}
-              options={processOptions}
-              onChange={this.onChange}
-              error={errors.selectiveProcess_id}
-              disabled={this.state.lock_process ? true : false}
-            />
-
-            {this.state.selectiveProcess_id ? (
-              <SelectListGroup
-                placeholder="* Selecione a chamada"
-                name="call_id"
-                label="Chamada: *"
-                value={this.state.call_id}
-                options={callOptions}
-                onChange={this.onChange}
-                error={errors.call_id}
-                disabled={this.state.lock_call ? true : false}
-              />
-            ) : (
-              ""
-            )}
-
-            {this.state.call_id ? (
-              <SelectListGroup
-                placeholder="* Selecione a etapa"
-                name="step_id"
-                label="Etapa: *"
-                value={this.state.step_id}
-                options={stepOptions}
-                onChange={this.onChange}
-                error={errors.step_id}
-              />
-            ) : (
-              ""
-            )}
-
-            <TextAreaFieldGroup
-              type="text"
-              name="description"
-              label="Observações:"
-              placeholder="Observações sobre a publicação"
-              value={this.state.description}
-              onChange={this.onChange}
-              error={errors.description}
-            />
-
-            <FileFieldGroup name="file" label="Arquivo: *" info="Apenas arquivos to tipo pdf." error={errors.file} onChange={this.onChangeFile} />
-
-            <CheckBoxFieldGroup
-              id="valid-checkbox"
-              name="valid"
-              text="Validade:"
-              value="Este documento é a versão mais recente de seu tipo."
-              checked={this.state.valid}
-              error={errors.valid}
-              info="Documentos mais antigos devem ser atualizados manualmente."
-              onChange={this.onCheck}
-            />
-
-            <input type="submit" className="btn btn-info btn-block mt-4" />
-          </form>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     //load raw data
     const { errors, selectiveProcess } = this.state;
@@ -392,17 +292,106 @@ class PublicationCreate extends Component {
         : []
     );
 
+    const publicationForm = (
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="date"
+          name="creation_date"
+          placeholder="* Data de criação"
+          value={this.state.creation_date}
+          onChange={this.onChange}
+          error={errors.creation_date}
+        />
+
+        {/* <TextFieldGroup
+          type="text"
+          name="name"
+          placeholder="* Nome da publicação"
+          value={this.state.name}
+          onChange={this.onChange}
+          error={errors.name}
+        /> */}
+
+        <SelectListGroup
+          placeholder="* Selecione o processo seletivo"
+          name="selectiveProcess_id"
+          value={this.state.selectiveProcess_id}
+          options={processOptions}
+          onChange={this.onChange}
+          error={errors.selectiveProcess_id}
+          disabled={this.state.lock_process ? true : false}
+        />
+
+        {this.state.selectiveProcess_id ? (
+          <SelectListGroup
+            placeholder="* Selecione a chamada"
+            name="call_id"
+            value={this.state.call_id}
+            options={callOptions}
+            onChange={this.onChange}
+            error={errors.call_id}
+            disabled={this.state.lock_call ? true : false}
+          />
+        ) : (
+          ""
+        )}
+
+        {this.state.call_id ? (
+          <SelectListGroup
+            placeholder="* Selecione a etapa"
+            name="step_id"
+            value={this.state.step_id}
+            options={stepOptions}
+            onChange={this.onChange}
+            error={errors.step_id}
+          />
+        ) : (
+          ""
+        )}
+
+        <TextAreaFieldGroup
+          type="text"
+          name="description"
+          placeholder="Observações sobre a publicação"
+          value={this.state.description}
+          onChange={this.onChange}
+          error={errors.description}
+        />
+
+        <SelectListGroup
+          placeholder="* Selecione o tipo de publicação"
+          name="publicationType_id"
+          value={this.state.publicationType_id}
+          options={processPublicationTypeOptions}
+          onChange={this.onChange}
+          error={errors.publicationType_id}
+        />
+
+        <FileFieldGroup name="file" error={errors.file} onChange={this.onChangeFile} />
+
+        <div className="form-check mb-4">
+          <input className="form-check-input" type="checkbox" name="valid" id="valid" checked={this.state.valid} onChange={this.onCheck} />
+          <label className="form-check-label" htmlFor="valid">
+            Documento atualizado
+          </label>
+        </div>
+
+        <input type="submit" className="btn btn-info btn-block mt-4" />
+      </form>
+    );
+
     return (
       <div className="publication-create">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-8 m-auto">
               <Link to={`/processes/${process_id}`} className="btn btn-light">
                 Voltar para processo seletivo
               </Link>
-              <h1 className="display-4">Publicação</h1>
-              {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
+              <h1 className="display-4 text-center">Criar publicação</h1>
+              <p className="lead text-center">Dê entrada nos dados básicos</p>
               {alertsList}
+              {publicationForm}
             </div>
           </div>
         </div>
