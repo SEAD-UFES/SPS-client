@@ -6,7 +6,6 @@ export const permissionCheck = (userRoles, permission, options) => {
 
   //search for permission on global roles
   if (globalUserRolesCheck(userRoles, permission, options)) {
-    console.log("é global e pode fazer isso...");
     return true;
   }
 
