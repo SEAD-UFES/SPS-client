@@ -128,7 +128,7 @@ class ProcessEdit extends Component {
 
   renderForm(state, errors, courseOptions) {
     return (
-      <div className="card mb-4">
+      <div className="card">
         <div className="card-header">
           <h4 className="mb-0">Editar processo</h4>
         </div>

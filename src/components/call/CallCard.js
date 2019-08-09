@@ -3,26 +3,15 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 import DrawFilter from "../profile/DrawFilter";
+import { getCallStatus } from "./callHelpers";
 
 export default class CallCard extends Component {
-  getCallStatus(call) {
-    let statusMessage = "";
-
-    if (moment(call.endingDate, "YYYY-MM-DDTHH:mm:ss.ssssZ") > moment()) {
-      statusMessage = <span className="text-success">Chamada em andamento</span>;
-    } else {
-      statusMessage = <span className="text-secondary">Chamada encerrada</span>;
-    }
-
-    return statusMessage;
-  }
-
   renderTable(process) {
     return (
       <table className="table table-hover mt-0 mb-0">
         <thead>
           <tr>
-            <th>Nome</th>
+            <th>Número</th>
             <th>Periodo</th>
             <th>Status</th>
             <th />
@@ -38,8 +27,13 @@ export default class CallCard extends Component {
                   {" - "}
                   {moment(call.endingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
                 </td>
-                <td>{this.getCallStatus(call)}</td>
+                <td>{getCallStatus(call)}</td>
                 <td>
+                  <DrawFilter permission="chamada acessar" course_id={process.Course.id}>
+                    <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
+                      <i className="fas fa-search-plus" />
+                    </Link>
+                  </DrawFilter>{" "}
                   <DrawFilter permission="chamada editar" course_id={process.Course.id}>
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                       <i className="fas fa-cog" />

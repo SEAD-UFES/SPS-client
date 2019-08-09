@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import CallView from "./CallView";
+import CallView from "./CallView_v1";
 import DrawFilter from "components/profile/DrawFilter";
 
 class CallTabList extends Component {

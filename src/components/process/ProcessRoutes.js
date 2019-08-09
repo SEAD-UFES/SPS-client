@@ -16,6 +16,7 @@ import CallEdit_v1 from "../call/CallEdit_v1";
 import PublicationCreate_v1 from "components/publication/PublicationCreate_v1";
 import PublicationUpdate_v1 from "components/publication/PublicationUpdate_v1";
 
+import CallView from "components/call/CallView";
 import CallCreate from "../call/CallCreate";
 import CallEdit from "../call/CallEdit";
 import CallDelete from "../call/CallDelete";
@@ -59,6 +60,8 @@ export default class ProcessRoutes extends Component {
         <PrivateRoute exact path={`${this.props.match.path}/:id/edit`} component={ProcessEdit} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/calls/create`} component={CallCreate} />
+
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id`} component={CallView} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/edit`} component={CallEdit} />
 

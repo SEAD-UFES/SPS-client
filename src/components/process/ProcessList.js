@@ -216,7 +216,7 @@ class ProcessList extends Component {
             <div className="col text-right">{this.renderAdd()}</div>
           </div>
         </div>
-        <div className="card-body mb-0">
+        <div className="card-body">
           {processes.selectiveProcesses.length > 0 ? this.renderTable(processes) : <p className="m-0">Sem resultados para exibir.</p>}
         </div>
       </div>
