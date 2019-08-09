@@ -29,7 +29,7 @@ class ProcessView extends Component {
               <h4 className="mb-0">Informações</h4>
             </div>
             <div className="col">
-              <div className="float-right">
+              <div className="text-right">
                 <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
                   <Link className="text-info" to={`/processes/${process.id}/edit`}>
                     <i className="fas fa-cog" /> Editar

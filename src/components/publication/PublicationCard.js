@@ -56,7 +56,7 @@ export default class PublicationCard extends Component {
                   <td>{this.renderPublicationLevel(process, publication)}</td>
                   <td>{publication.PublicationType.name}</td>
                   <td>{publication.description ? publication.description : ""}</td>
-                  <td>
+                  <td className="text-right">
                     <a
                       className={publication.valid ? "" : "isDisabled"}
                       onClick={publication.valid ? e => {} : e => e.preventDefault()}

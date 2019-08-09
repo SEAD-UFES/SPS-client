@@ -184,7 +184,7 @@ class ProcessList extends Component {
                   </td>
                   <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
                   <td>{process.Course.name}</td>
-                  <td>
+                  <td className="text-right">
                     <Link className="text-info" to={`/processes/${process.id}`}>
                       <i className="fas fa-search-plus" />
                     </Link>

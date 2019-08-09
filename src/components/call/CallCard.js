@@ -23,12 +23,12 @@ export default class CallCard extends Component {
               <tr key={call.id}>
                 <td>{call.number}</td>
                 <td>
-                  {moment(call.endingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
+                  {moment(call.openingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
                   {" - "}
                   {moment(call.endingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
                 </td>
                 <td>{getCallStatus(call)}</td>
-                <td>
+                <td className="text-right">
                   <DrawFilter permission="chamada acessar" course_id={process.Course.id}>
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
                       <i className="fas fa-search-plus" />
