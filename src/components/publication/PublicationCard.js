@@ -116,7 +116,7 @@ export default class PublicationCard extends Component {
           </div>
         </div>
         <div className="card-body">
-          {this.props.process.Calls.length > 0 ? this.renderTable(this.props.process) : <p className="mb-0">Sem publicações cadastradas.</p>}
+          {this.props.process.Publications.length > 0 ? this.renderTable(this.props.process) : <p className="mb-0">Sem publicações cadastradas.</p>}
         </div>
       </div>
     );
