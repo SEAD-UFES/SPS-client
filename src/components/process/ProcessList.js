@@ -170,13 +170,7 @@ class ProcessList extends Component {
               <th>Número/Ano</th>
               <th>Nível</th>
               <th>Curso</th>
-              <th>
-                <DrawFilter permission="processo seletivo criar" anyCourse={true}>
-                  <Link className="text-success" to={`${this.props.match.url}/create`}>
-                    <i className="fas fa-plus-circle" />
-                  </Link>
-                </DrawFilter>
-              </th>
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -191,8 +185,8 @@ class ProcessList extends Component {
                   <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
                   <td>{process.Course.name}</td>
                   <td>
-                    <Link className="text-success" to={`/processes/${process.id}`}>
-                      <i className="fas fa-eye" />
+                    <Link className="text-info" to={`/processes/${process.id}`}>
+                      <i className="fas fa-search-plus" />
                     </Link>
                   </td>
                 </tr>
