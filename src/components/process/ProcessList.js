@@ -163,6 +163,50 @@ class ProcessList extends Component {
 
   renderTable(processes) {
     return (
+      <React.Fragment>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>Número/Ano</th>
+              <th>Nível</th>
+              <th>Curso</th>
+              <th>
+                <DrawFilter permission="processo seletivo criar" anyCourse={true}>
+                  <Link className="text-success" to={`${this.props.match.url}/create`}>
+                    <i className="fas fa-plus-circle" />
+                  </Link>
+                </DrawFilter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {processes.selectiveProcesses.map(process => {
+              return (
+                <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
+                  <td>
+                    <Link to={`${this.props.match.url}/${process.id}`}>
+                      {process.number}/{process.year}
+                    </Link>
+                  </td>
+                  <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
+                  <td>{process.Course.name}</td>
+                  <td>
+                    <Link className="text-success" to={`/processes/${process.id}`}>
+                      <i className="fas fa-eye" />
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {this.renderPagination(processes)}
+      </React.Fragment>
+    );
+  }
+
+  renderProcesses(processes) {
+    return (
       <div className="card">
         <div className="card-header">
           <div className="row">
@@ -173,43 +217,7 @@ class ProcessList extends Component {
           </div>
         </div>
         <div className="card-body mb-0">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Número/Ano</th>
-                <th>Nível</th>
-                <th>Curso</th>
-                <th>
-                  <DrawFilter permission="processo seletivo criar" anyCourse={true}>
-                    <Link className="text-success" to={`${this.props.match.url}/create`}>
-                      <i className="fas fa-plus-circle" />
-                    </Link>
-                  </DrawFilter>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {processes.selectiveProcesses.map(process => {
-                return (
-                  <tr key={process.id} className={process.visible ? "" : "text-black-50"}>
-                    <td>
-                      <Link to={`${this.props.match.url}/${process.id}`}>
-                        {process.number}/{process.year}
-                      </Link>
-                    </td>
-                    <td>{process.Course.GraduationType ? process.Course.GraduationType.name : "-"}</td>
-                    <td>{process.Course.name}</td>
-                    <td>
-                      <Link className="text-success" to={`/processes/${process.id}`}>
-                        <i className="fas fa-eye" />
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {this.renderPagination(processes)}
+          {processes.selectiveProcesses.length > 0 ? this.renderTable(processes) : <p className="m-0">Sem resultados para exibir.</p>}
         </div>
       </div>
     );
@@ -314,7 +322,7 @@ class ProcessList extends Component {
       </div>
     );
 
-    const processTable = processes === null || loading ? <Spinner /> : this.renderTable(processes);
+    const processTable = processes === null || loading ? <Spinner /> : this.renderProcesses(processes);
 
     return (
       <div className="user-list">
