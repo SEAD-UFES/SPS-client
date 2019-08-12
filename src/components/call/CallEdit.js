@@ -27,8 +27,11 @@ class CallEdit extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.clearErrors();
+  }
+
+  componentDidMount() {
     if (this.props.match.params.call_id) {
       this.props.getCall(this.props.match.params.call_id);
     }
@@ -41,12 +44,14 @@ class CallEdit extends Component {
 
       let newStateErrors = {};
 
-      switch (errors.code) {
-        case "calls-05":
-          newStateErrors.endingDate = errors.userMessage;
-          break;
-        default:
-          break;
+      if (errors.data) {
+        switch (errors.data.code) {
+          case "calls-05":
+            newStateErrors.endingDate = errors.data.userMessage;
+            break;
+          default:
+            break;
+        }
       }
 
       this.setState({ errors: newStateErrors });
@@ -170,7 +175,7 @@ class CallEdit extends Component {
                 Voltar para o processo
               </Link>
               <h1 className="display-4">Chamada</h1>
-              <AlertError errors={errors} />
+              <AlertError errors={this.props.errors} />
               {this.renderForm(errors)}
             </div>
           </div>

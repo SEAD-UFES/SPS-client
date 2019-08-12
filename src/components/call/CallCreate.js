@@ -7,8 +7,8 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import { validateProcessNumber } from "../../validation";
 import { validateCallForm, validateEndingDate, validateOpeningDate } from "./validateCallForm";
 import AlertError from "components/common/AlertError";
-
 import { createCall } from "./callActions";
+import { clearErrors } from "actions/errorActions";
 
 class CallCreate extends Component {
   constructor() {
@@ -26,6 +26,10 @@ class CallCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillMount() {
+    this.props.clearErrors();
+  }
+
   componentWillReceiveProps(nextProps) {
     //If receive errors from server
     if (nextProps.errors) {
@@ -33,12 +37,14 @@ class CallCreate extends Component {
 
       let newStateErrors = {};
 
-      switch (errors.code) {
-        case "calls-05":
-          newStateErrors.endingDate = errors.userMessage;
-          break;
-        default:
-          break;
+      if (errors.data) {
+        switch (errors.data.code) {
+          case "calls-05":
+            newStateErrors.endingDate = errors.data.userMessage;
+            break;
+          default:
+            break;
+        }
       }
 
       this.setState({ errors: newStateErrors });
@@ -153,7 +159,7 @@ class CallCreate extends Component {
                 Voltar para o processo
               </Link>
               <h1 className="display-4">Chamada</h1>
-              <AlertError errors={errors} />
+              <AlertError errors={this.props.errors} />
               {this.renderForm(errors)}
             </div>
           </div>
@@ -176,5 +182,5 @@ const mapStateToProps = state => ({
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createCall }
+  { createCall, clearErrors }
 )(withRouter(CallCreate));

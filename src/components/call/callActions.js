@@ -16,12 +16,9 @@ export const createCall = (callData, history) => dispatch => {
     .then(res => {
       history.push(`/processes/${callData.selectiveProcess_id}`);
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      handleErrors(err, dispatch);
+    });
 };
 
 export const getCall = call_id => dispatch => {
@@ -34,12 +31,9 @@ export const getCall = call_id => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      handleErrors(err, dispatch);
+    });
 };
 
 export const updateCall = (callId, callData, history) => dispatch => {
@@ -48,12 +42,9 @@ export const updateCall = (callId, callData, history) => dispatch => {
     .then(res => {
       history.push(`/processes/${callData.selectiveProcess_id}`);
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      handleErrors(err, dispatch);
+    });
 };
 
 export const deleteCall = (call_id, callback_ok) => dispatch => {
@@ -63,19 +54,23 @@ export const deleteCall = (call_id, callback_ok) => dispatch => {
       callback_ok();
     })
     .catch(err => {
-      if (err.response) {
-        let errors = {};
-        errors.data = err.response.data;
-        errors.serverError = true;
-        dispatch({
-          type: GET_ERRORS,
-          payload: errors
-        });
-      } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: { anotherError: true }
-        });
-      }
+      handleErrors(err, dispatch);
     });
+};
+
+const handleErrors = (err, dispatch) => {
+  if (err.response) {
+    let errors = {};
+    errors.data = err.response.data;
+    errors.serverError = true;
+    dispatch({
+      type: GET_ERRORS,
+      payload: errors
+    });
+  } else {
+    dispatch({
+      type: GET_ERRORS,
+      payload: { anotherError: true }
+    });
+  }
 };
