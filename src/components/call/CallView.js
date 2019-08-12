@@ -63,7 +63,7 @@ class CallView extends Component {
                 <td>
                   <strong>Abertura:</strong>
                 </td>
-                <td>{moment(call.endingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
+                <td>{moment(call.openingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
               </tr>
               <tr>
                 <td>

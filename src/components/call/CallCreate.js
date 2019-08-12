@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import { validateNumberRequired } from "../../validation";
-import { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "./validateCallForm";
+import { validateProcessNumber } from "../../validation";
+import { validateCallForm, validateEndingDate, validateOpeningDate } from "./validateCallForm";
+import AlertError from "components/common/AlertError";
 
 import { createCall } from "./callActions";
 
@@ -14,8 +15,7 @@ class CallCreate extends Component {
     super();
     this.state = {
       number: "",
-      enrollmentOpeningDate: "",
-      enrollmentClosingDate: "",
+      openingDate: "",
       endingDate: "",
 
       //errors
@@ -51,70 +51,13 @@ class CallCreate extends Component {
     let valResult = { error: "", isValid: true };
     switch (e.target.name) {
       case "number":
-        valResult = validateNumberRequired(e.target.value);
+        valResult = validateProcessNumber(e.target.value);
         break;
-      case "enrollmentOpeningDate":
-        valResult = validateEnrollmentOpeningDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
-        //Removing errors from enrollmentClosingDate if needed
-        if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
-          if (!InsEndVal.isValid) {
-            errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
-          } else {
-            delete errors.enrollmentClosingDate;
-          }
-        }
-        //Removing errors from endingDate if needed
-        if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
-          if (!endingDateVal.isValid) {
-            errors = { ...errors, endingDate: endingDateVal.error };
-          } else {
-            delete errors.endingDate;
-          }
-        }
-        break;
-      case "enrollmentClosingDate":
-        valResult = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
-        //Removing errors from enrollmentOpeningDate if needed
-        if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
-          if (!InsStartVal.isValid) {
-            errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
-          } else {
-            delete errors.enrollmentOpeningDate;
-          }
-        }
-        //Removing errors from endingDate if needed
-        if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
-          if (!endingDateVal.isValid) {
-            errors = { ...errors, endingDate: endingDateVal.error };
-          } else {
-            delete errors.endingDate;
-          }
-        }
+      case "openingDate":
+        valResult = validateOpeningDate(e.target.value, this.state.endingDate);
         break;
       case "endingDate":
-        valResult = validateEndingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
-        //Removing errors from enrollmentOpeningDate if needed
-        if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
-          if (!InsStartVal.isValid) {
-            errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
-          } else {
-            delete errors.enrollmentOpeningDate;
-          }
-        }
-        //Removing errors from enrollmentClosingDate if needed
-        if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
-          if (!InsEndVal.isValid) {
-            errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
-          } else {
-            delete errors.enrollmentClosingDate;
-          }
-        }
+        valResult = validateEndingDate(this.state.openingDate, e.target.value);
         break;
       default:
         break;
@@ -136,30 +79,18 @@ class CallCreate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const tmpCallData = {
-      selectiveProcess_id: this.props.match.params.id,
+    const callData = {
+      selectiveProcess_id: this.props.match.params.process_id,
       number: this.state.number,
-      enrollmentOpeningDate: this.state.enrollmentOpeningDate,
-      enrollmentClosingDate: this.state.enrollmentClosingDate,
+      openingDate: this.state.openingDate,
       endingDate: this.state.endingDate
-      //course_id for permissions
-      //course_id: ""
     };
 
-    const valCall = validateCallForm(tmpCallData);
+    const valCall = validateCallForm(callData);
+
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      const callData = {
-        selectiveProcess_id: this.props.match.params.id,
-        number: tmpCallData.number,
-        enrollmentOpeningDate: tmpCallData.enrollmentOpeningDate,
-        enrollmentClosingDate: tmpCallData.enrollmentClosingDate,
-        endingDate: tmpCallData.endingDate
-        //course_id for permissions
-        //course_id: ""
-      };
-
       this.props.createCall(callData, this.props.history);
     }
   }
@@ -184,23 +115,13 @@ class CallCreate extends Component {
             />
 
             <TextFieldGroup
-              placeholder="Início das inscrições"
+              placeholder="Abertura da chamada"
               type="date"
-              label="Incrições - início: *"
-              name="enrollmentOpeningDate"
-              value={this.state.enrollmentOpeningDate}
+              label="Abertura: *"
+              name="openingDate"
+              value={this.state.openingDate}
               onChange={this.onChange}
-              error={errors.enrollmentOpeningDate}
-            />
-
-            <TextFieldGroup
-              placeholder="Encerramento das inscrições"
-              type="date"
-              label="Incrições - final: *"
-              name="enrollmentClosingDate"
-              value={this.state.enrollmentClosingDate}
-              onChange={this.onChange}
-              error={errors.enrollmentClosingDate}
+              error={errors.openingDate}
             />
 
             <TextFieldGroup
@@ -228,10 +149,11 @@ class CallCreate extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.id}`} className="btn btn-light">
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
               <h1 className="display-4">Chamada</h1>
+              <AlertError errors={errors} />
               {this.renderForm(errors)}
             </div>
           </div>

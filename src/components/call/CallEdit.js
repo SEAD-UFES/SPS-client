@@ -5,19 +5,18 @@ import { withRouter, Link } from "react-router-dom";
 import moment from "moment";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import { isEmpty, validateNumberRequired } from "../../validation";
-import { validateCallForm, validateEnrollmentOpeningDate, validateEnrollmentClosingDate, validateEndingDate } from "./validateCallForm";
-
+import { isEmpty, validateProcessNumber } from "../../validation";
+import { validateCallForm, validateOpeningDate, validateEndingDate } from "./validateCallForm";
 import { createCall, getCall, updateCall } from "./callActions";
 import { clearErrors } from "../../actions/errorActions";
+import AlertError from "components/common/AlertError";
 
 class CallEdit extends Component {
   constructor() {
     super();
     this.state = {
       number: "",
-      enrollmentOpeningDate: "",
-      enrollmentClosingDate: "",
+      openingDate: "",
       endingDate: "",
 
       //errors
@@ -58,8 +57,7 @@ class CallEdit extends Component {
       const call = nextProps.callStore.call;
       this.setState({
         number: call.number,
-        enrollmentOpeningDate: moment(call.enrollmentOpeningDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
-        enrollmentClosingDate: moment(call.enrollmentClosingDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
+        openingDate: moment(call.openingDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD"),
         endingDate: moment(call.endingDate, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD")
       });
     }
@@ -71,70 +69,13 @@ class CallEdit extends Component {
     let valResult = { error: "", isValid: true };
     switch (e.target.name) {
       case "number":
-        valResult = validateNumberRequired(e.target.value);
+        valResult = validateProcessNumber(e.target.value);
         break;
-      case "enrollmentOpeningDate":
-        valResult = validateEnrollmentOpeningDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
-        //Removing errors from enrollmentClosingDate if needed
-        if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
-          if (!InsEndVal.isValid) {
-            errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
-          } else {
-            delete errors.enrollmentClosingDate;
-          }
-        }
-        //Removing errors from endingDate if needed
-        if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(e.target.value, this.state.enrollmentClosingDate, this.state.endingDate);
-          if (!endingDateVal.isValid) {
-            errors = { ...errors, endingDate: endingDateVal.error };
-          } else {
-            delete errors.endingDate;
-          }
-        }
-        break;
-      case "enrollmentClosingDate":
-        valResult = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
-        //Removing errors from enrollmentOpeningDate if needed
-        if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
-          if (!InsStartVal.isValid) {
-            errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
-          } else {
-            delete errors.enrollmentOpeningDate;
-          }
-        }
-        //Removing errors from endingDate if needed
-        if (errors.endingDate) {
-          let endingDateVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, e.target.value, this.state.endingDate);
-          if (!endingDateVal.isValid) {
-            errors = { ...errors, endingDate: endingDateVal.error };
-          } else {
-            delete errors.endingDate;
-          }
-        }
+      case "openingDate":
+        valResult = validateOpeningDate(e.target.value, this.state.endingDate);
         break;
       case "endingDate":
-        valResult = validateEndingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
-        //Removing errors from enrollmentOpeningDate if needed
-        if (errors.enrollmentOpeningDate) {
-          let InsStartVal = validateEnrollmentOpeningDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
-          if (!InsStartVal.isValid) {
-            errors = { ...errors, enrollmentOpeningDate: InsStartVal.error };
-          } else {
-            delete errors.enrollmentOpeningDate;
-          }
-        }
-        //Removing errors from enrollmentClosingDate if needed
-        if (errors.enrollmentClosingDate) {
-          let InsEndVal = validateEnrollmentClosingDate(this.state.enrollmentOpeningDate, this.state.enrollmentClosingDate, e.target.value);
-          if (!InsEndVal.isValid) {
-            errors = { ...errors, enrollmentClosingDate: InsEndVal.error };
-          } else {
-            delete errors.enrollmentClosingDate;
-          }
-        }
+        valResult = validateEndingDate(this.state.openingDate, e.target.value);
         break;
       default:
         break;
@@ -159,8 +100,7 @@ class CallEdit extends Component {
     const callData = {
       selectiveProcess_id: this.props.match.params.process_id,
       number: this.state.number,
-      enrollmentOpeningDate: this.state.enrollmentOpeningDate,
-      enrollmentClosingDate: this.state.enrollmentClosingDate,
+      openingDate: this.state.openingDate,
       endingDate: this.state.endingDate
     };
 
@@ -192,23 +132,13 @@ class CallEdit extends Component {
             />
 
             <TextFieldGroup
-              placeholder="Início das inscrições"
+              placeholder="Abertura da chamada"
               type="date"
-              label="Incrições - início: *"
-              name="enrollmentOpeningDate"
-              value={this.state.enrollmentOpeningDate}
+              label="Abertura: *"
+              name="openingDate"
+              value={this.state.openingDate}
               onChange={this.onChange}
-              error={errors.enrollmentOpeningDate}
-            />
-
-            <TextFieldGroup
-              placeholder="Encerramento das inscrições"
-              type="date"
-              label="Incrições - final: *"
-              name="enrollmentClosingDate"
-              value={this.state.enrollmentClosingDate}
-              onChange={this.onChange}
-              error={errors.enrollmentClosingDate}
+              error={errors.openingDate}
             />
 
             <TextFieldGroup
@@ -231,25 +161,6 @@ class CallEdit extends Component {
   render() {
     const { errors } = this.state;
 
-    const alertsList = (
-      <div>
-        {errors.serverError ? (
-          <div class="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro do servidor
-          </div>
-        ) : (
-          ""
-        )}
-        {errors.anotherError ? (
-          <div class="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro desconhecido
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    );
-
     return (
       <div className="register">
         <div className="container">
@@ -259,7 +170,7 @@ class CallEdit extends Component {
                 Voltar para o processo
               </Link>
               <h1 className="display-4">Chamada</h1>
-              {alertsList}
+              <AlertError errors={errors} />
               {this.renderForm(errors)}
             </div>
           </div>
