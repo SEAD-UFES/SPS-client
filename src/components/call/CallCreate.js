@@ -97,7 +97,9 @@ class CallCreate extends Component {
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      this.props.createCall(callData, this.props.history);
+      this.props.createCall(callData, () => {
+        this.props.history.push(`/processes/${callData.selectiveProcess_id}`);
+      });
     }
   }
 

@@ -113,7 +113,9 @@ class CallEdit extends Component {
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors });
     } else {
-      this.props.updateCall(this.props.match.params.call_id, callData, this.props.history);
+      this.props.updateCall(this.props.match.params.call_id, callData, () => {
+        this.props.history.push(`/processes/${callData.selectiveProcess_id}`);
+      });
     }
   }
 

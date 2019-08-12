@@ -10,11 +10,11 @@ export const setCallsLoading = () => {
   };
 };
 
-export const createCall = (callData, history) => dispatch => {
+export const createCall = (callData, callback_ok) => dispatch => {
   spsApi
     .post("/v1/calls", callData)
     .then(res => {
-      history.push(`/processes/${callData.selectiveProcess_id}`);
+      callback_ok();
     })
     .catch(err => {
       handleErrors(err, dispatch);
@@ -36,11 +36,11 @@ export const getCall = call_id => dispatch => {
     });
 };
 
-export const updateCall = (callId, callData, history) => dispatch => {
+export const updateCall = (call_id, callData, callback_ok) => dispatch => {
   spsApi
-    .put(`/v1/calls/${callId}`, callData)
+    .put(`/v1/calls/${call_id}`, callData)
     .then(res => {
-      history.push(`/processes/${callData.selectiveProcess_id}`);
+      callback_ok();
     })
     .catch(err => {
       handleErrors(err, dispatch);
