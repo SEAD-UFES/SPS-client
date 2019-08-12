@@ -6,11 +6,12 @@ import { withRouter, Link } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
+
 import { validateProcessNumber, validateYearRequired, validateDescription, validateId } from "../../validation";
 import { validateProcessForm } from "./validateProcessForm";
+
 import { createProcess } from "./processActions";
 import { getCourses } from "../course/courseActions";
-import CheckBoxFieldGroup from "components/common/CheckBoxFieldGroup";
 
 class ProcessCreate extends Component {
   constructor() {
@@ -107,65 +108,6 @@ class ProcessCreate extends Component {
     }
   }
 
-  renderForm(state, errors, courseOptions) {
-    return (
-      <div className="card">
-        <div className="card-header">
-          <h4 className="mb-0">Novo processo</h4>
-        </div>
-
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="number"
-              label="Número: *"
-              placeholder="* Número"
-              value={this.state.number}
-              onChange={this.onChange}
-              error={errors.number}
-            />
-
-            <TextFieldGroup type="text" name="year" label="Ano: *" placeholder="* Ano" value={this.state.year} onChange={this.onChange} error={errors.year} />
-
-            <SelectListGroup
-              placeholder=""
-              name="course_id"
-              label="Curso: *"
-              value={this.state.course_id}
-              options={courseOptions}
-              onChange={this.onChange}
-              error={errors.course_id}
-            />
-
-            <TextAreaFieldGroup
-              placeholder="* Descrição"
-              name="description"
-              label="Descrição: *"
-              value={this.state.description}
-              onChange={this.onChange}
-              error={errors.description}
-              info="Apresentação básica do processo seletivo"
-            />
-
-            <CheckBoxFieldGroup
-              id="visible-checkbox"
-              name="visible"
-              text="Visibilidade:"
-              value="Tornar processo visível"
-              checked={this.state.visible}
-              error={errors.visible}
-              info=""
-              onChange={this.onCheck}
-            />
-
-            <input type="submit" className="btn mt-4 btn-info btn-block" />
-          </form>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     const { courseStore } = this.props;
     const { errors } = this.state;
@@ -185,12 +127,44 @@ class ProcessCreate extends Component {
       <div className="register">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-8 m-auto">
               <Link to="/processes" className="btn btn-light">
                 Voltar para a lista de processos
               </Link>
-              <h1 className="display-4">Processo seletivo</h1>
-              {this.renderForm(this.state, errors, courseOptions)}
+              <h1 className="display-4 text-center">Criar processo</h1>
+              <p className="lead text-center">Dê entrada nos dados básicos</p>
+              <form noValidate onSubmit={this.onSubmit}>
+                <TextFieldGroup type="text" name="number" placeholder="* Número" value={this.state.number} onChange={this.onChange} error={errors.number} />
+
+                <TextFieldGroup type="text" name="year" placeholder="* Ano" value={this.state.year} onChange={this.onChange} error={errors.year} />
+
+                <SelectListGroup
+                  placeholder=""
+                  name="course_id"
+                  value={this.state.course_id}
+                  options={courseOptions}
+                  onChange={this.onChange}
+                  error={errors.course_id}
+                />
+
+                <TextAreaFieldGroup
+                  placeholder="* Descrição"
+                  name="description"
+                  value={this.state.description}
+                  onChange={this.onChange}
+                  error={errors.description}
+                  info="Apresentação básica do processo seletivo"
+                />
+
+                <div className="form-check mb-4">
+                  <input className="form-check-input" type="checkbox" name="visible" id="visible" checked={this.state.visible} onChange={this.onCheck} />
+                  <label className="form-check-label" htmlFor="visible">
+                    Tornar processo visível
+                  </label>
+                </div>
+
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+              </form>
             </div>
           </div>
         </div>

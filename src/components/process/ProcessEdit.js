@@ -140,7 +140,7 @@ class ProcessEdit extends Component {
               name="number"
               label="Número: *"
               placeholder="* Número"
-              value={state.number}
+              value={this.state.number}
               onChange={this.onChange}
               error={errors.number}
             />
@@ -209,7 +209,6 @@ class ProcessEdit extends Component {
                 Voltar para o processo
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
-
               {this.renderForm(this.state, errors, courseOptions)}
             </div>
           </div>
