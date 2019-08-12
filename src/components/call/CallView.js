@@ -10,6 +10,7 @@ import { getCall } from "components/call/callActions";
 import { clearErrors } from "actions/errorActions";
 import DrawFilter from "components/profile/DrawFilter";
 import { getCallStatus } from "./callHelpers";
+import VacancyCard from "components/vacancy/VacancyCard";
 
 class CallView extends Component {
   constructor() {
@@ -83,27 +84,11 @@ class CallView extends Component {
     );
   }
 
-  renderVacancys(vacancys) {
-    return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Oferta de vagas</h4>
-            </div>
-            <div className="col">
-              <div className="text-right">
-                <Link className="text-success" to={`/processes/${"XXX"}/calls/${"XXX"}/edit`}>
-                  <i className="fas fa-plus-circle" /> Adicionar
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="card-body"> uaga uaga uaga</div>
-      </div>
-    );
+  renderVacancys(call, loading) {
+    if (call === null || loading) {
+      return <Spinner />;
+    }
+    return <VacancyCard call={call} process_id={this.props.match.params.process_id} />;
   }
 
   render() {
@@ -120,7 +105,7 @@ class CallView extends Component {
               <h1 className="display-4">Chamada</h1>
               <AlertError errors={errors} />
               {this.renderInfo(call, loading)}
-              {this.renderVacancys()}
+              {this.renderVacancys(call, loading)}
             </div>
           </div>
         </div>
