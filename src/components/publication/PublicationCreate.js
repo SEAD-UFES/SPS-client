@@ -17,6 +17,7 @@ import { getPublicationTypes } from "components/publicationType/publicationTypeA
 import { validateDateRequired, validateName } from "validation";
 import { validatePublicationForm } from "./validatePublicationForm";
 import { validateFileType } from "../../validation";
+import AlertError from "components/common/AlertError";
 
 class PublicationCreate extends Component {
   constructor() {
@@ -327,27 +328,6 @@ class PublicationCreate extends Component {
           })[0].Steps
         : [];
 
-    //mounting render pieces
-
-    const alertsList = (
-      <div>
-        {errors.serverError ? (
-          <div class="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro do servidor
-          </div>
-        ) : (
-          ""
-        )}
-        {errors.anotherError ? (
-          <div class="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro desconhecido
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    );
-
     const processPublicationTypeOptions = [{ label: "* Selecione o tipo de publicação", value: "" }].concat(
       publicationTypes
         ? publicationTypes.map(procPubTypes => {
@@ -401,8 +381,8 @@ class PublicationCreate extends Component {
                 Voltar para processo seletivo
               </Link>
               <h1 className="display-4">Publicação</h1>
+              <AlertError errors={this.props.errorStore} />
               {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
-              {alertsList}
             </div>
           </div>
         </div>
@@ -414,12 +394,14 @@ class PublicationCreate extends Component {
 PublicationCreate.proptypes = {
   getProcess: PropTypes.func.isRequired,
   getPublicationTypes: PropTypes.func.isRequired,
-  createPublication: PropTypes.func.isRequired
+  createPublication: PropTypes.func.isRequired,
+  errorStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   process: state.process,
-  publicationTypeStore: state.publicationTypeStore
+  publicationTypeStore: state.publicationTypeStore,
+  errorStore: state.errorStore
 });
 
 export default connect(
