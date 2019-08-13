@@ -236,7 +236,7 @@ class PublicationUpdate extends Component {
             <SelectListGroup
               placeholder="* Selecione o processo seletivo"
               name="selectiveProcess_id"
-              label="Curso: *"
+              label="Processo: *"
               value={this.state.selectiveProcess_id}
               options={processOptions}
               onChange={this.onChange}
