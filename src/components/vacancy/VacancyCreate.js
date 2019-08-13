@@ -126,7 +126,9 @@ class VacancyCreate extends Component {
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {
-      this.props.createVacancy(vacancyData, this.props.match.params.process_id, this.props.history);
+      this.props.createVacancy(vacancyData, () => {
+        this.props.history.push(`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`);
+      });
     }
   }
 

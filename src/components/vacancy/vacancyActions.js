@@ -10,11 +10,11 @@ export const setVacanciesLoading = () => {
   };
 };
 
-export const createVacancy = (vacancyData, process_id, history) => dispatch => {
+export const createVacancy = (vacancyData, callback_ok) => dispatch => {
   spsApi
     .post("/v1/vacancies", vacancyData)
     .then(res => {
-      history.push(`/processes/${process_id}`);
+      callback_ok();
     })
     .catch(err =>
       dispatch({
@@ -42,11 +42,11 @@ export const getVacancy = vacancy_id => dispatch => {
     );
 };
 
-export const updateVacancy = (process_id, vacancy_id, vacancyData, history) => dispatch => {
+export const updateVacancy = (vacancy_id, vacancyData, callback_ok) => dispatch => {
   spsApi
     .put(`/v1/vacancies/${vacancy_id}`, vacancyData)
     .then(res => {
-      history.push(`/processes/${process_id}`);
+      callback_ok();
     })
     .catch(err =>
       dispatch({

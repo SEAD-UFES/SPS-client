@@ -142,7 +142,9 @@ class VacancyEdit extends Component {
     if (!valVacancy.isValid) {
       this.setState({ errors: valVacancy.errors });
     } else {
-      this.props.updateVacancy(this.props.match.params.process_id, this.props.match.params.vacancy_id, vacancyData, this.props.history);
+      this.props.updateVacancy(this.props.match.params.vacancy_id, vacancyData, () => {
+        this.props.history.push(`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`);
+      });
     }
   }
 
