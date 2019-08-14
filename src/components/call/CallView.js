@@ -1,32 +1,36 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { withRouter, Link } from "react-router-dom";
-import moment from "moment";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { withRouter, Link } from 'react-router-dom'
+import moment from 'moment'
 
-import AlertError from "components/common/AlertError";
-import Spinner from "components/common/Spinner";
-import { getCall } from "components/call/callActions";
-import { clearErrors } from "actions/errorActions";
-import DrawFilter from "components/profile/DrawFilter";
-import { getCallStatus } from "./callHelpers";
-import VacancyCard from "components/vacancy/VacancyCard";
+import AlertError from 'components/common/AlertError'
+import Spinner from 'components/common/Spinner'
+import { getCall } from 'components/call/callActions'
+import { clearErrors } from 'actions/errorActions'
+import DrawFilter from 'components/profile/DrawFilter'
+import { getCallStatus } from './callHelpers'
+import VacancyCard from 'components/vacancy/VacancyCard'
+import { findCourse } from 'components/course/courseActions'
 
 class CallView extends Component {
   constructor() {
-    super();
-    this.state = {};
+    super()
+    this.state = {
+      course_id: ''
+    }
   }
 
   componentDidMount() {
-    this.props.getCall(this.props.match.params.call_id);
+    this.props.getCall(this.props.match.params.call_id)
+    this.props.findCourse({ call_id: this.props.match.params.call_id }, course => {
+      this.setState({ course_id: course.id })
+    })
   }
-
-  componentWillReceiveProps(nextProps) {}
 
   renderInfo(call, loading) {
     if (call === null || loading) {
-      return <Spinner />;
+      return <Spinner />
     }
 
     return (
@@ -38,9 +42,7 @@ class CallView extends Component {
             </div>
             <div className="col">
               <div className="text-right">
-                <DrawFilter permission="chamada editar" course_id={call.course_id}>
-                  {" "}
-                  {/*course_id temporario*/}
+                <DrawFilter permission="chamada editar" course_id={this.state.course_id}>
                   <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                     <i className="fas fa-cog" /> Editar
                   </Link>
@@ -63,13 +65,13 @@ class CallView extends Component {
                 <td>
                   <strong>Abertura:</strong>
                 </td>
-                <td>{moment(call.openingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
+                <td>{moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Encerramento:</strong>
                 </td>
-                <td>{moment(call.endingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}</td>
+                <td>{moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
               </tr>
               <tr>
                 <td>
@@ -81,19 +83,18 @@ class CallView extends Component {
           </table>
         </div>
       </div>
-    );
+    )
   }
 
   renderVacancys(call, loading) {
     if (call === null || loading) {
-      return <Spinner />;
+      return <Spinner />
     }
-    return <VacancyCard call={call} process_id={this.props.match.params.process_id} />;
+    return <VacancyCard call={call} process_id={this.props.match.params.process_id} course_id={this.state.course_id} />
   }
 
   render() {
-    const { errors, call, loading } = this.props;
-
+    const { errors, call, loading } = this.props
     return (
       <div className="register">
         <div className="container">
@@ -110,7 +111,7 @@ class CallView extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -121,17 +122,19 @@ CallView.proptypes = {
   getCall: PropTypes.func.isRequired,
   call: PropTypes.object.isRequired,
   loading: PropTypes.object.isRequired
-};
+}
 
 // Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errorStore,
   call: state.callStore.call,
-  loading: state.callStore.loading
-});
+  loading: state.callStore.loading,
+  course_loading: state.courseStore.loading,
+  course: state.courseStore.courses
+})
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { getCall, clearErrors }
-)(withRouter(CallView));
+  { getCall, clearErrors, findCourse }
+)(withRouter(CallView))

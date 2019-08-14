@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-import DrawFilter from "../profile/DrawFilter";
-import { compareByAssignmentName } from "utils/compareBy";
+import DrawFilter from '../profile/DrawFilter'
+import { compareByAssignmentName } from 'utils/compareBy'
 
 export default class VacancyCard extends Component {
   renderTable(call) {
@@ -26,30 +26,32 @@ export default class VacancyCard extends Component {
                 <td>{vacancy.Region ? vacancy.Region.name : <span className="text-secondary">...</span>}</td>
                 <td>{vacancy.Restriction ? vacancy.Restriction.name : <span className="text-secondary">...</span>}</td>
                 <td>{vacancy.qtd}</td>
-                <td>{vacancy.reserve ? "C.R." : "Não"}</td>
+                <td>{vacancy.reserve ? 'C.R.' : 'Não'}</td>
                 <td className="text-right">
-                  <DrawFilter permission="chamada editar" course_id={call.selectiveProcess_id}>
-                    <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
+                  <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+                    <Link
+                      className="text-info"
+                      to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
                       <i className="fas fa-cog" />
                     </Link>
-                  </DrawFilter>{" "}
-                  <DrawFilter permission="chamada apagar" course_id={call.selectiveProcess_id}>
-                    <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
+                  </DrawFilter>{' '}
+                  <DrawFilter permission="chamada apagar" course_id={this.props.course_id}>
+                    <Link
+                      className="text-danger"
+                      to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
                       <i className="fas fa-times-circle" />
                     </Link>
                   </DrawFilter>
                 </td>
               </tr>
-            );
+            )
           })}
         </tbody>
       </table>
-    );
+    )
   }
 
   render() {
-    console.log(this.props.call.Vacancies);
-
     return (
       <div className="card mb-4">
         <div className="card-header">
@@ -60,7 +62,11 @@ export default class VacancyCard extends Component {
             <div className="col">
               <div className="float-right">
                 <DrawFilter permission="chamada criar" course_id={this.props.process_id}>
-                  <Link className="text-success" to={`/processes/${this.props.call.selectiveProcess_id}/calls/${this.props.call.id}/vacancies/create`}>
+                  <Link
+                    className="text-success"
+                    to={`/processes/${this.props.call.selectiveProcess_id}/calls/${
+                      this.props.call.id
+                    }/vacancies/create`}>
                     <i className="fas fa-plus-circle" /> Adicionar
                   </Link>
                 </DrawFilter>
@@ -69,9 +75,13 @@ export default class VacancyCard extends Component {
           </div>
         </div>
         <div className="card-body">
-          {this.props.call.Vacancies.length > 0 ? this.renderTable(this.props.call) : <p className="mb-0">Sem oferta de vagas cadastradas.</p>}
+          {this.props.call.Vacancies.length > 0 ? (
+            this.renderTable(this.props.call)
+          ) : (
+            <p className="mb-0">Sem oferta de vagas cadastradas.</p>
+          )}
         </div>
       </div>
-    );
+    )
   }
 }
