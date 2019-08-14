@@ -43,7 +43,12 @@ class CallView extends Component {
             <div className="col">
               <div className="text-right">
                 <DrawFilter permission="chamada editar" course_id={this.state.course_id}>
-                  <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                  <Link
+                    className="text-info"
+                    to={{
+                      pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
+                      prevLocation: this.props.location
+                    }}>
                     <i className="fas fa-cog" /> Editar
                   </Link>
                 </DrawFilter>
