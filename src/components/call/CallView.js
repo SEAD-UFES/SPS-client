@@ -22,6 +22,7 @@ class CallView extends Component {
   }
 
   componentDidMount() {
+    this.props.clearErrors()
     this.props.getCall(this.props.match.params.call_id)
     this.props.findCourse({ call_id: this.props.match.params.call_id }, course => {
       this.setState({ course_id: course.id })
@@ -133,9 +134,7 @@ CallView.proptypes = {
 const mapStateToProps = state => ({
   errors: state.errorStore,
   call: state.callStore.call,
-  loading: state.callStore.loading,
-  course_loading: state.courseStore.loading,
-  course: state.courseStore.courses
+  loading: state.callStore.loading
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store

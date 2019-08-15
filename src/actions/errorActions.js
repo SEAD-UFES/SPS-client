@@ -1,8 +1,8 @@
-import { CLEAR_ERRORS } from "./types";
+import { CLEAR_ERRORS } from './types'
 
 //Register
-export const clearErrors = () => dispatch => {
-  dispatch({
+export const clearErrors = () => {
+  return {
     type: CLEAR_ERRORS
-  });
-};
+  }
+}
