@@ -1,38 +1,38 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
 
-import { spsServerUrl } from "apis/spsServer";
-import DrawFilter from "../profile/DrawFilter";
+import { spsServerUrl } from 'apis/spsServer'
+import DrawFilter from '../profile/DrawFilter'
 
 export default class PublicationCard extends Component {
   renderPublicationLevel(process, publication) {
-    let result = "Edital";
+    let result = 'Edital'
 
     if (publication.call_id) {
-      result = `${result} | Chamada`;
+      result = `${result} | Chamada`
 
       const filterCall = value => {
-        return value.id === publication.call_id;
-      };
-      const call = process.Calls.find(filterCall);
+        return value.id === publication.call_id
+      }
+      const call = process.Calls.find(filterCall)
       if (call) {
-        result = `${result} ${call.number}`;
+        result = `${result} ${call.number}`
 
         if (publication.step_id) {
-          result = `${result} | Etapa`;
+          result = `${result} | Etapa`
           const filterStep = value => {
-            return value.id === publication.step_id;
-          };
-          const step = call.Steps.find(filterStep);
+            return value.id === publication.step_id
+          }
+          const step = call.Steps.find(filterStep)
           if (step) {
-            result = `${result} ${step.number}`;
+            result = `${result} ${step.number}`
           }
         }
       }
     }
 
-    return result;
+    return result
   }
 
   renderTable(process) {
@@ -51,43 +51,46 @@ export default class PublicationCard extends Component {
           <tbody>
             {process.Publications.map(publication => {
               return (
-                <tr key={publication.id} className={publication.valid ? "" : "text-secondary"}>
-                  <td>{moment(publication.date, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</td>
+                <tr key={publication.id} className={publication.valid ? '' : 'text-secondary'}>
+                  <td>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</td>
                   <td>{this.renderPublicationLevel(process, publication)}</td>
                   <td>{publication.PublicationType.name}</td>
-                  <td>{publication.description ? publication.description : ""}</td>
+                  <td>{publication.description ? publication.description : ''}</td>
                   <td className="text-right">
                     <a
-                      className={publication.valid ? "" : "isDisabled"}
+                      className={publication.valid ? '' : 'isDisabled'}
                       onClick={publication.valid ? e => {} : e => e.preventDefault()}
-                      href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ""}
-                    >
+                      href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}>
                       <i className="fas fa-file-download" />
-                    </a>{" "}
+                    </a>{' '}
                     <DrawFilter permission="publication_update" course_id={process.Course.id}>
                       <Link
                         className="text-info"
-                        to={{ pathname: `/processes/${process.id}/publications/${publication.id}/update`, state: { publication: publication } }}
-                      >
+                        to={{
+                          pathname: `/processes/${process.id}/publications/${publication.id}/update`,
+                          state: { publication: publication }
+                        }}>
                         <i className="fas fa-cog" />
                       </Link>
-                    </DrawFilter>{" "}
+                    </DrawFilter>{' '}
                     <DrawFilter permission="publication_delete" course_id={process.Course.id}>
                       <Link
                         className="text-danger"
-                        to={{ pathname: `/processes/${process.id}/publications/${publication.id}/delete`, state: { publication: publication } }}
-                      >
+                        to={{
+                          pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
+                          state: { publication: publication }
+                        }}>
                         <i className="fas fa-times-circle" />
                       </Link>
                     </DrawFilter>
                   </td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
       </div>
-    );
+    )
   }
 
   render() {
@@ -106,8 +109,7 @@ export default class PublicationCard extends Component {
                     to={{
                       pathname: `/processes/${this.props.process.id}/publications/create`,
                       state: { selectiveProcess: this.props.process }
-                    }}
-                  >
+                    }}>
                     <i className="fas fa-plus-circle" /> Adicionar
                   </Link>
                 </DrawFilter>
@@ -116,9 +118,13 @@ export default class PublicationCard extends Component {
           </div>
         </div>
         <div className="card-body">
-          {this.props.process.Publications.length > 0 ? this.renderTable(this.props.process) : <p className="mb-0">Sem publicações cadastradas.</p>}
+          {this.props.process.Publications.length > 0 ? (
+            this.renderTable(this.props.process)
+          ) : (
+            <p className="mb-0">Sem publicações cadastradas.</p>
+          )}
         </div>
       </div>
-    );
+    )
   }
 }
