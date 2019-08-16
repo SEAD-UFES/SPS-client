@@ -107,7 +107,6 @@ class PublicationDelete extends Component {
   }
 
   render() {
-    //load raw data
     const { errorStore } = this.props
     const { processPublication, loading } = this.props.publicationStore
 
