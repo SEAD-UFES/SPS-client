@@ -57,7 +57,7 @@ class VacancyDelete extends Component {
     return (
       <div className="card mb-4">
         <div className="card-header">
-          <h4 className="mb-0">Excluir Oferta de vaga</h4>
+          <h4 className="mb-0">Excluir oferta de vaga</h4>
         </div>
         <div className="card-body">
           <table className="table mb-0 table-hover">
