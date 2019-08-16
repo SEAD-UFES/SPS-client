@@ -1,71 +1,66 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import Spinner from "components/common/Spinner";
-
-import { getVacancy, deleteVacancy } from "components/vacancy/vacancyActions";
+import Spinner from 'components/common/Spinner'
+import { getVacancy, deleteVacancy } from 'components/vacancy/vacancyActions'
+import AlertError from 'components/common/AlertError'
 
 class VacancyDelete extends Component {
   constructor() {
-    super();
-    this.state = { errors: [] };
-
-    this.onSubmit = this.onSubmit.bind(this);
+    super()
+    this.state = { errors: [] }
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
     if (this.props.match.params.vacancy_id) {
-      this.props.getVacancy(this.props.match.params.vacancy_id);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    //error handling
-    if (nextProps.errors) {
-      let errors = nextProps.errors;
-      this.setState({ errors: errors });
+      this.props.getVacancy(this.props.match.params.vacancy_id)
     }
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
     this.props.deleteVacancy(this.props.match.params.vacancy_id, () => {
-      this.props.history.push(`/processes/${this.props.match.params.process_id}`);
-    });
+      this.props.history.push(
+        `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`
+      )
+    })
   }
 
-  render() {
-    const { vacancy, loading } = this.props;
-    const { errors } = this.state;
-
-    const alertsList = (
-      <div>
-        {errors.serverError ? (
-          <div className="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro do servidor
-          </div>
-        ) : (
-          ""
-        )}
-        {errors.anotherError ? (
-          <div className="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro desconhecido
-          </div>
-        ) : (
-          ""
-        )}
+  renderChoices() {
+    return (
+      <div className="row">
+        <div className="col">
+          <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+        </div>
+        <div className="col">
+          <input
+            type="button"
+            value="Cancelar"
+            className="btn btn-secondary btn-block mt-4"
+            onClick={() => {
+              this.props.history.goBack()
+            }}
+          />
+        </div>
       </div>
-    );
+    )
+  }
 
-    const infoTable =
-      vacancy === null || loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          <h4 className="mb-2">Informações</h4>
-          <table className="table">
+  renderInfo(vacancy, loading) {
+    if (vacancy === null || loading) {
+      return <Spinner />
+    }
+
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <h4 className="mb-0">Excluir Oferta de vaga</h4>
+        </div>
+        <div className="card-body">
+          <table className="table mb-0 table-hover">
             <tbody>
               <tr>
                 <td>
@@ -77,9 +72,9 @@ class VacancyDelete extends Component {
                 <td>
                   <strong>Processo:</strong>
                 </td>
-                <td>{`${vacancy.Call.SelectiveProcess.number}/${vacancy.Call.SelectiveProcess.year} - ${vacancy.Call.SelectiveProcess.Course.name} | Chamada ${
-                  vacancy.Call.number
-                }`}</td>
+                <td>{`${vacancy.Call.SelectiveProcess.number}/${vacancy.Call.SelectiveProcess.year} - ${
+                  vacancy.Call.SelectiveProcess.Course.name
+                } | Chamada ${vacancy.Call.number}`}</td>
               </tr>
               <tr>
                 <td>
@@ -91,13 +86,13 @@ class VacancyDelete extends Component {
                 <td>
                   <strong>Região:</strong>
                 </td>
-                <td>{vacancy.Region ? vacancy.Region.name : "Sem região"}</td>
+                <td>{vacancy.Region ? vacancy.Region.name : 'Sem região'}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Restrição:</strong>
                 </td>
-                <td>{vacancy.Restriction ? vacancy.Restriction.name : "Sem restrição"}</td>
+                <td>{vacancy.Restriction ? vacancy.Restriction.name : 'Sem restrição'}</td>
               </tr>
               <tr>
                 <td>
@@ -109,62 +104,51 @@ class VacancyDelete extends Component {
                 <td>
                   <strong>Reserva:</strong>
                 </td>
-                <td>{vacancy.reserve ? "Sim" : "Não"}</td>
+                <td>{vacancy.reserve ? 'Sim' : 'Não'}</td>
               </tr>
             </tbody>
           </table>
-        </div>
-      );
-
-    const choices = (
-      <div className="row">
-        <div className="col">
-          <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
-        </div>
-        <div className="col">
-          <input
-            type="button"
-            value="Cancelar"
-            className="btn btn-secondary btn-block mt-4"
-            onClick={() => {
-              this.props.history.goBack();
-            }}
-          />
+          {this.renderChoices()}
         </div>
       </div>
-    );
+    )
+  }
+
+  render() {
+    const { vacancy, loading } = this.props
+    const { errorStore } = this.props
 
     return (
       <div className="roleassignments">
         <div className="container">
           <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
+            <div className="col-md-12">
+              <Link
+                to={`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`}
+                className="btn btn-light">
+                Voltar para a chamada
               </Link>
-              <h1 className="display-4 mb-4 text-center">Excluir oferta de vaga</h1>
-              {alertsList}
-              <p className="lead text-center">Você solicitou excluir o item:</p>
-              {infoTable}
-              <p className="lead text-center">Confirma a operação?</p>
-              {choices}
+              <h1 className="display-4">Oferta de vaga</h1>
+              <AlertError errors={errorStore} />
+              {this.renderInfo(vacancy, loading)}
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 VacancyDelete.propTypes = {
   getVacancy: PropTypes.func.isRequired,
   deleteVacancy: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   vacancy: state.vacancyStore.vacancy,
-  loading: state.vacancyStore.loading
-});
+  loading: state.vacancyStore.loading,
+  errorStore: state.errorStore
+})
 
 export default connect(
   mapStateToProps,
@@ -172,4 +156,4 @@ export default connect(
     getVacancy,
     deleteVacancy
   }
-)(VacancyDelete);
+)(VacancyDelete)
