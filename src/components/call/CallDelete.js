@@ -34,7 +34,8 @@ class CallDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-    this.props.deleteCall(this.props.match.params.call_id, () => {
+    const { call } = this.props
+    this.props.deleteCall(call.id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`)
     })
   }
