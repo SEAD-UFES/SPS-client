@@ -25,8 +25,8 @@ class PublicationDelete extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-    const { processPublication } = this.props.publicationStore
-    this.props.deletePublication(processPublication.id, () => {
+    const { publication } = this.props.publicationStore
+    this.props.deletePublication(publication.id, () => {
       this.props.history.push(`/processes/${this.props.match.params.process_id}`)
     })
   }
@@ -108,7 +108,7 @@ class PublicationDelete extends Component {
 
   render() {
     const { errorStore } = this.props
-    const { processPublication, loading } = this.props.publicationStore
+    const { publication, loading } = this.props.publicationStore
 
     return (
       <div className="publication-delete">
@@ -120,7 +120,7 @@ class PublicationDelete extends Component {
               </Link>
               <h1 className="display-4">Publicação</h1>
               <AlertError errors={errorStore} />
-              {this.renderInfo(processPublication, loading)}
+              {this.renderInfo(publication, loading)}
             </div>
           </div>
         </div>
