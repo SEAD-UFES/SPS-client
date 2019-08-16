@@ -129,7 +129,10 @@ class CallDelete extends Component {
 CallDelete.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   getCall: PropTypes.func.isRequired,
-  deleteCall: PropTypes.func.isRequired
+  deleteCall: PropTypes.func.isRequired,
+  call: PropTypes.object.isRequired,
+  loading: PropTypes.object.isRequired,
+  errorStore: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
