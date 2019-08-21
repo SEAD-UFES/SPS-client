@@ -1,105 +1,110 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter, Link } from 'react-router-dom'
 
-import TextFieldGroup from "../common/TextFieldGroup";
-import { validateProcessNumber } from "../../validation";
-import { validateCallForm, validateEndingDate, validateOpeningDate } from "./validateCallForm";
-import AlertError from "components/common/AlertError";
-import { createCall } from "./callActions";
-import { clearErrors } from "actions/errorActions";
+import TextFieldGroup from '../common/TextFieldGroup'
+import { validateProcessNumber } from '../../validation'
+import { validateCallForm, validateEndingDate, validateOpeningDate } from './validateCallForm'
+import AlertError from 'components/common/AlertError'
+import { createCall } from './callActions'
+import { clearErrors } from 'actions/errorActions'
+import moment from 'moment'
 
 class CallCreate extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      number: "",
-      openingDate: "",
-      endingDate: "",
+      number: '',
+      openingDate: '',
+      endingDate: '',
 
       //errors
       errors: {}
-    };
+    }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentWillMount() {
-    this.props.clearErrors();
+    this.props.clearErrors()
   }
 
   componentWillReceiveProps(nextProps) {
     //If receive errors from server
     if (nextProps.errors) {
-      let errors = nextProps.errors;
+      let errors = nextProps.errors
 
-      let newStateErrors = {};
+      let newStateErrors = {}
 
       if (errors.data) {
         switch (errors.data.code) {
-          case "calls-05":
-            newStateErrors.endingDate = errors.data.userMessage;
-            break;
+          case 'calls-05':
+            newStateErrors.endingDate = errors.data.userMessage
+            break
           default:
-            break;
+            break
         }
       }
 
-      this.setState({ errors: newStateErrors });
+      this.setState({ errors: newStateErrors })
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "number":
-        valResult = validateProcessNumber(e.target.value);
-        break;
-      case "openingDate":
-        valResult = validateOpeningDate(e.target.value, this.state.endingDate);
-        break;
-      case "endingDate":
-        valResult = validateEndingDate(this.state.openingDate, e.target.value);
-        break;
+      case 'number':
+        valResult = validateProcessNumber(e.target.value)
+        break
+      case 'openingDate':
+        valResult = validateOpeningDate(e.target.value, this.state.endingDate)
+        break
+      case 'endingDate':
+        valResult = validateEndingDate(this.state.openingDate, e.target.value)
+        break
       default:
-        break;
+        break
     }
 
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     const callData = {
       selectiveProcess_id: this.props.match.params.process_id,
       number: this.state.number,
       openingDate: this.state.openingDate,
       endingDate: this.state.endingDate
-    };
+    }
 
-    const valCall = validateCallForm(callData);
+    const valCall = validateCallForm(callData)
 
     if (!valCall.isValid) {
-      this.setState({ errors: valCall.errors });
+      this.setState({ errors: valCall.errors })
     } else {
+      //Formatando datas para o backend (temp?)
+      callData.openingDate = moment(callData.openingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00'
+      callData.endingDate = moment(callData.endingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
+
       this.props.createCall(callData, () => {
-        this.props.history.push(`/processes/${callData.selectiveProcess_id}`);
-      });
+        this.props.history.push(`/processes/${callData.selectiveProcess_id}`)
+      })
     }
   }
 
@@ -146,11 +151,11 @@ class CallCreate extends Component {
           </form>
         </div>
       </div>
-    );
+    )
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.state
 
     return (
       <div className="call-create">
@@ -167,22 +172,22 @@ class CallCreate extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 CallCreate.proptypes = {
   createCall: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
-};
+}
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errorStore
-});
+})
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
   { createCall, clearErrors }
-)(withRouter(CallCreate));
+)(withRouter(CallCreate))
