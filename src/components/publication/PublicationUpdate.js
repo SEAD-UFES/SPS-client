@@ -203,6 +203,7 @@ class PublicationUpdate extends Component {
       this.setState({ errors: valRoleType.errors })
     } else {
       delete publicationData.file
+      publicationData.date = moment(publicationData.date, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00'
       this.props.updatePublication(publicationData, () => {
         this.props.history.push(`/processes/${this.state.selectiveProcess_id}`)
       })
