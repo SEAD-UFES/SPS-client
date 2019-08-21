@@ -117,6 +117,9 @@ class CallEdit extends Component {
     if (!valCall.isValid) {
       this.setState({ errors: valCall.errors })
     } else {
+      //Formatando datas para o backend (temp?)
+      callData.openingDate = moment(callData.openingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00'
+      callData.endingDate = moment(callData.endingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
       this.props.updateCall(this.props.match.params.call_id, callData, () => {
         this.props.history.push(back_url)
       })

@@ -131,8 +131,8 @@ CallDelete.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   getCall: PropTypes.func.isRequired,
   deleteCall: PropTypes.func.isRequired,
-  call: PropTypes.object.isRequired,
-  loading: PropTypes.object.isRequired,
+  call: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
   errorStore: PropTypes.object.isRequired
 }
 

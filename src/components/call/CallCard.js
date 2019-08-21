@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
 
-import DrawFilter from "../profile/DrawFilter";
-import { getCallStatus } from "./callHelpers";
+import DrawFilter from '../profile/DrawFilter'
+import { getCallStatus } from './callHelpers'
 
 export default class CallCard extends Component {
   renderTable(process) {
@@ -23,9 +23,11 @@ export default class CallCard extends Component {
               <tr key={call.id}>
                 <td>{call.number}</td>
                 <td>
-                  {moment(call.openingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
-                  {" - "}
-                  {moment(call.endingDate, "YYYY-MM-DD HH:mm:ss ").format("DD/MM/YYYY")}
+                  {console.log(call.openingDate)}
+                  {console.log(call.endingDate)}
+                  {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
+                  {' - '}
+                  {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
                 </td>
                 <td>{getCallStatus(call)}</td>
                 <td className="text-right">
@@ -33,12 +35,12 @@ export default class CallCard extends Component {
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
                       <i className="fas fa-search-plus" />
                     </Link>
-                  </DrawFilter>{" "}
+                  </DrawFilter>{' '}
                   <DrawFilter permission="chamada editar" course_id={process.Course.id}>
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                       <i className="fas fa-cog" />
                     </Link>
-                  </DrawFilter>{" "}
+                  </DrawFilter>{' '}
                   <DrawFilter permission="chamada apagar" course_id={process.Course.id}>
                     <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
                       <i className="fas fa-times-circle" />
@@ -46,11 +48,11 @@ export default class CallCard extends Component {
                   </DrawFilter>
                 </td>
               </tr>
-            );
+            )
           })}
         </tbody>
       </table>
-    );
+    )
   }
 
   render() {
@@ -73,9 +75,13 @@ export default class CallCard extends Component {
           </div>
         </div>
         <div className="card-body">
-          {this.props.process.Calls.length > 0 ? this.renderTable(this.props.process) : <p className="mb-0">Sem chamadas cadastradas.</p>}
+          {this.props.process.Calls.length > 0 ? (
+            this.renderTable(this.props.process)
+          ) : (
+            <p className="mb-0">Sem chamadas cadastradas.</p>
+          )}
         </div>
       </div>
-    );
+    )
   }
 }
