@@ -23,8 +23,6 @@ export default class CallCard extends Component {
               <tr key={call.id}>
                 <td>{call.number}</td>
                 <td>
-                  {console.log(call.openingDate)}
-                  {console.log(call.endingDate)}
                   {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
                   {' - '}
                   {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
