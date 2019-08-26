@@ -11,13 +11,15 @@ class AlertError extends Component {
       <div>
         {this.props.errors.serverError ? (
           <div className="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro do servidor
+            <strong>Erro:</strong>{' '}
+            {this.props.errors.data.userMessage ? ` ${this.props.errors.data.userMessage}` : ' Erro do servidor.'}
           </div>
         ) : null}
 
         {this.props.errors.anotherError ? (
           <div className="alert alert-danger" role="alert">
-            <strong>Erro!</strong> Erro desconhecido
+            <strong>Erro:</strong>
+            {' Erro desconhecido.'}
           </div>
         ) : null}
       </div>
