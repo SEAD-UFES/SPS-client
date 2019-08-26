@@ -29,17 +29,17 @@ export default class CallCard extends Component {
                 </td>
                 <td>{getCallStatus(call)}</td>
                 <td className="text-right">
-                  <DrawFilter permission="chamada acessar" course_id={process.Course.id}>
+                  <DrawFilter permission="call_read" course_id={process.Course.id}>
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
                       <i className="fas fa-search-plus" />
                     </Link>
                   </DrawFilter>{' '}
-                  <DrawFilter permission="chamada editar" course_id={process.Course.id}>
+                  <DrawFilter permission="call_update" course_id={process.Course.id}>
                     <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                       <i className="fas fa-cog" />
                     </Link>
                   </DrawFilter>{' '}
-                  <DrawFilter permission="chamada apagar" course_id={process.Course.id}>
+                  <DrawFilter permission="call_delete" course_id={process.Course.id}>
                     <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
                       <i className="fas fa-times-circle" />
                     </Link>
@@ -63,7 +63,7 @@ export default class CallCard extends Component {
             </div>
             <div className="col">
               <div className="float-right">
-                <DrawFilter permission="chamada criar" course_id={this.props.process.Course.id}>
+                <DrawFilter permission="call_create" course_id={this.props.process.Course.id}>
                   <Link className="text-success" to={`/processes/${this.props.process.id}/calls/create`}>
                     <i className="fas fa-plus-circle" /> Adicionar
                   </Link>

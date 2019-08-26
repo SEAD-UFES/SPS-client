@@ -43,7 +43,7 @@ class CallView extends Component {
             </div>
             <div className="col">
               <div className="text-right">
-                <DrawFilter permission="chamada editar" course_id={this.state.course_id}>
+                <DrawFilter permission="call_update" course_id={this.state.course_id}>
                   <Link
                     className="text-info"
                     to={{

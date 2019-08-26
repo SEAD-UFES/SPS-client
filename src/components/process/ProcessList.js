@@ -152,7 +152,7 @@ class ProcessList extends Component {
   renderAdd() {
     return (
       <React.Fragment>
-        <DrawFilter permission="processo seletivo criar" anyCourse={true}>
+        <DrawFilter permission="selectiveprocess_create" anyCourse={true}>
           <Link className="text-success" to={`${this.props.match.url}/create`}>
             <i className="fas fa-plus-circle" /> Adicionar
           </Link>

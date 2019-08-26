@@ -30,7 +30,7 @@ class ProcessView extends Component {
             </div>
             <div className="col">
               <div className="text-right">
-                <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
+                <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
                   <Link className="text-info" to={`/processes/${process.id}/edit`}>
                     <i className="fas fa-cog" /> Editar
                   </Link>
@@ -57,7 +57,7 @@ class ProcessView extends Component {
                 </td>
                 <td>{process.Course.name}</td>
               </tr>
-              <DrawFilter permission="processo seletivo editar" course_id={process.Course.id}>
+              <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
                 <tr>
                   <td>
                     <strong>Visibilidade:</strong>

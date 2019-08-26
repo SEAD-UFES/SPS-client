@@ -28,14 +28,14 @@ export default class VacancyCard extends Component {
                 <td>{vacancy.qtd}</td>
                 <td>{vacancy.reserve ? 'C.R.' : 'Não'}</td>
                 <td className="text-right">
-                  <DrawFilter permission="chamada editar" course_id={this.props.course_id}>
+                  <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
                     <Link
                       className="text-info"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
                       <i className="fas fa-cog" />
                     </Link>
                   </DrawFilter>{' '}
-                  <DrawFilter permission="chamada apagar" course_id={this.props.course_id}>
+                  <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
                     <Link
                       className="text-danger"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
@@ -61,12 +61,10 @@ export default class VacancyCard extends Component {
             </div>
             <div className="col">
               <div className="float-right">
-                <DrawFilter permission="chamada criar" course_id={this.props.process_id}>
+                <DrawFilter permission="vacancy_create" course_id={this.props.process_id}>
                   <Link
                     className="text-success"
-                    to={`/processes/${this.props.call.selectiveProcess_id}/calls/${
-                      this.props.call.id
-                    }/vacancies/create`}>
+                    to={`/processes/${this.props.call.selectiveProcess_id}/calls/${this.props.call.id}/vacancies/create`}>
                     <i className="fas fa-plus-circle" /> Adicionar
                   </Link>
                 </DrawFilter>
