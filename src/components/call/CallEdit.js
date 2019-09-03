@@ -39,22 +39,11 @@ class CallEdit extends Component {
 
   componentWillReceiveProps(nextProps) {
     //If receive errors from server
-    if (nextProps.errors) {
-      let errors = nextProps.errors
-
-      let newStateErrors = {}
-
-      if (errors.data) {
-        switch (errors.data.code) {
-          case 'calls-05':
-            newStateErrors.endingDate = errors.data.userMessage
-            break
-          default:
-            break
-        }
+    if (nextProps.errorStore) {
+      let errorStore = nextProps.errorStore
+      if (errorStore.code === 'calls-01' && errorStore.data && errorStore.data.devMessage) {
+        this.setState({ errors: errorStore.data.devMessage.errors })
       }
-
-      this.setState({ errors: newStateErrors })
     }
 
     //(Preenchendo / Atualizando) dados do formulario
@@ -187,7 +176,7 @@ class CallEdit extends Component {
                 {back_url ? 'Voltar para a página anterior' : 'Voltar para o processo'}
               </Link>
               <h1 className="display-4">Chamada</h1>
-              <AlertError errors={this.props.errors} />
+              <AlertError errors={this.props.errorStore} />
               {this.renderForm(errors)}
             </div>
           </div>
@@ -201,12 +190,12 @@ class CallEdit extends Component {
 CallEdit.proptypes = {
   createCall: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errorStore: PropTypes.object.isRequired
 }
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errors: state.errorStore,
+  errorStore: state.errorStore,
   callStore: state.callStore
 })
 
