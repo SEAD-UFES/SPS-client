@@ -1,23 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { getProcess } from "./processActions";
-import Spinner from "../common/Spinner";
-import DrawFilter from "../profile/DrawFilter";
-import CallCard from "components/call/CallCard";
-import PublicationCard from "components/publication/PublicationCard";
+import { getProcess } from './processActions'
+import { getNoticeList } from 'components/notice/noticeActions'
+import Spinner from '../common/Spinner'
+import DrawFilter from '../profile/DrawFilter'
+import CallCard from 'components/call/CallCard'
+import PublicationCard from 'components/publication/PublicationCard'
+import NoticeCard from 'components/notice/NoticeCard'
 
 class ProcessView extends Component {
   componentDidMount() {
-    if (this.props.match.params.id) {
-      if (this.props.authStore.isAuthenticated) {
-        this.props.getProcess(this.props.match.params.id);
-      } else {
-        this.props.getProcess(this.props.match.params.id);
-      }
-    }
+    this.props.getProcess(this.props.match.params.id)
+    this.props.getNoticeList({ selectiveProcess_id: this.props.match.params.id })
   }
 
   renderInfoTable(process) {
@@ -30,7 +27,7 @@ class ProcessView extends Component {
             </div>
             <div className="col">
               <div className="text-right">
-                <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
+                <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
                   <Link className="text-info" to={`/processes/${process.id}/edit`}>
                     <i className="fas fa-cog" /> Editar
                   </Link>
@@ -62,7 +59,7 @@ class ProcessView extends Component {
                   <td>
                     <strong>Visibilidade:</strong>
                   </td>
-                  <td>{process.visible ? "Processo visível" : "Processo oculto"}</td>
+                  <td>{process.visible ? 'Processo visível' : 'Processo oculto'}</td>
                 </tr>
               </DrawFilter>
               <tr>
@@ -75,23 +72,25 @@ class ProcessView extends Component {
           </table>
         </div>
       </div>
-    );
+    )
   }
 
   renderCalls(process) {
-    return <CallCard process={process} course_id={process.id} />;
+    return <CallCard process={process} course_id={process.id} />
   }
 
   renderPublications(process) {
-    return <PublicationCard process={process} course_id={process.id} />;
+    return <PublicationCard process={process} course_id={process.id} />
   }
 
   render() {
-    const { process, loading } = this.props.processStore;
+    const { process, loading } = this.props.processStore
+    const processStore = this.props.processStore
+    const noticeStore = this.props.noticeStore
 
-    const infoCard = process === null || loading ? <Spinner /> : this.renderInfoTable(process);
-    const callCard = process === null || loading ? <Spinner /> : this.renderCalls(process);
-    const pubCard = process === null || loading ? <Spinner /> : this.renderPublications(process);
+    const infoCard = process === null || loading ? <Spinner /> : this.renderInfoTable(process)
+    const callCard = process === null || loading ? <Spinner /> : this.renderCalls(process)
+    const pubCard = process === null || loading ? <Spinner /> : this.renderPublications(process)
 
     return (
       <div className="process-view">
@@ -102,6 +101,7 @@ class ProcessView extends Component {
                 Voltar para lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
+              <NoticeCard noticeStore={noticeStore} processStore={processStore} />
               {infoCard}
               {callCard}
               {pubCard}
@@ -109,24 +109,27 @@ class ProcessView extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 ProcessView.propTypes = {
   getProcess: PropTypes.func.isRequired,
   processStore: PropTypes.object.isRequired,
-  authStore: PropTypes.object.isRequired
-};
+  authStore: PropTypes.object.isRequired,
+  getNoticeList: PropTypes.func.isRequired
+}
 
 const mapStateToProps = state => ({
   processStore: state.processStore,
-  authStore: state.authStore
-});
+  authStore: state.authStore,
+  noticeStore: state.noticeStore
+})
 
 export default connect(
   mapStateToProps,
   {
-    getProcess
+    getProcess,
+    getNoticeList
   }
-)(ProcessView);
+)(ProcessView)

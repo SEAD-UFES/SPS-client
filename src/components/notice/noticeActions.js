@@ -1,7 +1,14 @@
 import spsApi from 'apis/spsServer'
 
 import { GET_ERRORS } from 'actions/types'
-import { NOTICES_LOADING, READ_NOTICE } from './noticeActionTypes'
+import {
+  NOTICES_LOADING,
+  CREATE_NOTICE,
+  READ_NOTICE,
+  UPDATE_NOTICE,
+  DELETE_NOTICE,
+  READ_NOTICES
+} from './noticeActionTypes'
 
 //calls loading
 export const setNoticesLoading = () => {
@@ -29,7 +36,7 @@ export const createNotice = (noticeData, callback_ok) => dispatch => {
 export const getNotice = notice_id => dispatch => {
   dispatch(setNoticesLoading())
   spsApi
-    .get(`/v1/calls/${notice_id}`)
+    .get(`/v1/notices/${notice_id}`)
     .then(res => {
       dispatch({
         type: READ_NOTICE,
@@ -67,6 +74,26 @@ export const deleteNotice = (notice_id, callback_ok) => dispatch => {
         payload: notice_id
       })
       callback_ok()
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
+}
+
+export const getNoticeList = options => dispatch => {
+  let url = '/v1/notices'
+  if (options.selectiveProcess_id) {
+    url = `${url}?selectiveProcess_id=${options.selectiveProcess_id}`
+  }
+
+  dispatch(setNoticesLoading())
+  spsApi
+    .get(url)
+    .then(res => {
+      dispatch({
+        type: READ_NOTICES,
+        payload: res.data
+      })
     })
     .catch(err => {
       handleErrors(err, dispatch)
