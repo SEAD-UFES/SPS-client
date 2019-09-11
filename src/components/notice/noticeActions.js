@@ -67,7 +67,7 @@ export const updateNotice = (noticeData, callback_ok) => dispatch => {
 export const deleteNotice = (notice_id, callback_ok) => dispatch => {
   dispatch(setNoticesLoading())
   spsApi
-    .delete(`/v1/calls/${notice_id}`)
+    .delete(`/v1/notices/${notice_id}`)
     .then(res => {
       dispatch({
         type: DELETE_NOTICE,

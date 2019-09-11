@@ -68,7 +68,7 @@ class CallDelete extends Component {
     return (
       <div className="card mb-4">
         <div className="card-header">
-          <h4 className="mb-0">Excluir publicação</h4>
+          <h4 className="mb-0">Excluir chamada</h4>
         </div>
         <div className="card-body">
           <table className="table table-hover mb-0">

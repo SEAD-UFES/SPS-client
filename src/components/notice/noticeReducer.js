@@ -33,31 +33,31 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        notices: [...state, action.payload]
+        notices: [...state.notices, action.payload]
       }
     case READ_NOTICE:
       return {
         ...state,
         loading: false,
-        notices: [...state.notices.filter(filter_removeOldId), action.payload]
+        notices: [...state.notices.filter(filter_removeOldId(action)), action.payload]
       }
     case UPDATE_NOTICE:
       return {
         ...state,
         loading: false,
-        notices: [...state.notices.filter(filter_removeOldId), action.payload]
+        notices: [...state.notices.filter(filter_removeOldId(action)), action.payload]
       }
     case DELETE_NOTICE:
       return {
         ...state,
         loading: false,
-        notices: [...state.notices.filter(value => value !== action.payload)]
+        notices: [...state.notices.filter(value => value.id !== action.payload)]
       }
     case READ_NOTICES:
       return {
         ...state,
         loading: false,
-        notices: [...state.notices.filter(filter_removeOldIds), ...action.payload]
+        notices: [...state.notices.filter(filter_removeOldIds(action)), ...action.payload]
       }
     default:
       return state

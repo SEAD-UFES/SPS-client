@@ -101,8 +101,8 @@ class ProcessView extends Component {
                 Voltar para lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
-              <NoticeCard noticeStore={noticeStore} processStore={processStore} />
               {infoCard}
+              <NoticeCard noticeStore={noticeStore} processStore={processStore} />
               {callCard}
               {pubCard}
             </div>

@@ -10,7 +10,6 @@ import { validateNoticeForm, validateTitle, validateContent } from './validateNo
 import AlertError from 'components/common/AlertError'
 import { createNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
-import moment from 'moment'
 
 class NoticeCreate extends Component {
   constructor() {
