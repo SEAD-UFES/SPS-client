@@ -1,29 +1,30 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import SelectListGroup from "components/common/SelectListGroup";
-import { isEmpty, validateName } from "validation";
-import { validateRolePermissionForm } from "./validateRolePermissionForm";
+import SelectListGroup from 'components/common/SelectListGroup'
+import { isEmpty, validateName } from 'validation'
+import { validateRolePermissionForm } from './validateRolePermissionForm'
 
-import { getRoleTypes } from "../roleType/roleTypeActions";
-import { getPermissions } from "components/permission/permissionActions";
-import { createRolePermission } from "components/rolePermission/rolePermissionActions";
+import { getRoleTypes } from '../roleType/roleTypeActions'
+import { getPermissions } from 'components/permission/permissionActions'
+import { createRolePermission } from 'components/rolePermission/rolePermissionActions'
+import { comparePermissionByName } from 'utils/compareBy'
 
 class rolePermissionCreate extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      roleType_id: "",
-      permissionType_id: "",
+      roleType_id: '',
+      permissionType_id: '',
 
       roleType: {},
       errors: []
-    };
+    }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentWillMount() {
@@ -32,99 +33,99 @@ class rolePermissionCreate extends Component {
       this.setState({
         roleType_id: this.props.location.state.roleType.id,
         roleType: this.props.location.state.roleType
-      });
+      })
     } else if (this.props.match.params.roletype_id) {
-      this.setState({ roleType_id: this.props.match.params.roletype_id });
+      this.setState({ roleType_id: this.props.match.params.roletype_id })
     }
   }
 
   componentDidMount() {
     if (!(this.props.location.state && this.props.location.state.roleType)) {
-      this.props.getRoleTypes();
+      this.props.getRoleTypes()
     }
-    this.props.getPermissions();
+    this.props.getPermissions()
   }
 
   componentWillReceiveProps(nextProps) {
     //Errors
     if (nextProps.errors) {
-      let errors = nextProps.errors;
-      this.setState({ errors: errors });
+      let errors = nextProps.errors
+      this.setState({ errors: errors })
     }
   }
 
   onChange(e) {
     //local validation of fields:
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
 
     switch (e.target.name) {
-      case "roleType_id":
-        valResult = validateName(e.target.value);
-        break;
-      case "permissionType_id":
-        valResult = validateName(e.target.value);
-        break;
+      case 'roleType_id':
+        valResult = validateName(e.target.value)
+        break
+      case 'permissionType_id':
+        valResult = validateName(e.target.value)
+        break
       default:
-        break;
+        break
     }
 
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     const rolePermissionData = {
       roleType_id: this.state.roleType_id,
       permission_id: this.state.permissionType_id
-    };
+    }
 
-    const valRoleType = validateRolePermissionForm(rolePermissionData);
+    const valRoleType = validateRolePermissionForm(rolePermissionData)
     if (!valRoleType.isValid) {
-      this.setState({ errors: valRoleType.errors });
+      this.setState({ errors: valRoleType.errors })
     } else {
       this.props.createRolePermission(rolePermissionData, () => {
-        this.props.history.push(`/parameters/roletypes/${this.state.roleType_id}`);
-      });
+        this.props.history.push(`/parameters/roletypes/${this.state.roleType_id}`)
+      })
     }
   }
 
   render() {
-    const { errors } = this.state;
-    const permissions = this.props.permissionStore.permissions;
-    const roleTypes = !isEmpty(this.state.roleType) ? [this.state.roleType] : this.props.roleTypeStore.roleTypes;
+    const { errors } = this.state
+    const permissions = this.props.permissionStore.permissions
+    const roleTypes = !isEmpty(this.state.roleType) ? [this.state.roleType] : this.props.roleTypeStore.roleTypes
 
-    const roleTypeOptions = [{ label: "* Selecione a papel", value: "" }].concat(
+    const roleTypeOptions = [{ label: '* Selecione a papel', value: '' }].concat(
       roleTypes
         ? roleTypes.map(roleType => {
             return {
               label: roleType.name,
               value: roleType.id
-            };
+            }
           })
         : []
-    );
+    )
 
-    const permissionOptions = [{ label: "* Selecione a papel", value: "" }].concat(
+    const permissionOptions = [{ label: '* Selecione a papel', value: '' }].concat(
       permissions
-        ? permissions.map(permission => {
+        ? permissions.sort(comparePermissionByName).map(permission => {
             return {
               label: permission.name,
               value: permission.id
-            };
+            }
           })
         : []
-    );
+    )
 
     const alertsList = (
       <div>
@@ -133,17 +134,17 @@ class rolePermissionCreate extends Component {
             <strong>Erro!</strong> Erro do servidor
           </div>
         ) : (
-          ""
+          ''
         )}
         {errors.anotherError ? (
           <div class="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro desconhecido
           </div>
         ) : (
-          ""
+          ''
         )}
       </div>
-    );
+    )
 
     const permAssigForm = (
       <form noValidate onSubmit={this.onSubmit}>
@@ -170,7 +171,7 @@ class rolePermissionCreate extends Component {
           <input type="submit" className="btn btn-info btn-block mt-4" />
         </div>
       </form>
-    );
+    )
 
     return (
       <div className="rolePermission-create">
@@ -189,18 +190,18 @@ class rolePermissionCreate extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 rolePermissionCreate.propTypes = {
   getRoleTypes: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   roleTypeStore: state.roleTypeStore,
   permissionStore: state.permissionStore
-});
+})
 
 export default connect(
   mapStateToProps,
@@ -209,4 +210,4 @@ export default connect(
     getPermissions,
     createRolePermission
   }
-)(rolePermissionCreate);
+)(rolePermissionCreate)

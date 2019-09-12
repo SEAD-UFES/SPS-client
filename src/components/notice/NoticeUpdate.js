@@ -159,7 +159,7 @@ class NoticeUpdate extends Component {
               id="visible-checkbox"
               name="visible"
               text="Visibilidade:"
-              value="Tornar processo visível"
+              value="Tornar visível para os usuários"
               checked={this.state.visible}
               error={errors.visible}
               info=""

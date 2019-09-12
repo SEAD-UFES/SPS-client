@@ -1,35 +1,36 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { getRoleType } from "./roleTypeActions";
-import Spinner from "components/common/Spinner";
+import { getRoleType } from './roleTypeActions'
+import Spinner from 'components/common/Spinner'
+import { comparePermissionByName } from 'utils/compareBy'
 
 class RoleTypeView extends Component {
   componentDidMount() {
     if (this.props.match.params.roletype_id) {
-      this.props.getRoleType(this.props.match.params.roletype_id);
+      this.props.getRoleType(this.props.match.params.roletype_id)
     }
   }
 
   buildPermissionAssignment(roleType, permission) {
-    let dryRoleType = JSON.parse(JSON.stringify(roleType));
-    delete dryRoleType.Permissions;
+    let dryRoleType = JSON.parse(JSON.stringify(roleType))
+    delete dryRoleType.Permissions
 
-    let dryPermission = JSON.parse(JSON.stringify(permission));
-    delete dryPermission.RolePermission;
+    let dryPermission = JSON.parse(JSON.stringify(permission))
+    delete dryPermission.RolePermission
 
-    let permAssig = {};
-    permAssig = permission.RolePermission;
-    permAssig.RoleType = dryRoleType;
-    permAssig.Permission = dryPermission;
+    let permAssig = {}
+    permAssig = permission.RolePermission
+    permAssig.RoleType = dryRoleType
+    permAssig.Permission = dryPermission
 
-    return permAssig;
+    return permAssig
   }
 
   render() {
-    const { roleTypeStore } = this.props;
+    const { roleTypeStore } = this.props
 
     const infoTable =
       roleTypeStore.roleType === null || roleTypeStore.loading ? (
@@ -55,12 +56,12 @@ class RoleTypeView extends Component {
                 <td>
                   <strong>Escopo:</strong>
                 </td>
-                <td>{roleTypeStore.roleType.global ? "Global" : "Curso"}</td>
+                <td>{roleTypeStore.roleType.global ? 'Global' : 'Curso'}</td>
               </tr>
             </tbody>
           </table>
         </div>
-      );
+      )
 
     const permissionsTable =
       roleTypeStore.roleType === null || roleTypeStore.loading ? (
@@ -68,7 +69,7 @@ class RoleTypeView extends Component {
       ) : (
         <div>
           <h4 className="mb-2">Lista de permissões atribuidas</h4>
-          {roleTypeStore.roleType.name === "Administrador" ? (
+          {roleTypeStore.roleType.name === 'Administrador' ? (
             <p>Administradores podem tudo.</p>
           ) : roleTypeStore.roleType.Permissions.length > 0 ? (
             <table className="table">
@@ -81,15 +82,14 @@ class RoleTypeView extends Component {
                       to={{
                         pathname: `${this.props.match.url}/create-permassig`,
                         state: { roleType: roleTypeStore.roleType }
-                      }}
-                    >
+                      }}>
                       <i className="fas fa-plus-circle" />
                     </Link>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {roleTypeStore.roleType.Permissions.map(permission => {
+                {roleTypeStore.roleType.Permissions.sort(comparePermissionByName).map(permission => {
                   return (
                     <tr key={permission.id}>
                       <td>{permission.name}</td>
@@ -102,34 +102,32 @@ class RoleTypeView extends Component {
                               roleType: roleTypeStore.roleType,
                               rolePermission: this.buildPermissionAssignment(roleTypeStore.roleType, permission)
                             }
-                          }}
-                        >
+                          }}>
                           <i className="fas fa-times-circle" />
                         </Link>
                       </td>
                     </tr>
-                  );
+                  )
                 })}
               </tbody>
             </table>
           ) : (
             <div>
               <p>
-                Não existem permissões associadas a esse papel.{" "}
+                Não existem permissões associadas a esse papel.{' '}
                 <Link
                   className="text-success"
                   to={{
                     pathname: `${this.props.match.url}/create-permassig`,
                     state: { roleType: roleTypeStore.roleType }
-                  }}
-                >
+                  }}>
                   <i className="fas fa-plus-circle" /> Adicionar
                 </Link>
               </p>
             </div>
           )}
         </div>
-      );
+      )
 
     return (
       <div className="roletypes">
@@ -146,21 +144,21 @@ class RoleTypeView extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 RoleTypeView.propTypes = {
   getRoleType: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   roleTypeStore: state.roleTypeStore
-});
+})
 
 export default connect(
   mapStateToProps,
   {
     getRoleType
   }
-)(RoleTypeView);
+)(RoleTypeView)
