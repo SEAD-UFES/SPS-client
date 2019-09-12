@@ -17,7 +17,11 @@ class ProcessView extends Component {
     this.props.getNoticeList({ selectiveProcess_id: this.props.match.params.id })
   }
 
-  renderInfoTable(process) {
+  renderInfoTable(process, loading) {
+    if (process === null || loading) {
+      return <Spinner />
+    }
+
     return (
       <div className="card mb-4">
         <div className="card-header">
@@ -75,22 +79,79 @@ class ProcessView extends Component {
     )
   }
 
-  renderCalls(process) {
+  renderCalls(process, loading) {
+    if (process === null || loading) {
+      return <Spinner />
+    }
     return <CallCard process={process} course_id={process.id} />
   }
 
-  renderPublications(process) {
+  renderPublications(process, loading) {
+    if (process === null || loading) {
+      return <Spinner />
+    }
     return <PublicationCard process={process} course_id={process.id} />
+  }
+
+  renderNoticeCard(noticeStore, processStore) {
+    if (noticeStore.notices === null || noticeStore.loading || processStore.process === null || processStore.loading) {
+      return <Spinner />
+    }
+
+    const notices = noticeStore.notices.filter(notice => notice.selectiveProcess_id === processStore.process.id)
+    const notice = notices.length > 0 ? notices[0] : null
+
+    if (notice) {
+      return <NoticeCard noticeStore={noticeStore} processStore={processStore} />
+    } else {
+      return (
+        <DrawFilter permission="notice_read" course_id={processStore.process.Course.id}>
+          <NoticeCard noticeStore={noticeStore} processStore={processStore} />
+        </DrawFilter>
+      )
+    }
+  }
+
+  renderOther(noticeStore, processStore) {
+    if (noticeStore.notices === null || noticeStore.loading || processStore.process === null || processStore.loading) {
+      return <Spinner />
+    }
+
+    const notices = noticeStore.notices.filter(notice => notice.selectiveProcess_id === processStore.process.id)
+    const notice = notices.length > 0 ? notices[0] : null
+
+    if (notice) {
+      if (notice.override) {
+        return (
+          <DrawFilter permission="notice_read" course_id={processStore.process.Course.id}>
+            <React.Fragment>
+              {this.renderCalls(processStore.process, processStore.loading)}
+              {this.renderPublications(processStore.process, processStore.loading)}
+            </React.Fragment>
+          </DrawFilter>
+        )
+      } else {
+        return (
+          <React.Fragment>
+            {this.renderCalls(processStore.process, processStore.loading)}
+            {this.renderPublications(processStore.process, processStore.loading)}
+          </React.Fragment>
+        )
+      }
+    } else {
+      return (
+        <React.Fragment>
+          {this.renderCalls(processStore.process, processStore.loading)}
+          {this.renderPublications(processStore.process, processStore.loading)}
+        </React.Fragment>
+      )
+    }
   }
 
   render() {
     const { process, loading } = this.props.processStore
     const processStore = this.props.processStore
     const noticeStore = this.props.noticeStore
-
-    const infoCard = process === null || loading ? <Spinner /> : this.renderInfoTable(process)
-    const callCard = process === null || loading ? <Spinner /> : this.renderCalls(process)
-    const pubCard = process === null || loading ? <Spinner /> : this.renderPublications(process)
 
     return (
       <div className="process-view">
@@ -101,10 +162,9 @@ class ProcessView extends Component {
                 Voltar para lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
-              {infoCard}
-              <NoticeCard noticeStore={noticeStore} processStore={processStore} />
-              {callCard}
-              {pubCard}
+              {this.renderInfoTable(process, loading)}
+              {this.renderNoticeCard(noticeStore, processStore)}
+              {this.renderOther(noticeStore, processStore)}
             </div>
           </div>
         </div>
