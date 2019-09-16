@@ -70,7 +70,9 @@ class NoticeCard extends Component {
             </div>
           </div>
         </div>
-        <div className="card-body">{renderBody(notices)}</div>
+        <div className="card-body">
+          <span dangerouslySetInnerHTML={{ __html: renderBody(notices) }} />
+        </div>
       </div>
     )
   }

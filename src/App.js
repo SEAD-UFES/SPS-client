@@ -1,54 +1,57 @@
 //Default react app imports
 //import logo from "./logo.svg";
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react'
+import './App.css'
 
 //Library imports
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
-import jwt_decode from "jwt-decode";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import jwt_decode from 'jwt-decode'
 
 //Local imports
-import store from "./store/store"; //Importa o store criado nesse arquivo.
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./components/auth/authActions";
-import { clearCurrentProfile } from "./components/profile/profileActions";
-import PrivateRoute from "./components/common/PrivateRoute";
+import store from './store/store' //Importa o store criado nesse arquivo.
+import setAuthToken from './utils/setAuthToken'
+import { setCurrentUser, logoutUser } from './components/auth/authActions'
+import { clearCurrentProfile } from './components/profile/profileActions'
+import PrivateRoute from './components/common/PrivateRoute'
 
 //Components
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import Dashboard from "./components/profile/Dashboard";
+import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
+import Landing from './components/layout/Landing'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
+import Dashboard from './components/profile/Dashboard'
 
 //Route components
-import ProfileRoutes from "./components/profile/ProfileRoutes";
-import UserRoutes from "./components/user/UserRoutes";
-import ProcessRoutes from "./components/process/ProcessRoutes";
-import ParameterRoutes from "./components/parameter/ParameterRoutes";
-import NotFound from "./components/common/NotFound";
+import ProfileRoutes from './components/profile/ProfileRoutes'
+import UserRoutes from './components/user/UserRoutes'
+import ProcessRoutes from './components/process/ProcessRoutes'
+import ParameterRoutes from './components/parameter/ParameterRoutes'
+import NotFound from './components/common/NotFound'
+
+//Teste
+import Teste from 'Teste.js'
 
 //Check for token
-if (localStorage.jwtToken && typeof localStorage.jwtToken !== "undefined") {
+if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
   //Set auth token header auth
-  setAuthToken(localStorage.jwtToken);
+  setAuthToken(localStorage.jwtToken)
 
   //decode token
-  const decoded = jwt_decode(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken)
 
   //dispath action to set user and profile on store
-  store.dispatch(setCurrentUser(decoded));
+  store.dispatch(setCurrentUser(decoded))
 
   //check for expired token
-  const currentTime = Date.now() / 1000;
+  const currentTime = Date.now() / 1000
   if (decoded.exp < currentTime) {
     //clear current profile
-    store.dispatch(clearCurrentProfile());
+    store.dispatch(clearCurrentProfile())
 
     //logout user
-    store.dispatch(logoutUser());
+    store.dispatch(logoutUser())
 
     //redirect to login page (replaced by PrivateRoute)
     //window.location.href = "/login";
@@ -65,6 +68,8 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Landing} />
+
+              <Route exact path="/teste" component={Teste} />
 
               <Route exact path="/register" component={Register} />
 
@@ -87,8 +92,8 @@ class App extends Component {
           </div>
         </Router>
       </Provider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

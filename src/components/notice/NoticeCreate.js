@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
+import { Editor, EditorState } from 'draft-js'
 
 import TextFieldGroup from '../common/TextFieldGroup'
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
@@ -11,6 +12,8 @@ import AlertError from 'components/common/AlertError'
 import { createNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
 
+import TextAreaFieldCKEditor4 from 'components/common/TextAreaField_CKEditor4'
+
 class NoticeCreate extends Component {
   constructor() {
     super()
@@ -19,6 +22,8 @@ class NoticeCreate extends Component {
       content: '',
       visible: false,
       override: false,
+
+      editorState: EditorState.createEmpty(),
 
       //errors
       errors: {}
@@ -69,6 +74,10 @@ class NoticeCreate extends Component {
       [e.target.name]: e.target.value,
       errors: errors
     })
+  }
+
+  onChange_ckeditor4 = event => {
+    this.setState({ content: event.editor.getData() })
   }
 
   onCheck(e) {
@@ -132,6 +141,16 @@ class NoticeCreate extends Component {
               label="Conteúdo: *"
               value={this.state.content}
               onChange={this.onChange}
+              error={errors.content}
+              info="Mensagem para os candidatos em potencial."
+            />
+
+            <TextAreaFieldCKEditor4
+              placeholder="Conteúdo"
+              name="content"
+              label="Conteúdo: *"
+              value={this.state.content}
+              onChange={this.onChange_ckeditor4}
               error={errors.content}
               info="Mensagem para os candidatos em potencial."
             />

@@ -146,25 +146,6 @@ export const findCourse = (options, callback_ok) => dispatch => {
     .catch(err => handleErrors(err, dispatch))
 }
 
-export const findCourse2 = async options => {
-  let params = ''
-
-  if (options.process_id) {
-    params = `${params}process_id=${options.process_id}`
-  }
-
-  if (options.call_id) {
-    params = `${params}call_id=${options.call_id}`
-  }
-
-  if (options.vacancy_id) {
-    params = `${params}vacancy_id=${options.vancancy_id}`
-  }
-
-  const res = await spsApi.get(`/v1/courses/find?${params}`)
-  return res.data
-}
-
 const handleErrors = (err, dispatch) => {
   if (err.response) {
     let errors = {}

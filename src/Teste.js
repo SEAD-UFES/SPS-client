@@ -3,18 +3,23 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 
-import TextFieldGroup from '../common/TextFieldGroup'
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
-import CheckBoxFieldGroup from '../common/CheckBoxFieldGroup'
-import { validateNoticeForm, validateTitle, validateContent } from './validateNoticeForm'
+import TextFieldGroup from 'components/common/TextFieldGroup'
+import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
+
+import CheckBoxFieldGroup from 'components/common/CheckBoxFieldGroup'
+import { validateNoticeForm, validateTitle, validateContent } from 'components/notice/validateNoticeForm'
 import AlertError from 'components/common/AlertError'
-import { getNotice, updateNotice } from './noticeActions'
+import { createNotice } from 'components/notice/noticeActions'
 import { clearErrors } from 'actions/errorActions'
-import { isEmpty } from '../../validation'
 
-import TextAreaFieldCKEditor4 from 'components/common/TextAreaField_CKEditor4'
+//Editores
+// import { Editor, EditorState } from 'draft-js'
+// import CKEditor from '@ckeditor/ckeditor5-react'
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+// import TextAreaField_CKEditor from 'components/common/TextAreaField_CKEditor'
+import TextAreaField_CKEditor4 from 'components/common/TextAreaField_CKEditor4'
 
-class NoticeUpdate extends Component {
+class Teste extends Component {
   constructor() {
     super()
     this.state = {
@@ -23,6 +28,8 @@ class NoticeUpdate extends Component {
       visible: false,
       override: false,
 
+      // editorState: EditorState.createEmpty(),
+
       //errors
       errors: {}
     }
@@ -30,16 +37,12 @@ class NoticeUpdate extends Component {
     this.onChange = this.onChange.bind(this)
     this.onCheck = this.onCheck.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    // this.onChange_editor = this.onChange_editor.bind(this)
+    // this.onChange_ckeditor = this.onChange_ckeditor.bind(this)
   }
 
   componentWillMount() {
     this.props.clearErrors()
-  }
-
-  componentDidMount() {
-    if (this.props.match.params.notice_id) {
-      this.props.getNotice(this.props.match.params.notice_id)
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,17 +51,6 @@ class NoticeUpdate extends Component {
       let errorStore = nextProps.errorStore
       if (errorStore.code === 'notices-01' && errorStore.data && errorStore.data.devMessage) {
         this.setState({ errors: errorStore.data.devMessage.errors })
-      }
-    }
-
-    //load data on state
-    if (isEmpty(nextProps.errorStore) && nextProps.noticeStore) {
-      if (!nextProps.noticeStore.loading) {
-        const notices = nextProps.noticeStore.notices.filter(notice => notice.id === this.props.match.params.notice_id)
-        if (notices.length > 0) {
-          const notice = notices[0]
-          this.setState(notice)
-        }
       }
     }
   }
@@ -109,7 +101,6 @@ class NoticeUpdate extends Component {
     e.preventDefault()
 
     const noticeData = {
-      id: this.props.match.params.notice_id,
       selectiveProcess_id: this.props.match.params.process_id,
       title: this.state.title,
       content: this.state.content,
@@ -117,12 +108,12 @@ class NoticeUpdate extends Component {
       override: this.state.override
     }
 
-    const valNotice = validateNoticeForm(noticeData, this.props.match.params.process_id)
+    const valNotice = validateNoticeForm(noticeData)
 
     if (!valNotice.isValid) {
       this.setState({ errors: valNotice.errors })
     } else {
-      this.props.updateNotice(noticeData, () => {
+      this.props.createNotice(noticeData, () => {
         this.props.history.push(`/processes/${noticeData.selectiveProcess_id}`)
       })
     }
@@ -132,7 +123,7 @@ class NoticeUpdate extends Component {
     return (
       <div className="card mb-4">
         <div className="card-header">
-          <h4 className="mb-0">Editar notícia</h4>
+          <h4 className="mb-0">Criar notícia</h4>
         </div>
 
         <div className="card-body">
@@ -148,17 +139,6 @@ class NoticeUpdate extends Component {
             />
 
             <TextAreaFieldGroup
-              placeholder="Conteúdo"
-              name="content"
-              label="Conteúdo: *"
-              value={this.state.content}
-              onChange={this.onChange}
-              error={errors.content}
-              info="Mensagem para os candidatos em potencial."
-            />
-
-            {/* //testando */}
-            <TextAreaFieldCKEditor4
               placeholder="Conteúdo"
               name="content"
               label="Conteúdo: *"
@@ -197,20 +177,52 @@ class NoticeUpdate extends Component {
     )
   }
 
+  onChange_ckeditor4 = event => {
+    this.setState({ content: event.editor.getData() })
+  }
+
+  renderCKEditor4(errors) {
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <h4 className="mb-0">CKEditor4</h4>
+        </div>
+
+        <div className="card-body">
+          <form noValidate onSubmit={this.onSubmit}>
+            <TextAreaField_CKEditor4
+              placeholder="Conteúdo"
+              name="content"
+              label="Conteúdo: *"
+              value={this.state.content}
+              onChange={this.onChange_ckeditor4}
+              error={errors.content}
+              info="Mensagem para os candidatos em potencial."
+            />
+          </form>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const { errors } = this.state
 
     return (
-      <div className="notice-update">
+      <div className="notice-create">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
                 Voltar para o processo
               </Link>
-              <h1 className="display-4">Notícia</h1>
+              <h1 className="display-4">Testes</h1>
               <AlertError errors={this.props.errorStore} />
               {this.renderForm(errors)}
+              {/* {this.renderDraftjs()} */}
+              {/* {this.renderCKEditor()} */}
+              {/* {this.renderCKEditor_component(errors)} */}
+              {this.renderCKEditor4(errors)}
             </div>
           </div>
         </div>
@@ -219,20 +231,18 @@ class NoticeUpdate extends Component {
   }
 }
 
-NoticeUpdate.proptypes = {
-  getNotice: PropTypes.func.isRequired,
-  updateNotice: PropTypes.func.isRequired,
+Teste.proptypes = {
+  createNotice: PropTypes.func.isRequired,
   errorStore: PropTypes.object.isRequired
 }
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  noticeStore: state.noticeStore,
   errorStore: state.errorStore
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { getNotice, updateNotice, clearErrors }
-)(withRouter(NoticeUpdate))
+  { createNotice, clearErrors }
+)(withRouter(Teste))
