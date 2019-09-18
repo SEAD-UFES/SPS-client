@@ -32,6 +32,7 @@ import NotFound from './components/common/NotFound'
 
 //Teste
 import Teste from 'Teste.js'
+import TwoWayBinding from 'teste2'
 
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
@@ -70,6 +71,7 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
 
               <Route exact path="/teste" component={Teste} />
+              <Route exact path="/teste2" component={TwoWayBinding} />
 
               <Route exact path="/register" component={Register} />
 

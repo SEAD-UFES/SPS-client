@@ -12,12 +12,8 @@ import AlertError from 'components/common/AlertError'
 import { createNotice } from 'components/notice/noticeActions'
 import { clearErrors } from 'actions/errorActions'
 
-//Editores
-// import { Editor, EditorState } from 'draft-js'
-// import CKEditor from '@ckeditor/ckeditor5-react'
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-// import TextAreaField_CKEditor from 'components/common/TextAreaField_CKEditor'
-import TextAreaField_CKEditor4 from 'components/common/TextAreaField_CKEditor4'
+import TextAreaFieldCKEditor4 from 'components/common/TextAreaFieldCKEditor4'
+import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class Teste extends Component {
   constructor() {
@@ -27,9 +23,6 @@ class Teste extends Component {
       content: '',
       visible: false,
       override: false,
-
-      // editorState: EditorState.createEmpty(),
-
       //errors
       errors: {}
     }
@@ -37,8 +30,6 @@ class Teste extends Component {
     this.onChange = this.onChange.bind(this)
     this.onCheck = this.onCheck.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    // this.onChange_editor = this.onChange_editor.bind(this)
-    // this.onChange_ckeditor = this.onChange_ckeditor.bind(this)
   }
 
   componentWillMount() {
@@ -190,7 +181,7 @@ class Teste extends Component {
 
         <div className="card-body">
           <form noValidate onSubmit={this.onSubmit}>
-            <TextAreaField_CKEditor4
+            <TextAreaFieldCKEditor4
               placeholder="Conteúdo"
               name="content"
               label="Conteúdo: *"
@@ -200,6 +191,32 @@ class Teste extends Component {
               info="Mensagem para os candidatos em potencial."
             />
           </form>
+        </div>
+      </div>
+    )
+  }
+
+  onChange_TinyMCE = event => {
+    console.log('Content was updated:', event.target.getContent())
+  }
+
+  renderTinyMCE(errors) {
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <h4 className="mb-0">TinyMCE</h4>
+        </div>
+
+        <div className="card-body">
+          <TextAreaFieldTinyMCE
+            placeholder="Conteúdo"
+            name="content"
+            label="Conteúdo: *"
+            value={this.state.content}
+            onChange={this.onChange_TinyMCE}
+            error={errors.content}
+            info="Mensagem para os candidatos em potencial."
+          />
         </div>
       </div>
     )
@@ -219,10 +236,8 @@ class Teste extends Component {
               <h1 className="display-4">Testes</h1>
               <AlertError errors={this.props.errorStore} />
               {this.renderForm(errors)}
-              {/* {this.renderDraftjs()} */}
-              {/* {this.renderCKEditor()} */}
-              {/* {this.renderCKEditor_component(errors)} */}
               {this.renderCKEditor4(errors)}
+              {this.renderTinyMCE(errors)}
             </div>
           </div>
         </div>

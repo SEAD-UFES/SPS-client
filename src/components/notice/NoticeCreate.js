@@ -2,17 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { Editor, EditorState } from 'draft-js'
 
 import TextFieldGroup from '../common/TextFieldGroup'
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
 import CheckBoxFieldGroup from '../common/CheckBoxFieldGroup'
 import { validateNoticeForm, validateTitle, validateContent } from './validateNoticeForm'
 import AlertError from 'components/common/AlertError'
 import { createNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
 
-import TextAreaFieldCKEditor4 from 'components/common/TextAreaField_CKEditor4'
+import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class NoticeCreate extends Component {
   constructor() {
@@ -22,9 +20,6 @@ class NoticeCreate extends Component {
       content: '',
       visible: false,
       override: false,
-
-      editorState: EditorState.createEmpty(),
-
       //errors
       errors: {}
     }
@@ -77,7 +72,31 @@ class NoticeCreate extends Component {
   }
 
   onChange_ckeditor4 = event => {
-    this.setState({ content: event.editor.getData() })
+    const value = event.editor.getData()
+    let errors = this.state.errors
+    let valResult = validateContent(value)
+
+    if (!valResult.isValid) {
+      errors = { ...errors, content: valResult.error }
+    } else {
+      delete errors.content
+    }
+
+    this.setState({ content: value, errors: errors })
+  }
+
+  onChange_TinyMCE = event => {
+    const value = event.target.getContent()
+    let errors = this.state.errors
+    let valResult = validateContent(value)
+
+    if (!valResult.isValid) {
+      errors = { ...errors, content: valResult.error }
+    } else {
+      delete errors.content
+    }
+
+    this.setState({ content: value, errors: errors })
   }
 
   onCheck(e) {
@@ -135,7 +154,7 @@ class NoticeCreate extends Component {
               error={errors.title}
             />
 
-            <TextAreaFieldGroup
+            {/* <TextAreaFieldGroup
               placeholder="Conteúdo"
               name="content"
               label="Conteúdo: *"
@@ -143,14 +162,24 @@ class NoticeCreate extends Component {
               onChange={this.onChange}
               error={errors.content}
               info="Mensagem para os candidatos em potencial."
-            />
+            /> */}
 
-            <TextAreaFieldCKEditor4
+            {/* <TextAreaFieldCKEditor4
               placeholder="Conteúdo"
               name="content"
               label="Conteúdo: *"
               value={this.state.content}
               onChange={this.onChange_ckeditor4}
+              error={errors.content}
+              info="Mensagem para os candidatos em potencial."
+            /> */}
+
+            <TextAreaFieldTinyMCE
+              placeholder="Conteúdo"
+              name="content"
+              label="Conteúdo: *"
+              value={this.state.content}
+              onChange={this.onChange_TinyMCE}
               error={errors.content}
               info="Mensagem para os candidatos em potencial."
             />

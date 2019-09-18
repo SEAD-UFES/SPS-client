@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 
 import TextFieldGroup from '../common/TextFieldGroup'
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
 import CheckBoxFieldGroup from '../common/CheckBoxFieldGroup'
 import { validateNoticeForm, validateTitle, validateContent } from './validateNoticeForm'
 import AlertError from 'components/common/AlertError'
@@ -12,7 +11,7 @@ import { getNotice, updateNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
 import { isEmpty } from '../../validation'
 
-import TextAreaFieldCKEditor4 from 'components/common/TextAreaField_CKEditor4'
+import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class NoticeUpdate extends Component {
   constructor() {
@@ -57,7 +56,7 @@ class NoticeUpdate extends Component {
         const notices = nextProps.noticeStore.notices.filter(notice => notice.id === this.props.match.params.notice_id)
         if (notices.length > 0) {
           const notice = notices[0]
-          this.setState(notice)
+          this.setState({ ...notice })
         }
       }
     }
@@ -89,6 +88,20 @@ class NoticeUpdate extends Component {
       [e.target.name]: e.target.value,
       errors: errors
     })
+  }
+
+  onChange_TinyMCE = event => {
+    const value = event.target.getContent()
+    let errors = this.state.errors
+    let valResult = validateContent(value)
+
+    if (!valResult.isValid) {
+      errors = { ...errors, content: valResult.error }
+    } else {
+      delete errors.content
+    }
+
+    this.setState({ content: value, errors: errors })
   }
 
   onCheck(e) {
@@ -147,23 +160,12 @@ class NoticeUpdate extends Component {
               error={errors.title}
             />
 
-            <TextAreaFieldGroup
+            <TextAreaFieldTinyMCE
               placeholder="Conteúdo"
               name="content"
               label="Conteúdo: *"
               value={this.state.content}
-              onChange={this.onChange}
-              error={errors.content}
-              info="Mensagem para os candidatos em potencial."
-            />
-
-            {/* //testando */}
-            <TextAreaFieldCKEditor4
-              placeholder="Conteúdo"
-              name="content"
-              label="Conteúdo: *"
-              value={this.state.content}
-              onChange={this.onChange}
+              onChange={this.onChange_TinyMCE}
               error={errors.content}
               info="Mensagem para os candidatos em potencial."
             />
