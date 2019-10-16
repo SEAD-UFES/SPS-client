@@ -167,7 +167,7 @@ class ProfileEditPerson extends Component {
     return (
       <div className="card mb-4">
         <div className="card-header">
-          <h4 className="mb-0">Editar dados de usuário</h4>
+          <h4 className="mb-0">Editar dados pessoais</h4>
         </div>
         <div className="card-body">
           <form noValidate onSubmit={this.onSubmit}>
