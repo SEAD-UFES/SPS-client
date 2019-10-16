@@ -1,204 +1,221 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
 
-import { getCurrentProfile } from "./profileActions";
-import Spinner from "../common/Spinner";
+import { getCurrentProfile } from './profileActions'
+import Spinner from '../common/Spinner'
 
 class Profile extends Component {
   componentDidMount() {
-    this.props.getCurrentProfile();
+    this.props.getCurrentProfile()
+  }
+
+  renderUser(profile, loading) {
+    if (profile === null || loading) {
+      return <Spinner />
+    }
+
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <div className="row">
+            <div className="col">
+              <h4 className="mb-0">Dados de usuário</h4>
+            </div>
+            <div className="col">
+              <div className="text-right">
+                <Link
+                  className="text-info"
+                  to={{
+                    pathname: '/profile/edit-user',
+                    prevLocation: this.props.location
+                  }}>
+                  <i className="fas fa-cog" /> Editar
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card-body">
+          <table className="table table-hover mt-0 mb-0">
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Login/Email:</strong>
+                </td>
+                <td>{profile.login}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
+
+  renderPerson(profile, loading) {
+    if (profile === null || loading) {
+      return <Spinner />
+    }
+
+    if (!profile.Person) {
+      return (
+        <div className="card mb-4">
+          <div className="card-header">
+            <div className="row">
+              <div className="col">
+                <h4 className="mb-0">Dados pessoais</h4>
+              </div>
+              <div className="col">
+                <div className="text-right">
+                  <Link
+                    className="text-info"
+                    to={{
+                      pathname: '/profile/edit-person',
+                      prevLocation: this.props.location
+                    }}>
+                    <i className="fas fa-cog" /> Editar
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-body">
+            <p>Usuário ainda não possui dados pessoais.</p>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <div className="row">
+            <div className="col">
+              <h4 className="mb-0">Dados pessoais</h4>
+            </div>
+            <div className="col">
+              <div className="text-right">
+                <Link
+                  className="text-info"
+                  to={{
+                    pathname: '/profile/edit-person',
+                    prevLocation: this.props.location
+                  }}>
+                  <i className="fas fa-cog" /> Editar
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card-body">
+          <table className="table table-hover mt-0 mb-0">
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Nome / Sobrenome:</strong>
+                </td>
+                <td>
+                  {profile.Person.name} {profile.Person.surname}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Data de Nascimento:</strong>
+                </td>
+                <td>
+                  {profile.Person.birthdate ? (
+                    moment(profile.Person.birthdate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')
+                  ) : (
+                    <span className="text-muted">...</span>
+                  )}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>CPF:</strong>
+                </td>
+                <td>{profile.Person.cpf}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Nacionalidade:</strong>
+                </td>
+                <td>
+                  {profile.Person.nationality ? profile.Person.nationality : <span className="text-muted">...</span>}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>RG (Número / Expeditor):</strong>
+                </td>
+                <td>
+                  {profile.Person.rgNumber ? (
+                    profile.Person.rgNumber - profile.Person.rgDispatcher
+                  ) : (
+                    <span className="text-muted">...</span>
+                  )}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Cor:</strong>
+                </td>
+                <td>{profile.Person.ethnicity ? profile.Person.ethnicity : <span className="text-muted">...</span>}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Sexo:</strong>
+                </td>
+                <td>{profile.Person.gender ? profile.Person.gender : <span className="text-muted">...</span>}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Estado Civil:</strong>
+                </td>
+                <td>
+                  {profile.Person.civilStatus ? profile.Person.civilStatus : <span className="text-muted">...</span>}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
   }
 
   render() {
-    const { user } = this.props.authStore;
-    const { profile, loading } = this.props.profileStore;
+    const { user } = this.props.authStore
+    const { profile, loading } = this.props.profileStore
 
-    const userData =
-      profile === null || profile.loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          <h4 className="mb-3">Dados de usuário</h4>
-
-          <div className="row">
-            <div className="col-md-3">
-              <p>
-                <strong>Login/Email:</strong>
-              </p>
-            </div>
-            <div className="col-md-9">
-              <p>{profile.login}</p>
-            </div>
-          </div>
-        </div>
-      );
-
-    const personData =
-      profile === null || profile.loading ? (
-        <Spinner />
-      ) : profile.Person ? (
-        <div>
-          <h4 className="mb-3">Dados de pessoais</h4>
-
-          <div className="row">
-            <div className="col-md-3">
-              <p>
-                <strong>Nome / Sobrenome:</strong>
-              </p>
-            </div>
-            <div className="col-md-9">
-              <p>
-                {profile.person.name} {profile.person.surname}
-              </p>
-            </div>
-          </div>
-
-          {profile.person.birthdate ? (
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>Data de Nascimento:</strong>
-                </p>
-              </div>
-              <div className="col-md-9">
-                <p>{moment(profile.person.birthdate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-
-          <div className="row">
-            <div className="col-md-3">
-              <p>
-                <strong>CPF:</strong>
-              </p>
-            </div>
-            <div className="col-md-9">
-              <p>{profile.person.cpf}</p>
-            </div>
-          </div>
-
-          {profile.person.nationality ? (
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>Nacionalidade:</strong>
-                </p>
-              </div>
-              <div className="col-md-9">
-                <p>{profile.person.nationality}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-
-          {profile.person.rgNumber ? (
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>RG (Número / Expeditor):</strong>
-                </p>
-              </div>
-              <div className="col-md-9">
-                <p>
-                  {profile.person.rgNumber} - {profile.person.rgDispatcher}
-                </p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-
-          {profile.person.ethnicity ? (
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Cor:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>{profile.person.ethnicity}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-
-          {profile.person.gender ? (
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Sexo:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>{profile.person.gender}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-
-          {profile.person.civilStatus ? (
-            <div className="row">
-              <div className="col-md-2">
-                <p>
-                  <strong>Estado Civil:</strong>
-                </p>
-              </div>
-              <div className="col-md-10">
-                <p>{profile.person.civilStatus}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      ) : (
-        <div>
-          <h4 className="mb-3">Dados de pessoais</h4>
-          <p>Usuário ainda não possui dados pessoais</p>
-        </div>
-      );
-
-    let dashboardContent;
+    let dashboardContent
     if (profile === null || loading) {
-      dashboardContent = <Spinner />;
+      dashboardContent = <Spinner />
     } else {
       //Check if logged in user has profile data
       if (Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
-            <p className="lead text-muted">{profile.person ? profile.person.name + " " + profile.person.surname : profile.login}</p>
-
-            {/* <!-- Profile Actions --> */}
-            <div className="btn-group mb-4" role="group">
-              <Link to="/profile/edit-user" className="btn btn-light">
-                <i className="fas fa-user-circle text-info mr-1" /> Editar dados de acesso
-              </Link>
-              <Link to="/profile/edit-person" className="btn btn-light">
-                <i className="fas fa-user-circle text-info mr-1" /> Editar dados pessoais
-              </Link>
-            </div>
-
-            {userData}
-
-            {personData}
+            {this.renderUser(profile, loading)}
+            {this.renderPerson(profile, loading)}
           </div>
-        );
+        )
       } else {
         //User login in but dont have a profile
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Bem-vindo{user.person.name}</p>
+            <p className="lead text-muted">Bem-vindo{user.Person.name}</p>
             <p>Dados de perfil não localizados</p>
           </div>
-        );
+        )
       }
     }
     return (
@@ -212,7 +229,7 @@ class Profile extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -221,16 +238,16 @@ Profile.propTypes = {
   //deleteAccount: PropTypes.func.isRequired,
   authStore: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   profileStore: state.profileStore,
   authStore: state.authStore
-});
+})
 
 export default connect(
   mapStateToProps,
   {
     getCurrentProfile
   }
-)(Profile);
+)(Profile)
