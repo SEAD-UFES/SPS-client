@@ -239,21 +239,13 @@ class UserEditUser extends Component {
 
   render() {
     const { errors } = this.state
-    const { user, loading } = this.props.userStore
-
-    let userLink
-    if (user === null || loading) {
-      userLink = `/users/`
-    } else {
-      userLink = `/users/${user.id}`
-    }
 
     return (
       <div className="user-edit-user">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <Link to={userLink} className="btn btn-light">
+              <Link to={`/users/${this.props.match.params.id}`} className="btn btn-light">
                 Voltar para perfil do usuário
               </Link>
               <h1 className="display-4">Usuário</h1>
