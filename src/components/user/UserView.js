@@ -1,194 +1,197 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
 
-import { getUser } from "./userActions";
-import Spinner from "../common/Spinner";
+import { getUser } from './userActions'
+import Spinner from '../common/Spinner'
 
 class UserView extends Component {
   componentDidMount() {
     if (this.props.match.params.id) {
-      this.props.getUser(this.props.match.params.id);
+      this.props.getUser(this.props.match.params.id)
     }
   }
 
-  render() {
-    const { user, loading } = this.props.userStore;
-
-    let userContent;
+  renderUser(user, loading) {
     if (user === null || loading) {
-      userContent = <Spinner />;
-    } else {
-      userContent = (
-        <div>
-          <p className="lead text-muted">{user.Person ? `${user.Person.name} ${user.Person.surname}` : "Sem nome"}</p>
-
-          {/* <!-- Profile Actions --> */}
-          <div className="btn-group mb-4" role="group">
-            <Link to={`/users/${user.id}/edit-user`} className="btn btn-light">
-              <i className="fas fa-user-circle text-info mr-1" /> Editar dados de acesso
-            </Link>
-            <Link to={`/users/${user.id}/edit-person`} className="btn btn-light">
-              <i className="fas fa-user-circle text-info mr-1" /> Editar dados pessoais
-            </Link>
-          </div>
-
-          {/* <!-- User data --> */}
-          <div>
-            <h4 className="mb-2">Dados de usuário</h4>
-
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>Login/Email:</strong>
-                </p>
-              </div>
-              <div className="col-md-9">
-                <p>{user.login}</p>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-3">
-                <p>
-                  <strong>Status:</strong>
-                </p>
-              </div>
-              <div className="col-md-9">
-                <p>{user.authorized ? "Ativo" : "Desativado"}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* <!-- Person Data --> */}
-          {user.Person ? (
-            <div>
-              <h4 className="mb-3">Dados de pessoais</h4>
-
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>Nome / Sobrenome:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>
-                    {user.Person.name} {user.Person.surname}
-                  </p>
-                </div>
-              </div>
-
-              {user.Person.birthdate ? (
-                <div className="row">
-                  <div className="col-md-3">
-                    <p>
-                      <strong>Data de Nascimento:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-9">
-                    <p>{moment(user.Person.birthdate, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY")}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              <div className="row">
-                <div className="col-md-3">
-                  <p>
-                    <strong>CPF:</strong>
-                  </p>
-                </div>
-                <div className="col-md-9">
-                  <p>{user.Person.cpf}</p>
-                </div>
-              </div>
-
-              {user.Person.nationality ? (
-                <div className="row">
-                  <div className="col-md-3">
-                    <p>
-                      <strong>Nacionalidade:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-9">
-                    <p>{user.Person.nationality}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {user.Person.rgNumber ? (
-                <div className="row">
-                  <div className="col-md-3">
-                    <p>
-                      <strong>RG (Número / Expeditor):</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-9">
-                    <p>
-                      {user.Person.rgNumber} - {user.Person.rgDispatcher}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {user.Person.ethnicity ? (
-                <div className="row">
-                  <div className="col-md-2">
-                    <p>
-                      <strong>Cor:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-10">
-                    <p>{user.Person.ethnicity}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {user.Person.gender ? (
-                <div className="row">
-                  <div className="col-md-2">
-                    <p>
-                      <strong>Sexo:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-10">
-                    <p>{user.Person.gender}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {user.Person.civilStatus ? (
-                <div className="row">
-                  <div className="col-md-2">
-                    <p>
-                      <strong>Estado Civil:</strong>
-                    </p>
-                  </div>
-                  <div className="col-md-10">
-                    <p>{user.Person.civilStatus}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      );
+      return <Spinner />
     }
+
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <div className="row">
+            <div className="col">
+              <h4 className="mb-0">Dados de usuário</h4>
+            </div>
+            <div className="col">
+              <div className="text-right">
+                <Link
+                  className="text-info"
+                  to={{
+                    pathname: `/users/${user.id}/edit-user`,
+                    prevLocation: this.props.location
+                  }}>
+                  <i className="fas fa-cog" /> Editar
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card-body">
+          <table className="table table-hover mt-0 mb-0">
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Login/Email:</strong>
+                </td>
+                <td>{user.login}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
+
+  renderPerson(user, loading) {
+    if (user === null || loading) {
+      return <Spinner />
+    }
+
+    if (!user.Person) {
+      return (
+        <div className="card mb-4">
+          <div className="card-header">
+            <div className="row">
+              <div className="col">
+                <h4 className="mb-0">Dados pessoais</h4>
+              </div>
+              <div className="col">
+                <div className="text-right">
+                  <Link
+                    className="text-info"
+                    to={{
+                      pathname: `/users/${user.id}/edit-person`,
+                      prevLocation: this.props.location
+                    }}>
+                    <i className="fas fa-cog" /> Editar
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-body">
+            <p>Usuário ainda não possui dados pessoais.</p>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="card mb-4">
+        <div className="card-header">
+          <div className="row">
+            <div className="col">
+              <h4 className="mb-0">Dados pessoais</h4>
+            </div>
+            <div className="col">
+              <div className="text-right">
+                <Link
+                  className="text-info"
+                  to={{
+                    pathname: `/users/${user.id}/edit-person`,
+                    prevLocation: this.props.location
+                  }}>
+                  <i className="fas fa-cog" /> Editar
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card-body">
+          <table className="table table-hover mt-0 mb-0">
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Nome / Sobrenome:</strong>
+                </td>
+                <td>
+                  {user.Person.name} {user.Person.surname}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Data de Nascimento:</strong>
+                </td>
+                <td>
+                  {user.Person.birthdate ? (
+                    moment(user.Person.birthdate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')
+                  ) : (
+                    <span className="text-muted">...</span>
+                  )}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>CPF:</strong>
+                </td>
+                <td>{user.Person.cpf}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Nacionalidade:</strong>
+                </td>
+                <td>{user.Person.nationality ? user.Person.nationality : <span className="text-muted">...</span>}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>RG (Número / Expeditor):</strong>
+                </td>
+                <td>
+                  {user.Person.rgNumber ? (
+                    user.Person.rgNumber - user.Person.rgDispatcher
+                  ) : (
+                    <span className="text-muted">...</span>
+                  )}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Cor:</strong>
+                </td>
+                <td>{user.Person.ethnicity ? user.Person.ethnicity : <span className="text-muted">...</span>}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Sexo:</strong>
+                </td>
+                <td>{user.Person.gender ? user.Person.gender : <span className="text-muted">...</span>}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Estado Civil:</strong>
+                </td>
+                <td>{user.Person.civilStatus ? user.Person.civilStatus : <span className="text-muted">...</span>}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
+
+  render() {
+    const { user, loading } = this.props.userStore
     return (
       <div className="profile">
         <div className="container">
@@ -197,27 +200,29 @@ class UserView extends Component {
               <Link to="/users" className="btn btn-light">
                 Voltar para lista de usuários
               </Link>
-              <h1 className="display-4">Perfil</h1>
-              {userContent}
+              <h1 className="display-4">Usuário</h1>
+              {/* {userContent} */}
+              {this.renderUser(user, loading)}
+              {this.renderPerson(user, loading)}
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 UserView.propTypes = {
   getUser: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   userStore: state.userStore
-});
+})
 
 export default connect(
   mapStateToProps,
   {
     getUser
   }
-)(UserView);
+)(UserView)
