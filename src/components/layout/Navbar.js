@@ -86,15 +86,6 @@ class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="mobile-nav">
             <ul className="navbar-nav mr-auto">
-              <DrawFilter permission="user_list">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/users">
-                    {' '}
-                    Usuários
-                  </Link>
-                </li>
-              </DrawFilter>
-
               <li className="nav-item">
                 <Link className="nav-link" to="/processes">
                   {' '}

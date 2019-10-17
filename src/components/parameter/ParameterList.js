@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class ParameterList extends Component {
   render() {
@@ -10,6 +10,9 @@ export default class ParameterList extends Component {
             <div className="col-md-12">
               <h1 className="display-4">Parâmetros</h1>
               <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                  <Link to={`/users`}>Usuários</Link>
+                </li>
                 <li className="list-group-item">
                   <Link to={`${this.props.match.path}/courses`}>Cursos</Link>
                 </li>
@@ -42,6 +45,6 @@ export default class ParameterList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
