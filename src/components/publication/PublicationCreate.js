@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import TextFieldGroup from 'components/common/TextFieldGroup'
 import SelectListGroup from 'components/common/SelectListGroup'
-import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
+// import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
 import FileFieldGroup from '../common/FileFieldGroup'
 import CheckBoxFieldGroup from 'components/common/CheckBoxFieldGroup'
 
@@ -18,6 +18,7 @@ import { validateDateRequired, validateName } from 'validation'
 import { validatePublicationForm } from './validatePublicationForm'
 import { validateFileType } from '../../validation'
 import AlertError from 'components/common/AlertError'
+import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class PublicationCreate extends Component {
   constructor() {
@@ -29,6 +30,7 @@ class PublicationCreate extends Component {
       selectiveProcess_id: '',
       call_id: '',
       step_id: '',
+      title: '',
       publicationType_id: '',
       description: '',
       valid: true,
@@ -158,13 +160,13 @@ class PublicationCreate extends Component {
       case 'creation_date':
         valResult = validateDateRequired(e.target.value)
         break
-      // case "name":
-      //   valResult = validateName(e.target.value);
-      //   break;
+      case 'publicationType_id':
+        valResult = validateName(e.target.value)
+        break
       case 'selectiveProcess_id':
         valResult = validateName(e.target.value)
         break
-      case 'publicationType_id':
+      case 'title':
         valResult = validateName(e.target.value)
         break
       default:
@@ -184,15 +186,22 @@ class PublicationCreate extends Component {
     })
   }
 
+  onChange_TinyMCE = event => {
+    const value = event.target.getContent()
+    let errors = this.state.errors
+
+    this.setState({ description: value, errors: errors })
+  }
+
   onSubmit(e) {
     e.preventDefault()
 
     const publicationData = {
       date: this.state.creation_date,
-      name: this.state.name,
       selectiveProcess_id: this.state.selectiveProcess_id,
       call_id: this.state.call_id ? this.state.call_id : null,
       step_id: this.state.step_id ? this.state.step_id : null,
+      title: this.state.title,
       description: this.state.description ? this.state.description : null,
       publicationType_id: this.state.publicationType_id,
       file: this.state.file,
@@ -254,7 +263,7 @@ class PublicationCreate extends Component {
               <SelectListGroup
                 placeholder="* Selecione a chamada"
                 name="call_id"
-                label="Chamada: *"
+                label="Chamada:"
                 value={this.state.call_id}
                 options={callOptions}
                 onChange={this.onChange}
@@ -269,7 +278,7 @@ class PublicationCreate extends Component {
               <SelectListGroup
                 placeholder="* Selecione a etapa"
                 name="step_id"
-                label="Etapa: *"
+                label="Etapa:"
                 value={this.state.step_id}
                 options={stepOptions}
                 onChange={this.onChange}
@@ -279,7 +288,17 @@ class PublicationCreate extends Component {
               ''
             )}
 
-            <TextAreaFieldGroup
+            <TextFieldGroup
+              type="title"
+              name="title"
+              label="Título: *"
+              placeholder="Título da publicação"
+              value={this.state.title}
+              onChange={this.onChange}
+              error={errors.title}
+            />
+
+            {/* <TextAreaFieldGroup
               type="text"
               name="description"
               label="Observações:"
@@ -287,6 +306,16 @@ class PublicationCreate extends Component {
               value={this.state.description}
               onChange={this.onChange}
               error={errors.description}
+            /> */}
+
+            <TextAreaFieldTinyMCE
+              placeholder="Conteúdo"
+              name="description"
+              label="Observações:"
+              value={this.state.description}
+              onChange={this.onChange_TinyMCE}
+              error={errors.description}
+              info="corpo da mensagem da publicação, se houver."
             />
 
             <FileFieldGroup

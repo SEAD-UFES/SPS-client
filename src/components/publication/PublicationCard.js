@@ -35,6 +35,55 @@ export default class PublicationCard extends Component {
     return result
   }
 
+  renderPublicationLine(process, publication) {
+    return (
+      <tr key={publication.id} className={publication.valid ? '' : 'text-secondary'}>
+        <td>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</td>
+        <td>{this.renderPublicationLevel(process, publication)}</td>
+        <td>{publication.PublicationType.name}</td>
+        <td>{publication.title}</td>
+        <td className="text-right">
+          <Link
+            className="text-info"
+            to={{
+              pathname: `/processes/${process.id}/publications/${publication.id}`,
+              state: { publication: publication }
+            }}>
+            <i className="fas fa-search-plus" />
+          </Link>{' '}
+          <a
+            className={publication.valid ? '' : 'isDisabled'}
+            onClick={publication.valid ? e => {} : e => e.preventDefault()}
+            href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
+            target="_blank"
+            rel="noopener noreferrer">
+            <i className="fas fa-file-download" />
+          </a>{' '}
+          <DrawFilter permission="publication_update" course_id={process.Course.id}>
+            <Link
+              className="text-info"
+              to={{
+                pathname: `/processes/${process.id}/publications/${publication.id}/update`,
+                state: { publication: publication }
+              }}>
+              <i className="fas fa-cog" />
+            </Link>
+          </DrawFilter>{' '}
+          <DrawFilter permission="publication_delete" course_id={process.Course.id}>
+            <Link
+              className="text-danger"
+              to={{
+                pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
+                state: { publication: publication }
+              }}>
+              <i className="fas fa-times-circle" />
+            </Link>
+          </DrawFilter>
+        </td>
+      </tr>
+    )
+  }
+
   renderTable(process) {
     return (
       <div className="table-responsive">
@@ -44,48 +93,13 @@ export default class PublicationCard extends Component {
               <th>Data</th>
               <th>Nível</th>
               <th>Tipo</th>
-              <th>Observações</th>
+              <th>Título</th>
               <th />
             </tr>
           </thead>
           <tbody>
             {process.Publications.map(publication => {
-              return (
-                <tr key={publication.id} className={publication.valid ? '' : 'text-secondary'}>
-                  <td>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</td>
-                  <td>{this.renderPublicationLevel(process, publication)}</td>
-                  <td>{publication.PublicationType.name}</td>
-                  <td>{publication.description ? publication.description : ''}</td>
-                  <td className="text-right">
-                    <a
-                      className={publication.valid ? '' : 'isDisabled'}
-                      onClick={publication.valid ? e => {} : e => e.preventDefault()}
-                      href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}>
-                      <i className="fas fa-file-download" />
-                    </a>{' '}
-                    <DrawFilter permission="publication_update" course_id={process.Course.id}>
-                      <Link
-                        className="text-info"
-                        to={{
-                          pathname: `/processes/${process.id}/publications/${publication.id}/update`,
-                          state: { publication: publication }
-                        }}>
-                        <i className="fas fa-cog" />
-                      </Link>
-                    </DrawFilter>{' '}
-                    <DrawFilter permission="publication_delete" course_id={process.Course.id}>
-                      <Link
-                        className="text-danger"
-                        to={{
-                          pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
-                          state: { publication: publication }
-                        }}>
-                        <i className="fas fa-times-circle" />
-                      </Link>
-                    </DrawFilter>
-                  </td>
-                </tr>
-              )
+              return this.renderPublicationLine(process, publication)
             })}
           </tbody>
         </table>

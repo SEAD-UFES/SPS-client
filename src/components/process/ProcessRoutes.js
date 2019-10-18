@@ -24,6 +24,7 @@ import VacancyDelete from '../vacancy/VacancyDelete'
 import PublicationCreate from 'components/publication/PublicationCreate'
 import PublicationUpdate from 'components/publication/PublicationUpdate'
 import PublicationDelete from 'components/publication/PublicationDelete'
+import PublicationRoutes from 'components/publication/PublicationRoutes'
 
 import NoticeRoutes from 'components/notice/NoticeRoutes'
 
@@ -91,20 +92,14 @@ export default class ProcessRoutes extends Component {
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/publications/create`}
-          component={PublicationCreate}
-        />
-
-        <PrivateRoute
-          exact
           path={`${this.props.match.path}/:process_id/calls/:call_id/publications/create`}
           component={PublicationCreate}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/publications/:publication_id/update`}
-          component={PublicationUpdate}
+          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/delete`}
+          component={PublicationDelete}
         />
 
         <PrivateRoute
@@ -113,17 +108,7 @@ export default class ProcessRoutes extends Component {
           component={PublicationUpdate}
         />
 
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:process_id/publications/:publication_id/delete`}
-          component={PublicationDelete}
-        />
-
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/delete`}
-          component={PublicationDelete}
-        />
+        <Route path={`${this.props.match.path}/:process_id/publications`} component={PublicationRoutes} />
 
         <PrivateRoute path={`${this.props.match.path}/:process_id/notices`} component={NoticeRoutes} />
 

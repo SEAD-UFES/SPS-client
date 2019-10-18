@@ -80,9 +80,9 @@ class PublicationDelete extends Component {
 
               <tr>
                 <td>
-                  <strong>Descrição:</strong>
+                  <strong>Título:</strong>
                 </td>
-                <td>{publication.description ? publication.description : ''}</td>
+                <td>{publication.title}</td>
               </tr>
 
               <tr>

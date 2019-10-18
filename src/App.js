@@ -31,8 +31,9 @@ import ParameterRoutes from './components/parameter/ParameterRoutes'
 import NotFound from './components/common/NotFound'
 
 //Teste
-import Teste from 'Teste.js'
-import TwoWayBinding from 'teste2'
+import Teste from 'Teste01'
+import TwoWayBinding from 'Teste02'
+import Teste03 from 'Teste03'
 
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
@@ -70,8 +71,9 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Landing} />
 
-              <Route exact path="/teste" component={Teste} />
-              <Route exact path="/teste2" component={TwoWayBinding} />
+              <Route exact path="/teste01" component={Teste} />
+              <Route exact path="/teste02" component={TwoWayBinding} />
+              <Route exact path="/teste03" component={Teste03} />
 
               <Route exact path="/register" component={Register} />
 

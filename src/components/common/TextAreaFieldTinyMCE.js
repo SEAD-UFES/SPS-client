@@ -11,9 +11,6 @@ import { Editor } from '@tinymce/tinymce-react'
 //import CKEDITOR from 'ckeditor'
 
 class TextAreaFieldTinyMCE extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     const style = {
       height: 'auto',

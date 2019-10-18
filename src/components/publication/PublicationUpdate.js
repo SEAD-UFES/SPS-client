@@ -7,7 +7,7 @@ import moment from 'moment'
 import { spsServerUrl } from 'apis/spsServer'
 import TextFieldGroup from 'components/common/TextFieldGroup'
 import SelectListGroup from 'components/common/SelectListGroup'
-import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
+// import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
 import CheckBoxFieldGroup from 'components/common/CheckBoxFieldGroup'
 
 import { getProcess } from 'components/process/processActions'
@@ -17,6 +17,7 @@ import { getPublication, updatePublication } from 'components/publication/public
 import { validateDateRequired, validateName } from 'validation'
 import { validatePublicationForm } from './validatePublicationForm'
 import AlertError from 'components/common/AlertError'
+import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class PublicationUpdate extends Component {
   constructor() {
@@ -28,6 +29,7 @@ class PublicationUpdate extends Component {
       selectiveProcess_id: '',
       call_id: '',
       step_id: '',
+      title: '',
       publicationType_id: '',
       description: '',
       valid: true,
@@ -81,6 +83,7 @@ class PublicationUpdate extends Component {
         selectiveProcess_id: this.props.location.state.publication.selectiveProcess_id,
         call_id: this.props.location.state.publication.call_id ? this.props.location.state.publication.call_id : '',
         step_id: this.props.location.state.publication.step_id ? this.props.location.state.publication.step_id : '',
+        title: this.props.location.state.publication.title,
         publicationType_id: this.props.location.state.publication.publicationType_id
           ? this.props.location.state.publication.publicationType_id
           : '',
@@ -135,6 +138,7 @@ class PublicationUpdate extends Component {
             selectiveProcess_id: publication.selectiveProcess_id,
             call_id: publication.call_id ? publication.call_id : '',
             step_id: publication.step_id ? publication.step_id : '',
+            title: publication.title,
             publicationType_id: publication.publicationType_id ? publication.publicationType_id : '',
             description: publication.description ? publication.description : '',
             valid: publication.valid,
@@ -166,6 +170,9 @@ class PublicationUpdate extends Component {
       case 'publicationType_id':
         valResult = validateName(e.target.value)
         break
+      case 'title':
+        valResult = validateName(e.target.value)
+        break
       default:
         break
     }
@@ -183,6 +190,13 @@ class PublicationUpdate extends Component {
     })
   }
 
+  onChange_TinyMCE = event => {
+    const value = event.target.getContent()
+    let errors = this.state.errors
+
+    this.setState({ description: value, errors: errors })
+  }
+
   onSubmit(e) {
     e.preventDefault()
 
@@ -192,6 +206,7 @@ class PublicationUpdate extends Component {
       selectiveProcess_id: this.state.selectiveProcess_id,
       call_id: this.state.call_id ? this.state.call_id : null,
       step_id: this.state.step_id ? this.state.step_id : null,
+      title: this.state.title,
       description: this.state.description ? this.state.description : null,
       publicationType_id: this.state.publicationType_id,
       file: this.state.file,
@@ -279,7 +294,17 @@ class PublicationUpdate extends Component {
               ''
             )}
 
-            <TextAreaFieldGroup
+            <TextFieldGroup
+              type="title"
+              name="title"
+              label="Título: *"
+              placeholder="Título da publicação"
+              value={this.state.title}
+              onChange={this.onChange}
+              error={errors.title}
+            />
+
+            {/* <TextAreaFieldGroup
               type="text"
               name="description"
               label="Observações:"
@@ -287,6 +312,16 @@ class PublicationUpdate extends Component {
               value={this.state.description}
               onChange={this.onChange}
               error={errors.description}
+            /> */}
+
+            <TextAreaFieldTinyMCE
+              placeholder="Conteúdo"
+              name="description"
+              label="Observações:"
+              value={this.state.description}
+              onChange={this.onChange_TinyMCE}
+              error={errors.description}
+              info="corpo da mensagem da publicação, se houver."
             />
 
             <div className="form-group row">
