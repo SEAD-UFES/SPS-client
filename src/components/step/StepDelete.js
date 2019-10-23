@@ -22,7 +22,7 @@ class StepDelete extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //error handling
     if (nextProps.errors) {
       let errors = nextProps.errors;

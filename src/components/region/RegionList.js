@@ -27,7 +27,7 @@ class RegionList extends Component {
     this.props.getRegions();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.regionStore.regions) {
       this.setState(

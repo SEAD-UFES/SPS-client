@@ -27,7 +27,7 @@ class GraduationTypeList extends Component {
     this.props.getGraduationTypes();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.graduationTypeStore.graduationTypes) {
       this.setState(

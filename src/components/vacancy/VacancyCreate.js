@@ -42,7 +42,7 @@ class VacancyCreate extends Component {
     this.props.getRegions()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //If receive errors from server
     if (nextProps.errors) {
       let errors = nextProps.errors

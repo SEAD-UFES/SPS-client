@@ -33,7 +33,7 @@ class ProcessCreate extends Component {
     this.props.getCourses();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       let errors = nextProps.errors;
       this.setState({ errors: errors });

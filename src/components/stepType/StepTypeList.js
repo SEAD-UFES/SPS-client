@@ -27,7 +27,7 @@ class StepTypesList extends Component {
     this.props.getStepTypes();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.stepTypeStore.stepTypes) {
       this.setState(

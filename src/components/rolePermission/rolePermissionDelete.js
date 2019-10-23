@@ -17,7 +17,7 @@ class rolePermissionDelete extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.location.state && this.props.location.state.rolePermission) {
       this.setState({
         rolePermission: this.props.location.state.rolePermission
@@ -31,7 +31,7 @@ class rolePermissionDelete extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //errors
     if (nextProps.errors) {
       let errors = nextProps.errors;

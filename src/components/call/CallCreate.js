@@ -27,11 +27,11 @@ class CallCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.clearErrors()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //If receive errors from server
     if (nextProps.errorStore) {
       let errorStore = nextProps.errorStore

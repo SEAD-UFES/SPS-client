@@ -25,7 +25,7 @@ class RegionModalDelete extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //error management
     if (!isEmpty(nextProps.errors)) {
       let newErrors = [];

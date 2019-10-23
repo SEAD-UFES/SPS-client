@@ -17,7 +17,7 @@ class Navbar extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.authStore.isAuthenticated) {
       if (nextProps.profileStore.loading === false && nextProps.profileStore.profile === null) {
         this.props.getCurrentProfile()

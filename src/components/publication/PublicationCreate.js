@@ -51,7 +51,7 @@ class PublicationCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     //get process from link
     if (this.props.location.state && this.props.location.state.selectiveProcess) {
       this.setState({
@@ -80,7 +80,7 @@ class PublicationCreate extends Component {
     this.props.getPublicationTypes()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //Errors
     if (nextProps.errors) {
       let errors = nextProps.errors

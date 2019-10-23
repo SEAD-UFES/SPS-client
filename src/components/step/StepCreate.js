@@ -44,7 +44,7 @@ class StepCreate extends Component {
     this.props.getStepTypes();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //If receive errors from server
     if (nextProps.errors) {
       let errors = nextProps.errors;

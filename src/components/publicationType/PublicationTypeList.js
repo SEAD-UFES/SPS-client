@@ -27,7 +27,7 @@ class ProcessPublicationTypesList extends Component {
     this.props.getPublicationTypes();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.publicationTypeStore.publicationTypes) {
       this.setState(

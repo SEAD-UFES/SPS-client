@@ -25,7 +25,7 @@ class RoleTypesList extends Component {
     this.props.getRoleTypes();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.roleTypeStore.roleTypes) {
       this.setState(

@@ -13,7 +13,7 @@ class TextAreaFieldCKEditor4 extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value) {
       this.setState({ value: nextProps.value })
     }

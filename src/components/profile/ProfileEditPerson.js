@@ -39,7 +39,7 @@ class ProfileEditPerson extends Component {
     this.props.getPeopleOptions()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
     if (!isEmpty(nextProps.errors)) {
       if (nextProps.errors.devMessage.errors[0].message === 'cpf must be unique') {

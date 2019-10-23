@@ -32,7 +32,7 @@ class ProfileEditUser extends Component {
     this.props.getCurrentProfile()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
     if (!isEmpty(nextProps.errors)) {
       let errors = { ...this.props.errors }

@@ -27,7 +27,7 @@ class RestrictionList extends Component {
     this.props.getRestrictions();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.restrictionStore.restrictions) {
       this.setState(

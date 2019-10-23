@@ -31,7 +31,7 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.authStore.isAuthenticated) {
       this.props.clearErrors()
       if (this.props.location.prevLocation) {

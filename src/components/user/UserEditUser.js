@@ -35,7 +35,7 @@ class UserEditUser extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //tratando errors do servidor
     if (!isEmpty(nextProps.errors)) {
       let errors = { ...this.props.errors }

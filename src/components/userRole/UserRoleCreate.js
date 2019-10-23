@@ -36,7 +36,7 @@ class UserRoleCreate extends Component {
     this.props.getCourses();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //errors
     if (nextProps.errors) {
       let errors = nextProps.errors;

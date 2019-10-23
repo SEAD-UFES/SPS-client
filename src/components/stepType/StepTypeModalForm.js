@@ -33,7 +33,7 @@ class StepTypeModalForm extends Component {
     window.$(`#${this.props.targetName}`).on("hidden.bs.modal", this.resetState);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //error management
     if (!isEmpty(nextProps.errors)) {
       this.setState({ errors: nextProps.errors });

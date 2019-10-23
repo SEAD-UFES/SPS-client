@@ -15,7 +15,7 @@ class PublicationDelete extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.clearErrors()
   }
 

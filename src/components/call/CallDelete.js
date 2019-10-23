@@ -16,7 +16,7 @@ class CallDelete extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.clearErrors()
   }
 
@@ -24,7 +24,7 @@ class CallDelete extends Component {
     this.props.getCall(this.props.match.params.call_id)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //error handling
     if (nextProps.errors) {
       let errors = nextProps.errors

@@ -29,7 +29,7 @@ class CourseList extends Component {
     this.props.getGraduationTypes();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.courseStore.courses) {
       this.setState(

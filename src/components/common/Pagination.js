@@ -20,7 +20,7 @@ class Pagination extends React.Component {
     this.state = { pager: {} };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     var pager = this.state.pager;
     pager = this.getPager(this.props.currentPage, this.props.numberOfPages, this.props.pageSize);
     this.setState({ pager: pager });

@@ -34,7 +34,7 @@ class UserCreate extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       let errors = nextProps.errors.devMessage
       errors.email = nextProps.errors.devMessage.login

@@ -39,7 +39,7 @@ class ProcessEdit extends Component {
     this.props.getCourses();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //Tratando errors
     if (nextProps.errors) {
       let errors = nextProps.errors;

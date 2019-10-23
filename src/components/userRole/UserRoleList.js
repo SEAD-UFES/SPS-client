@@ -25,7 +25,7 @@ class UserRoleList extends Component {
     this.props.getUserRoles();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.userRoleStore.userRoles) {
       this.setState(

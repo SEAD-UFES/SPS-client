@@ -15,7 +15,7 @@ class NoticeDelete extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.clearErrors()
   }
 
@@ -23,7 +23,7 @@ class NoticeDelete extends Component {
     this.props.getNotice(this.props.match.params.notice_id)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //error handling
     if (nextProps.errors) {
       let errors = nextProps.errors

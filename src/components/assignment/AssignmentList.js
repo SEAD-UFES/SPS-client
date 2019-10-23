@@ -27,7 +27,7 @@ class AssignmentList extends Component {
     this.props.getAssignments();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //atualizar lista
     if (nextProps.assignmentStore.assignments) {
       this.setState(

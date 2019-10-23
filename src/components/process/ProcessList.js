@@ -42,7 +42,7 @@ class ProcessList extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {}
+  UNSAFE_componentWillReceiveProps(nextProps) {}
 
   onChangePage(page, pageSize) {
     this.props.getProcessList({ page: page, limit: pageSize, ...buildFilterStrings(this.props.filters) });

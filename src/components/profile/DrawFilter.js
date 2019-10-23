@@ -11,14 +11,14 @@ class DrawFilter extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { profile, loading } = this.props.profileStore;
     if (profile !== null && loading !== true) {
       this.canDraw(profile.UserRoles, this.props.permission, { course_id: this.props.course_id, anyCourse: this.props.anyCourse });
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.profileStore) {
       const { profile, loading } = nextProps.profileStore;
       if (profile !== null && loading !== true) {
