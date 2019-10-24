@@ -6,27 +6,20 @@ import { withRouter, Link } from 'react-router-dom'
 
 import AlertError from 'components/common/AlertError'
 import Spinner from 'components/common/Spinner'
-import { getCall } from 'components/call/callActions'
+// import { getCall } from 'components/call/callActions'
 import { clearErrors } from 'actions/errorActions'
 // import DrawFilter from 'components/profile/DrawFilter'
 // import { getCallStatus } from 'components/call/callHelpers'
-import { findCourse } from 'components/course/courseActions'
+// import { findCourse } from 'components/course/courseActions'
 import { spsServerUrl } from 'apis/spsServer'
+import { getPublication } from 'components/publication/publicationActions'
 
-class PubilcationView extends Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     course_id: ''
-  //   }
-  // }
-
+class PublicationView extends Component {
   componentDidMount() {
     this.props.clearErrors()
-    // this.props.getCall(this.props.match.params.call_id)
-    // this.props.findCourse({ call_id: this.props.match.params.call_id }, course => {
-    //   this.setState({ course_id: course.id })
-    // })
+    if (!(this.props.location.state && this.props.location.state.publication)) {
+      this.props.getPublication(this.props.match.params.publication_id)
+    }
   }
 
   openPdf(spsServerUrl, file) {
@@ -71,8 +64,19 @@ class PubilcationView extends Component {
   }
 
   render() {
-    const { errors, loading } = this.props
-    const publication = this.props.location.state.publication
+    const { errors } = this.props
+
+    const publicationValue = () => {
+      if (this.props.location.state && this.props.location.state.publication) {
+        return this.props.location.state.publication
+      }
+      if (this.props.loading === false && this.props.publication !== null) {
+        return this.props.publication
+      }
+      return null
+    }
+
+    const publication = publicationValue()
 
     return (
       <div className="register">
@@ -84,7 +88,7 @@ class PubilcationView extends Component {
               </Link>
               <h1 className="display-4">Publicação</h1>
               <AlertError errors={errors} />
-              {this.renderInfo(publication, loading)}
+              {this.renderInfo(publication, this.props.loading)}
             </div>
           </div>
         </div>
@@ -94,23 +98,23 @@ class PubilcationView extends Component {
 }
 
 // Call Edit props
-PubilcationView.proptypes = {
+PublicationView.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  getCall: PropTypes.func.isRequired,
-  call: PropTypes.object.isRequired,
+  getPublication: PropTypes.func.isRequired,
+  publication: PropTypes.object.isRequired,
   loading: PropTypes.object.isRequired
 }
 
 // Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errorStore,
-  call: state.callStore.call,
-  loading: state.callStore.loading
+  publication: state.publicationStore.publication,
+  loading: state.publicationStore.loading
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { getCall, clearErrors, findCourse }
-)(withRouter(PubilcationView))
+  { getPublication, clearErrors }
+)(withRouter(PublicationView))
