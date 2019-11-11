@@ -41,7 +41,7 @@ class CallEdit extends Component {
     //If receive errors from server
     if (nextProps.errorStore) {
       let errorStore = nextProps.errorStore
-      if (errorStore.code === 'calls-01' && errorStore.data && errorStore.data.devMessage) {
+      if (errorStore.data && errorStore.data.code === 'calls-01' && errorStore.data.devMessage) {
         this.setState({ errors: errorStore.data.devMessage.errors })
       }
     }

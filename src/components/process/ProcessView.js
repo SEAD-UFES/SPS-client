@@ -125,24 +125,24 @@ class ProcessView extends Component {
         return (
           <DrawFilter permission="notice_read" course_id={processStore.process.Course.id}>
             <React.Fragment>
-              {this.renderCalls(processStore.process, processStore.loading)}
               {this.renderPublications(processStore.process, processStore.loading)}
+              {this.renderCalls(processStore.process, processStore.loading)}
             </React.Fragment>
           </DrawFilter>
         )
       } else {
         return (
           <React.Fragment>
-            {this.renderCalls(processStore.process, processStore.loading)}
             {this.renderPublications(processStore.process, processStore.loading)}
+            {this.renderCalls(processStore.process, processStore.loading)}
           </React.Fragment>
         )
       }
     } else {
       return (
         <React.Fragment>
-          {this.renderCalls(processStore.process, processStore.loading)}
           {this.renderPublications(processStore.process, processStore.loading)}
+          {this.renderCalls(processStore.process, processStore.loading)}
         </React.Fragment>
       )
     }

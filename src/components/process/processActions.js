@@ -1,35 +1,32 @@
-import spsApi from "apis/spsServer";
+import spsApi from 'apis/spsServer'
 
-import { GET_ERRORS, CLEAR_ERRORS } from "actions/types";
-import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_PROCESS_FILTERS } from "./processActionTypes";
+import { GET_ERRORS, CLEAR_ERRORS } from 'actions/types'
+import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_PROCESS_FILTERS } from './processActionTypes'
 
 //Process loading
 export const setProcessLoading = () => {
   return {
     type: PROCESS_LOADING
-  };
-};
+  }
+}
 
 //create Process
 export const createProcess = (processData, history) => dispatch => {
   spsApi
-    .post("/v1/selectiveprocesses", processData)
+    .post('/v1/selectiveprocesses', processData)
     .then(res => {
-      history.push(`/processes/${res.data.id}`);
+      history.push(`/processes/${res.data.id}`)
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
+}
 
 //get Process
 export const getProcess = process_id => dispatch => {
-  let url = `/v1/selectiveprocesses/${process_id}`;
+  let url = `/v1/selectiveprocesses/${process_id}`
 
-  dispatch(setProcessLoading());
+  dispatch(setProcessLoading())
   spsApi
     .get(`${url}`)
     .then(res =>
@@ -43,63 +40,63 @@ export const getProcess = process_id => dispatch => {
         type: GET_PROCESS,
         payload: null
       })
-    );
-};
+    )
+}
 
 //update Process Data
 export const updateProcess = (processId, processData, history) => dispatch => {
   spsApi
     .put(`/v1/selectiveprocesses/${processId}`, processData)
     .then(res => {
-      dispatch({ type: CLEAR_ERRORS });
-      history.push(`/processes/${processId}`);
+      dispatch({ type: CLEAR_ERRORS })
+      history.push(`/processes/${processId}`)
     })
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      });
-    });
-};
+      })
+    })
+}
 
 //get Process List
 export const getProcessList = (options = {}) => dispatch => {
-  let url = "/v1/selectiveprocesses";
+  let url = '/v1/selectiveprocesses'
   //console.log("getProcessList:", options);
 
   if (!options.page) {
-    options.page = 1;
+    options.page = 1
   }
-  url = url + `?page=${options.page}`;
+  url = url + `?page=${options.page}`
 
   //base parameters
   if (!options.limit) {
-    options.limit = 10;
+    options.limit = 10
   }
-  url = url + `&limit=${options.limit}`;
+  url = url + `&limit=${options.limit}`
 
   if (options.numbers) {
-    url = url + `&numbers=${options.numbers}`;
+    url = url + `&numbers=${options.numbers}`
   }
 
   //filters
   if (options.years) {
-    url = url + `&years=${options.years}`;
+    url = url + `&years=${options.years}`
   }
 
   if (options.graduationTypes) {
-    url = url + `&graduationTypes=${options.graduationTypes}`;
+    url = url + `&graduationTypes=${options.graduationTypes}`
   }
 
   if (options.courses) {
-    url = url + `&courses=${options.courses}`;
+    url = url + `&courses=${options.courses}`
   }
 
   if (options.assignments) {
-    url = url + `&assignments=${options.assignments}`;
+    url = url + `&assignments=${options.assignments}`
   }
 
-  dispatch(setProcessLoading());
+  dispatch(setProcessLoading())
   spsApi
     .get(`${url}`)
     .then(res =>
@@ -112,58 +109,75 @@ export const getProcessList = (options = {}) => dispatch => {
       dispatch({
         type: GET_PROCESSES,
         payload: null
-      });
-    });
-};
+      })
+    })
+}
 
 //get Process Filters
 export const getProcessFilters = () => dispatch => {
-  let url = "/v1/selectiveprocesses/filters";
+  let url = '/v1/selectiveprocesses/filters'
   //console.log("getProcessFilters");
-  dispatch(setProcessLoading());
+  dispatch(setProcessLoading())
   spsApi
     .get(`${url}`)
     .then(res => {
       //Build filters on right format
-      const filters = res.data;
-      let indexes = Object.keys(filters);
-      let state_filters = {};
+      const filters = res.data
+      let indexes = Object.keys(filters)
+      let state_filters = {}
 
       for (let index of indexes) {
-        const filter = filters[index];
-        let state_filter = [];
+        const filter = filters[index]
+        let state_filter = []
 
         if (filter.length > 0) {
-          if (typeof filter[0] !== "object") {
+          if (typeof filter[0] !== 'object') {
             state_filter = filter.map(item => {
-              return { label: item, value: item, marked: false, applied: false };
-            });
+              return { label: item, value: item, marked: false, applied: false }
+            })
           } else {
             state_filter = filter.map(item => {
-              return { label: item.name, value: item.id, marked: false, applied: false };
-            });
+              return { label: item.name, value: item.id, marked: false, applied: false }
+            })
           }
         }
 
-        state_filters[index] = state_filter;
+        state_filters[index] = state_filter
       }
 
       dispatch({
         type: GET_PROCESS_FILTERS,
         payload: state_filters
-      });
+      })
     })
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      });
-    });
-};
+      })
+    })
+}
 
 export const setProcessFilters = new_filters => dispatch => {
   dispatch({
     type: GET_PROCESS_FILTERS,
     payload: new_filters
-  });
-};
+  })
+}
+
+const handleErrors = (err, dispatch) => {
+  if (err.response) {
+    let errors = {}
+    errors.data = err.response.data
+    errors.serverError = true
+    dispatch({
+      type: GET_ERRORS,
+      payload: errors
+    })
+  } else {
+    dispatch({
+      type: GET_ERRORS,
+      payload: { anotherError: true }
+    })
+  }
+}

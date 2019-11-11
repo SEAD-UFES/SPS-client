@@ -1,95 +1,98 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter, Link } from 'react-router-dom'
 
-import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import SelectListGroup from "../common/SelectListGroup";
-import { validateProcessNumber, validateYearRequired, validateDescription, validateId } from "../../validation";
-import { validateProcessForm } from "./validateProcessForm";
-import { createProcess } from "./processActions";
-import { getCourses } from "../course/courseActions";
-import CheckBoxFieldGroup from "components/common/CheckBoxFieldGroup";
+import TextFieldGroup from '../common/TextFieldGroup'
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
+import SelectListGroup from '../common/SelectListGroup'
+import { validateProcessNumber, validateYearRequired, validateDescription, validateId } from '../../validation'
+import { validateProcessForm } from './validateProcessForm'
+import { createProcess } from './processActions'
+import { getCourses } from '../course/courseActions'
+import { clearErrors } from '../../actions/errorActions'
+import CheckBoxFieldGroup from 'components/common/CheckBoxFieldGroup'
+import AlertError from 'components/common/AlertError'
 
 class ProcessCreate extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      number: "",
-      year: "",
-      course_id: "",
-      description: "",
+      number: '',
+      year: '',
+      course_id: '',
+      description: '',
       visible: false,
       errors: {}
-    };
+    }
 
-    this.onChange = this.onChange.bind(this);
-    this.onCheck = this.onCheck.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.onCheck = this.onCheck.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.getCourses();
+    this.props.clearErrors()
+    this.props.getCourses()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      let errors = nextProps.errors;
-      this.setState({ errors: errors });
+    if (nextProps.errorStore) {
+      let errors = nextProps.errorStore
+      this.setState({ errors: errors })
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "number":
-        valResult = validateProcessNumber(e.target.value);
-        break;
-      case "year":
-        valResult = validateYearRequired(e.target.value);
-        break;
-      case "course_id":
-        valResult = validateId(e.target.value);
-        break;
-      case "description":
-        valResult = validateDescription(e.target.value);
-        break;
+      case 'number':
+        valResult = validateProcessNumber(e.target.value)
+        break
+      case 'year':
+        valResult = validateYearRequired(e.target.value)
+        break
+      case 'course_id':
+        valResult = validateId(e.target.value)
+        break
+      case 'description':
+        valResult = validateDescription(e.target.value)
+        break
       default:
-        break;
+        break
     }
 
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
   onCheck(e) {
     //validação local dos campos
-    let errors = this.state.errors;
+    let errors = this.state.errors
     switch (e.target.name) {
       default:
-        break;
+        break
     }
 
     this.setState({
       [e.target.name]: !this.state[e.target.name],
       errors: errors
-    });
+    })
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     const processData = {
       number: this.state.number,
@@ -97,13 +100,13 @@ class ProcessCreate extends Component {
       course_id: this.state.course_id,
       description: this.state.description,
       visible: this.state.visible
-    };
+    }
 
-    const valProcess = validateProcessForm(processData);
+    const valProcess = validateProcessForm(processData)
     if (!valProcess.isValid) {
-      this.setState({ errors: valProcess.errors });
+      this.setState({ errors: valProcess.errors })
     } else {
-      this.props.createProcess(processData, this.props.history);
+      this.props.createProcess(processData, this.props.history)
     }
   }
 
@@ -126,7 +129,15 @@ class ProcessCreate extends Component {
               error={errors.number}
             />
 
-            <TextFieldGroup type="text" name="year" label="Ano: *" placeholder="* Ano" value={this.state.year} onChange={this.onChange} error={errors.year} />
+            <TextFieldGroup
+              type="text"
+              name="year"
+              label="Ano: *"
+              placeholder="* Ano"
+              value={this.state.year}
+              onChange={this.onChange}
+              error={errors.year}
+            />
 
             <SelectListGroup
               placeholder=""
@@ -163,23 +174,23 @@ class ProcessCreate extends Component {
           </form>
         </div>
       </div>
-    );
+    )
   }
 
   render() {
-    const { courseStore } = this.props;
-    const { errors } = this.state;
+    const { courseStore } = this.props
+    const { errors } = this.state
 
-    const courseOptions = [{ label: "Escolha o curso", value: "" }].concat(
+    const courseOptions = [{ label: 'Escolha o curso', value: '' }].concat(
       courseStore.courses
         ? courseStore.courses.map(course => {
             return {
               label: course.name,
               value: course.id
-            };
+            }
           })
         : []
-    );
+    )
 
     return (
       <div className="register">
@@ -190,12 +201,14 @@ class ProcessCreate extends Component {
                 Voltar para a lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
+              {console.log(this.props.errorStore)}
+              <AlertError errors={this.props.errorStore} />
               {this.renderForm(this.state, errors, courseOptions)}
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -203,17 +216,17 @@ class ProcessCreate extends Component {
 ProcessCreate.proptypes = {
   createProcess: PropTypes.func.isRequired,
   getCourses: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
-};
+  errorStore: PropTypes.object.isRequired
+}
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   courseStore: state.courseStore,
-  errors: state.errorStore
-});
+  errorStore: state.errorStore
+})
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(
   mapStateToProps,
-  { createProcess, getCourses }
-)(withRouter(ProcessCreate));
+  { createProcess, getCourses, clearErrors }
+)(withRouter(ProcessCreate))
