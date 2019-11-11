@@ -52,10 +52,7 @@ export const updateProcess = (processId, processData, history) => dispatch => {
       history.push(`/processes/${processId}`)
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
+      handleErrors(err, dispatch)
     })
 }
 
