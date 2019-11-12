@@ -1,19 +1,20 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { PropTypes } from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { PropTypes } from 'prop-types'
+import { connect } from 'react-redux'
 
 class Landing extends Component {
   componentDidMount() {
-    if (this.props.authStore.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
+    this.props.history.push('/processes')
+    // if (this.props.authStore.isAuthenticated) {
+    //   this.props.history.push("/dashboard");
+    // }
   }
 
   render() {
     return (
       <div className="landing">
-        <div className="dark-overlay landing-inner text-light">
+        {/* <div className="dark-overlay landing-inner text-light">
           <div className="container">
             <div className="row">
               <div className="col-md-12 text-center">
@@ -32,18 +33,18 @@ class Landing extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
-    );
+    )
   }
 }
 
 Landing.propTypes = {
   authStore: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   authStore: state.authStore
-});
+})
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps)(Landing)
