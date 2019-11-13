@@ -1,84 +1,84 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import TextFieldGroup from "../common/TextFieldGroup";
-import TextFieldAreaGroup from "../common/TextAreaFieldGroup";
-import { isEmpty, validateName } from "../../validation";
-import { validateAssignmentForm } from "./validateAssignmentForm";
-import { clearErrors } from "../../actions/errorActions";
+import TextFieldGroup from '../common/TextFieldGroup'
+import TextFieldAreaGroup from '../common/TextAreaFieldGroup'
+import { isEmpty, validateName } from '../../validation'
+import { validateAssignmentForm } from './validateAssignmentForm'
+import { clearErrors } from '../../actions/errorActions'
 
 class AssignmentModalForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       //component options
-      mode: this.props.mode ? this.props.mode : "add",
+      mode: this.props.mode ? this.props.mode : 'add',
 
       //item data
       id: this.props.item ? this.props.item.id : null,
-      name: this.props.item ? this.props.item.name : "",
-      description: this.props.item ? (this.props.item.description ? this.props.item.description : "") : "",
+      name: this.props.item ? this.props.item.name : '',
+      description: this.props.item ? (this.props.item.description ? this.props.item.description : '') : '',
       //errors
       errors: []
-    };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.resetState = this.resetState.bind(this);
+    }
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    this.resetState = this.resetState.bind(this)
   }
 
   componentDidMount() {
-    window.$(`#${this.props.targetName}`).on("hidden.bs.modal", this.resetState);
+    window.$(`#${this.props.targetName}`).on('hidden.bs.modal', this.resetState)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     //error management
     if (!isEmpty(nextProps.errors)) {
-      let newErrors = [];
+      let newErrors = []
       switch (nextProps.errors.code) {
-        case "assignments-02":
-          newErrors = {};
-          if (nextProps.errors.devMessage.name === "SequelizeUniqueConstraintError") {
-            if (nextProps.errors.devMessage.errors[0].message === "name must be unique") {
-              newErrors.name = "Já existe uma curso com esse nome.";
-              this.setState({ errors: newErrors });
+        case 'assignments-02':
+          newErrors = {}
+          if (nextProps.errors.devMessage.name === 'SequelizeUniqueConstraintError') {
+            if (nextProps.errors.devMessage.errors[0].message === 'name must be unique') {
+              newErrors.name = 'Já existe uma curso com esse nome.'
+              this.setState({ errors: newErrors })
             }
           }
-          break;
+          break
         default:
-          return null;
+          return null
       }
     } else {
-      this.setState({ errors: [] });
+      this.setState({ errors: [] })
     }
   }
 
   onChange(e) {
     //local validation of fields:
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "name":
-        valResult = validateName(e.target.value);
-        break;
-      case "description":
-        valResult = validateName(e.target.value);
-        break;
+      case 'name':
+        valResult = validateName(e.target.value)
+        break
+      case 'description':
+        valResult = validateName(e.target.value)
+        break
       default:
-        break;
+        break
     }
 
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
   onSubmit() {
@@ -87,28 +87,28 @@ class AssignmentModalForm extends Component {
       id: this.state.id,
       name: this.state.name,
       description: this.state.description
-    };
+    }
 
     //Form validation:
-    const valAssignment = validateAssignmentForm(assignmentData);
+    const valAssignment = validateAssignmentForm(assignmentData)
     if (!valAssignment.isValid) {
-      this.setState({ errors: valAssignment.errors });
+      this.setState({ errors: valAssignment.errors })
     } else {
       //if add stance
-      if (this.state.mode === "add") {
+      if (this.state.mode === 'add') {
         this.props.addFunction(assignmentData, () => {
-          window.$(`#${this.props.targetName}`).modal("hide");
-          this.setState({ name: "", description: "" });
-          this.props.reloadFunction();
-        });
+          window.$(`#${this.props.targetName}`).modal('hide')
+          this.setState({ name: '', description: '' })
+          this.props.reloadFunction()
+        })
       }
 
       //if edit stance
-      if (this.state.mode === "edit") {
+      if (this.state.mode === 'edit') {
         this.props.editFunction(assignmentData, () => {
-          window.$(`#${this.props.targetName}`).modal("hide");
-          this.props.reloadFunction();
-        });
+          window.$(`#${this.props.targetName}`).modal('hide')
+          this.props.reloadFunction()
+        })
       }
     }
   }
@@ -116,16 +116,16 @@ class AssignmentModalForm extends Component {
   resetState() {
     this.setState({
       id: this.props.item ? this.props.item.id : null,
-      name: this.props.item ? this.props.item.name : "",
-      description: this.props.item ? (this.props.item.description ? this.props.item.description : "") : "",
+      name: this.props.item ? this.props.item.name : '',
+      description: this.props.item ? (this.props.item.description ? this.props.item.description : '') : '',
       //errors
       errors: []
-    });
-    this.props.clearErrors();
+    })
+    this.props.clearErrors()
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.state
     return (
       <div
         className="modal fade"
@@ -133,13 +133,12 @@ class AssignmentModalForm extends Component {
         tabIndex="-1"
         role="dialog"
         aria-labelledby={`${this.props.targetName}-ModalLabel`}
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id={`${this.props.targetName}-ModalLabel`}>
-                {this.props.mode === "edit" ? "Editar atribuição" : "Adicionar atribuição"}
+                {this.props.mode === 'edit' ? 'Editar atribuição' : 'Adicionar atribuição'}
               </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -149,7 +148,14 @@ class AssignmentModalForm extends Component {
               <form className="">
                 <div className="">
                   <div className="form-group">
-                    <TextFieldGroup type="text" name="name" placeholder="* Nome" value={this.state.name} onChange={this.onChange} error={errors.name} />
+                    <TextFieldGroup
+                      type="text"
+                      name="name"
+                      placeholder="* Nome"
+                      value={this.state.name}
+                      onChange={this.onChange}
+                      error={errors.name}
+                    />
 
                     <TextFieldAreaGroup
                       type="text"
@@ -164,7 +170,12 @@ class AssignmentModalForm extends Component {
               </form>
             </div>
             <div className="modal-footer">
-              <input type="submit" className="btn btn-info" onClick={this.onSubmit} value={this.props.mode === "edit" ? "Atualizar" : "Adicionar"} />
+              <input
+                type="submit"
+                className="btn btn-primary"
+                onClick={this.onSubmit}
+                value={this.props.mode === 'edit' ? 'Atualizar' : 'Adicionar'}
+              />
 
               <button type="button" className="btn btn-secondary" data-dismiss="modal">
                 Cancelar
@@ -173,20 +184,17 @@ class AssignmentModalForm extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 AssignmentModalForm.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   errors: state.errorStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  { clearErrors }
-)(AssignmentModalForm);
+export default connect(mapStateToProps, { clearErrors })(AssignmentModalForm)

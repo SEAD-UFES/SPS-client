@@ -256,7 +256,7 @@ class UserEditPerson extends Component {
               error={errors.civilStatus}
             />
 
-            <input value="Enviar" type="submit" className="btn btn-info btn-block mt-4" />
+            <input value="Enviar" type="submit" className="btn btn-primary btn-block mt-4" />
           </form>
         </div>
       </div>
@@ -333,12 +333,9 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    clearErrors,
-    getUser,
-    updatePerson,
-    getUserPeopleOptions
-  }
-)(withRouter(UserEditPerson))
+export default connect(mapStateToProps, {
+  clearErrors,
+  getUser,
+  updatePerson,
+  getUserPeopleOptions
+})(withRouter(UserEditPerson))

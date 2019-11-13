@@ -30,12 +30,12 @@ export default class CallCard extends Component {
                 <td>{getCallStatus(call)}</td>
                 <td className="text-right">
                   <DrawFilter permission="call_read" course_id={process.Course.id}>
-                    <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
+                    <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
                       <i className="fas fa-search-plus" />
                     </Link>
                   </DrawFilter>{' '}
                   <DrawFilter permission="call_update" course_id={process.Course.id}>
-                    <Link className="text-info" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                    <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
                       <i className="fas fa-cog" />
                     </Link>
                   </DrawFilter>{' '}

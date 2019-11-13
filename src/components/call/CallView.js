@@ -45,7 +45,7 @@ class CallView extends Component {
               <div className="text-right">
                 <DrawFilter permission="call_update" course_id={this.state.course_id}>
                   <Link
-                    className="text-info"
+                    className="text-primary"
                     to={{
                       pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
                       prevLocation: this.props.location
@@ -138,7 +138,4 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { getCall, clearErrors, findCourse }
-)(withRouter(CallView))
+export default connect(mapStateToProps, { getCall, clearErrors, findCourse })(withRouter(CallView))

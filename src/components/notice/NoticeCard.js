@@ -17,7 +17,9 @@ class NoticeCard extends Component {
         return (
           <React.Fragment>
             <DrawFilter permission="notice_update" course_id={processStore.process.Course.id}>
-              <Link className="text-info" to={`/processes/${processStore.process.id}/notices/${notices[0].id}/update`}>
+              <Link
+                className="text-primary"
+                to={`/processes/${processStore.process.id}/notices/${notices[0].id}/update`}>
                 <i className="fas fa-cog" /> Editar
               </Link>
             </DrawFilter>

@@ -187,7 +187,7 @@ class ProcessEdit extends Component {
               onChange={this.onCheck}
             />
 
-            <input type="submit" className="btn mt-4 btn-info btn-block" />
+            <input type="submit" className="btn mt-4 btn-primary btn-block" />
           </form>
         </div>
       </div>
@@ -245,7 +245,4 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { clearErrors, getProcess, updateProcess, getCourses }
-)(withRouter(ProcessEdit))
+export default connect(mapStateToProps, { clearErrors, getProcess, updateProcess, getCourses })(withRouter(ProcessEdit))

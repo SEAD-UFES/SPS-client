@@ -179,7 +179,7 @@ class UserCreate extends Component {
               error={errors.password2}
             />
 
-            <input type="submit" className="btn btn-info btn-block mt-4" />
+            <input type="submit" className="btn btn-primary btn-block mt-4" />
           </form>
         </div>
       </div>
@@ -221,7 +221,4 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { createUser }
-)(withRouter(UserCreate))
+export default connect(mapStateToProps, { createUser })(withRouter(UserCreate))

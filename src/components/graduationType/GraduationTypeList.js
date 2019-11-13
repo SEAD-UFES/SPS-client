@@ -1,30 +1,35 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { createGraduationType, getGraduationTypes, updateGraduationType, deleteGraduationType } from "./graduationTypeActions";
-import { clearErrors } from "actions/errorActions";
-import { compareBy } from "utils/compareBy";
-import GraduationTypeModalForm from "./GraduationTypeModalForm";
-import GraduationTypeModalDelete from "./GraduationTypeModalDelete";
+import {
+  createGraduationType,
+  getGraduationTypes,
+  updateGraduationType,
+  deleteGraduationType
+} from './graduationTypeActions'
+import { clearErrors } from 'actions/errorActions'
+import { compareBy } from 'utils/compareBy'
+import GraduationTypeModalForm from './GraduationTypeModalForm'
+import GraduationTypeModalDelete from './GraduationTypeModalDelete'
 
 class GraduationTypeList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sortMethod: "",
+      sortMethod: '',
       sortReverse: false,
       graduationTypeList: [],
       errors: []
-    };
+    }
 
-    this.sortBy = this.sortBy.bind(this);
-    this.orderIcon = this.orderIcon.bind(this);
+    this.sortBy = this.sortBy.bind(this)
+    this.orderIcon = this.orderIcon.bind(this)
   }
 
   componentDidMount() {
-    this.props.clearErrors();
-    this.props.getGraduationTypes();
+    this.props.clearErrors()
+    this.props.getGraduationTypes()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -32,62 +37,62 @@ class GraduationTypeList extends Component {
     if (nextProps.graduationTypeStore.graduationTypes) {
       this.setState(
         {
-          sortMethod: "",
+          sortMethod: '',
           sortReverse: false,
           graduationTypeList: nextProps.graduationTypeStore.graduationTypes
         },
-        () => this.sortBy("name", { reverse: false })
-      );
+        () => this.sortBy('name', { reverse: false })
+      )
     }
   }
 
-  sortBy(key = "name", options) {
-    let sortMethod = this.state.sortMethod;
-    let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.graduationTypeList];
+  sortBy(key = 'name', options) {
+    let sortMethod = this.state.sortMethod
+    let sortReverse = this.state.sortReverse
+    let arrayCopy = [...this.state.graduationTypeList]
 
     //Determinar se é ordem é forçada.
     if (options && options.reverse) {
-      sortReverse = options.reverse;
+      sortReverse = options.reverse
     } else {
       //Se o método está sendo aplicado novamente na mesma key
       if (sortMethod === key) {
-        sortReverse = sortReverse ? false : true;
+        sortReverse = sortReverse ? false : true
       }
     }
 
-    arrayCopy.sort(compareBy(key));
+    arrayCopy.sort(compareBy(key))
 
     if (sortReverse) {
-      arrayCopy.reverse();
+      arrayCopy.reverse()
     }
 
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
       graduationTypeList: arrayCopy
-    });
+    })
   }
 
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />;
+        return <i className="fas fa-arrow-up" />
       } else {
-        return <i className="fas fa-arrow-down" />;
+        return <i className="fas fa-arrow-down" />
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const { graduationTypeList } = this.state;
+    const { graduationTypeList } = this.state
 
     //Add item - form
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
             + Adicionar nível de formação
           </button>
         </div>
@@ -99,7 +104,7 @@ class GraduationTypeList extends Component {
           reloadFunction={this.props.getGraduationTypes}
         />
       </div>
-    );
+    )
 
     //item list
     const graduationTypesTable = (
@@ -109,7 +114,7 @@ class GraduationTypeList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
                 {/* <th>Descrição</th> */}
                 <th>Opções</th>
               </tr>
@@ -124,10 +129,9 @@ class GraduationTypeList extends Component {
                       <td>
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-info"
+                          className="btn btn-link buttonAsLink text-primary"
                           data-toggle="modal"
-                          data-target={`#editModal-${graduationType.id}`}
-                        >
+                          data-target={`#editModal-${graduationType.id}`}>
                           <i className="fas fa-cog" />
                         </button>
                         <GraduationTypeModalForm
@@ -136,13 +140,12 @@ class GraduationTypeList extends Component {
                           item={graduationType}
                           editFunction={this.props.updateGraduationType}
                           reloadFunction={this.props.getGraduationTypes}
-                        />{" "}
+                        />{' '}
                         <button
                           type="button"
                           className="btn btn-link buttonAsLink text-danger"
                           data-toggle="modal"
-                          data-target={`#deleteModal-${graduationType.id}`}
-                        >
+                          data-target={`#deleteModal-${graduationType.id}`}>
                           <i className="fas fa-times-circle" />
                         </button>
                         <GraduationTypeModalDelete
@@ -153,7 +156,7 @@ class GraduationTypeList extends Component {
                         />
                       </td>
                     </tr>
-                  );
+                  )
                 })
               ) : (
                 <tr>
@@ -168,7 +171,7 @@ class GraduationTypeList extends Component {
           </tr>
         )}
       </div>
-    );
+    )
 
     return (
       <div className="graduationTypes">
@@ -183,7 +186,7 @@ class GraduationTypeList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -193,19 +196,16 @@ GraduationTypeList.proptypes = {
   updateGraduationType: PropTypes.func.isRequired,
   deleteGraduationType: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   graduationTypeStore: state.graduationTypeStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  {
-    getGraduationTypes,
-    createGraduationType,
-    updateGraduationType,
-    deleteGraduationType,
-    clearErrors
-  }
-)(GraduationTypeList);
+export default connect(mapStateToProps, {
+  getGraduationTypes,
+  createGraduationType,
+  updateGraduationType,
+  deleteGraduationType,
+  clearErrors
+})(GraduationTypeList)

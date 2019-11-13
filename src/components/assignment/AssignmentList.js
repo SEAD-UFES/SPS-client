@@ -1,30 +1,30 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { clearErrors } from "../../actions/errorActions";
-import { getAssignments, createAssignment, updateAssignment, deleteAssignment } from "./assignmentActions";
-import { compareBy } from "utils/compareBy";
-import AssignmentModalForm from "./AssignmentModalForm";
-import AssignmentModalDelete from "./AssignmentModalDelete";
+import { clearErrors } from '../../actions/errorActions'
+import { getAssignments, createAssignment, updateAssignment, deleteAssignment } from './assignmentActions'
+import { compareBy } from 'utils/compareBy'
+import AssignmentModalForm from './AssignmentModalForm'
+import AssignmentModalDelete from './AssignmentModalDelete'
 
 class AssignmentList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sortMethod: "",
+      sortMethod: '',
       sortReverse: false,
       assignmentList: [],
       errors: []
-    };
+    }
 
-    this.sortBy = this.sortBy.bind(this);
-    this.orderIcon = this.orderIcon.bind(this);
+    this.sortBy = this.sortBy.bind(this)
+    this.orderIcon = this.orderIcon.bind(this)
   }
 
   componentDidMount() {
-    this.props.clearErrors();
-    this.props.getAssignments();
+    this.props.clearErrors()
+    this.props.getAssignments()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -32,92 +32,97 @@ class AssignmentList extends Component {
     if (nextProps.assignmentStore.assignments) {
       this.setState(
         {
-          sortMethod: "",
+          sortMethod: '',
           sortReverse: false,
           assignmentList: nextProps.assignmentStore.assignments
         },
-        () => this.sortBy("name", { reverse: false })
-      );
+        () => this.sortBy('name', { reverse: false })
+      )
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "new_item":
-        break;
+      case 'new_item':
+        break
       default:
-        break;
+        break
     }
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
-  sortBy(key = "name", options) {
-    let sortMethod = this.state.sortMethod;
-    let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.assignmentList];
+  sortBy(key = 'name', options) {
+    let sortMethod = this.state.sortMethod
+    let sortReverse = this.state.sortReverse
+    let arrayCopy = [...this.state.assignmentList]
 
     //Determinar se é ordem é forçada.
     if (options && options.reverse) {
-      sortReverse = options.reverse;
+      sortReverse = options.reverse
     } else {
       //Se o método está sendo aplicado novamente na mesma key
       if (sortMethod === key) {
-        sortReverse = sortReverse ? false : true;
+        sortReverse = sortReverse ? false : true
       }
     }
 
-    arrayCopy.sort(compareBy(key));
+    arrayCopy.sort(compareBy(key))
 
     if (sortReverse) {
-      arrayCopy.reverse();
+      arrayCopy.reverse()
     }
 
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
       assignmentList: arrayCopy
-    });
+    })
   }
 
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />;
+        return <i className="fas fa-arrow-up" />
       } else {
-        return <i className="fas fa-arrow-down" />;
+        return <i className="fas fa-arrow-down" />
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const { assignmentList } = this.state;
+    const { assignmentList } = this.state
 
     //Add item - form
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
             + Adicionar atribuição
           </button>
         </div>
 
-        <AssignmentModalForm mode="add" targetName="addModal" addFunction={this.props.createAssignment} reloadFunction={this.props.getAssignments} />
+        <AssignmentModalForm
+          mode="add"
+          targetName="addModal"
+          addFunction={this.props.createAssignment}
+          reloadFunction={this.props.getAssignments}
+        />
       </div>
-    );
+    )
 
     //item list
     const assignmentsTable = (
@@ -127,8 +132,8 @@ class AssignmentList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
-                <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
+                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
+                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -138,9 +143,19 @@ class AssignmentList extends Component {
                   return (
                     <tr key={assignment.id}>
                       <td>{assignment.name}</td>
-                      <td>{assignment.description ? assignment.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
-                        <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${assignment.id}`}>
+                        {assignment.description ? (
+                          assignment.description
+                        ) : (
+                          <span className="text-muted">Sem descrição.</span>
+                        )}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-primary"
+                          data-toggle="modal"
+                          data-target={`#editModal-${assignment.id}`}>
                           <i className="fas fa-cog" />
                         </button>
                         <AssignmentModalForm
@@ -149,13 +164,12 @@ class AssignmentList extends Component {
                           item={assignment}
                           editFunction={this.props.updateAssignment}
                           reloadFunction={this.props.getAssignments}
-                        />{" "}
+                        />{' '}
                         <button
                           type="button"
                           className="btn btn-link buttonAsLink text-danger"
                           data-toggle="modal"
-                          data-target={`#deleteModal-${assignment.id}`}
-                        >
+                          data-target={`#deleteModal-${assignment.id}`}>
                           <i className="fas fa-times-circle" />
                         </button>
                         <AssignmentModalDelete
@@ -166,7 +180,7 @@ class AssignmentList extends Component {
                         />
                       </td>
                     </tr>
-                  );
+                  )
                 })
               ) : (
                 <tr>
@@ -181,7 +195,7 @@ class AssignmentList extends Component {
           </tr>
         )}
       </div>
-    );
+    )
 
     return (
       <div className="assignments">
@@ -196,7 +210,7 @@ class AssignmentList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -206,19 +220,16 @@ AssignmentList.proptypes = {
   createAssignment: PropTypes.func.isRequired,
   updateAssignment: PropTypes.func.isRequired,
   deleteAssignment: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   assignmentStore: state.assignmentStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  {
-    clearErrors,
-    getAssignments,
-    createAssignment,
-    updateAssignment,
-    deleteAssignment
-  }
-)(AssignmentList);
+export default connect(mapStateToProps, {
+  clearErrors,
+  getAssignments,
+  createAssignment,
+  updateAssignment,
+  deleteAssignment
+})(AssignmentList)

@@ -170,7 +170,7 @@ class ProcessCreate extends Component {
               onChange={this.onCheck}
             />
 
-            <input type="submit" className="btn mt-4 btn-info btn-block" />
+            <input type="submit" className="btn mt-4 btn-primary btn-block" />
           </form>
         </div>
       </div>
@@ -226,7 +226,4 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { createProcess, getCourses, clearErrors }
-)(withRouter(ProcessCreate))
+export default connect(mapStateToProps, { createProcess, getCourses, clearErrors })(withRouter(ProcessCreate))

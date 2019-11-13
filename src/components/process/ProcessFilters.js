@@ -15,7 +15,7 @@ class ProcessFilters extends Component {
         })
         .map((item, key) => {
           return (
-            <span key={key} className="badge badge-info mr-1">
+            <span key={key} className="badge badge-primary mr-1">
               {item.label}{' '}
               <i
                 onClick={() => {
@@ -78,7 +78,7 @@ class ProcessFilters extends Component {
               type="button"
               onClick={this.props.onClearFilters}
               value="Limpar filtros"
-              className="btn btn-outline-info mb-1 mt-1"
+              className="btn btn-outline-primary mb-1 mt-1"
             />
           </div>
         </div>

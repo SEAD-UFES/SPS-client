@@ -168,7 +168,7 @@ class rolePermissionCreate extends Component {
             error={errors.permissionType_id}
           />
 
-          <input type="submit" className="btn btn-info btn-block mt-4" />
+          <input type="submit" className="btn btn-primary btn-block mt-4" />
         </div>
       </form>
     )
@@ -203,11 +203,8 @@ const mapStateToProps = state => ({
   permissionStore: state.permissionStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    getRoleTypes,
-    getPermissions,
-    createRolePermission
-  }
-)(rolePermissionCreate)
+export default connect(mapStateToProps, {
+  getRoleTypes,
+  getPermissions,
+  createRolePermission
+})(rolePermissionCreate)

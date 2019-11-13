@@ -30,7 +30,7 @@ export default class VacancyCard extends Component {
                 <td className="text-right">
                   <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
                     <Link
-                      className="text-info"
+                      className="text-primary"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
                       <i className="fas fa-cog" />
                     </Link>

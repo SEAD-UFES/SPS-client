@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter, Link } from 'react-router-dom'
 
-import TextFieldGroup from "../common/TextFieldGroup";
-import SelectListGroup from "../common/SelectListGroup";
-import { validateNumberRequired } from "../../validation";
+import TextFieldGroup from '../common/TextFieldGroup'
+import SelectListGroup from '../common/SelectListGroup'
+import { validateNumberRequired } from '../../validation'
 import {
   validateStepType_id,
   validateResultDate,
@@ -13,99 +13,119 @@ import {
   validateLimitAppealDate,
   validateResultAfterAppealDate,
   validateStepForm
-} from "./validateStepForm";
+} from './validateStepForm'
 
-import { createStep } from "./stepActions";
-import { getStepTypes } from "components/stepType/stepTypeActions";
-import { clearErrors } from "../../actions/errorActions";
+import { createStep } from './stepActions'
+import { getStepTypes } from 'components/stepType/stepTypeActions'
+import { clearErrors } from '../../actions/errorActions'
 
 class StepCreate extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       //Step data
-      number: "",
-      stepType_id: "",
-      resultDate: "",
-      openAppealDate: "",
-      limitAppealDate: "",
-      resultAfterAppealDate: "",
+      number: '',
+      stepType_id: '',
+      resultDate: '',
+      openAppealDate: '',
+      limitAppealDate: '',
+      resultAfterAppealDate: '',
 
       //errors
       errors: {}
-    };
+    }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.clearErrors();
-    this.props.getStepTypes();
+    this.props.clearErrors()
+    this.props.getStepTypes()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     //If receive errors from server
     if (nextProps.errors) {
-      let errors = nextProps.errors;
+      let errors = nextProps.errors
 
-      let newStateErrors = {};
+      let newStateErrors = {}
 
       switch (errors.code) {
-        case "calls-05":
-          newStateErrors.endingDate = errors.userMessage;
-          break;
+        case 'calls-05':
+          newStateErrors.endingDate = errors.userMessage
+          break
         default:
-          break;
+          break
       }
 
-      this.setState({ errors: newStateErrors });
+      this.setState({ errors: newStateErrors })
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
 
     switch (e.target.name) {
-      case "number":
-        valResult = validateNumberRequired(e.target.value);
-        break;
-      case "stepType_id":
-        valResult = validateStepType_id(e.target.value);
-        break;
-      case "resultDate":
-        valResult = validateResultDate(e.target.value, this.state.openAppealDate, this.state.limitAppealDate, this.state.resultAfterAppealDate);
-        break;
-      case "openAppealDate":
-        valResult = validateOpenAppealDate(this.state.resultDate, e.target.value, this.state.limitAppealDate, this.state.resultAfterAppealDate);
-        break;
-      case "limitAppealDate":
-        valResult = validateLimitAppealDate(this.state.resultDate, this.state.openAppealDate, e.target.value, this.state.resultAfterAppealDate);
-        break;
-      case "resultAfterAppealDate":
-        valResult = validateResultAfterAppealDate(this.state.resultDate, this.state.openAppealDate, this.state.limitAppealDate, e.target.value);
-        break;
+      case 'number':
+        valResult = validateNumberRequired(e.target.value)
+        break
+      case 'stepType_id':
+        valResult = validateStepType_id(e.target.value)
+        break
+      case 'resultDate':
+        valResult = validateResultDate(
+          e.target.value,
+          this.state.openAppealDate,
+          this.state.limitAppealDate,
+          this.state.resultAfterAppealDate
+        )
+        break
+      case 'openAppealDate':
+        valResult = validateOpenAppealDate(
+          this.state.resultDate,
+          e.target.value,
+          this.state.limitAppealDate,
+          this.state.resultAfterAppealDate
+        )
+        break
+      case 'limitAppealDate':
+        valResult = validateLimitAppealDate(
+          this.state.resultDate,
+          this.state.openAppealDate,
+          e.target.value,
+          this.state.resultAfterAppealDate
+        )
+        break
+      case 'resultAfterAppealDate':
+        valResult = validateResultAfterAppealDate(
+          this.state.resultDate,
+          this.state.openAppealDate,
+          this.state.limitAppealDate,
+          e.target.value
+        )
+        break
       default:
-        break;
+        break
     }
 
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     const StepData = {
       number: this.state.number,
@@ -115,29 +135,29 @@ class StepCreate extends Component {
       openAppealDate: this.state.openAppealDate,
       limitAppealDate: this.state.limitAppealDate,
       resultAfterAppealDate: this.state.resultAfterAppealDate
-    };
+    }
 
-    const valStep = validateStepForm(StepData);
+    const valStep = validateStepForm(StepData)
     if (!valStep.isValid) {
-      this.setState({ errors: valStep.errors });
+      this.setState({ errors: valStep.errors })
     } else {
-      this.props.createStep(StepData, this.props.match.params.process_id, this.props.history);
+      this.props.createStep(StepData, this.props.match.params.process_id, this.props.history)
     }
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.state
 
-    const steptypeOptions = [{ label: "Escolha o tipo de etapa", value: "" }].concat(
+    const steptypeOptions = [{ label: 'Escolha o tipo de etapa', value: '' }].concat(
       this.props.options
         ? this.props.options.map(steptype => {
             return {
               label: steptype.name,
               value: steptype.id
-            };
+            }
           })
         : []
-    );
+    )
 
     return (
       <div className="register">
@@ -208,13 +228,13 @@ class StepCreate extends Component {
                   error={errors.resultAfterAppealDate}
                 />
 
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-primary btn-block mt-4" />
               </form>
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -224,16 +244,13 @@ StepCreate.proptypes = {
   getStepTypes: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
-};
+}
 
 //Put redux store data on props
 const mapStateToProps = state => ({
   errors: state.errorStore,
   options: state.stepTypeStore.stepTypes
-});
+})
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { createStep, getStepTypes, clearErrors }
-)(withRouter(StepCreate));
+export default connect(mapStateToProps, { createStep, getStepTypes, clearErrors })(withRouter(StepCreate))

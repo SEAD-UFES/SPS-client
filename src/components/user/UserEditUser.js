@@ -230,7 +230,7 @@ class UserEditUser extends Component {
               disabled={!this.state.changePassword}
             />
 
-            <input value="Enviar" type="submit" className="btn btn-info btn-block mt-4" />
+            <input value="Enviar" type="submit" className="btn btn-primary btn-block mt-4" />
           </form>
         </div>
       </div>
@@ -271,7 +271,4 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(
-  mapStateToProps,
-  { getUser, updateUser, clearErrors }
-)(withRouter(UserEditUser))
+export default connect(mapStateToProps, { getUser, updateUser, clearErrors })(withRouter(UserEditUser))

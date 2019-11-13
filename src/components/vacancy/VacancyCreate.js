@@ -193,7 +193,7 @@ class VacancyCreate extends Component {
               onChange={this.onCheck}
             />
 
-            <input type="submit" className="btn btn-info btn-block mt-4" />
+            <input type="submit" className="btn btn-primary btn-block mt-4" />
           </form>
         </div>
       </div>
@@ -275,13 +275,10 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  {
-    clearErrors,
-    getAssignments,
-    getRestrictions,
-    getRegions,
-    createVacancy
-  }
-)(withRouter(VacancyCreate))
+export default connect(mapStateToProps, {
+  clearErrors,
+  getAssignments,
+  getRestrictions,
+  getRegions,
+  createVacancy
+})(withRouter(VacancyCreate))

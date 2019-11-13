@@ -154,7 +154,7 @@ class CallEdit extends Component {
               error={errors.endingDate}
             />
 
-            <input type="submit" className="btn btn-info btn-block mt-4" />
+            <input type="submit" className="btn btn-primary btn-block mt-4" />
           </form>
         </div>
       </div>
@@ -200,7 +200,4 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { createCall, getCall, updateCall, clearErrors }
-)(withRouter(CallEdit))
+export default connect(mapStateToProps, { createCall, getCall, updateCall, clearErrors })(withRouter(CallEdit))

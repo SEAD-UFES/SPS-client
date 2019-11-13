@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { isEmpty } from "validation";
-import { getUserRoles } from "./userRoleActions";
-import Spinner from "components/common/Spinner";
+import { isEmpty } from 'validation'
+import { getUserRoles } from './userRoleActions'
+import Spinner from 'components/common/Spinner'
 
 class UserRoleList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sortMethod: "",
+      sortMethod: '',
       sortReverse: false,
       userRoleList: [],
       errors: []
-    };
+    }
 
-    this.sortBy = this.sortBy.bind(this);
-    this.orderIcon = this.orderIcon.bind(this);
+    this.sortBy = this.sortBy.bind(this)
+    this.orderIcon = this.orderIcon.bind(this)
   }
 
   componentDidMount() {
-    this.props.getUserRoles();
+    this.props.getUserRoles()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -30,91 +30,91 @@ class UserRoleList extends Component {
     if (nextProps.userRoleStore.userRoles) {
       this.setState(
         {
-          sortMethod: "",
+          sortMethod: '',
           sortReverse: false,
           userRoleList: nextProps.userRoleStore.userRoles
         },
         () => {
-          this.sortBy("user", { reverse: false });
+          this.sortBy('user', { reverse: false })
         }
-      );
+      )
     }
   }
 
-  sortBy(key = "user", options) {
-    let sortMethod = this.state.sortMethod;
-    let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.userRoleList];
+  sortBy(key = 'user', options) {
+    let sortMethod = this.state.sortMethod
+    let sortReverse = this.state.sortReverse
+    let arrayCopy = [...this.state.userRoleList]
 
     //Determinar se é ordem é forçada.
     if (options && !isEmpty(options.reverse)) {
-      sortReverse = options.reverse;
+      sortReverse = options.reverse
     } else {
       //Se o método está sendo aplicado novamente na mesma key
       if (sortMethod === key) {
-        sortReverse = sortReverse ? false : true;
+        sortReverse = sortReverse ? false : true
       }
     }
 
     const compareByUser = (a, b) => {
-      if (a.User.login.toLowerCase() < b.User.login.toLowerCase()) return -1;
-      if (a.User.login.toLowerCase() > b.User.login.toLowerCase()) return 1;
-      return 0;
-    };
+      if (a.User.login.toLowerCase() < b.User.login.toLowerCase()) return -1
+      if (a.User.login.toLowerCase() > b.User.login.toLowerCase()) return 1
+      return 0
+    }
 
     const compareByRoleType = (a, b) => {
-      if (a.RoleType.name.toLowerCase() < b.RoleType.name.toLowerCase()) return -1;
-      if (a.RoleType.name.toLowerCase() > b.RoleType.name.toLowerCase()) return 1;
-      return 0;
-    };
+      if (a.RoleType.name.toLowerCase() < b.RoleType.name.toLowerCase()) return -1
+      if (a.RoleType.name.toLowerCase() > b.RoleType.name.toLowerCase()) return 1
+      return 0
+    }
 
     const compareByCourse = (a, b) => {
-      const A = a.RoleType.global ? "Papel global" : !isEmpty(a.Course) ? a.Course.name : "";
-      const B = b.RoleType.global ? "Papel global" : !isEmpty(b.Course) ? b.Course.name : "";
+      const A = a.RoleType.global ? 'Papel global' : !isEmpty(a.Course) ? a.Course.name : ''
+      const B = b.RoleType.global ? 'Papel global' : !isEmpty(b.Course) ? b.Course.name : ''
 
-      if (A.toLowerCase() < B.toLowerCase()) return -1;
-      if (A.toLowerCase() > B.toLowerCase()) return 1;
-      return 0;
-    };
+      if (A.toLowerCase() < B.toLowerCase()) return -1
+      if (A.toLowerCase() > B.toLowerCase()) return 1
+      return 0
+    }
 
     switch (key) {
-      case "user":
-        arrayCopy.sort(compareByUser);
-        break;
-      case "role":
-        arrayCopy.sort(compareByRoleType);
-        break;
-      case "course":
-        arrayCopy.sort(compareByCourse);
-        break;
+      case 'user':
+        arrayCopy.sort(compareByUser)
+        break
+      case 'role':
+        arrayCopy.sort(compareByRoleType)
+        break
+      case 'course':
+        arrayCopy.sort(compareByCourse)
+        break
       default:
     }
 
     if (sortReverse) {
-      arrayCopy.reverse();
+      arrayCopy.reverse()
     }
 
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
       userRoleList: arrayCopy
-    });
+    })
   }
 
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />;
+        return <i className="fas fa-arrow-up" />
       } else {
-        return <i className="fas fa-arrow-down" />;
+        return <i className="fas fa-arrow-down" />
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const { userRoleStore } = this.props;
-    const { userRoleList } = this.state;
+    const { userRoleStore } = this.props
+    const { userRoleList } = this.state
 
     const userRolesTable =
       userRoleStore.userRoles === null || userRoleStore.loading ? (
@@ -125,9 +125,9 @@ class UserRoleList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("user")}>Usuário {this.orderIcon("user")}</th>
-                <th onClick={() => this.sortBy("role")}>Atribuição {this.orderIcon("role")}</th>
-                <th onClick={() => this.sortBy("course")}>Curso {this.orderIcon("course")}</th>
+                <th onClick={() => this.sortBy('user')}>Usuário {this.orderIcon('user')}</th>
+                <th onClick={() => this.sortBy('role')}>Atribuição {this.orderIcon('role')}</th>
+                <th onClick={() => this.sortBy('course')}>Curso {this.orderIcon('course')}</th>
                 <th>
                   <Link className="text-success" to={`${this.props.match.url}/create`}>
                     <i className="fas fa-plus-circle" />
@@ -145,14 +145,22 @@ class UserRoleList extends Component {
                     <td>
                       <Link to={`/parameters/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
                     </td>
-                    <td>{userRole.RoleType.global ? "Papel global" : userRole.Course ? userRole.Course.name : <span className="text-muted">n/a</span>}</td>
+                    <td>
+                      {userRole.RoleType.global ? (
+                        'Papel global'
+                      ) : userRole.Course ? (
+                        userRole.Course.name
+                      ) : (
+                        <span className="text-muted">n/a</span>
+                      )}
+                    </td>
                     <td>
                       <Link className="text-danger" to={`${this.props.match.url}/${userRole.id}/delete`}>
                         <i className="fas fa-times-circle" />
                       </Link>
                     </td>
                   </tr>
-                );
+                )
               })}
             </tbody>
           </table>
@@ -160,23 +168,23 @@ class UserRoleList extends Component {
       ) : (
         <div>
           <p>
-            Sem atribuições de papel cadastrados.{" "}
+            Sem atribuições de papel cadastrados.{' '}
             <Link className="text-success" to={`${this.props.match.url}/create`}>
               <i className="fas fa-plus-circle" />
               Adicionar
             </Link>
           </p>
         </div>
-      );
+      )
 
     const addButton = (
       <div className="btn-group mb-4" role="group">
         <Link to={`${this.props.match.url}/create`} className="btn btn-light">
-          <i className="fas fa-user-circle text-info mr-1" />
+          <i className="fas fa-user-circle text-primary mr-1" />
           Adicionar atribuição de papel
         </Link>
       </div>
-    );
+    )
 
     return (
       <div className="userRole-list">
@@ -191,21 +199,18 @@ class UserRoleList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 UserRoleList.proptypes = {
   getUserRoles: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   userRoleStore: state.userRoleStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  {
-    getUserRoles
-  }
-)(UserRoleList);
+export default connect(mapStateToProps, {
+  getUserRoles
+})(UserRoleList)

@@ -1,30 +1,30 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { createStepType, getStepTypes, updateStepType, deleteStepType } from "./stepTypeActions";
-import { clearErrors } from "actions/errorActions";
-import { compareBy } from "utils/compareBy";
-import StepTypeModalForm from "./StepTypeModalForm";
-import StepTypeModalDelete from "./StepTypeModalDelete";
+import { createStepType, getStepTypes, updateStepType, deleteStepType } from './stepTypeActions'
+import { clearErrors } from 'actions/errorActions'
+import { compareBy } from 'utils/compareBy'
+import StepTypeModalForm from './StepTypeModalForm'
+import StepTypeModalDelete from './StepTypeModalDelete'
 
 class StepTypesList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sortMethod: "",
+      sortMethod: '',
       sortReverse: false,
       stepTypeList: [],
       errors: []
-    };
+    }
 
-    this.sortBy = this.sortBy.bind(this);
-    this.orderIcon = this.orderIcon.bind(this);
+    this.sortBy = this.sortBy.bind(this)
+    this.orderIcon = this.orderIcon.bind(this)
   }
 
   componentDidMount() {
-    this.props.clearErrors();
-    this.props.getStepTypes();
+    this.props.clearErrors()
+    this.props.getStepTypes()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -32,92 +32,97 @@ class StepTypesList extends Component {
     if (nextProps.stepTypeStore.stepTypes) {
       this.setState(
         {
-          sortMethod: "",
+          sortMethod: '',
           sortReverse: false,
           stepTypeList: nextProps.stepTypeStore.stepTypes
         },
-        () => this.sortBy("name", { reverse: false })
-      );
+        () => this.sortBy('name', { reverse: false })
+      )
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "new_item":
-        break;
+      case 'new_item':
+        break
       default:
-        break;
+        break
     }
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
-  sortBy(key = "name", options) {
-    let sortMethod = this.state.sortMethod;
-    let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.stepTypeList];
+  sortBy(key = 'name', options) {
+    let sortMethod = this.state.sortMethod
+    let sortReverse = this.state.sortReverse
+    let arrayCopy = [...this.state.stepTypeList]
 
     //Determinar se é ordem é forçada.
     if (options && options.reverse) {
-      sortReverse = options.reverse;
+      sortReverse = options.reverse
     } else {
       //Se o método está sendo aplicado novamente na mesma key
       if (sortMethod === key) {
-        sortReverse = sortReverse ? false : true;
+        sortReverse = sortReverse ? false : true
       }
     }
 
-    arrayCopy.sort(compareBy(key));
+    arrayCopy.sort(compareBy(key))
 
     if (sortReverse) {
-      arrayCopy.reverse();
+      arrayCopy.reverse()
     }
 
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
       stepTypeList: arrayCopy
-    });
+    })
   }
 
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />;
+        return <i className="fas fa-arrow-up" />
       } else {
-        return <i className="fas fa-arrow-down" />;
+        return <i className="fas fa-arrow-down" />
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const { stepTypeList } = this.state;
+    const { stepTypeList } = this.state
 
     //Add item - form
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
             + Adicionar tipo de etapa
           </button>
         </div>
 
-        <StepTypeModalForm mode="add" targetName="addModal" addFunction={this.props.createStepType} reloadFunction={this.props.getStepTypes} />
+        <StepTypeModalForm
+          mode="add"
+          targetName="addModal"
+          addFunction={this.props.createStepType}
+          reloadFunction={this.props.getStepTypes}
+        />
       </div>
-    );
+    )
 
     //item list
     const stepTypesTable = (
@@ -127,7 +132,7 @@ class StepTypesList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
                 <th>Descrição</th>
                 <th>Opções</th>
               </tr>
@@ -138,9 +143,13 @@ class StepTypesList extends Component {
                   return (
                     <tr key={stepType.id}>
                       <td>{stepType.name}</td>
-                      <td>{stepType.description ? stepType.description : ""}</td>
+                      <td>{stepType.description ? stepType.description : ''}</td>
                       <td>
-                        <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${stepType.id}`}>
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-primary"
+                          data-toggle="modal"
+                          data-target={`#editModal-${stepType.id}`}>
                           <i className="fas fa-cog" />
                         </button>
                         <StepTypeModalForm
@@ -149,8 +158,12 @@ class StepTypesList extends Component {
                           item={stepType}
                           editFunction={this.props.updateStepType}
                           reloadFunction={this.props.getStepTypes}
-                        />{" "}
-                        <button type="button" className="btn btn-link buttonAsLink text-danger" data-toggle="modal" data-target={`#deleteModal-${stepType.id}`}>
+                        />{' '}
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-danger"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${stepType.id}`}>
                           <i className="fas fa-times-circle" />
                         </button>
                         <StepTypeModalDelete
@@ -161,7 +174,7 @@ class StepTypesList extends Component {
                         />
                       </td>
                     </tr>
-                  );
+                  )
                 })
               ) : (
                 <tr>
@@ -176,7 +189,7 @@ class StepTypesList extends Component {
           </tr>
         )}
       </div>
-    );
+    )
 
     return (
       <div className="stepTypes">
@@ -191,7 +204,7 @@ class StepTypesList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -201,19 +214,16 @@ StepTypesList.proptypes = {
   updateStepType: PropTypes.func.isRequired,
   deleteStepType: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   stepTypeStore: state.stepTypeStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  {
-    getStepTypes,
-    createStepType,
-    updateStepType,
-    deleteStepType,
-    clearErrors
-  }
-)(StepTypesList);
+export default connect(mapStateToProps, {
+  getStepTypes,
+  createStepType,
+  updateStepType,
+  deleteStepType,
+  clearErrors
+})(StepTypesList)

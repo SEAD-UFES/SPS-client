@@ -19,7 +19,7 @@ class FilterFieldGroup extends React.Component {
     return (
       <div className="form-group dropdown cq-dropdown" data-name="statuses">
         <button
-          className="btn btn-info btn-sm dropdown-toggle form-control form-control-lg text-truncate"
+          className="btn btn-primary btn-sm dropdown-toggle form-control form-control-lg text-truncate"
           type="button"
           id="btndropdown"
           data-toggle="dropdown"
@@ -35,7 +35,7 @@ class FilterFieldGroup extends React.Component {
                 })
                 .map((item, key) => {
                   return (
-                    <span className="badge badge-info mr-1" key={key}>
+                    <span className="badge badge-primary mr-1" key={key}>
                       {item.label}
                     </span>
                   )

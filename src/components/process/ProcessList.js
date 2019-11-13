@@ -210,37 +210,39 @@ class ProcessList extends Component {
   renderTable(processes) {
     return (
       <React.Fragment>
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th>Número/Ano</th>
-              <th>Nível</th>
-              <th>Curso</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {processes.selectiveProcesses.map(process => {
-              return (
-                <tr key={process.id} className={process.visible ? '' : 'text-black-50'}>
-                  <td>
-                    <Link to={`${this.props.match.url}/${process.id}`}>
-                      {process.number}/{process.year}
-                    </Link>
-                  </td>
-                  <td>{process.Course.GraduationType ? process.Course.GraduationType.name : '-'}</td>
-                  <td>{process.Course.name}</td>
-                  <td className="text-right">
-                    <Link className="text-info" to={`/processes/${process.id}`}>
-                      <i className="fas fa-search-plus" />
-                    </Link>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        {this.renderPagination(processes)}
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>Número/Ano</th>
+                <th>Nível</th>
+                <th>Curso</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {processes.selectiveProcesses.map(process => {
+                return (
+                  <tr key={process.id} className={process.visible ? '' : 'text-black-50'}>
+                    <td>
+                      <Link to={`${this.props.match.url}/${process.id}`}>
+                        {process.number}/{process.year}
+                      </Link>
+                    </td>
+                    <td>{process.Course.GraduationType ? process.Course.GraduationType.name : '-'}</td>
+                    <td>{process.Course.name}</td>
+                    <td className="text-right">
+                      <Link className="text-primary" to={`/processes/${process.id}`}>
+                        <i className="fas fa-search-plus" />
+                      </Link>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          {this.renderPagination(processes)}
+        </div>
       </React.Fragment>
     )
   }
@@ -297,7 +299,7 @@ class ProcessList extends Component {
           })
           .map((item, key) => {
             return (
-              <span key={key} className="badge badge-info mr-1">
+              <span key={key} className="badge badge-primary mr-1">
                 {item.label}{' '}
                 <i
                   onClick={() => {
@@ -320,7 +322,7 @@ class ProcessList extends Component {
         <div className="card-header">
           <button
             ref="filterButton"
-            className="btn btn-info mr-2"
+            className="btn btn-primary mr-2"
             type="button"
             data-toggle="collapse"
             data-target="#collapse1"
@@ -363,7 +365,7 @@ class ProcessList extends Component {
                   type="submit"
                   onClick={this.applyFilters}
                   value="Aplicar filtros"
-                  className="btn btn-info"
+                  className="btn btn-primary"
                 />
               </div>
             </form>
@@ -377,15 +379,20 @@ class ProcessList extends Component {
                   this.refs.filterSubmit.click()
                 }}
                 value="Aplicar filtros"
-                className="btn btn-info ml-1  mb-1"
+                className="btn btn-primary ml-1  mb-1"
               />
               <input
                 type="button"
                 onClick={this.clearFilters}
                 value="Limpar filtros"
-                className="btn btn-info ml-1 mb-1"
+                className="btn btn-primary ml-1 mb-1"
               />
-              <input type="button" onClick={this.cancelFilters} value="Cancelar" className="btn btn-info ml-1  mb-1" />
+              <input
+                type="button"
+                onClick={this.cancelFilters}
+                value="Cancelar"
+                className="btn btn-primary ml-1  mb-1"
+              />
             </div>
           </div>
         </div>
@@ -431,7 +438,6 @@ const mapStateToProps = state => ({
   filters: state.processStore.filters
 })
 
-export default connect(
-  mapStateToProps,
-  { getUserList, getProcessList, getProcessFilters, setProcessFilters }
-)(ProcessList)
+export default connect(mapStateToProps, { getUserList, getProcessList, getProcessFilters, setProcessFilters })(
+  ProcessList
+)

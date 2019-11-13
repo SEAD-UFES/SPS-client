@@ -1,30 +1,35 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { createPublicationType, getPublicationTypes, deletePublicationType, updatePublicationType } from "./publicationTypeActions";
-import { clearErrors } from "actions/errorActions";
-import { compareBy } from "utils/compareBy";
-import PublicationTypeModalForm from "./PublicationTypeModalForm";
-import PublicationTypeModalDelete from "./PublicationTypeModalDelete";
+import {
+  createPublicationType,
+  getPublicationTypes,
+  deletePublicationType,
+  updatePublicationType
+} from './publicationTypeActions'
+import { clearErrors } from 'actions/errorActions'
+import { compareBy } from 'utils/compareBy'
+import PublicationTypeModalForm from './PublicationTypeModalForm'
+import PublicationTypeModalDelete from './PublicationTypeModalDelete'
 
 class ProcessPublicationTypesList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sortMethod: "",
+      sortMethod: '',
       sortReverse: false,
       publicationTypeList: [],
       errors: []
-    };
+    }
 
-    this.sortBy = this.sortBy.bind(this);
-    this.orderIcon = this.orderIcon.bind(this);
+    this.sortBy = this.sortBy.bind(this)
+    this.orderIcon = this.orderIcon.bind(this)
   }
 
   componentDidMount() {
-    this.props.clearErrors();
-    this.props.getPublicationTypes();
+    this.props.clearErrors()
+    this.props.getPublicationTypes()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -32,85 +37,85 @@ class ProcessPublicationTypesList extends Component {
     if (nextProps.publicationTypeStore.publicationTypes) {
       this.setState(
         {
-          sortMethod: "",
+          sortMethod: '',
           sortReverse: false,
           publicationTypeList: nextProps.publicationTypeStore.publicationTypes
         },
-        () => this.sortBy("name", { reverse: false })
-      );
+        () => this.sortBy('name', { reverse: false })
+      )
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "new_item":
-        break;
+      case 'new_item':
+        break
       default:
-        break;
+        break
     }
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
-  sortBy(key = "name", options) {
-    let sortMethod = this.state.sortMethod;
-    let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.publicationTypeList];
+  sortBy(key = 'name', options) {
+    let sortMethod = this.state.sortMethod
+    let sortReverse = this.state.sortReverse
+    let arrayCopy = [...this.state.publicationTypeList]
 
     //Determinar se é ordem é forçada.
     if (options && options.reverse) {
-      sortReverse = options.reverse;
+      sortReverse = options.reverse
     } else {
       //Se o método está sendo aplicado novamente na mesma key
       if (sortMethod === key) {
-        sortReverse = sortReverse ? false : true;
+        sortReverse = sortReverse ? false : true
       }
     }
 
-    arrayCopy.sort(compareBy(key));
+    arrayCopy.sort(compareBy(key))
 
     if (sortReverse) {
-      arrayCopy.reverse();
+      arrayCopy.reverse()
     }
 
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
       publicationTypeList: arrayCopy
-    });
+    })
   }
 
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />;
+        return <i className="fas fa-arrow-up" />
       } else {
-        return <i className="fas fa-arrow-down" />;
+        return <i className="fas fa-arrow-down" />
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const { publicationTypeList } = this.state;
+    const { publicationTypeList } = this.state
 
     //Add item - form
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
             + Adicionar tipo de publicação
           </button>
         </div>
@@ -122,7 +127,7 @@ class ProcessPublicationTypesList extends Component {
           reloadFunction={this.props.getPublicationTypes}
         />
       </div>
-    );
+    )
 
     //item list
     const publicationTypesTable = (
@@ -132,7 +137,7 @@ class ProcessPublicationTypesList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
+                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -145,10 +150,9 @@ class ProcessPublicationTypesList extends Component {
                       <td>
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-info"
+                          className="btn btn-link buttonAsLink text-primary"
                           data-toggle="modal"
-                          data-target={`#editModal-${publicationType.id}`}
-                        >
+                          data-target={`#editModal-${publicationType.id}`}>
                           <i className="fas fa-cog" />
                         </button>
                         <PublicationTypeModalForm
@@ -157,13 +161,12 @@ class ProcessPublicationTypesList extends Component {
                           item={publicationType}
                           editFunction={this.props.updatePublicationType}
                           reloadFunction={this.props.getPublicationTypes}
-                        />{" "}
+                        />{' '}
                         <button
                           type="button"
                           className="btn btn-link buttonAsLink text-danger"
                           data-toggle="modal"
-                          data-target={`#deleteModal-${publicationType.id}`}
-                        >
+                          data-target={`#deleteModal-${publicationType.id}`}>
                           <i className="fas fa-times-circle" />
                         </button>
                         <PublicationTypeModalDelete
@@ -174,7 +177,7 @@ class ProcessPublicationTypesList extends Component {
                         />
                       </td>
                     </tr>
-                  );
+                  )
                 })
               ) : (
                 <tr>
@@ -189,7 +192,7 @@ class ProcessPublicationTypesList extends Component {
           </tr>
         )}
       </div>
-    );
+    )
 
     return (
       <div className="publicationTypes">
@@ -204,7 +207,7 @@ class ProcessPublicationTypesList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -213,19 +216,16 @@ ProcessPublicationTypesList.proptypes = {
   clearErrors: PropTypes.func.isRequired,
   createPublicationType: PropTypes.func.isRequired,
   updatePublicationType: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   publicationTypeStore: state.publicationTypeStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  {
-    getPublicationTypes,
-    clearErrors,
-    createPublicationType,
-    deletePublicationType,
-    updatePublicationType
-  }
-)(ProcessPublicationTypesList);
+export default connect(mapStateToProps, {
+  getPublicationTypes,
+  clearErrors,
+  createPublicationType,
+  deletePublicationType,
+  updatePublicationType
+})(ProcessPublicationTypesList)

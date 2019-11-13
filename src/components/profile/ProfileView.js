@@ -27,7 +27,7 @@ class Profile extends Component {
             <div className="col">
               <div className="text-right">
                 <Link
-                  className="text-info"
+                  className="text-primary"
                   to={{
                     pathname: '/profile/edit-user',
                     prevLocation: this.props.location
@@ -70,7 +70,7 @@ class Profile extends Component {
               <div className="col">
                 <div className="text-right">
                   <Link
-                    className="text-info"
+                    className="text-primary"
                     to={{
                       pathname: '/profile/edit-person',
                       prevLocation: this.props.location
@@ -98,7 +98,7 @@ class Profile extends Component {
             <div className="col">
               <div className="text-right">
                 <Link
-                  className="text-info"
+                  className="text-primary"
                   to={{
                     pathname: '/profile/edit-person',
                     prevLocation: this.props.location
@@ -245,9 +245,6 @@ const mapStateToProps = state => ({
   authStore: state.authStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    getCurrentProfile
-  }
-)(Profile)
+export default connect(mapStateToProps, {
+  getCurrentProfile
+})(Profile)

@@ -105,7 +105,7 @@ class UserList extends Component {
                     <td>{user.authorized ? 'Ativo' : 'Desativado'}</td>
 
                     <td>
-                      <Link className="text-info" to={`${this.props.match.url}/${user.id}`}>
+                      <Link className="text-primary" to={`${this.props.match.url}/${user.id}`}>
                         <i className="fas fa-search-plus" />
                       </Link>
                     </td>
@@ -156,7 +156,4 @@ const mapStateToProps = state => ({
   userStore: state.userStore
 })
 
-export default connect(
-  mapStateToProps,
-  { getUserList }
-)(UserList)
+export default connect(mapStateToProps, { getUserList })(UserList)

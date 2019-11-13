@@ -29,7 +29,7 @@ class UserView extends Component {
             <div className="col">
               <div className="text-right">
                 <Link
-                  className="text-info"
+                  className="text-primary"
                   to={{
                     pathname: `/users/${user.id}/edit-user`,
                     prevLocation: this.props.location
@@ -72,7 +72,7 @@ class UserView extends Component {
               <div className="col">
                 <div className="text-right">
                   <Link
-                    className="text-info"
+                    className="text-primary"
                     to={{
                       pathname: `/users/${user.id}/edit-person`,
                       prevLocation: this.props.location
@@ -100,7 +100,7 @@ class UserView extends Component {
             <div className="col">
               <div className="text-right">
                 <Link
-                  className="text-info"
+                  className="text-primary"
                   to={{
                     pathname: `/users/${user.id}/edit-person`,
                     prevLocation: this.props.location
@@ -220,9 +220,6 @@ const mapStateToProps = state => ({
   userStore: state.userStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    getUser
-  }
-)(UserView)
+export default connect(mapStateToProps, {
+  getUser
+})(UserView)

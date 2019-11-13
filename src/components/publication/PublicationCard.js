@@ -44,7 +44,7 @@ export default class PublicationCard extends Component {
         <td>{publication.title}</td>
         <td className="text-right">
           <Link
-            className="text-info"
+            className="text-primary"
             to={{
               pathname: `/processes/${process.id}/publications/${publication.id}`,
               state: { publication: publication }
@@ -61,7 +61,7 @@ export default class PublicationCard extends Component {
           </a>{' '}
           <DrawFilter permission="publication_update" course_id={process.Course.id}>
             <Link
-              className="text-info"
+              className="text-primary"
               to={{
                 pathname: `/processes/${process.id}/publications/${publication.id}/update`,
                 state: { publication: publication }

@@ -1,32 +1,32 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { clearErrors } from "../../actions/errorActions";
-import { getCourses, createCourse, updateCourse, deleteCourse } from "./courseActions";
-import { compareBy } from "utils/compareBy";
-import CourseModalForm from "./CourseModalForm";
-import CourseModalDelete from "./CourseModalDelete";
-import { getGraduationTypes } from "components/graduationType/graduationTypeActions";
+import { clearErrors } from '../../actions/errorActions'
+import { getCourses, createCourse, updateCourse, deleteCourse } from './courseActions'
+import { compareBy } from 'utils/compareBy'
+import CourseModalForm from './CourseModalForm'
+import CourseModalDelete from './CourseModalDelete'
+import { getGraduationTypes } from 'components/graduationType/graduationTypeActions'
 
 class CourseList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      sortMethod: "",
+      sortMethod: '',
       sortReverse: false,
       coursesList: [],
       errors: []
-    };
+    }
 
-    this.sortBy = this.sortBy.bind(this);
-    this.orderIcon = this.orderIcon.bind(this);
+    this.sortBy = this.sortBy.bind(this)
+    this.orderIcon = this.orderIcon.bind(this)
   }
 
   componentDidMount() {
-    this.props.clearErrors();
-    this.props.getCourses();
-    this.props.getGraduationTypes();
+    this.props.clearErrors()
+    this.props.getCourses()
+    this.props.getGraduationTypes()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -34,87 +34,87 @@ class CourseList extends Component {
     if (nextProps.courseStore.courses) {
       this.setState(
         {
-          sortMethod: "",
+          sortMethod: '',
           sortReverse: false,
           coursesList: nextProps.courseStore.courses
         },
-        () => this.sortBy("name", { reverse: false })
-      );
+        () => this.sortBy('name', { reverse: false })
+      )
     }
   }
 
   onChange(e) {
     //validação local dos campos
-    let errors = this.state.errors;
-    let valResult = { error: "", isValid: true };
+    let errors = this.state.errors
+    let valResult = { error: '', isValid: true }
     switch (e.target.name) {
-      case "new_item":
-        break;
+      case 'new_item':
+        break
       default:
-        break;
+        break
     }
     if (!valResult.isValid) {
-      errors = { ...errors, [e.target.name]: valResult.error };
+      errors = { ...errors, [e.target.name]: valResult.error }
     } else {
-      delete errors[e.target.name];
+      delete errors[e.target.name]
     }
 
     //Atualizando os estados do campos e dos erros
     this.setState({
       [e.target.name]: e.target.value,
       errors: errors
-    });
+    })
   }
 
-  sortBy(key = "name", options) {
-    let sortMethod = this.state.sortMethod;
-    let sortReverse = this.state.sortReverse;
-    let arrayCopy = [...this.state.coursesList];
+  sortBy(key = 'name', options) {
+    let sortMethod = this.state.sortMethod
+    let sortReverse = this.state.sortReverse
+    let arrayCopy = [...this.state.coursesList]
 
     //Determinar se é ordem é forçada.
     if (options && options.reverse) {
-      sortReverse = options.reverse;
+      sortReverse = options.reverse
     } else {
       //Se o método está sendo aplicado novamente na mesma key
       if (sortMethod === key) {
-        sortReverse = sortReverse ? false : true;
+        sortReverse = sortReverse ? false : true
       }
     }
 
-    arrayCopy.sort(compareBy(key));
+    arrayCopy.sort(compareBy(key))
 
     if (sortReverse) {
-      arrayCopy.reverse();
+      arrayCopy.reverse()
     }
 
     this.setState({
       sortMethod: key,
       sortReverse: sortReverse,
       coursesList: arrayCopy
-    });
+    })
   }
 
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />;
+        return <i className="fas fa-arrow-up" />
       } else {
-        return <i className="fas fa-arrow-down" />;
+        return <i className="fas fa-arrow-down" />
       }
     }
-    return null;
+    return null
   }
 
   render() {
-    const { coursesList } = this.state;
-    const { graduationTypes } = this.props.graduationTypeStore;
-    console.log(graduationTypes);
+    const { coursesList } = this.state
+    const { graduationTypes } = this.props.graduationTypeStore
+    console.log(graduationTypes)
 
     //Add item - form
     const addItemTool = (
       <div>
         <div className="mb-2">
-          <button type="button" className="btn btn-info" data-toggle="modal" data-target="#addModal">
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
             + Adicionar curso
           </button>
         </div>
@@ -127,7 +127,7 @@ class CourseList extends Component {
           graduationTypes={graduationTypes}
         />
       </div>
-    );
+    )
 
     //item list
     const coursesTable = (
@@ -137,9 +137,9 @@ class CourseList extends Component {
           <table className="table">
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("level")}>Nível {this.orderIcon("level")}</th>
-                <th onClick={() => this.sortBy("name")}>Nome {this.orderIcon("name")}</th>
-                <th onClick={() => this.sortBy("description")}>Descrição {this.orderIcon("description")}</th>
+                <th onClick={() => this.sortBy('level')}>Nível {this.orderIcon('level')}</th>
+                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
+                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -150,9 +150,15 @@ class CourseList extends Component {
                     <tr key={course.id}>
                       <td>{course.GraduationType.name}</td>
                       <td>{course.name}</td>
-                      <td>{course.description ? course.description : <span className="text-muted">Sem descrição.</span>}</td>
                       <td>
-                        <button type="button" className="btn btn-link buttonAsLink text-info" data-toggle="modal" data-target={`#editModal-${course.id}`}>
+                        {course.description ? course.description : <span className="text-muted">Sem descrição.</span>}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-primary"
+                          data-toggle="modal"
+                          data-target={`#editModal-${course.id}`}>
                           <i className="fas fa-cog" />
                         </button>
                         <CourseModalForm
@@ -162,8 +168,12 @@ class CourseList extends Component {
                           editFunction={this.props.updateCourse}
                           reloadFunction={this.props.getCourses}
                           graduationTypes={graduationTypes}
-                        />{" "}
-                        <button type="button" className="btn btn-link buttonAsLink text-danger" data-toggle="modal" data-target={`#deleteModal-${course.id}`}>
+                        />{' '}
+                        <button
+                          type="button"
+                          className="btn btn-link buttonAsLink text-danger"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${course.id}`}>
                           <i className="fas fa-times-circle" />
                         </button>
                         <CourseModalDelete
@@ -174,22 +184,22 @@ class CourseList extends Component {
                         />
                       </td>
                     </tr>
-                  );
+                  )
                 })
               ) : (
-                  <tr>
-                    <td colSpan="3">Sem itens para exibir</td>
-                  </tr>
-                )}
+                <tr>
+                  <td colSpan="3">Sem itens para exibir</td>
+                </tr>
+              )}
             </tbody>
           </table>
         ) : (
-            <tr>
-              <td colSpan="3">Sem itens para exibir</td>
-            </tr>
-          )}
+          <tr>
+            <td colSpan="3">Sem itens para exibir</td>
+          </tr>
+        )}
       </div>
-    );
+    )
 
     return (
       <div className="assignments">
@@ -204,7 +214,7 @@ class CourseList extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -214,21 +224,18 @@ CourseList.proptypes = {
   createCourse: PropTypes.func.isRequired,
   updateCourse: PropTypes.func.isRequired,
   deleteCourse: PropTypes.func.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   graduationTypeStore: state.graduationTypeStore,
   courseStore: state.courseStore
-});
+})
 
-export default connect(
-  mapStateToProps,
-  {
-    clearErrors,
-    getCourses,
-    createCourse,
-    updateCourse,
-    deleteCourse,
-    getGraduationTypes
-  }
-)(CourseList);
+export default connect(mapStateToProps, {
+  clearErrors,
+  getCourses,
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  getGraduationTypes
+})(CourseList)

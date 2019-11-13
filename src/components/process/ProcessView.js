@@ -32,7 +32,7 @@ class ProcessView extends Component {
             <div className="col">
               <div className="text-right">
                 <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
-                  <Link className="text-info" to={`/processes/${process.id}/edit`}>
+                  <Link className="text-primary" to={`/processes/${process.id}/edit`}>
                     <i className="fas fa-cog" /> Editar
                   </Link>
                 </DrawFilter>
@@ -186,10 +186,7 @@ const mapStateToProps = state => ({
   noticeStore: state.noticeStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    getProcess,
-    getNoticeList
-  }
-)(ProcessView)
+export default connect(mapStateToProps, {
+  getProcess,
+  getNoticeList
+})(ProcessView)
