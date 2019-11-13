@@ -45,7 +45,7 @@ class ProcessFilters extends Component {
       <div className="card mb-2 px-1">
         <div className="card-body p-0">
           <div>{this.renderFilterBadges(this.props.filters)}</div>
-          <div>
+          <div className="d-table w-100">
             <FilterFieldGroup
               id="years"
               label="Ano"
@@ -74,12 +74,14 @@ class ProcessFilters extends Component {
               onChange={this.props.onCheckItem}
             />
 
-            <input
-              type="button"
-              onClick={this.props.onClearFilters}
-              value="Limpar filtros"
-              className="btn btn-outline-primary mb-1 mt-1"
-            />
+            <div className="btn-group d-table-cell pr-1">
+              <input
+                type="button"
+                onClick={this.props.onClearFilters}
+                value="Limpar filtros"
+                className="btn btn-outline-primary btn-block"
+              />
+            </div>
           </div>
         </div>
       </div>

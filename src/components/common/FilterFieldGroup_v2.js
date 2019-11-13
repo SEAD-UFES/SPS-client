@@ -17,9 +17,9 @@ class FilterFieldGroup extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="btn-group">
+        <div className="btn-group d-table-cell pr-1">
           <button
-            className="btn btn-outline-primary mt-1 mb-1 mr-1 dropdown-toggle text-truncate"
+            className="btn btn-outline-primary btn-block mt-1 mb-1 mr-1 dropdown-toggle text-truncate"
             type="button"
             id={`btndropdown-${this.props.id}`}
             data-toggle="dropdown"

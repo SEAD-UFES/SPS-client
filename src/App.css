@@ -5,7 +5,7 @@ img {
 
 .landing {
   position: relative;
-  background: url("./img/showcase.jpg") no-repeat;
+  background: url('./img/showcase.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -48,7 +48,7 @@ ul.timeline {
 }
 
 ul.timeline:before {
-  content: " ";
+  content: ' ';
   background: #d4d9df;
   display: inline-block;
   position: absolute;
@@ -64,7 +64,7 @@ ul.timeline > li {
 }
 
 ul.timeline > li:before {
-  content: " ";
+  content: ' ';
   background: white;
   display: inline-block;
   position: absolute;
@@ -96,19 +96,19 @@ ul.timeline > li:before {
 /*##########################################*/
 /*#### Codigo para a paginação ####*/
 
-a {
+/* a {
   color: #17a2b8;
-}
+} */
 
-.pagination > li > button {
+/* .pagination > li > button {
   color: #17a2b8 !important;
-}
+} */
 
-.pagination > li.active > button {
+/* .pagination > li.active > button {
   color: white !important;
   background-color: #17a2b8 !important;
   border-color: #17a2b8 !important;
-}
+} */
 /*##########################################*/
 
 /*##########################################*/
