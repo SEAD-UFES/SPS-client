@@ -1,7 +1,7 @@
 //Default react app imports
 //import logo from "./logo.svg";
 import React, { Component } from 'react'
-import './App.css'
+import './style.css'
 
 //Library imports
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'

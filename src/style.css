@@ -1,0 +1,415 @@
+/* Isabela */
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700&display=swap');
+* {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+footer {
+  bottom: 0;
+}
+
+#main {
+  min-height: calc(100vh - 72px - 48px - 40px - 24px);
+}
+
+a {
+  color: #1765ab;
+}
+
+a:hover {
+  color: #043166;
+  text-decoration: none;
+  border-bottom: 1px solid #043166;
+}
+
+ul {
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+.btn {
+  border-radius: 1px;
+  background: none;
+}
+
+.bg-info {
+  background-color: #1765ab !important;
+}
+
+.btn-info {
+  background-color: #1765ab !important;
+  border-color: #1765ab !important;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: normal !important;
+}
+
+h1 {
+  margin: 3rem 0 2rem;
+  color: #1765ab;
+  font-weight: bold !important;
+  font-size: 40px !important;
+}
+
+.table td,
+.table th {
+  border-top: none;
+  padding: 0.75rem 0;
+  vertical-align: middle;
+}
+
+.table td a {
+  font-weight: bold;
+}
+
+.table th {
+  color: #c75000;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar-topo {
+  background-color: #043166;
+  width: 100%;
+  text-align: right;
+}
+
+.nav-column {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+#filtros {
+  padding-bottom: 3rem;
+}
+
+#filtros #aplicados {
+  padding: 1rem 0;
+  color: white;
+}
+
+#filtros #aplicados .excluir-filtro {
+  background-color: #1765ab;
+  line-height: 1.8;
+  font-size: 0.8rem;
+  padding-left: 8px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  border-radius: 2px;
+}
+
+#filtros #aplicados .excluir-filtro i {
+  padding: 0 8px;
+}
+
+#filtros #seletores {
+  border: solid 0.5px #cfeaff;
+}
+
+#filtros #seletores button#exibe-seletores {
+  font-size: 1rem;
+  border: none;
+  background: none;
+  text-align: left;
+  padding: 8px 15px;
+  position: relative;
+  width: 100%;
+}
+
+#filtros #seletores button#exibe-seletores i {
+  right: 15px;
+  position: absolute;
+  color: gray;
+}
+
+#filtros #seletores .seletor {
+  font-weight: 300;
+  vertical-align: top;
+  display: block;
+}
+
+#filtros #seletores .seletor button.exibe-filtros {
+  font-size: 1rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  padding: 8px 15px;
+  position: relative;
+}
+
+#filtros #seletores .seletor button.exibe-filtros:after {
+  content: '\f107';
+  right: 15px;
+  width: auto;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 600;
+  position: absolute;
+  color: lightgray;
+}
+
+#filtros #seletores .seletor ul {
+  padding: 10px 10px 3px;
+  line-height: 1.8;
+}
+
+#filtros #seletores .seletor ul li label {
+  padding: 0.2rem 0;
+}
+
+#filtros #seletores .seletor ul li label input {
+  margin-right: 0.3rem;
+}
+
+#filtros #seletores .seletor ul li label:hover {
+  color: #1765ab;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
+#filtros #seletores .seletor ul li label input[type='checkbox']:checked + span {
+  color: #1765ab;
+  font-weight: 400;
+}
+
+#filtros #seletores .seletor.show {
+  background-color: #edf9ff;
+}
+
+#filtros #seletores .seletor.show button.exibe-filtros {
+  color: #043166;
+  font-weight: 400;
+}
+
+#filtros #seletores .seletor.show button.exibe-filtros:after {
+  content: '\f106';
+}
+
+#filtros #seletores input[type='button']#limpar {
+  font-size: 1rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  padding: 8px 15px;
+  position: relative;
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #1765ab;
+  border-top: solid 0.5px #cfeaff;
+}
+
+#filtros #seletores input[type='button']#limpar:hover {
+  background-color: #1765ab;
+  color: white;
+}
+
+@media screen and (min-width: 800px) {
+  #filtros button#exibe-seletores {
+    display: none;
+  }
+  #filtros #seletores {
+    border: none;
+  }
+  #filtros #seletores #collapse1 {
+    display: block;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    border: none;
+  }
+  #filtros #seletores .seletor {
+    display: inline-block;
+    border: solid 0.5px #1765ab;
+    margin-right: 15px;
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }
+  #filtros #seletores .seletor button.exibe-filtros:after {
+    color: gray;
+  }
+  #filtros #seletores .seletor ul {
+    position: absolute;
+    background-color: #edf9ff;
+    border: solid 1px #1765ab;
+    margin-top: 0;
+    border-radius: 1px;
+    width: 100%;
+    z-index: 1;
+  }
+  #filtros #seletores .seletor:nth-of-type(1) {
+    width: 12%;
+  }
+  #filtros #seletores .seletor:nth-of-type(2) {
+    width: 25%;
+  }
+  #filtros #seletores .seletor:nth-of-type(3) {
+    width: 25%;
+  }
+  #filtros #seletores .seletor:nth-of-type(4) {
+    width: 25%;
+  }
+  #filtros #seletores input[type='button']#limpar {
+    border: 1px #1765ab solid;
+    border-radius: 2px;
+    width: 13%;
+  }
+}
+
+#editais {
+  width: 100%;
+  font-weight: 300;
+  border-bottom: 1px solid #cfeaff;
+  margin-bottom: 3rem;
+}
+
+#editais .titulos {
+  display: none;
+}
+
+#editais li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 1px solid #cfeaff;
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+#editais li h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+#editais li h3 a {
+  color: #c75000;
+}
+
+#editais li h3 a:hover {
+  border-bottom: solid 1.5px #c75000;
+  color: #c75000;
+}
+
+#editais li p {
+  margin: 0.3rem 0 !important;
+}
+
+#editais li .atribuicao {
+  font-weight: 400;
+}
+
+@media screen and (min-width: 800px) {
+  #editais .titulos {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  #editais .titulos span {
+    font-weight: 600;
+    color: #05427b;
+    font-size: 1.1rem;
+    margin: 1.5rem 0;
+    display: inline-block;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }
+  #editais .titulos span:nth-of-type(1) {
+    width: 12%;
+  }
+  #editais .titulos span:nth-of-type(2) {
+    width: 25%;
+  }
+  #editais .titulos span:nth-of-type(3) {
+    width: 25%;
+  }
+  #editais .titulos span:nth-of-type(4) {
+    width: 25%;
+  }
+  #editais .titulos span:nth-of-type(5) {
+    width: 13%;
+  }
+  #editais li {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    margin-bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  #editais li p,
+  #editais li h3 {
+    margin: 1rem 0 !important;
+    position: relative !important;
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: top;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }
+  #editais li p {
+    font-weight: 300;
+    color: black;
+    font-style: normal;
+  }
+  #editais li p:nth-of-type(1) {
+    width: 25%;
+  }
+  #editais li p:nth-of-type(2) {
+    width: 25%;
+  }
+  #editais li p:nth-of-type(3) {
+    width: 25%;
+  }
+  #editais li p:nth-of-type(4) {
+    width: 13%;
+  }
+  #editais li h3 {
+    width: 12%;
+    font-weight: 600;
+  }
+  #editais li h3 a:hover {
+    border-bottom: solid 0.5px #1765ab;
+    color: #1765ab;
+  }
+  #editais li h3 span {
+    display: none;
+  }
+}
+/*# sourceMappingURL=style.css.map */

@@ -160,14 +160,14 @@ class ProcessView extends Component {
     const noticeStore = this.props.noticeStore
 
     return (
-      <div className="process-view">
+      <div className="process-view" id="main">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <Link to="/processes" className="btn btn-light">
                 Voltar para lista de processos
               </Link>
-              <h1 className="display-4 m-2"> {this.renderProcessName(process, loading)}</h1>
+              <h1 className="display-4"> {this.renderProcessName(process, loading)}</h1>
               {this.renderInfoTable(process, loading)}
               {this.renderNoticeCard(noticeStore, processStore)}
               {this.renderOther(noticeStore, processStore)}

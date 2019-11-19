@@ -15,7 +15,7 @@ class ProcessFilters extends Component {
         })
         .map((item, key) => {
           return (
-            <span key={key} className="badge badge-primary mr-1">
+            <span key={key} className="badge badge-primary mr-1 excluir-filtro">
               {item.label}{' '}
               <i
                 onClick={() => {
@@ -42,10 +42,23 @@ class ProcessFilters extends Component {
 
   render() {
     return (
-      <div className="card mb-2 px-1">
-        <div className="card-body p-0">
-          <div>{this.renderFilterBadges(this.props.filters)}</div>
-          <div className="d-table w-100">
+      <div id="filtros">
+        <div id="aplicados">{this.renderFilterBadges(this.props.filters)}</div>
+
+        <div id="seletores">
+          <button
+            id="exibe-seletores"
+            ref="filterButton"
+            className="btn btn-filtros"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapse1"
+            aria-expanded="false"
+            aria-controls="collapse1">
+            Opções de filtro
+          </button>
+
+          <div id="collapse1" className="panel-collapse collapse">
             <FilterFieldGroup
               id="years"
               label="Ano"
@@ -74,14 +87,7 @@ class ProcessFilters extends Component {
               onChange={this.props.onCheckItem}
             />
 
-            <div className="btn-group d-table-cell pr-1">
-              <input
-                type="button"
-                onClick={this.props.onClearFilters}
-                value="Limpar filtros"
-                className="btn btn-outline-primary btn-block"
-              />
-            </div>
+            <input type="button" onClick={this.props.onClearFilters} value="Limpar" className="btn" id="limpar" />
           </div>
         </div>
       </div>

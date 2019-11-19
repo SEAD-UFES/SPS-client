@@ -1,0 +1,95 @@
+/* Isabela */
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700&display=swap');
+
+@import 'scss/variables';
+
+* {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+footer {
+  bottom: 0;
+}
+
+#main {
+  min-height: calc(100vh - 72px - 48px - 40px - 24px);
+}
+
+a {
+  color: $azulRegular;
+
+  &:hover {
+    color: $azulEscuro;
+    text-decoration: none;
+    border-bottom: 1px solid $azulEscuro;
+  }
+}
+
+ul {
+  padding: 0;
+  li {
+    list-style: none;
+  }
+}
+
+.btn {
+  border-radius: 1px;
+  background: none;
+}
+
+.bg-info {
+  background-color: $azulRegular !important;
+}
+
+.btn-info {
+  background-color: $azulRegular !important;
+  border-color: $azulRegular !important;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: normal !important;
+}
+
+h1 {
+  margin: 3rem 0 2rem;
+  color: $azulRegular;
+  font-weight: bold !important;
+  font-size: 40px !important;
+}
+
+.table td,
+.table th {
+  border-top: none;
+  padding: 0.75rem 0;
+  vertical-align: middle;
+}
+
+.table td a {
+  font-weight: bold;
+}
+
+.table th {
+  color: $laranjaMedio;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar-topo {
+  background-color: $azulEscuro;
+  width: 100%;
+  text-align: right;
+}
+
+.nav-column {
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+@import 'scss/filtros';
+@import 'scss/processesList';

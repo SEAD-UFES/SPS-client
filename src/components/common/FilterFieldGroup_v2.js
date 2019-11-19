@@ -17,25 +17,24 @@ class FilterFieldGroup extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="btn-group d-table-cell pr-1">
+        <div className="btn-group seletor">
           <button
-            className="btn btn-outline-primary btn-block mt-1 mb-1 mr-1 dropdown-toggle text-truncate"
+            className="btn exibe-filtros"
             type="button"
             id={`btndropdown-${this.props.id}`}
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="true">
             {label}
-            <span className="caret" />
           </button>
           <ul className="dropdown-menu" aria-labelledby={`btndropdown-${this.props.id}`}>
             {items.length > 0
               ? items.map((item, key) => {
                   return (
-                    <li className="dropdown-item" key={key}>
+                    <li className="" key={key}>
                       <label className="radio-btn">
-                        <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} />{' '}
-                        {item.label}
+                        <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} />
+                        <span>{item.label}</span>
                       </label>
                     </li>
                   )
