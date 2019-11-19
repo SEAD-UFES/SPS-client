@@ -201,7 +201,6 @@ class ProcessCreate extends Component {
                 Voltar para a lista de processos
               </Link>
               <h1 className="display-4">Processo seletivo</h1>
-              {console.log(this.props.errorStore)}
               <AlertError errors={this.props.errorStore} />
               {this.renderForm(this.state, errors, courseOptions)}
             </div>

@@ -17,6 +17,14 @@ class ProcessView extends Component {
     this.props.getNoticeList({ selectiveProcess_id: this.props.match.params.id })
   }
 
+  renderProcessName(process, loading) {
+    if (process === null || loading) {
+      return <Spinner />
+    }
+
+    return <React.Fragment>{`Edital ${process.number}/${process.year}`}</React.Fragment>
+  }
+
   renderInfoTable(process, loading) {
     if (process === null || loading) {
       return <Spinner />
@@ -46,11 +54,9 @@ class ProcessView extends Component {
             <tbody>
               <tr>
                 <td>
-                  <strong>Número/Ano:</strong>
+                  <strong>Nível:</strong>
                 </td>
-                <td>
-                  {process.number}/{process.year}
-                </td>
+                <td>{process.Course.GraduationType.name}</td>
               </tr>
               <tr>
                 <td>
@@ -161,7 +167,7 @@ class ProcessView extends Component {
               <Link to="/processes" className="btn btn-light">
                 Voltar para lista de processos
               </Link>
-              <h1 className="display-4">Processo seletivo</h1>
+              <h1 className="display-4 m-2"> {this.renderProcessName(process, loading)}</h1>
               {this.renderInfoTable(process, loading)}
               {this.renderNoticeCard(noticeStore, processStore)}
               {this.renderOther(noticeStore, processStore)}
