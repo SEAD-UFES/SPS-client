@@ -112,37 +112,31 @@ class ProcessCreate extends Component {
 
   renderForm(state, errors, courseOptions) {
     return (
-      <div className="card">
-        <div className="card-header">
-          <h4 className="mb-0">Novo processo</h4>
-        </div>
-
-        <div className="card-body">
           <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="number"
-              label="Número: *"
-              placeholder="* Número"
-              value={this.state.number}
-              onChange={this.onChange}
-              error={errors.number}
-            />
+            <div className="form-lateral">
+              <TextFieldGroup
+                type="text"
+                name="number"
+                label="Número"
+                value={this.state.number}
+                onChange={this.onChange}
+                error={errors.number}
+              />
 
-            <TextFieldGroup
-              type="text"
-              name="year"
-              label="Ano: *"
-              placeholder="* Ano"
-              value={this.state.year}
-              onChange={this.onChange}
-              error={errors.year}
-            />
-
+              <TextFieldGroup
+                type="text"
+                name="year"
+                label="Ano"
+                value={this.state.year}
+                onChange={this.onChange}
+                error={errors.year}
+              />
+            </div>
+            
             <SelectListGroup
               placeholder=""
               name="course_id"
-              label="Curso: *"
+              label="Curso"
               value={this.state.course_id}
               options={courseOptions}
               onChange={this.onChange}
@@ -150,9 +144,8 @@ class ProcessCreate extends Component {
             />
 
             <TextAreaFieldGroup
-              placeholder="* Descrição"
               name="description"
-              label="Descrição: *"
+              label="Descrição"
               value={this.state.description}
               onChange={this.onChange}
               error={errors.description}
@@ -162,18 +155,15 @@ class ProcessCreate extends Component {
             <CheckBoxFieldGroup
               id="visible-checkbox"
               name="visible"
-              text="Visibilidade:"
+              text="Visibilidade"
               value="Tornar processo visível"
               checked={this.state.visible}
               error={errors.visible}
-              info=""
               onChange={this.onCheck}
             />
 
-            <input type="submit" className="btn mt-4 btn-primary btn-block" />
+            <input type="submit" className="btn btn-primary" value="Cadastrar" />
           </form>
-        </div>
-      </div>
     )
   }
 
@@ -193,18 +183,15 @@ class ProcessCreate extends Component {
     )
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to="/processes" className="btn btn-light">
-                Voltar para a lista de processos
-              </Link>
-              <h1 className="display-4">Processo seletivo</h1>
-              <AlertError errors={this.props.errorStore} />
-              {this.renderForm(this.state, errors, courseOptions)}
-            </div>
-          </div>
+      <div className="register" id="main">
+        <Link to="/processes" className="btn btn-light">
+          Voltar para a lista de processos
+        </Link>
+
+        <div className="form-container">
+          <h1 className="display-4">Processo seletivo</h1>
+          <AlertError errors={this.props.errorStore} />
+          {this.renderForm(this.state, errors, courseOptions)}
         </div>
       </div>
     )

@@ -123,34 +123,26 @@ class Login extends Component {
 
   renderLogin(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Dados de acesso</h4>
-        </div>
-        <div className="card-body">
-          <form onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="login"
-              label="Email: *"
-              placeholder="Endereço de email"
-              value={this.state.login}
-              onChange={this.onChange}
-              error={errors.login}
-            />
-            <TextFieldGroup
-              type="password"
-              name="password"
-              label="Senha: *"
-              placeholder="Senha"
-              value={this.state.password}
-              onChange={this.onChange}
-              error={errors.password}
-            />
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
-          </form>
-        </div>
-      </div>
+      <form onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="text"
+          name="login"
+          label="E-mail"
+          value={this.state.login}
+          onChange={this.onChange}
+          error={errors.login}
+        />
+        <TextFieldGroup
+          type="password"
+          name="password"
+          label="Senha"
+          placeholder="Senha"
+          value={this.state.password}
+          onChange={this.onChange}
+          error={errors.password}
+        />
+        <input type="submit" className="btn btn-primary" />
+      </form>
     )
   }
 
@@ -158,14 +150,10 @@ class Login extends Component {
     const { errors } = this.state
 
     return (
-      <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Login</h1>
+      <div className="login" id="main">
+        <div className="form-container">
+              <h1 className="display-4">Entrar</h1>
               {this.renderLogin(errors)}
-            </div>
-          </div>
         </div>
       </div>
     )

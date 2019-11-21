@@ -1,0 +1,92 @@
+.form-container{
+  max-width: 480px;
+  margin: 0 auto;
+  margin-bottom: 8rem;
+}
+
+form{
+
+  div.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.75rem;
+    position: relative;
+
+    label, span.form-control-label{
+      text-transform: lowercase;
+      color: #043166;
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 1.3;
+      margin-bottom: .15rem;
+      font-variant: small-caps;
+  
+      &.form-check-label{
+        color: black;
+        text-transform: none;
+        font-variant: normal;
+        font-weight: 400;
+        font-size: 1rem;
+      }
+    }
+
+    .form-check{ padding-top: .8rem; }
+
+    .invalid-feedback{
+      color: $vermelho;
+      position: absolute;
+      width: 100%;
+      margin-top: .1rem;
+    }
+
+    div{ margin-top: -.3rem; }
+
+    small{
+      color: #6c757d !important;
+    }
+
+    input, textarea, select{
+      border: 1px solid rgba($azulRegular, .3);
+      border-radius: 1px;
+      font-size: 1rem;
+      font-weight: 300;
+
+      &.is-invalid{
+        border: 1px solid $vermelho;
+      }
+    }
+
+    input:not([type="checkbox"]), select{ 
+      height: 36px;
+      margin-top: .1rem;
+    }
+
+    textarea{ height: 72px; }
+
+    input[type="file"]{
+      padding-bottom: 34px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  .form-spacing{
+    padding-top: 2.2rem;
+  }
+
+  input[type="submit"]{
+    float: right;
+    margin-top: 1.3rem;
+  }
+
+
+  @media screen and (min-width: 420px) {
+    .form-lateral{
+      display: flex;
+      justify-content: space-between;
+  
+      > div{ width: calc(50% - 1rem); }
+    }
+  }
+
+
+}

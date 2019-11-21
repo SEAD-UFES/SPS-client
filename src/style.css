@@ -1,11 +1,12 @@
 /* Isabela */
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700&display=swap");
 * {
   font-family: 'Fira Sans', sans-serif;
 }
 
 body {
   min-height: 100vh;
+  font-size: 16px;
 }
 
 footer {
@@ -14,6 +15,8 @@ footer {
 
 #main {
   min-height: calc(100vh - 72px - 48px - 40px - 24px);
+  /* ajustar depois de definir as barras */
+  padding: 0 1.5rem;
 }
 
 a {
@@ -37,6 +40,24 @@ ul li {
 .btn {
   border-radius: 1px;
   background: none;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #c75000;
+  color: white;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-size: 1.3rem;
+  font-weight: 500;
+  height: 2.25rem;
+  padding: 0 1.5rem;
+  line-height: 1;
+}
+
+.btn-primary:hover, .btn-primary:active {
+  background-color: #b24800 !important;
+  border: none !important;
 }
 
 .bg-info {
@@ -87,11 +108,11 @@ h1 {
 .nav-column {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 #filtros {
@@ -234,8 +255,8 @@ h1 {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     border: none;
   }
   #filtros #seletores .seletor {
@@ -244,8 +265,8 @@ h1 {
     margin-right: 15px;
     position: relative;
     -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
   }
   #filtros #seletores .seletor button.exibe-filtros:after {
     color: gray;
@@ -295,8 +316,8 @@ h1 {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   border-top: 1px solid #cfeaff;
   position: relative;
   margin-bottom: 1.2rem;
@@ -331,8 +352,8 @@ h1 {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   #editais .titulos span {
     font-weight: 600;
@@ -341,8 +362,8 @@ h1 {
     margin: 1.5rem 0;
     display: inline-block;
     -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
   }
   #editais .titulos span:nth-of-type(1) {
     width: 12%;
@@ -362,15 +383,15 @@ h1 {
   #editais li {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
     margin-bottom: 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   #editais li p,
   #editais li h3 {
@@ -380,8 +401,8 @@ h1 {
     font-size: 1rem;
     vertical-align: top;
     -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
   }
   #editais li p {
     font-weight: 300;
@@ -410,6 +431,109 @@ h1 {
   }
   #editais li h3 span {
     display: none;
+  }
+}
+
+.form-container {
+  max-width: 480px;
+  margin: 0 auto;
+  margin-bottom: 8rem;
+}
+
+form div.form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+form div.form-group label, form div.form-group span.form-control-label {
+  text-transform: lowercase;
+  color: #043166;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-bottom: .15rem;
+  font-variant: small-caps;
+}
+
+form div.form-group label.form-check-label, form div.form-group span.form-control-label.form-check-label {
+  color: black;
+  text-transform: none;
+  font-variant: normal;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+form div.form-group .form-check {
+  padding-top: .8rem;
+}
+
+form div.form-group .invalid-feedback {
+  color: #CB171D;
+  position: absolute;
+  width: 100%;
+  margin-top: .1rem;
+}
+
+form div.form-group div {
+  margin-top: -.3rem;
+}
+
+form div.form-group small {
+  color: #6c757d !important;
+}
+
+form div.form-group input, form div.form-group textarea, form div.form-group select {
+  border: 1px solid rgba(23, 101, 171, 0.3);
+  border-radius: 1px;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+form div.form-group input.is-invalid, form div.form-group textarea.is-invalid, form div.form-group select.is-invalid {
+  border: 1px solid #CB171D;
+}
+
+form div.form-group input:not([type="checkbox"]), form div.form-group select {
+  height: 36px;
+  margin-top: .1rem;
+}
+
+form div.form-group textarea {
+  height: 72px;
+}
+
+form div.form-group input[type="file"] {
+  padding-bottom: 34px !important;
+  font-size: 14px !important;
+}
+
+form .form-spacing {
+  padding-top: 2.2rem;
+}
+
+form input[type="submit"] {
+  float: right;
+  margin-top: 1.3rem;
+}
+
+@media screen and (min-width: 420px) {
+  form .form-lateral {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  form .form-lateral > div {
+    width: calc(50% - 1rem);
   }
 }
 /*# sourceMappingURL=style.css.map */
