@@ -742,4 +742,131 @@ form input[type="submit"] {
     display: none;
   }
 }
+
+footer {
+  background-color: #043166;
+  color: white;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+footer .container {
+  padding: 3rem 1rem;
+}
+
+footer .container div {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+footer .container div h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+
+footer .container div h4:after {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: #f06c00;
+  width: 100%;
+  margin-top: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+footer .container div p {
+  margin: 0;
+}
+
+footer .container div a {
+  color: white;
+  border-bottom: solid 0.5px transparent;
+}
+
+footer .container div a:hover {
+  border-color: #f06c00;
+}
+
+footer .container div .enderecoLink {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 0.25em;
+  margin-bottom: 1.5rem;
+}
+
+footer .container div .enderecoLink > span {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+footer .container div .enderecoLink > span:first-child {
+  margin-bottom: 0.25em;
+}
+
+footer .container div .enderecoLink > span a {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+footer .container div .enderecoLink > span img {
+  margin-right: 0.5em;
+  height: 1.5rem;
+}
+
+footer #copyright {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: default;
+  width: 100%;
+  height: 3rem;
+  background-color: #c75000;
+  text-align: center;
+  color: white;
+}
+
+footer #copyright p {
+  margin: 0;
+  display: inline-block;
+  font-size: 0.8rem;
+  line-height: 3rem;
+  vertical-align: top;
+  height: inherit;
+}
+
+footer #copyright p span {
+  display: none;
+}
+
+footer #copyright p span a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 992px) {
+  footer .container div {
+    width: calc(50% - 0.7rem);
+    vertical-align: top;
+  }
+  footer .container div:nth-child(even) {
+    float: right;
+  }
+  footer #copyright p span {
+    display: inline-block;
+  }
+}
 /*# sourceMappingURL=style.css.map */
