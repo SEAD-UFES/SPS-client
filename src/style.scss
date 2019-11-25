@@ -61,6 +61,17 @@ ul {
   }
 }
 
+.btn-add{ 
+  position: absolute;
+  right: 0;
+  top: 1.5rem;
+
+  a{
+    padding-top: .4rem;
+    i{ font-size: 1rem; }
+  }
+}
+
 
 .bg-info {
   background-color: $azulRegular !important;
@@ -76,10 +87,14 @@ ul {
 }
 
 h1 {
-  margin: 3rem 0 2rem;
+  margin: 3rem 0;
   color: $azulRegular;
   font-weight: bold !important;
   font-size: 40px !important;
+}
+
+h2, h3, h4{
+  color: $azulRegular;
 }
 
 .table td,
@@ -115,3 +130,4 @@ h1 {
 @import 'scss/filtros';
 @import 'scss/processesList';
 @import 'scss/forms';
+@import 'scss/process';

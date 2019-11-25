@@ -35,110 +35,127 @@ export default class PublicationCard extends Component {
     return result
   }
 
+  // renderPublicationLine(process, publication) {
+  //   return (
+  //     <tr key={publication.id} className={publication.valid ? '' : 'text-secondary'}>
+  //       <td>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</td>
+  //       <td>{this.renderPublicationLevel(process, publication)}</td>
+  //       <td>{publication.PublicationType.name}</td>
+  //       <td>{publication.title}</td>
+  //       <td className="text-right">
+  //         <Link
+  //           className="text-primary"
+  //           to={{
+  //             pathname: `/processes/${process.id}/publications/${publication.id}`,
+  //             state: { publication: publication }
+  //           }}>
+  //           <i className="fas fa-search-plus" />
+  //         </Link>{' '}
+  //         <a
+  //           className={publication.valid ? '' : 'isDisabled'}
+  //           onClick={publication.valid ? e => {} : e => e.preventDefault()}
+  //           href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
+  //           target="_blank"
+  //           rel="noopener noreferrer">
+  //           <i className="fas fa-file-download" />
+  //         </a>{' '}
+  //         <DrawFilter permission="publication_update" course_id={process.Course.id}>
+  //           <Link
+  //             className="text-primary"
+  //             to={{
+  //               pathname: `/processes/${process.id}/publications/${publication.id}/update`,
+  //               state: { publication: publication }
+  //             }}>
+  //             <i className="fas fa-cog" />
+  //           </Link>
+  //         </DrawFilter>{' '}
+  //         <DrawFilter permission="publication_delete" course_id={process.Course.id}>
+  //           <Link
+  //             className="text-danger"
+  //             to={{
+  //               pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
+  //               state: { publication: publication }
+  //             }}>
+  //             <i className="fas fa-times-circle" />
+  //           </Link>
+  //         </DrawFilter>
+  //       </td>
+  //     </tr>
+  //   )
+  // }
+
   renderPublicationLine(process, publication) {
     return (
-      <tr key={publication.id} className={publication.valid ? '' : 'text-secondary'}>
-        <td>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</td>
-        <td>{this.renderPublicationLevel(process, publication)}</td>
-        <td>{publication.PublicationType.name}</td>
-        <td>{publication.title}</td>
-        <td className="text-right">
-          <Link
-            className="text-primary"
-            to={{
-              pathname: `/processes/${process.id}/publications/${publication.id}`,
-              state: { publication: publication }
-            }}>
-            <i className="fas fa-search-plus" />
-          </Link>{' '}
-          <a
-            className={publication.valid ? '' : 'isDisabled'}
-            onClick={publication.valid ? e => {} : e => e.preventDefault()}
-            href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
-            target="_blank"
-            rel="noopener noreferrer">
+      <li>
+        <div>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</div>
+        <div>
+          <a className={publication.valid ? '' : 'isDisabled'}
+          onClick={publication.valid ? e => {} : e => e.preventDefault()}
+          href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
+          target="_blank"
+          rel="noopener noreferrer">
+
             <i className="fas fa-file-download" />
-          </a>{' '}
-          <DrawFilter permission="publication_update" course_id={process.Course.id}>
-            <Link
-              className="text-primary"
-              to={{
-                pathname: `/processes/${process.id}/publications/${publication.id}/update`,
-                state: { publication: publication }
-              }}>
-              <i className="fas fa-cog" />
-            </Link>
-          </DrawFilter>{' '}
-          <DrawFilter permission="publication_delete" course_id={process.Course.id}>
-            <Link
-              className="text-danger"
-              to={{
-                pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
-                state: { publication: publication }
-              }}>
-              <i className="fas fa-times-circle" />
-            </Link>
-          </DrawFilter>
-        </td>
-      </tr>
+            {publication.title}
+
+          </a>
+        </div>
+      </li>
     )
   }
 
   renderTable(process) {
     return (
-      <div className="table-responsive">
-        <table className="table table-hover mt-0 mb-0">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Nível</th>
-              <th>Tipo</th>
-              <th>Título</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {process.Publications.map(publication => {
-              return this.renderPublicationLine(process, publication)
-            })}
-          </tbody>
-        </table>
-      </div>
+      // <div className="table-responsive">
+      //   <table className="table table-hover mt-0 mb-0">
+      //     <thead>
+      //       <tr>
+      //         <th>Data</th>
+      //         <th>Nível</th>
+      //         <th>Tipo</th>
+      //         <th>Título</th>
+      //         <th />
+      //       </tr>
+      //     </thead>
+      //     <tbody>
+      //       {process.Publications.map(publication => {
+      //         return this.renderPublicationLine(process, publication)
+      //       })}
+      //     </tbody>
+      //   </table>
+      // </div>
+      <ul>
+        {process.Publications.map(publication => {
+          return this.renderPublicationLine(process, publication)
+        })}
+      </ul>
     )
   }
 
   render() {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Publicações</h4>
-            </div>
-            <div className="col">
-              <div className="float-right">
-                <DrawFilter permission="publication_create" course_id={this.props.process.Course.id}>
-                  <Link
-                    className="text-success mb-0"
-                    to={{
-                      pathname: `/processes/${this.props.process.id}/publications/create`,
-                      state: { selectiveProcess: this.props.process }
-                    }}>
-                    <i className="fas fa-plus-circle" /> Adicionar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
-          </div>
+      <section id="anexos" class="quadro">
+        <h4>Anexos</h4>
+
+        <div class="btn-add">
+          <DrawFilter permission="publication_create" course_id={this.props.process.Course.id}>
+            <Link
+              className="btn btn-primary"
+              to={{
+                pathname: `/processes/${this.props.process.id}/publications/create`,
+                state: { selectiveProcess: this.props.process }
+              }}>
+              <i className="fas fa-plus-circle" /> Adicionar
+            </Link>
+          </DrawFilter>
         </div>
-        <div className="card-body">
+
           {this.props.process.Publications.length > 0 ? (
             this.renderTable(this.props.process)
           ) : (
-            <p className="mb-0">Sem publicações cadastradas.</p>
+            <p>Sem publicações cadastradas.</p>
           )}
-        </div>
-      </div>
+      </section>
     )
   }
 }

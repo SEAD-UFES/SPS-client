@@ -31,55 +31,41 @@ class ProcessView extends Component {
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Informações</h4>
-            </div>
-            <div className="col">
-              <div className="text-right">
-                <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
-                  <Link className="text-primary" to={`/processes/${process.id}/edit`}>
-                    <i className="fas fa-cog" /> Editar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
-          </div>
+      <div>
+        <div className="btn-add">
+          <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
+            <Link className="btn btn-primary" to={`/processes/${process.id}/edit`}>
+              <i className="fas fa-cog" /> Editar
+            </Link>
+          </DrawFilter>
         </div>
+  
+        <div id="info">
+          <div>
+            <p>
+              {process.description}
+            </p>
+          </div>
 
-        <div className="card-body">
-          <table className="table table-hover mt-0 mb-0">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Nível:</strong>
-                </td>
-                <td>{process.Course.GraduationType.name}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Curso:</strong>
-                </td>
-                <td>{process.Course.name}</td>
-              </tr>
-              <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
-                <tr>
-                  <td>
-                    <strong>Visibilidade:</strong>
-                  </td>
-                  <td>{process.visible ? 'Processo visível' : 'Processo oculto'}</td>
-                </tr>
-              </DrawFilter>
-              <tr>
-                <td>
-                  <strong>Descrição:</strong>
-                </td>
-                <td>{process.description}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div>
+            <p>
+              <strong>Nível: </strong>
+              {process.Course.GraduationType.name}
+            </p>
+
+            <p>
+              <strong>Curso: </strong>
+              {process.Course.name}
+            </p>
+
+            <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
+              <p>
+                <strong>Visibilidade: </strong>
+                {process.visible ? 'Processo visível' : 'Processo oculto'}
+              </p>
+            </DrawFilter>
+          </div>
+          
         </div>
       </div>
     )
@@ -167,7 +153,7 @@ class ProcessView extends Component {
               <Link to="/processes" className="btn btn-light">
                 Voltar para lista de processos
               </Link>
-              <h1 className="display-4"> {this.renderProcessName(process, loading)}</h1>
+              <h1>{this.renderProcessName(process, loading)}</h1>
               {this.renderInfoTable(process, loading)}
               {this.renderNoticeCard(noticeStore, processStore)}
               {this.renderOther(noticeStore, processStore)}
