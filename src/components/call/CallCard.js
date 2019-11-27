@@ -29,33 +29,6 @@ export default class CallCard extends Component {
 
           {process.Calls.map(call => {
             return (
-              // <tr key={call.id}>
-              //   <td>{call.number}</td>
-              //   <td>
-              //     {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
-              //     {' - '}
-              //     {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
-              //   </td>
-              //   <td>{getCallStatus(call)}</td>
-              //   <td className="text-right">
-              //     <DrawFilter permission="call_read" course_id={process.Course.id}>
-              //       <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
-              //         <i className="fas fa-search-plus" />
-              //       </Link>
-              //     </DrawFilter>{' '}
-              //     <DrawFilter permission="call_update" course_id={process.Course.id}>
-              //       <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-              //         <i className="fas fa-cog" />
-              //       </Link>
-              //     </DrawFilter>{' '}
-              //     <DrawFilter permission="call_delete" course_id={process.Course.id}>
-              //       <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
-              //         <i className="fas fa-times-circle" />
-              //       </Link>
-              //     </DrawFilter>
-              //   </td>
-              // </tr>
-
               <li key={call.id}>
                 <h3><span>Chamada </span>{call.number}</h3>
                 <p>
@@ -68,18 +41,18 @@ export default class CallCard extends Component {
                 </p>
                 <p className="text-right">
                   <DrawFilter permission="call_read" course_id={process.Course.id}>
-                    <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
-                      <i className="fas fa-search-plus" />
+                    <Link className="text-primary icon-read" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
+                      <i class="fas fa-eye"></i>
                     </Link>
                   </DrawFilter>{' '}
                   <DrawFilter permission="call_update" course_id={process.Course.id}>
-                    <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-                      <i className="fas fa-cog" />
+                    <Link className="icon-edit" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                      <i class="fas fa-pencil-alt"></i>
                     </Link>
                   </DrawFilter>{' '}
                   <DrawFilter permission="call_delete" course_id={process.Course.id}>
-                    <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
-                      <i className="fas fa-times-circle" />
+                    <Link className="icon-delete" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
+                      <i class="fas fa-trash"></i>
                     </Link>
                   </DrawFilter>
                 </p>
@@ -88,8 +61,6 @@ export default class CallCard extends Component {
             )
           })}
           </ul>
-      //   </tbody>
-      // </table>
     )
   }
 
@@ -97,14 +68,11 @@ export default class CallCard extends Component {
     return (
       <section id="chamadas" class="quadro">
         <h4>Chamadas</h4>
-
-        <div class="btn-add">
-          <DrawFilter permission="call_create" course_id={this.props.process.Course.id}>
-            <Link className="btn btn-primary" to={`/processes/${this.props.process.id}/calls/create`}>
-              <i className="fas fa-plus-circle" /> Adicionar
-            </Link>
-          </DrawFilter>
-        </div>
+        <DrawFilter permission="call_create" course_id={this.props.process.Course.id}>
+          <Link className="btn btn-add" to={`/processes/${this.props.process.id}/calls/create`}>
+            <i className="fas fa-plus-circle" /> Adicionar
+          </Link>
+        </DrawFilter>
 
         <div>
           {this.props.process.Calls.length > 0 ? (

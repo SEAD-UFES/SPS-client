@@ -32,7 +32,7 @@ class ProcessView extends Component {
 
     return (
       <div>
-        <div className="btn-add">
+        <div className="btn-edit">
           <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
             <Link className="btn btn-primary" to={`/processes/${process.id}/edit`}>
               <i className="fas fa-cog" /> Editar
@@ -148,17 +148,23 @@ class ProcessView extends Component {
     return (
       <div className="process-view" id="main">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to="/processes" className="btn btn-light">
-                Voltar para lista de processos
-              </Link>
-              <h1>{this.renderProcessName(process, loading)}</h1>
-              {this.renderInfoTable(process, loading)}
-              {this.renderNoticeCard(noticeStore, processStore)}
-              {this.renderOther(noticeStore, processStore)}
-            </div>
+
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>{this.renderProcessName(process, loading)}</span>
           </div>
+
+          <div className="conteudo">
+            <h1>{this.renderProcessName(process, loading)}</h1>
+            {this.renderInfoTable(process, loading)}
+            {this.renderNoticeCard(noticeStore, processStore)}
+            {this.renderOther(noticeStore, processStore)}
+          </div>
+
         </div>
       </div>
     )

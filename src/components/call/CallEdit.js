@@ -117,47 +117,40 @@ class CallEdit extends Component {
 
   renderForm(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar chamada</h4>
-        </div>
-
-        <div className="card-body">
           <form noValidate onSubmit={this.onSubmit}>
             <TextFieldGroup
               type="text"
               name="number"
-              label="Número: *"
-              placeholder="Número da chamada"
+              label="Número"
               value={this.state.number}
               onChange={this.onChange}
               error={errors.number}
             />
 
-            <TextFieldGroup
-              placeholder="Abertura da chamada"
-              type="date"
-              label="Abertura: *"
-              name="openingDate"
-              value={this.state.openingDate}
-              onChange={this.onChange}
-              error={errors.openingDate}
-            />
+            <div className="form-lateral">
+              <TextFieldGroup
+                placeholder="__/__/__"
+                type="date"
+                label="Data de abertura"
+                name="openingDate"
+                value={this.state.openingDate}
+                onChange={this.onChange}
+                error={errors.openingDate}
+              />
 
-            <TextFieldGroup
-              placeholder="Encerramento da chamada"
-              type="date"
-              label="Encerramento: *"
-              name="endingDate"
-              value={this.state.endingDate}
-              onChange={this.onChange}
-              error={errors.endingDate}
-            />
+              <TextFieldGroup
+                placeholder="__/__/__"
+                type="date"
+                label="Data de encerramento"
+                name="endingDate"
+                value={this.state.endingDate}
+                onChange={this.onChange}
+                error={errors.endingDate}
+              />
+            </div>
 
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
+            <input type="submit" className="btn btn-primary" value="Editar"/>
           </form>
-        </div>
-      </div>
     )
   }
 
@@ -166,20 +159,17 @@ class CallEdit extends Component {
     const back_url = this.props.location.prevLocation ? this.props.location.prevLocation.pathname : null
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link
-                to={back_url ? back_url : `/processes/${this.props.match.params.process_id}`}
-                className="btn btn-light">
-                {back_url ? 'Voltar para a página anterior' : 'Voltar para o processo'}
-              </Link>
-              <h1 className="display-4">Chamada</h1>
-              <AlertError errors={this.props.errorStore} />
-              {this.renderForm(errors)}
-            </div>
-          </div>
+      <div className="register" id="main">
+        <Link
+          to={back_url ? back_url : `/processes/${this.props.match.params.process_id}`}
+          className="btn btn-light">
+          {back_url ? 'Voltar para a página anterior' : 'Voltar para o processo'}
+        </Link>
+
+        <div className="form-container">
+          <h1 className="display-4">Editar chamada</h1>
+          <AlertError errors={this.props.errorStore} />
+          {this.renderForm(errors)}
         </div>
       </div>
     )

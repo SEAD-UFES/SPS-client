@@ -1,16 +1,4 @@
-.process-view{
-
-  .btn-add{ 
-    position: absolute;
-    right: 0;
-    top: 1.5rem;
-
-    a{
-      padding-top: .4rem;
-      i{ font-size: 1rem; }
-    }
-  }
-
+.process-view, .register{
 
   #info{
     margin-bottom: 2rem;
@@ -82,6 +70,20 @@
 
         p {
           margin: 0.3rem 0 !important;
+        }
+
+        .text-right{
+
+          i{ padding: 0 .3rem; }
+
+          .icon-read{
+
+            color: $laranjaMedio !important;
+
+            i{ color: $laranjaMedio; }
+          }
+
+          // .icon-delete i { color: $vermelho; }
         }
       }
     }

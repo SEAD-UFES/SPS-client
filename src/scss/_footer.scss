@@ -3,65 +3,57 @@ footer {
   color: white;
   font-weight: 300;
   line-height: 1.8;
+  padding-top: 3rem;
 
-  .container {
-    padding: 3rem 1rem;
+  div {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1rem;
 
-    div {
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 1rem;
+    h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
 
-      h4 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: white;
+      &:after {
+        content: "";
+        display: block;
+        height: 2px;
+        background-color: $laranjaRegular;
+        width: 100%;
+        margin-top: 0.4rem;
+        margin-bottom: 0.8rem;
+      }
+    }
 
-        &:after {
-          content: "";
-          display: block;
-          height: 2px;
-          background-color: $laranjaRegular;
-          width: 100%;
-          margin-top: 0.4rem;
-          margin-bottom: 0.8rem;
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: white;
+    }
+
+    .enderecoLink {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0.25em;
+      margin-bottom: 1.5rem;
+
+      > span {
+        display: inline-flex;
+
+        &:first-child {
+          margin-bottom: 0.25em;
         }
-      }
 
-      p {
-        margin: 0;
-      }
-
-      a {
-        color: white;
-        border-bottom: solid 0.5px transparent;
-
-        &:hover {
-          border-color: $laranjaRegular;
-        }
-      }
-
-      .enderecoLink {
-        display: flex;
-        flex-direction: column;
-        margin-top: 0.25em;
-        margin-bottom: 1.5rem;
-
-        > span {
+        a {
           display: inline-flex;
+        }
 
-          &:first-child {
-            margin-bottom: 0.25em;
-          }
-
-          a {
-            display: inline-flex;
-          }
-
-          img {
-            margin-right: 0.5em;
-            height: 1.5rem;
-          }
+        img {
+          margin-right: 0.5em;
+          height: 1.5rem;
         }
       }
     }
@@ -77,6 +69,7 @@ footer {
     background-color: $laranjaMedio;
     text-align: center;
     color: white;
+    margin: 0;
 
     p {
       margin: 0;
@@ -98,16 +91,15 @@ footer {
 
   @media screen and (min-width: 992px) {
       
-    .container {
-      div {
-        width: calc(50% - 0.7rem);
-        vertical-align: top;
+    div {
+      width: calc(50% - 0.7rem);
+      vertical-align: top;
 
-        &:nth-child(even) {
-          float: right;
-        }
+      &:nth-child(even) {
+        float: right;
       }
     }
+
 
     #copyright {
       p {

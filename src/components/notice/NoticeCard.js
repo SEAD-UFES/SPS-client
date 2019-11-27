@@ -36,7 +36,7 @@ class NoticeCard extends Component {
       } else {
         return (
           <DrawFilter permission="notice_create" course_id={processStore.process.Course.id}>
-            <Link className="btn btn-primary" to={`/processes/${processStore.process.id}/notices/create`}>
+            <Link className="btn btn-add" to={`/processes/${processStore.process.id}/notices/create`}>
               <i className="fas fa-plus-circle" /> Adicionar
             </Link>
           </DrawFilter>
@@ -63,10 +63,7 @@ class NoticeCard extends Component {
     return (
       <section class="quadro">
         <h4>{renderTitle(notices)}</h4>
-
-        <div class="btn-add">
-          {renderOptions(notices)}
-        </div>
+        {renderOptions(notices)}
 
         <div>
           <span dangerouslySetInnerHTML={{ __html: renderBody(notices) }} />

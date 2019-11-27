@@ -29,65 +29,46 @@ class CallView extends Component {
     })
   }
 
+  renderCallName(call, loading) {
+    if (call === null || loading) {
+      return <Spinner />
+    }
+
+    return <React.Fragment>{`Chamada ${call.number}`}</React.Fragment>
+  }
+
   renderInfo(call, loading) {
     if (call === null || loading) {
       return <Spinner />
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Informações</h4>
-            </div>
-            <div className="col">
-              <div className="text-right">
-                <DrawFilter permission="call_update" course_id={this.state.course_id}>
-                  <Link
-                    className="text-primary"
-                    to={{
-                      pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
-                      prevLocation: this.props.location
-                    }}>
-                    <i className="fas fa-cog" /> Editar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
-          </div>
+      <div>
+        <div className="btn-edit">
+          <DrawFilter permission="call_update" course_id={this.state.course_id}>
+            <Link
+              className="btn btn-primary"
+              to={{
+                pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
+                prevLocation: this.props.location
+              }}>
+              <i className="fas fa-cog" /> Editar
+            </Link>
+          </DrawFilter>
         </div>
 
-        <div className="card-body">
-          <table className="table table-hover mt-0 mb-0">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Número:</strong>
-                </td>
-                <td>{call.number}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Abertura:</strong>
-                </td>
-                <td>{moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Encerramento:</strong>
-                </td>
-                <td>{moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Status:</strong>
-                </td>
-                <td>{getCallStatus(call)}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <p>
+          <strong>Abertura: </strong>
+           {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+        </p>
+        <p>
+          <strong>Encerramento: </strong>
+          {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+        </p>
+        <p>
+          <strong>Status: </strong>
+          {getCallStatus(call)}
+        </p>
       </div>
     )
   }
@@ -102,19 +83,17 @@ class CallView extends Component {
   render() {
     const { errors, call, loading } = this.props
     return (
-      <div className="register">
+      <div className="register" id="main">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
-              </Link>
-              <h1 className="display-4">Chamada</h1>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
+              Voltar para o processo
+            </Link>
+            <div className="conteudo">
+              <h1>{this.renderCallName(call, loading)}</h1>
               <AlertError errors={errors} />
               {this.renderInfo(call, loading)}
               {this.renderVacancys(call, loading)}
             </div>
-          </div>
         </div>
       </div>
     )

@@ -199,7 +199,7 @@ class ProcessList extends Component {
     return (
       <React.Fragment>
         <DrawFilter permission="selectiveprocess_create" anyCourse={true}>
-          <Link className="text-success" to={`${this.props.match.url}/create`}>
+          <Link className="btn-add" to={`${this.props.match.url}/create`}>
             <i className="fas fa-plus-circle" /> Adicionar
           </Link>
         </DrawFilter>
