@@ -2,36 +2,45 @@ import React from 'react'
 
 const GraduationTypeTable = props => {
   const renderTable = props => {
-    if (props.users.length === 0) {
+    //Spinner
+    if (props.loading) {
+      return <p>carregando...</p>
+    }
+
+    //No itens
+    if (props.itens.length === 0) {
       return <p>Sem resultados para exibir.</p>
     }
 
+    //have itens
     return (
       <table className="table table-hover">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Actions</th>
+            <th>Nome</th>
+            <th>
+              <div className="float-right">Actions</div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {props.users.length > 0 ? (
-            props.users.map(user => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
+          {props.itens.length > 0 ? (
+            props.itens.map(item => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
                 <td>
-                  <button
-                    onClick={() => {
-                      props.editRow(user)
-                    }}
-                    className="btn btn-primary mr-1">
-                    Edit
-                  </button>
-                  <button onClick={() => props.deleteUser(user.id)} className="btn btn-danger">
-                    Delete
-                  </button>
+                  <div className="float-right">
+                    <button
+                      onClick={() => {
+                        props.ItemUpdate(item)
+                      }}
+                      className="btn btn-primary mr-1">
+                      Editar
+                    </button>
+                    <button onClick={() => props.deleteUser(item.id)} className="btn btn-danger">
+                      Apagar
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))
@@ -44,17 +53,21 @@ const GraduationTypeTable = props => {
       </table>
     )
   }
+
+  //Render do card
   return (
     <div className="card mb-4">
       <div className="card-header">
         <div className="row">
           <div className="col">
-            <h4 className="mb-0">Resultados</h4>
+            <h4 className="pt-1">Resultados</h4>
           </div>
           <div className="col">
-            <button className="btn btn-success" onClick={props.openAddItem}>
-              Adicionar
-            </button>
+            <div className="float-right">
+              <button className="btn btn-success" onClick={props.openItemCreate}>
+                Adicionar
+              </button>
+            </div>
           </div>
         </div>
       </div>

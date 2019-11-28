@@ -29,7 +29,7 @@ export const createGraduationType = (graduationTypeData, callback_ok) => dispatc
       callback_ok(res.data.id)
     })
     .catch(err => {
-      handleErrors(err, dispatch)
+      handleErrors(err, dispatch, 'createGraduationType')
     })
 }
 
@@ -92,9 +92,12 @@ export const listGraduationType = () => dispatch => {
     })
 }
 
-const handleErrors = (err, dispatch) => {
+const handleErrors = (err, dispatch, source) => {
   if (err.response) {
     let errors = {}
+    if (source) {
+      errors.source = source
+    }
     errors.data = err.response.data
     errors.serverError = true
     dispatch({

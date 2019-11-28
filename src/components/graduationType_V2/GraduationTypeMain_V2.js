@@ -1,11 +1,13 @@
+// prettier-ignore
+
 import React, { useState, useEffect, Fragment } from 'react'
 import ItemCreate from './GraduationTypeCreate'
 import AddUserForm from './AddUserForm'
 import EditUserForm from './EditUserForm'
-import UserTable from './GraduationTypeTable'
-import ItemTable from './GraduationTypeTable_V2'
+import ItemTable from './GraduationTypeTable'
+import AlertError from 'components/common/AlertError'
 
-import { listGraduationType } from './graduationTypeActions_V2'
+import { listGraduationType, createGraduationType } from './graduationTypeActions_V2'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -24,16 +26,12 @@ const GraduationTypeMain = props => {
   const [currentUser, setCurrentUser] = useState(initialFormState)
   const [editing, setEditing] = useState(false)
 
-  //setting Effect
+  //first load
   useEffect(() => {
     props.listGraduationType()
   }, [])
 
   // CRUD operations
-  const addItem = user => {
-    user.id = users.length + 1
-    setUsers([...users, user])
-  }
 
   const addUser = user => {
     user.id = users.length + 1
@@ -67,9 +65,16 @@ const GraduationTypeMain = props => {
     setCurrentUser({ id: user.id, name: user.name, username: user.username })
   }
 
+  const renderAlertError = () => {
+    if (props.errorStore.source !== 'createGraduationType' || props.errorStore.source !== 'createGraduationType') {
+      return <AlertError errors={props.errorStore} />
+    }
+  }
+
   return (
     <div className="container">
       <h1>Níveis de graduação</h1>
+      {renderAlertError()}
       <div className="flex-row">
         <div className="flex-large">
           {editing ? (
@@ -95,7 +100,7 @@ const GraduationTypeMain = props => {
             editRow={editRow}
             deleteUser={deleteUser}
           />
-          <ItemCreate show={showItemCreate} addItem={addItem} hideItemCreate={hideItemCreate} />
+          <ItemCreate show={showItemCreate} createItem={props.createGraduationType} hideItemCreate={hideItemCreate} />
           {/* <ItemEdit/> */}
         </div>
       </div>
@@ -104,15 +109,18 @@ const GraduationTypeMain = props => {
 }
 
 GraduationTypeMain.proptypes = {
-  listGraduationType: PropTypes.func.isRequired
+  listGraduationType: PropTypes.func.isRequired,
+  createGraduationType: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  graduationTypeStore_v2: state.graduationTypeStore_V2
+  graduationTypeStore_v2: state.graduationTypeStore_V2,
+  errorStore: state.errorStore
 })
 
 const mapFunctionsToProps = {
-  listGraduationType
+  listGraduationType,
+  createGraduationType
 }
 
 export default connect(mapStateToProps, mapFunctionsToProps)(GraduationTypeMain)
