@@ -19,7 +19,7 @@ const GraduationTypeTable = props => {
           <tr>
             <th>Nome</th>
             <th>
-              <div className="float-right">Actions</div>
+              <div className="float-right">Ações</div>
             </th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@ const GraduationTypeTable = props => {
                   <div className="float-right">
                     <button
                       onClick={() => {
-                        props.ItemUpdate(item)
+                        props.openItemUpdate(item)
                       }}
                       className="btn btn-primary mr-1">
                       Editar

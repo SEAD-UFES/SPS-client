@@ -5,15 +5,14 @@ import AlertError from '../common/AlertError'
 import { connect } from 'react-redux'
 import { clearErrors } from 'actions/errorActions'
 
-const GraduationTypeCreate = props => {
+const GraduationTypeUpdate = props => {
   //Set state
   const initialFormState = props.initialFormState ? props.initialFormState : { id: null, name: '', username: '' }
-  const [user, setUser] = useState(initialFormState)
-  const [Item, setItem] = useState(initialFormState)
+  const [item, setItem] = useState(initialFormState)
   const errors = {}
 
-  const hideItemCreate = () => {
-    props.hideItemCreate()
+  const hideItemUpdate = () => {
+    props.hideItemUpdate()
     props.clearErrors()
     setItem(initialFormState)
   }
@@ -21,16 +20,16 @@ const GraduationTypeCreate = props => {
   //onChange itens
   const onChange = event => {
     const { name, value } = event.target
-    setItem({ ...user, [name]: value })
+    setItem({ ...item, [name]: value })
   }
 
   //Submit function
   const onSubmit = event => {
     event.preventDefault()
-    delete Item.id
-    props.createItem(Item, It => {
+    delete item.id
+    props.itemUpdate(item, It => {
       setItem(initialFormState)
-      props.hideItemCreate()
+      props.hideItemUpdate()
     })
   }
 
@@ -42,7 +41,7 @@ const GraduationTypeCreate = props => {
           type="text"
           name="name"
           label="Nome: *"
-          value={Item.name}
+          value={item.name}
           onChange={onChange}
           error={errors.name}
         />
@@ -52,16 +51,16 @@ const GraduationTypeCreate = props => {
 
   //return
   return (
-    <Modal show={props.show} onHide={hideItemCreate} centered size="lg">
+    <Modal show={props.show} onHide={hideItemUpdate} centered size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>Criar Nível de graduação</Modal.Title>
+        <Modal.Title>Editar Nível de graduação</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <AlertError errors={props.errorStore} />
         {renderForm(props)}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={hideItemCreate}>
+        <Button variant="secondary" onClick={hideItemUpdate}>
           Cancelar
         </Button>
         <Button variant="primary" onClick={onSubmit}>
@@ -76,4 +75,4 @@ const mapStateToProps = state => ({
   errorStore: state.errorStore
 })
 
-export default connect(mapStateToProps, { clearErrors })(GraduationTypeCreate)
+export default connect(mapStateToProps, { clearErrors })(GraduationTypeUpdate)

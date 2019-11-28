@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect, Fragment } from 'react'
 import ItemCreate from './GraduationTypeCreate'
+import ItemUpdate from './GraduationTypeUpdate'
+
 import AddUserForm from './AddUserForm'
 import EditUserForm from './EditUserForm'
 import ItemTable from './GraduationTypeTable'
 import AlertError from 'components/common/AlertError'
 
-import { listGraduationType, createGraduationType } from './graduationTypeActions_V2'
+import { listGraduationType, createGraduationType, updateGraduationType } from './graduationTypeActions_V2'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -59,14 +61,31 @@ const GraduationTypeMain = props => {
     setShowItemCreate(false)
   }
 
+  //Item update state and handlers
+  const [showItemUpdate, setShowItemUpdate] = useState(false)
+  const openItemUpdate = () => {
+    setShowItemUpdate(true)
+  }
+  const hideItemUpdate = () => {
+    setShowItemUpdate(false)
+  }
+
+  //Item delete state and handlers
+  const [showItemDelete, setShowItemDelete] = useState(false)
+  const openItemDelete = () => {
+    setShowItemDelete(true)
+  }
+  const hideItemDelete = () => {
+    setShowItemDelete(false)
+  }
+
   const editRow = user => {
     setEditing(true)
-
     setCurrentUser({ id: user.id, name: user.name, username: user.username })
   }
 
   const renderAlertError = () => {
-    if (props.errorStore.source !== 'createGraduationType' || props.errorStore.source !== 'createGraduationType') {
+    if (props.errorStore.source !== 'createGraduationType' && props.errorStore.source !== 'updateGraduationType') {
       return <AlertError errors={props.errorStore} />
     }
   }
@@ -97,10 +116,14 @@ const GraduationTypeMain = props => {
             users={users}
             loadingItens={props.graduationTypeStore_v2.loading}
             itens={props.graduationTypeStore_v2.graduationTypes}
+            openItemUpdate={openItemUpdate}
             editRow={editRow}
             deleteUser={deleteUser}
           />
           <ItemCreate show={showItemCreate} createItem={props.createGraduationType} hideItemCreate={hideItemCreate} />
+          <ItemUpdate show={showItemUpdate} updateItem={props.updateGraduationType} hideItemUpdate={hideItemUpdate} />
+          {/* <ItemDelete show={showItemDelete} updateItem={props.deleteGraduationType} hideItemUpdate={hideItemDelete} /> */}
+
           {/* <ItemEdit/> */}
         </div>
       </div>
@@ -120,7 +143,8 @@ const mapStateToProps = state => ({
 
 const mapFunctionsToProps = {
   listGraduationType,
-  createGraduationType
+  createGraduationType,
+  updateGraduationType
 }
 
 export default connect(mapStateToProps, mapFunctionsToProps)(GraduationTypeMain)
