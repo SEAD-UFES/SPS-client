@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import TextFieldGroup from 'components/common/TextFieldGroup'
 import AlertError from '../common/AlertError'
@@ -7,18 +7,23 @@ import { clearErrors } from 'actions/errorActions'
 
 const GraduationTypeDelete = props => {
   //Set state
-  const initialFormState = props.initialFormState ? props.initialFormState : { id: null, name: '', username: '' }
+  const initialFormState = props.item ? props.item : { id: null, name: '' }
   const [item, setItem] = useState(initialFormState)
   const errors = {}
 
-  const hideItemUpdate = () => {
-    props.hideItemUpdate()
+  useEffect(() => {
+    setItem(props.item)
+  }, [props.item])
+
+  const hideItemDelete = () => {
+    props.hideItemDelete()
     props.clearErrors()
     setItem(initialFormState)
   }
 
   //onChange itens
   const onChange = event => {
+    event.preventDefault()
     const { name, value } = event.target
     setItem({ ...item, [name]: value })
   }
@@ -26,10 +31,8 @@ const GraduationTypeDelete = props => {
   //Submit function
   const onSubmit = event => {
     event.preventDefault()
-    delete item.id
-    props.itemUpdate(item, It => {
-      setItem(initialFormState)
-      props.hideItemUpdate()
+    props.deleteItem(item.id, It => {
+      props.hideItemDelete()
     })
   }
 
@@ -44,6 +47,7 @@ const GraduationTypeDelete = props => {
           value={item.name}
           onChange={onChange}
           error={errors.name}
+          disabled
         />
       </form>
     )
@@ -51,20 +55,20 @@ const GraduationTypeDelete = props => {
 
   //return
   return (
-    <Modal show={props.show} onHide={hideItemUpdate} centered size="lg">
+    <Modal show={props.show} onHide={hideItemDelete} centered size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>Editar Nível de graduação</Modal.Title>
+        <Modal.Title>Apagar Nível de graduação</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <AlertError errors={props.errorStore} />
         {renderForm(props)}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={hideItemUpdate}>
+        <Button variant="secondary" onClick={hideItemDelete}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={onSubmit}>
-          Criar
+        <Button variant="danger" onClick={onSubmit}>
+          Apagar
         </Button>
       </Modal.Footer>
     </Modal>

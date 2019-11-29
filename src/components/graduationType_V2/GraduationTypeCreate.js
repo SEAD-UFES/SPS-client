@@ -4,23 +4,43 @@ import TextFieldGroup from 'components/common/TextFieldGroup'
 import AlertError from '../common/AlertError'
 import { connect } from 'react-redux'
 import { clearErrors } from 'actions/errorActions'
+import { validateName } from '../../validation'
 
 const GraduationTypeCreate = props => {
   //Set state
-  const initialFormState = props.initialFormState ? props.initialFormState : { id: null, name: '', username: '' }
+  const initialFormState = { id: null, name: '', username: '' }
   const [item, setItem] = useState(initialFormState)
-  const errors = {}
+  const [errors, setErrors] = useState({})
 
   const hideItemCreate = () => {
     props.hideItemCreate()
     props.clearErrors()
     setItem(initialFormState)
+    setErrors({})
   }
 
   //onChange itens
   const onChange = event => {
     const { name, value } = event.target
+    let valResult = { error: '', isValid: true }
+    let TemporaryErrors = errors
+
+    switch (name) {
+      case 'name':
+        valResult = validateName(value)
+        break
+      default:
+        break
+    }
+
+    if (!valResult.isValid) {
+      TemporaryErrors = { ...TemporaryErrors, [name]: valResult.error }
+    } else {
+      delete TemporaryErrors[name]
+    }
+
     setItem({ ...item, [name]: value })
+    setErrors(TemporaryErrors)
   }
 
   //Submit function

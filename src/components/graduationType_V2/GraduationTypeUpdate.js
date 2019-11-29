@@ -1,34 +1,56 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import TextFieldGroup from 'components/common/TextFieldGroup'
 import AlertError from '../common/AlertError'
 import { connect } from 'react-redux'
 import { clearErrors } from 'actions/errorActions'
+import { validateName } from '../../validation'
 
 const GraduationTypeUpdate = props => {
   //Set state
-  const initialFormState = props.initialFormState ? props.initialFormState : { id: null, name: '', username: '' }
+  const initialFormState = props.item ? props.item : { id: null, name: '', username: '' }
   const [item, setItem] = useState(initialFormState)
-  const errors = {}
+  const [errors, setErrors] = useState({})
+
+  useEffect(() => {
+    setItem(props.item)
+  }, [props.item])
 
   const hideItemUpdate = () => {
     props.hideItemUpdate()
     props.clearErrors()
     setItem(initialFormState)
+    setErrors({})
   }
 
   //onChange itens
   const onChange = event => {
     const { name, value } = event.target
+    let valResult = { error: '', isValid: true }
+    let TemporaryErrors = errors
+
+    switch (name) {
+      case 'name':
+        valResult = validateName(value)
+        break
+      default:
+        break
+    }
+
+    if (!valResult.isValid) {
+      TemporaryErrors = { ...TemporaryErrors, [name]: valResult.error }
+    } else {
+      delete TemporaryErrors[name]
+    }
+
     setItem({ ...item, [name]: value })
+    setErrors(TemporaryErrors)
   }
 
   //Submit function
   const onSubmit = event => {
     event.preventDefault()
-    delete item.id
-    props.itemUpdate(item, It => {
-      setItem(initialFormState)
+    props.updateItem(item, It => {
       props.hideItemUpdate()
     })
   }
@@ -64,7 +86,7 @@ const GraduationTypeUpdate = props => {
           Cancelar
         </Button>
         <Button variant="primary" onClick={onSubmit}>
-          Criar
+          Atualizar
         </Button>
       </Modal.Footer>
     </Modal>

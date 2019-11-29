@@ -7,6 +7,8 @@ import {
   LIST_GRADUATIONTYPE_V2
 } from './graduationTypeActionTypes_V2'
 
+import { compareItemByName } from 'utils/compareBy'
+
 const initialState = {
   loading: false,
   graduationTypes: []
@@ -33,31 +35,37 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        graduationTypes: [...state.graduationTypes, action.payload]
+        graduationTypes: [...state.graduationTypes, action.payload].sort(compareItemByName)
       }
     case READ_GRADUATIONTYPE_V2:
       return {
         ...state,
         loading: false,
-        graduationTypes: [...state.graduationTypes.filter(filter_removeOldId(action)), action.payload]
+        graduationTypes: [...state.graduationTypes.filter(filter_removeOldId(action)), action.payload].sort(
+          compareItemByName
+        )
       }
     case UPDATE_GRADUATIONTYPE_V2:
       return {
         ...state,
         loading: false,
-        gaduationTypes: [...state.graduationTypes.filter(filter_removeOldId(action)), action.payload]
+        graduationTypes: [...state.graduationTypes.filter(filter_removeOldId(action)), action.payload].sort(
+          compareItemByName
+        )
       }
     case DELETE_GRADUATIONTYPE_V2:
       return {
         ...state,
         loading: false,
-        gaduationTypes: [...state.graduationTypes.filter(value => value.id !== action.payload)]
+        graduationTypes: [...state.graduationTypes.filter(value => value.id !== action.payload)].sort(compareItemByName)
       }
     case LIST_GRADUATIONTYPE_V2:
       return {
         ...state,
         loading: false,
-        graduationTypes: [...state.graduationTypes.filter(filter_removeOldIds(action)), ...action.payload]
+        graduationTypes: [...state.graduationTypes.filter(filter_removeOldIds(action)), ...action.payload].sort(
+          compareItemByName
+        )
       }
     default:
       return state

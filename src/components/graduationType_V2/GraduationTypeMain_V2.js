@@ -1,56 +1,30 @@
 // prettier-ignore
 
 import React, { useState, useEffect, Fragment } from 'react'
-import ItemCreate from './GraduationTypeCreate'
-import ItemUpdate from './GraduationTypeUpdate'
-
-import AddUserForm from './AddUserForm'
-import EditUserForm from './EditUserForm'
-import ItemTable from './GraduationTypeTable'
-import AlertError from 'components/common/AlertError'
-
-import { listGraduationType, createGraduationType, updateGraduationType } from './graduationTypeActions_V2'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import ItemTable from './GraduationTypeTable'
+import ItemCreate from './GraduationTypeCreate'
+import ItemUpdate from './GraduationTypeUpdate'
+import ItemDelete from './GraduationTypeDelete'
+import AlertError from 'components/common/AlertError'
+
+import {
+  listGraduationType,
+  createGraduationType,
+  updateGraduationType,
+  deleteGraduationType
+} from './graduationTypeActions_V2'
+
 const GraduationTypeMain = props => {
-  // Data
-  const usersData = [
-    { id: 1, name: 'Tania', username: 'floppydiskette' },
-    { id: 2, name: 'Craig', username: 'siliconeidolon' },
-    { id: 3, name: 'Ben', username: 'benisphere' }
-  ]
-
   const initialFormState = { id: null, name: '', username: '' }
-
-  // Setting state
-  const [users, setUsers] = useState(usersData)
-  const [currentUser, setCurrentUser] = useState(initialFormState)
-  const [editing, setEditing] = useState(false)
+  const [currentItem, setCurrentItem] = useState(initialFormState)
 
   //first load
   useEffect(() => {
     props.listGraduationType()
   }, [])
-
-  // CRUD operations
-
-  const addUser = user => {
-    user.id = users.length + 1
-    setUsers([...users, user])
-  }
-
-  const deleteUser = id => {
-    setEditing(false)
-
-    setUsers(users.filter(user => user.id !== id))
-  }
-
-  const updateUser = (id, updatedUser) => {
-    setEditing(false)
-
-    setUsers(users.map(user => (user.id === id ? updatedUser : user)))
-  }
 
   //Item create state and handlers
   const [showItemCreate, setShowItemCreate] = useState(false)
@@ -63,29 +37,32 @@ const GraduationTypeMain = props => {
 
   //Item update state and handlers
   const [showItemUpdate, setShowItemUpdate] = useState(false)
-  const openItemUpdate = () => {
+  const openItemUpdate = item => {
+    setCurrentItem(item)
     setShowItemUpdate(true)
   }
   const hideItemUpdate = () => {
+    setCurrentItem(initialFormState)
     setShowItemUpdate(false)
   }
 
   //Item delete state and handlers
   const [showItemDelete, setShowItemDelete] = useState(false)
-  const openItemDelete = () => {
+  const openItemDelete = item => {
+    setCurrentItem(item)
     setShowItemDelete(true)
   }
   const hideItemDelete = () => {
+    setCurrentItem(initialFormState)
     setShowItemDelete(false)
   }
 
-  const editRow = user => {
-    setEditing(true)
-    setCurrentUser({ id: user.id, name: user.name, username: user.username })
-  }
-
   const renderAlertError = () => {
-    if (props.errorStore.source !== 'createGraduationType' && props.errorStore.source !== 'updateGraduationType') {
+    if (
+      props.errorStore.source !== 'createGraduationType' &&
+      props.errorStore.source !== 'updateGraduationType' &&
+      props.errorStore.source !== 'deleteGraduationType'
+    ) {
       return <AlertError errors={props.errorStore} />
     }
   }
@@ -96,35 +73,26 @@ const GraduationTypeMain = props => {
       {renderAlertError()}
       <div className="flex-row">
         <div className="flex-large">
-          {editing ? (
-            <Fragment>
-              <EditUserForm
-                editing={editing}
-                setEditing={setEditing}
-                currentUser={currentUser}
-                updateUser={updateUser}
-              />
-            </Fragment>
-          ) : (
-            <Fragment>{/* <AddUserForm show={addItem} addUser={addUser} /> */}</Fragment>
-          )}
-        </div>
-        <div className="flex-large">
-          {/* <UserTable openAddItem={openAddItem} users={users} editRow={editRow} deleteUser={deleteUser} /> */}
           <ItemTable
             openItemCreate={openItemCreate}
-            users={users}
             loadingItens={props.graduationTypeStore_v2.loading}
             itens={props.graduationTypeStore_v2.graduationTypes}
             openItemUpdate={openItemUpdate}
-            editRow={editRow}
-            deleteUser={deleteUser}
+            openItemDelete={openItemDelete}
           />
           <ItemCreate show={showItemCreate} createItem={props.createGraduationType} hideItemCreate={hideItemCreate} />
-          <ItemUpdate show={showItemUpdate} updateItem={props.updateGraduationType} hideItemUpdate={hideItemUpdate} />
-          {/* <ItemDelete show={showItemDelete} updateItem={props.deleteGraduationType} hideItemUpdate={hideItemDelete} /> */}
-
-          {/* <ItemEdit/> */}
+          <ItemUpdate
+            show={showItemUpdate}
+            updateItem={props.updateGraduationType}
+            hideItemUpdate={hideItemUpdate}
+            item={currentItem}
+          />
+          <ItemDelete
+            show={showItemDelete}
+            deleteItem={props.deleteGraduationType}
+            hideItemDelete={hideItemDelete}
+            item={currentItem}
+          />
         </div>
       </div>
     </div>
@@ -144,7 +112,8 @@ const mapStateToProps = state => ({
 const mapFunctionsToProps = {
   listGraduationType,
   createGraduationType,
-  updateGraduationType
+  updateGraduationType,
+  deleteGraduationType
 }
 
 export default connect(mapStateToProps, mapFunctionsToProps)(GraduationTypeMain)

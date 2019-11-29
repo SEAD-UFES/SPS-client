@@ -55,10 +55,10 @@ export const updateGraduationType = (graduationTypeData, callback_ok) => dispatc
         type: UPDATE_GRADUATIONTYPE_V2,
         payload: res.data
       })
-      callback_ok(graduationTypeData.id)
+      callback_ok(graduationTypeData)
     })
     .catch(err => {
-      handleErrors(err, dispatch)
+      handleErrors(err, dispatch, 'updateGraduationType')
     })
 }
 
@@ -68,12 +68,12 @@ export const deleteGraduationType = (graduationType_id, callback_ok) => dispatch
     .then(res => {
       dispatch({
         type: DELETE_GRADUATIONTYPE_V2,
-        payload: res.data
+        payload: graduationType_id
       })
       callback_ok()
     })
     .catch(err => {
-      handleErrors(err, dispatch)
+      handleErrors(err, dispatch, 'deleteGraduationType')
     })
 }
 

@@ -37,7 +37,7 @@ const GraduationTypeTable = props => {
                       className="btn btn-primary mr-1">
                       Editar
                     </button>
-                    <button onClick={() => props.deleteUser(item.id)} className="btn btn-danger">
+                    <button onClick={() => props.openItemDelete(item)} className="btn btn-danger">
                       Apagar
                     </button>
                   </div>
