@@ -37,14 +37,12 @@ class CallView extends Component {
     return <React.Fragment>{`Chamada ${call.number}`}</React.Fragment>
   }
 
-  renderInfo(call, loading) {
+  renderCallEdit(call, loading) {
     if (call === null || loading) {
       return <Spinner />
     }
-
     return (
-      <div>
-        <div className="btn-edit">
+      <div className="btn-right">
           <DrawFilter permission="call_update" course_id={this.state.course_id}>
             <Link
               className="btn btn-primary"
@@ -56,7 +54,16 @@ class CallView extends Component {
             </Link>
           </DrawFilter>
         </div>
+    )
+  }
 
+  renderInfo(call, loading) {
+    if (call === null || loading) {
+      return <Spinner />
+    }
+
+    return (
+      <section>
         <p>
           <strong>Abertura: </strong>
            {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
@@ -69,7 +76,7 @@ class CallView extends Component {
           <strong>Status: </strong>
           {getCallStatus(call)}
         </p>
-      </div>
+      </section>
     )
   }
 
@@ -83,13 +90,25 @@ class CallView extends Component {
   render() {
     const { errors, call, loading } = this.props
     return (
-      <div className="register" id="main">
+      <div className="view-page">
         <div className="container">
-            <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-              Voltar para o processo
-            </Link>
-            <div className="conteudo">
+
+          <div className="breadcrumb">              
+              <span>Você está em:</span>
+              <Link to="/processes" className="breadcrumb-link">
+                Processos Seletivos
+              </Link>
+              <i class="fas fa-greater-than"></i>
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+                Edital XXX/XXXX
+              </Link>
+              <i class="fas fa-greater-than"></i>
+              <span>{this.renderCallName(call, loading)}</span>
+            </div>
+
+            <div id="main">
               <h1>{this.renderCallName(call, loading)}</h1>
+              {this.renderCallEdit(call, loading)}
               <AlertError errors={errors} />
               {this.renderInfo(call, loading)}
               {this.renderVacancys(call, loading)}

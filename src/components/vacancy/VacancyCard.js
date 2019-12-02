@@ -7,79 +7,70 @@ import { compareByAssignmentName } from 'utils/compareBy'
 export default class VacancyCard extends Component {
   renderTable(call) {
     return (
-      <table className="table table-hover mt-0 mb-0">
-        <thead>
-          <tr>
-            <th>Atribuição</th>
-            <th>Local</th>
-            <th>Restrição</th>
-            <th>Vagas</th>
-            <th>Reserva</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
+      <ul className="table-list">
+        <div class="titulos">
+          <span>Atribuição</span>
+          <span>Vagas</span>
+          <span>Local</span>
+          <span>Restrição</span>
+          <span>Reserva</span>
+          <span></span>
+        </div>
+
           {call.Vacancies.sort(compareByAssignmentName).map(vacancy => {
             return (
-              <tr key={vacancy.id}>
-                <td>{vacancy.Assignment.name}</td>
-                <td>{vacancy.Region ? vacancy.Region.name : <span className="text-secondary">...</span>}</td>
-                <td>{vacancy.Restriction ? vacancy.Restriction.name : <span className="text-secondary">...</span>}</td>
-                <td>{vacancy.qtd}</td>
-                <td>{vacancy.reserve ? 'C.R.' : 'Não'}</td>
-                <td className="text-right">
+              <li key={vacancy.id}>
+                <h3>{vacancy.Assignment.name}</h3>
+                <p>{vacancy.qp}</p>
+                <p>{vacancy.Region ? vacancy.Region.name : <span className="text-secondary">...</span>}</p>
+                <p>{vacancy.Restriction ? vacancy.Restriction.name : <span className="text-secondary">...</span>}</p>
+                <p>{vacancy.reserve ? 'C.R.' : 'Não'}</p>
+                <p className="text-right">
                   <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
                     <Link
-                      className="text-primary"
+                      className="icon-edit"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
-                      <i className="fas fa-cog" />
+                      <i class="fas fa-pencil-alt"></i>
                     </Link>
                   </DrawFilter>{' '}
                   <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
                     <Link
-                      className="text-danger"
+                      className="icon-delete"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
-                      <i className="fas fa-times-circle" />
+                      <i class="fas fa-trash"></i>
                     </Link>
                   </DrawFilter>
-                </td>
-              </tr>
+                </p>
+              </li>
             )
           })}
-        </tbody>
-      </table>
+      </ul>
     )
   }
 
   render() {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Ofertas de vaga</h4>
-            </div>
-            <div className="col">
-              <div className="float-right">
-                <DrawFilter permission="vacancy_create" course_id={this.props.process_id}>
-                  <Link
-                    className="text-success"
-                    to={`/processes/${this.props.call.selectiveProcess_id}/calls/${this.props.call.id}/vacancies/create`}>
-                    <i className="fas fa-plus-circle" /> Adicionar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
-          </div>
+      <section id="ofertas" class="quadro">
+        <h4>Ofertas de vaga</h4>
+
+        <div className="btn-right">
+          <DrawFilter permission="vacancy_create" course_id={this.props.process_id}>
+            <Link
+              className="btn btn-terciary"
+              to={`/processes/${this.props.call.selectiveProcess_id}/calls/${this.props.call.id}/vacancies/create`}>
+              <i className="fas fa-plus-circle" /> Adicionar
+            </Link>
+          </DrawFilter>
         </div>
-        <div className="card-body">
+
+        <div>
           {this.props.call.Vacancies.length > 0 ? (
             this.renderTable(this.props.call)
           ) : (
             <p className="mb-0">Sem oferta de vagas cadastradas.</p>
           )}
         </div>
-      </div>
+      </section>
     )
   }
 }

@@ -25,49 +25,54 @@ class ProcessView extends Component {
     return <React.Fragment>{`Edital ${process.number}/${process.year}`}</React.Fragment>
   }
 
+  renderProcessEdit(process, loading){
+    if (process === null || loading) {
+      return <Spinner />
+    }
+
+    return (
+      <div className="btn-right">
+        <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
+          <Link className="btn btn-primary" to={`/processes/${process.id}/edit`}>
+            <i className="fas fa-cog" /> Editar
+          </Link>
+        </DrawFilter>
+      </div>
+    )
+  }
+
   renderInfoTable(process, loading) {
     if (process === null || loading) {
       return <Spinner />
     }
 
     return (
-      <div>
-        <div className="btn-edit">
-          <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
-            <Link className="btn btn-primary" to={`/processes/${process.id}/edit`}>
-              <i className="fas fa-cog" /> Editar
-            </Link>
+      <section id="info">
+        <div>
+          <p>
+            {process.description}
+          </p>
+        </div>
+
+        <div>
+          <p>
+            <strong>Nível: </strong>
+            {process.Course.GraduationType.name}
+          </p>
+
+          <p>
+            <strong>Curso: </strong>
+            {process.Course.name}
+          </p>
+
+          <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
+            <p>
+              <strong>Visibilidade: </strong>
+              {process.visible ? 'Processo visível' : 'Processo oculto'}
+            </p>
           </DrawFilter>
         </div>
-  
-        <div id="info">
-          <div>
-            <p>
-              {process.description}
-            </p>
-          </div>
-
-          <div>
-            <p>
-              <strong>Nível: </strong>
-              {process.Course.GraduationType.name}
-            </p>
-
-            <p>
-              <strong>Curso: </strong>
-              {process.Course.name}
-            </p>
-
-            <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
-              <p>
-                <strong>Visibilidade: </strong>
-                {process.visible ? 'Processo visível' : 'Processo oculto'}
-              </p>
-            </DrawFilter>
-          </div>
-          
-        </div>
-      </div>
+      </section>
     )
   }
 
@@ -146,9 +151,8 @@ class ProcessView extends Component {
     const noticeStore = this.props.noticeStore
 
     return (
-      <div className="process-view" id="main">
+      <div className="process-view" >
         <div className="container">
-
           <div className="breadcrumb">              
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
@@ -158,8 +162,9 @@ class ProcessView extends Component {
             <span>{this.renderProcessName(process, loading)}</span>
           </div>
 
-          <div className="conteudo">
+          <div id="main">
             <h1>{this.renderProcessName(process, loading)}</h1>
+            {this.renderProcessEdit(process, loading)}
             {this.renderInfoTable(process, loading)}
             {this.renderNoticeCard(noticeStore, processStore)}
             {this.renderOther(noticeStore, processStore)}

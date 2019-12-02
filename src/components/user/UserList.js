@@ -31,6 +31,22 @@ class UserList extends Component {
     this.props.getUserList(page, pageSize)
   }
 
+  renderUserAdd(users, loading){
+    if (users === null || loading) {
+      return <Spinner />
+    }
+
+    return (
+      <div className="btn-right">
+        <DrawFilter permission="user_create">
+          <Link className="btn btn-primary" to={`${this.props.match.url}/create`}>
+            <i className="fas fa-plus-circle" /> Adicionar
+          </Link>
+        </DrawFilter>
+      </div>
+    )
+  }
+
   renderUserList(users, loading) {
     if (users === null || loading) {
       return <Spinner />
@@ -38,88 +54,43 @@ class UserList extends Component {
 
     if (users.length === 0) {
       return (
-        <div className="card mb-4">
-          <div className="card-header">
-            <div className="row">
-              <div className="col">
-                <h4 className="mb-0">Usuários</h4>
-              </div>
-              <div className="col">
-                <div className="float-right">
-                  <DrawFilter permission="user_create">
-                    <Link className="text-success" to={`${this.props.match.url}/create`}>
-                      <i className="fas fa-plus-circle" /> Adicionar
-                    </Link>
-                  </DrawFilter>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card-body">
+        <div>
             <p>Sem resultados para exibir.</p>
-          </div>
         </div>
       )
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Usuários</h4>
-            </div>
-            <div className="col">
-              <div className="float-right">
-                <DrawFilter permission="user_create">
-                  <Link className="text-success" to={`${this.props.match.url}/create`}>
-                    <i className="fas fa-plus-circle" /> Adicionar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
+      <div>
+        <ul className="table-list">
+          <div class="titulos">
+            <span>Nome</span>
+            <span>Login/Email</span>
+            <span>Status</span>
           </div>
-        </div>
-        <div className="card-body">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Nome/Sobrenome</th>
-                <th>Login/Email</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.users.map(user => {
-                return (
-                  <tr key={user.id}>
-                    <td>
-                      <Link to={`${this.props.match.url}/${user.id}`}>
-                        {user.Person ? `${user.Person.name} ${user.Person.surname}` : `Sem nome`}
-                      </Link>
-                    </td>
 
-                    <td>{user.login}</td>
+          {users.users.map(user => {
+            return (
+              <li key={user.id}>
+                <h3>
+                  <Link to={`${this.props.match.url}/${user.id}`}>
+                    {user.Person ? `${user.Person.name} ${user.Person.surname}` : `Sem nome`}
+                  </Link>
+                </h3>
 
-                    <td>{user.authorized ? 'Ativo' : 'Desativado'}</td>
+                <p>{user.login}</p>
 
-                    <td>
-                      <Link className="text-primary" to={`${this.props.match.url}/${user.id}`}>
-                        <i className="fas fa-search-plus" />
-                      </Link>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-          <Pagination
-            currentPage={users.info.currentPage}
-            numberOfPages={users.info.numberOfPages}
-            onChangePage={this.onChangePage}
-          />
-        </div>
+                <p>{user.authorized ? 'Ativo' : 'Desativado'}</p>
+              </li>
+            )
+          })}
+        </ul>
+
+        <Pagination
+          currentPage={users.info.currentPage}
+          numberOfPages={users.info.numberOfPages}
+          onChangePage={this.onChangePage}
+        />
       </div>
     )
   }
@@ -131,15 +102,24 @@ class UserList extends Component {
     return (
       <div className="user-list">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Lista de usuários</h1>
-              <p className="lead text-muted" />
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Usuários</span>
+          </div>
 
-              {this.renderUserList(users, loading)}
+          <div id="main">
+            <h1>Lista de usuários</h1>
+            {this.renderUserAdd(users, loading)}
 
-              {/* {usersContent} */}
-            </div>
+            <p className="lead text-muted" />
+
+            {this.renderUserList(users, loading)}
+
+            {/* {usersContent} */}
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ class CallDelete extends Component {
     return (
       <div className="row">
         <div className="col">
-          <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+          <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
         </div>
         <div className="col">
           <input
@@ -66,41 +66,25 @@ class CallDelete extends Component {
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Excluir chamada</h4>
-        </div>
-        <div className="card-body">
-          <table className="table table-hover mb-0">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Id:</strong>
-                </td>
-                <td>{call.id}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Número:</strong>
-                </td>
-                <td>{call.number}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Abertura:</strong>
-                </td>
-                <td>{moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Encerramento:</strong>
-                </td>
-                <td>{moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
-              </tr>
-            </tbody>
-          </table>
-          {this.renderChoices()}
-        </div>
+      <div>
+        <p>
+          <strong>Número: </strong>
+          {call.number}
+        </p>
+        <p>
+          <strong>Id: </strong>
+          {call.id}
+        </p>
+        <p>
+          <strong>Data de abertura: </strong>
+          {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+        </p>
+        <p>
+          <strong>Data de encerramento: </strong>
+          {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+        </p>
+        
+        {this.renderChoices()}
       </div>
     )
   }
@@ -111,15 +95,23 @@ class CallDelete extends Component {
     return (
       <div className="call-delete">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
-              </Link>
-              <h1 className="display-4">Chamada</h1>
-              <AlertError errors={errorStore} />
-              {this.renderInfo(call, loading)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Excluir chamada</span>
+          </div>
+
+          <div className="form-container" id="main">
+            <h1>Excluir chamada</h1>
+            <AlertError errors={errorStore} />
+            {this.renderInfo(call, loading)}
           </div>
         </div>
       </div>

@@ -199,7 +199,7 @@ class ProcessList extends Component {
     return (
       <React.Fragment>
         <DrawFilter permission="selectiveprocess_create" anyCourse={true}>
-          <Link className="btn-add" to={`${this.props.match.url}/create`}>
+          <Link className="btn btn-primary" to={`${this.props.match.url}/create`}>
             <i className="fas fa-plus-circle" /> Adicionar
           </Link>
         </DrawFilter>
@@ -244,8 +244,6 @@ class ProcessList extends Component {
   renderProcesses(processes) {
     return (
       <div className="">
-        <div className="col text-right">{this.renderAdd()}</div>
-
         {processes.selectiveProcesses.length > 0 ? (
           this.renderTable(processes)
         ) : (
@@ -388,23 +386,25 @@ class ProcessList extends Component {
     const processTable = processes === null || loading ? <Spinner /> : this.renderProcesses(processes)
 
     return (
-      <div className="user-list" id="main">
+      <div className="user-list">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Processos seletivos</h1>
-              <p className="lead text-muted" />
-              <ProcessFilters
-                filters={this.props.filters}
-                onCheckItem={this.markFilterV2}
-                onSubmit={this.props.addFilter}
-                onRemoveFilter={this.removeFilter}
-                onClearFilters={this.clearFiltersV2}
-              />
-              {/* {filterBox} */}
-              {processTable}
-            </div>
+          <div className="breadcrumb"></div>
+
+          <div id="main">
+            <h1>Processos seletivos</h1>
+            <div className="btn-right">{this.renderAdd()}</div>
+
+            <ProcessFilters
+              filters={this.props.filters}
+              onCheckItem={this.markFilterV2}
+              onSubmit={this.props.addFilter}
+              onRemoveFilter={this.removeFilter}
+              onClearFilters={this.clearFiltersV2}
+            />
+
+            {processTable}
           </div>
+
         </div>
       </div>
     )

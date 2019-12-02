@@ -136,15 +136,10 @@ class VacancyCreate extends Component {
 
   renderForm(assignmentOptions, regionsOptions, restrictionsOptions, errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Criar oferta de vaga</h4>
-        </div>
-        <div className="card-body">
           <form noValidate onSubmit={this.onSubmit}>
             <SelectListGroup
               name="assignment_id"
-              label="Atribuição: *"
+              label="Atribuição"
               placeholder="Selecione a atribuição"
               value={this.state.assignment_id}
               options={assignmentOptions}
@@ -152,51 +147,50 @@ class VacancyCreate extends Component {
               error={errors.assignment_id}
             />
 
-            <SelectListGroup
-              name="region_id"
-              label="Local:"
-              placeholder="Selecione o polo associado"
-              value={this.state.region_id}
-              options={regionsOptions}
-              onChange={this.onChange}
-              error={errors.region_id}
-            />
-
-            <SelectListGroup
-              name="restriction_id"
-              label="Restrição:"
-              placeholder="Selecione a restrição da vaga"
-              value={this.state.restriction_id}
-              options={restrictionsOptions}
-              onChange={this.onChange}
-              error={errors.restriction_id}
-            />
-
             <TextFieldGroup
               type="text"
               name="qtd"
-              label="Quantidade: *"
-              placeholder="Quantidade"
+              label="Quantidade"
               value={this.state.qtd}
               onChange={this.onChange}
               error={errors.qtd}
             />
 
+            <SelectListGroup
+              name="region_id"
+              label="Polo"
+              placeholder="Selecione o polo associado"
+              value={this.state.region_id}
+              options={regionsOptions}
+              onChange={this.onChange}
+              error={errors.region_id}
+              info="Campo opcional"
+            />
+
+            <SelectListGroup
+              name="restriction_id"
+              label="Restrição"
+              placeholder="Selecione a restrição da vaga"
+              value={this.state.restriction_id}
+              options={restrictionsOptions}
+              onChange={this.onChange}
+              error={errors.restriction_id}
+              info="Campo opcional"
+            />
+            
             <CheckBoxFieldGroup
               id="reserve-checkbox"
               name="reserve"
-              text="Reserva:"
+              text="Reserva"
               value="Esta oferta de vagas permite cadastro de reserva."
               checked={this.state.reserve}
               error={errors.reserve}
-              info=""
               onChange={this.onCheck}
             />
 
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
+            <input type="submit" className="btn btn-primary" value="Criar" />
           </form>
-        </div>
-      </div>
+
     )
   }
 
@@ -240,17 +234,28 @@ class VacancyCreate extends Component {
     return (
       <div className="vacancy-create">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link
-                to={`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`}
-                className="btn btn-light">
-                Voltar para a chamada
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link
+                to={`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`} className="breadcrumb-link"                >
+                Chamada XXX
               </Link>
-              <h1 className="display-4">Oferta de vaga</h1>
+            <i class="fas fa-greater-than"></i>
+            <span>Criar oferta</span>
+          </div>
+
+          <div className="form-container" id="main">
+            <h1>Nova oferta de vaga</h1>
               <AlertError errors={errors} />
               {this.renderForm(assignmentOptions, regionsOptions, restrictionsOptions, errors)}
-            </div>
           </div>
         </div>
       </div>

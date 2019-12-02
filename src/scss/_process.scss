@@ -1,8 +1,10 @@
-.process-view, .register{
+.process-view, .register, .view-page{
 
-  #info{
+  section{
     margin-bottom: 2rem;
-
+  }
+  
+  #info{
     > div{
       strong{ color: $laranjaMedio; }
     }
@@ -11,81 +13,46 @@
   .quadro{
     position: relative;
     border-top: 2px solid $azulClaro;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 
     h4{
-      margin-top: 1.5rem;
+      margin-top: 2.5rem;
       margin-bottom: 2rem;
     }
 
     &#anexos{
       li{
+
         div{ 
-          display: inline-block;
-
           &:first-of-type{ margin-right: 1rem; }
+          
+          &:nth-of-type(2){ 
+            a{
+              color: black;
+  
+              i{ 
+                margin-right: .5rem; 
+                color: $laranjaRegular;
+              }
 
-          a{
-            color: black;
-
-            i{ 
-              margin-right: .5rem; 
-              color: $laranjaRegular;
+              &:hover{ text-decoration: underline; }
             }
           }
+
+          &:last-of-type{ 
+            i{ padding: 0 .3rem; }
+          }         
 
         }
       }
     }
 
-    &#chamadas{
-      width: 100%;
-      margin-bottom: 3rem;
+    .admin-buttons{
+      position: absolute;
+      right: 0;
+      top: .5rem;
 
-      .titulos {
-        display: none;
-      }
-
-      li {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        margin-bottom: 1.2rem;
-
-        h3 {
-          font-size: 1.15rem;
-          font-weight: 500;
-          margin-top: 1rem;
-          color: $laranjaMedio;
-
-          a {
-            color: $laranjaMedio;
-
-            &:hover {
-              border-bottom: solid 1.5px $laranjaMedio;
-              color: $laranjaMedio;
-            }
-          }
-        }
-
-        p {
-          margin: 0.3rem 0 !important;
-        }
-
-        .text-right{
-
-          i{ padding: 0 .3rem; }
-
-          .icon-read{
-
-            color: $laranjaMedio !important;
-
-            i{ color: $laranjaMedio; }
-          }
-
-          // .icon-delete i { color: $vermelho; }
-        }
-      }
+      i{ padding: 0 .3rem; }
     }
 
   }
@@ -102,84 +69,24 @@
       }
     }
 
-    .quadro{
-      &#chamadas{
-      .titulos {
+    .quadro#anexos{
+      li{
         display: flex;
-        justify-content: space-between;
-  
-        span {
-          font-weight: 600;
-          color: $azulMedio;
-          font-size: 1.1rem;
-          margin: .8rem 0;
-          display: inline-block;
-          flex: 1 1 auto;
-  
-          &:nth-of-type(1) {
-            width: 12%;
-          }
-          &:nth-of-type(2) {
-            width: 30%;
-          }
-          &:nth-of-type(3) {
-            width: 30%;
-          }
-          &:nth-of-type(4) {
-            width: 28%;
-          }
- 
-        }
-      }
-  
-      li {
         flex-direction: row;
-        margin-bottom: 0;
-        display: flex;
-        justify-content: space-between;
-  
-        p,
-        h3 {
-          margin: 1rem 0 !important;
-          position: relative !important;
-          display: inline-block;
-          font-size: 1rem;
-          vertical-align: top;
-          flex: 1 1 auto;
-        }
-  
-        p {
-          font-weight: 300;
-          color: black;
-          font-style: normal;
-  
-          &:nth-of-type(1) {
-            width: 30%;
+        justify-content: flex-start;
+
+        div{          
+          &:nth-of-type(2){ 
+            flex-grow: 1;
           }
-          &:nth-of-type(2) {
-            width: 30%;
-          }
-          &:nth-of-type(3) {
-            width: 28%;
-          }
-        }
-  
-        h3 {
-          width: 12%;
-          font-weight: 600;
-  
-          a:hover {
-            border-bottom: solid 0.5px $azulRegular;
-            color: $azulRegular;
-          }
-  
-          span {
-            display: none;
-          }
+
+          &:last-of-type{ 
+            align-self: flex-end;
+          }         
+
         }
       }
     }
-  }
 
   }
 }

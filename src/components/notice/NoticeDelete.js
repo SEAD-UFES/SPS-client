@@ -43,7 +43,7 @@ class NoticeDelete extends Component {
     return (
       <div className="row">
         <div className="col">
-          <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+          <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
         </div>
         <div className="col">
           <input
@@ -64,31 +64,20 @@ class NoticeDelete extends Component {
       return <Spinner />
     }
 
-    return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Excluir notícia</h4>
-        </div>
-        <div className="card-body">
-          <table className="table table-hover mb-0">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Id:</strong>
-                </td>
-                <td>{notice.id}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Título:</strong>
-                </td>
-                <td>{notice.title}</td>
-              </tr>
-            </tbody>
-          </table>
-          {this.renderChoices()}
-        </div>
+    return (    
+      <div>
+        <p>
+          <strong>Título: </strong>
+          {notice.title}
+        </p>
+        <p>
+          <strong>Id: </strong>
+          {notice.id}
+        </p>
+        
+        {this.renderChoices()}
       </div>
+
     )
   }
 
@@ -98,16 +87,25 @@ class NoticeDelete extends Component {
     return (
       <div className="notice-delete">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
-              </Link>
-              <h1 className="display-4">Notícia</h1>
-              <AlertError errors={errorStore} />
-              {this.renderInfo(notice, loading)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Excluir notícia</span>
           </div>
+
+          <div className="form-container" id="main">
+            <h1>Excluir notícia</h1>
+            <AlertError errors={errorStore} />
+            {this.renderInfo(notice, loading)}
+          </div>
+
         </div>
       </div>
     )

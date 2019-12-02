@@ -35,6 +35,55 @@ export default class PublicationCard extends Component {
     return result
   }
 
+    // renderPublicationLine(process, publication) {
+  //   return (
+  //     <tr key={publication.id} className={publication.valid ? '' : 'text-secondary'}>
+  //       <td>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</td>
+  //       <td>{this.renderPublicationLevel(process, publication)}</td>
+  //       <td>{publication.PublicationType.name}</td>
+  //       <td>{publication.title}</td>
+  //       <td className="text-right">
+  //         <Link
+  //           className="text-primary"
+  //           to={{
+  //             pathname: `/processes/${process.id}/publications/${publication.id}`,
+  //             state: { publication: publication }
+  //           }}>
+  //           <i className="fas fa-search-plus" />
+  //         </Link>{' '}
+  //         <a
+  //           className={publication.valid ? '' : 'isDisabled'}
+  //           onClick={publication.valid ? e => {} : e => e.preventDefault()}
+  //           href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
+  //           target="_blank"
+  //           rel="noopener noreferrer">
+  //           <i className="fas fa-file-download" />
+  //         </a>{' '}
+  //         <DrawFilter permission="publication_update" course_id={process.Course.id}>
+  //           <Link
+  //             className="text-primary"
+  //             to={{
+  //               pathname: `/processes/${process.id}/publications/${publication.id}/update`,
+  //               state: { publication: publication }
+  //             }}>
+  //             <i className="fas fa-cog" />
+  //           </Link>
+  //         </DrawFilter>{' '}
+  //         <DrawFilter permission="publication_delete" course_id={process.Course.id}>
+  //           <Link
+  //             className="text-danger"
+  //             to={{
+  //               pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
+  //               state: { publication: publication }
+  //             }}>
+  //             <i className="fas fa-times-circle" />
+  //           </Link>
+  //         </DrawFilter>
+  //       </td>
+  //     </tr>
+  //   )
+  // }
+
   renderPublicationLine(process, publication) {
     return (
       <li>
@@ -50,6 +99,28 @@ export default class PublicationCard extends Component {
             {publication.title}
 
           </a>
+        </div>
+        <div className="text-right">
+          <DrawFilter permission="publication_update" course_id={process.Course.id}>
+             <Link
+              className="icon-edit"
+              to={{
+                pathname: `/processes/${process.id}/publications/${publication.id}/update`,
+                state: { publication: publication }
+              }}>
+              <i class="fas fa-pencil-alt"></i>
+            </Link>
+          </DrawFilter>{' '}
+          <DrawFilter permission="publication_delete" course_id={process.Course.id}>
+            <Link
+              className="icon-delete"
+              to={{
+                pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
+                state: { publication: publication }
+              }}>
+              <i class="fas fa-trash"></i>
+            </Link>
+          </DrawFilter>
         </div>
       </li>
     )
@@ -70,14 +141,16 @@ export default class PublicationCard extends Component {
       <section id="anexos" class="quadro">
         <h4>Anexos</h4>
 
-        <DrawFilter permission="publication_create" course_id={this.props.process.Course.id}>
-          <Link className="btn btn-add" to={{
-              pathname: `/processes/${this.props.process.id}/publications/create`,
-              state: { selectiveProcess: this.props.process }
-            }}>
-            <i className="fas fa-plus-circle" /> Adicionar
-          </Link>
-        </DrawFilter>
+        <div className="btn-right">
+          <DrawFilter permission="publication_create" course_id={this.props.process.Course.id}>
+            <Link className="btn btn-terciary" to={{
+                pathname: `/processes/${this.props.process.id}/publications/create`,
+                state: { selectiveProcess: this.props.process }
+              }}>
+              <i className="fas fa-plus-circle" /> Adicionar
+            </Link>
+          </DrawFilter>
+        </div>
 
           {this.props.process.Publications.length > 0 ? (
             this.renderTable(this.props.process)

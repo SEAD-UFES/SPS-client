@@ -16,7 +16,7 @@ body {
   position: relative;
   padding: 0 1.5rem;
   max-width: unset;
-
+  
   @media screen and (min-width: 720px){
     padding: 0 2rem;
   }
@@ -34,17 +34,17 @@ footer {
 }
 
 #main {
-  min-height: calc(100vh - 72px - 48px - 40px - 24px); /* ajustar depois de definir as barras */
-  padding-top: 1.5rem;
+  position: relative;
+  min-height: calc(100vh - 72px - 48px - 40px - 24px - 92px - 6rem); /* ajustar depois de definir as barras */
   margin-bottom: 6rem;
-
-  .conteudo{ position: relative; }
 }
 
 a {
   color: $azulRegular;
 
   &:hover {
+    text-decoration: none;
+
     &:after{
       content: "";
       height: 1px;
@@ -76,19 +76,37 @@ ul {
   font-weight: 500;
   height: 2.25rem;
   padding: 0 1.5rem;
-  line-height: 1;
+  // line-height: 1;
 
   &:hover, &:active{
     background-color: $laranjaEscuro !important;
     border: none !important;
   }
+
+  i{ font-size: 1rem; }
 }
 
-.btn-add{ 
-  position: absolute;
-  right: 0;
-  top: .5rem;
-  padding-top: .4rem;
+.btn-secondary{
+  background-color: white;
+  color: $laranjaMedio;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-size: 1.3rem;
+  font-weight: 500;
+  height: 2.25rem;
+  padding: 0 1.5rem;
+  line-height: 1;
+  border: 1px solid $laranjaMedio;
+  border-radius: 2px;
+
+  &:hover, &:active{
+    background-color: $laranjaExtraClaro !important;
+    color: $laranjaMedio;
+    border: 1px solid $laranjaMedio;
+  }
+}
+
+.btn-terciary{
   color: $laranjaMedio;
   text-transform: lowercase;
   font-variant: small-caps;
@@ -111,17 +129,17 @@ ul {
   }
 
   i{ font-size: 1rem; }
-
 }
 
-.btn-edit{
-  position: absolute;
-  right: 0;
-  top: .5rem;
+.btn-right{
+  display: inline-block;
+  vertical-align: text-bottom;
 
-  i{ font-size: 1rem; }
-  
-  a{ padding-top: .4rem; }
+  @media screen and (min-width: 800px) {
+    position: absolute;
+    right: 0;
+    top: 2rem;
+  }
 }
 
 .breadcrumb{
@@ -156,7 +174,6 @@ ul {
   span:last-of-type{ color: $azulRegular; }
 }
 
-
 .bg-info {
   background-color: $azulRegular !important;
 }
@@ -171,14 +188,18 @@ ul {
 }
 
 h1 {
-  margin: 3rem 0;
+  margin: 2rem 0;
   color: $azulRegular;
   font-weight: bold !important;
   font-size: 40px !important;
+  display: inline-block;
+  margin-right: 2rem;
 }
 
 h2, h3, h4{
   color: $azulRegular;
+  display: inline-block;
+  margin-right: 2rem;
 }
 
 .table td,
@@ -211,9 +232,11 @@ h2, h3, h4{
   align-items: flex-end;
 }
 
+@import 'scss/pagination';
 @import 'scss/nav';
 @import 'scss/filtros';
 @import 'scss/processesList';
 @import 'scss/forms';
 @import 'scss/process';
 @import 'scss/footer';
+@import 'scss/table-list';

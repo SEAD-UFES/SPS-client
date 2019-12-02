@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom'
 export default class ParameterList extends Component {
   render() {
     return (
-      <div className="parameter-list">
+      <div className="parameter-list" id="main">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Parâmetros</h1>
-              <ul className="list-group list-group-flush">
+              <h1>Parâmetros</h1>
+              <ul>
                 <li className="list-group-item">
                   <Link to={`/users`}>Usuários</Link>
                 </li>
@@ -41,8 +39,6 @@ export default class ParameterList extends Component {
                   <Link to={`${this.props.match.path}/graduationtypes`}>Níveis de graduação</Link>
                 </li>
               </ul>
-            </div>
-          </div>
         </div>
       </div>
     )

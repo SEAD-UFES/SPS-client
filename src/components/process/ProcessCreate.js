@@ -183,15 +183,22 @@ class ProcessCreate extends Component {
     )
 
     return (
-      <div className="register" id="main">
-        <Link to="/processes" className="btn btn-light">
-          Voltar para a lista de processos
-        </Link>
+      <div className="register">
+        <div className="container">
+          <div className="breadcrumb">              
+              <span>Você está em:</span>
+              <Link to="/processes" className="breadcrumb-link">
+                Processos Seletivos
+              </Link>
+              <i class="fas fa-greater-than"></i>
+              <span>Novo processo</span>
+            </div>
 
-        <div className="form-container">
-          <h1 className="display-4">Processo seletivo</h1>
-          <AlertError errors={this.props.errorStore} />
-          {this.renderForm(this.state, errors, courseOptions)}
+          <div className="form-container" id="main">
+            <h1>Novo processo</h1>
+            <AlertError errors={this.props.errorStore} />
+            {this.renderForm(this.state, errors, courseOptions)}
+          </div>
         </div>
       </div>
     )

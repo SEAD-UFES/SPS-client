@@ -92,16 +92,16 @@ class Pagination extends React.Component {
     }
 
     return (
-      <ul className="pagination justify-content-center mb-0">
-        <li className={`page-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+      <ul className="pagination justify-content-center">
+        {/* <li className={`page-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => this.setPage(1)}>
             <i className="fas fa-step-backward" />
           </button>
-        </li>
+        </li> */}
 
-        <li className={`page-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+        <li className={`page-item arrow ${pager.currentPage === 1 ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => this.setPage(pager.currentPage - 1)}>
-            <i className="fas fa-backward" />
+          <i class="fas fa-angle-left"></i> Anterior
           </button>
         </li>
 
@@ -113,16 +113,16 @@ class Pagination extends React.Component {
           </li>
         ))}
 
-        <li className={`page-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+        <li className={`page-item arrow ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => this.setPage(pager.currentPage + 1)}>
-            <i className="fas fa-forward" />
+          Próxima <i class="fas fa-angle-right"></i> 
           </button>
         </li>
-        <li className={`page-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+        {/* <li className={`page-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => this.setPage(pager.totalPages)}>
             <i className="fas fa-step-forward" />
           </button>
-        </li>
+        </li> */}
       </ul>
     )
   }

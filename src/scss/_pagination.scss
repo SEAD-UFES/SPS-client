@@ -1,0 +1,35 @@
+.pagination{
+  margin-top: 5rem;
+
+  .page-item{
+
+    button{
+      border: none;
+      background: none;
+      color: $laranjaMedio;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 24px;
+      padding: 0;
+      height: 24px;
+      margin: 0 .25rem;
+    }
+
+    &.disabled button{
+      color: rgba(black, .3);
+    }
+
+    &.active button{
+      background-color: $azulClaro;
+      color: $azulRegular;
+      border-radius: 2px;
+    }
+
+    &.arrow button{
+      width: auto;
+
+      &:first-of-type{ margin-right: 1rem; }
+      &:last-of-type{ margin-left: 1rem; }
+    }
+  }
+}
