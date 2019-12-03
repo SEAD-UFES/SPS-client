@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { clearErrors } from 'actions/errorActions'
@@ -109,9 +110,9 @@ class RestrictionList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar restrição
+          <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
 
@@ -127,72 +128,66 @@ class RestrictionList extends Component {
     //item list
     const restrictionsTable = (
       <div>
-        <h4 className="mb-2">Lista de restrições</h4>
         {RestrictionList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+            <div className="titulos">
+                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+                {/* <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th> */}
+                <span>Descrição</span>
+                <span></span>
+            </div>
               {restrictionsList.length > 0 ? (
                 restrictionsList.map(restriction => {
                   return (
-                    <tr key={restriction.id}>
-                      <td>{restriction.name}</td>
-                      <td>
+                    <li key={restriction.id}>
+                      <h3>{restriction.name}</h3>
+                      <p>
                         {restriction.description ? (
                           restriction.description
                         ) : (
                           <span className="text-muted">Sem descrição.</span>
                         )}
-                      </td>
-                      <td>
+                      </p>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${restriction.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <RestrictionModalForm
+                        <button
+                          type="button"
+                          className="btn btn-icon"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${restriction.id}`}>
+                          <i className="fas fa-trash" />
+                        </button>
+                      </p>
+                      <RestrictionModalForm
                           targetName={`editModal-${restriction.id}`}
                           mode="edit"
                           item={restriction}
                           editFunction={this.props.updateRestriction}
                           reloadFunction={this.props.getRestrictions}
                         />{' '}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-danger"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${restriction.id}`}>
-                          <i className="fas fa-times-circle" />
-                        </button>
                         <RestrictionModalDelete
                           targetName={`deleteModal-${restriction.id}`}
                           item={restriction}
                           deleteFunction={this.props.deleteRestriction}
                           reloadFunction={this.props.getRestrictions}
                         />
-                      </td>
-                    </tr>
+                    </li>
                   )
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
+                <li>
+                  <p>Sem itens para exibir</p>
+                </li>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
+          <p>Sem itens para exibir</p>
         )}
       </div>
     )
@@ -200,13 +195,20 @@ class RestrictionList extends Component {
     return (
       <div className="restrictions">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Restrições</h1>
-              <p className="lead text-muted">Restrições que serão ofertadas pelo sistema</p>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Restrições</span>
+          </div>
+
+          <div id="main">
+              <h1>Restrições</h1>
               {addItemTool}
+              {/* <p className="lead text-muted">Restrições que serão ofertadas pelo sistema</p> */}
               {restrictionsTable}
-            </div>
           </div>
         </div>
       </div>

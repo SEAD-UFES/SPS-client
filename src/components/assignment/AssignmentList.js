@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -109,11 +110,12 @@ class AssignmentList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar atribuição
+            <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
+
 
         <AssignmentModalForm
           mode="add"
@@ -127,72 +129,68 @@ class AssignmentList extends Component {
     //item list
     const assignmentsTable = (
       <div>
-        <h4 className="mb-2">Lista de atribuições</h4>
         {assignmentList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+            <div className="titulos">
+                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+                {/* <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th> */}
+                <span>Descrição</span>
+                <span></span>
+            </div>
               {assignmentList.length > 0 ? (
                 assignmentList.map(assignment => {
                   return (
-                    <tr key={assignment.id}>
-                      <td>{assignment.name}</td>
-                      <td>
+                    <li key={assignment.id}>
+                      <h3>{assignment.name}</h3>
+                      <p>
                         {assignment.description ? (
                           assignment.description
                         ) : (
                           <span className="text-muted">Sem descrição.</span>
                         )}
-                      </td>
-                      <td>
+                      </p>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${assignment.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <AssignmentModalForm
+                        <button
+                          type="button"
+                          className="btn btn-icon"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${assignment.id}`}>
+                          <i className="fas fa-trash" />
+                        </button>
+                      </p>
+                      <AssignmentModalForm
                           targetName={`editModal-${assignment.id}`}
                           mode="edit"
                           item={assignment}
                           editFunction={this.props.updateAssignment}
                           reloadFunction={this.props.getAssignments}
                         />{' '}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-danger"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${assignment.id}`}>
-                          <i className="fas fa-times-circle" />
-                        </button>
                         <AssignmentModalDelete
                           targetName={`deleteModal-${assignment.id}`}
                           item={assignment}
                           deleteFunction={this.props.deleteAssignment}
                           reloadFunction={this.props.getAssignments}
                         />
-                      </td>
-                    </tr>
+                    </li>
                   )
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
+                <li>
+                  Sem itens para exibir
+                </li>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
+          <p>
+            Sem itens para exibir
+          </p>
         )}
       </div>
     )
@@ -200,13 +198,20 @@ class AssignmentList extends Component {
     return (
       <div className="assignments">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Atribuições</h1>
-              <p className="lead text-muted">Atribuições que serão ofertadas pelo sistema</p>
-              {addItemTool}
-              {assignmentsTable}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Atribuições</span>
+          </div>
+
+          <div id="main">
+            <h1>Atribuições</h1>
+            {addItemTool}
+            {/* <p className="lead text-muted">Atribuições que serão ofertadas pelo sistema</p> */}
+            {assignmentsTable}
           </div>
         </div>
       </div>

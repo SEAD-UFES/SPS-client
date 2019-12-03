@@ -35,13 +35,13 @@
                 color: $laranjaRegular;
               }
 
-              &:hover{ text-decoration: underline; }
+              &:hover{ 
+                border: none;
+                margin-bottom: none;
+                text-decoration: underline;
+              }
             }
-          }
-
-          &:last-of-type{ 
-            i{ padding: 0 .3rem; }
-          }         
+          }   
 
         }
       }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -91,9 +92,9 @@ class GraduationTypeList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar nível de formação
+            <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
 
@@ -109,66 +110,59 @@ class GraduationTypeList extends Component {
     //item list
     const graduationTypesTable = (
       <div>
-        <h4 className="mb-2">Lista de niveis de formação</h4>
         {graduationTypeList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
+          <ul className="table-list">
+              <div className="titulos">
+                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
                 {/* <th>Descrição</th> */}
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+                <span></span>
+              </div>
               {graduationTypeList.length > 0 ? (
                 graduationTypeList.map(graduationType => {
                   return (
-                    <tr key={graduationType.id}>
-                      <td>{graduationType.name}</td>
+                    <li key={graduationType.id}>
+                      <h3>{graduationType.name}</h3>
                       {/* <td>{graduationType.description ? graduationType.description : ""}</td> */}
-                      <td>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${graduationType.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <GraduationTypeModalForm
+                        <button
+                          type="button"
+                          className="btn btn-icon"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${graduationType.id}`}>
+                          <i className="fas fa-trash" />
+                        </button>
+                      </p>
+                      <GraduationTypeModalForm
                           targetName={`editModal-${graduationType.id}`}
                           mode="edit"
                           item={graduationType}
                           editFunction={this.props.updateGraduationType}
                           reloadFunction={this.props.getGraduationTypes}
                         />{' '}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-danger"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${graduationType.id}`}>
-                          <i className="fas fa-times-circle" />
-                        </button>
                         <GraduationTypeModalDelete
                           targetName={`deleteModal-${graduationType.id}`}
                           item={graduationType}
                           deleteFunction={this.props.deleteGraduationType}
                           reloadFunction={this.props.getGraduationTypes}
                         />
-                      </td>
-                    </tr>
+                    </li>
                   )
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
+                <li>
+                  Sem itens para exibir
+                </li>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
+            <p colSpan="3">Sem itens para exibir</p>
         )}
       </div>
     )
@@ -176,13 +170,20 @@ class GraduationTypeList extends Component {
     return (
       <div className="graduationTypes">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Níveis de formação</h1>
-              <p className="lead text-muted">Níveis de formação disponíveis dentro do sistema</p>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Níveis de formação</span>
+          </div>
+
+          <div id="main">
+              <h1>Níveis de formação</h1>
+              {/* <p className="lead text-muted">Níveis de formação disponíveis dentro do sistema</p> */}
               {addItemTool}
               {graduationTypesTable}
-            </div>
           </div>
         </div>
       </div>

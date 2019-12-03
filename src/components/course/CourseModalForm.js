@@ -167,7 +167,7 @@ class CourseModalForm extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id={`${this.props.targetName}-ModalLabel`}>
-                {this.props.mode === 'edit' ? 'Editar curso' : 'Adicionar curso'}
+                {this.props.mode === 'edit' ? 'Editar curso' : 'Novo curso'}
               </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -178,7 +178,8 @@ class CourseModalForm extends Component {
                 <div className="">
                   <div className="form-group">
                     <SelectListGroup
-                      placeholder="* Escolha o nível de graduação"
+                      placeholder="Escolha o nível de graduação"
+                      label="Nível"
                       name="graduationType_id"
                       value={this.state.graduationType_id}
                       options={graduationTypeOptions}
@@ -189,7 +190,7 @@ class CourseModalForm extends Component {
                     <TextFieldGroup
                       type="text"
                       name="name"
-                      placeholder="* Nome"
+                      placeholder="Nome"
                       value={this.state.name}
                       onChange={this.onChange}
                       error={errors.name}

@@ -45,35 +45,22 @@ class RoleTypeDelete extends Component {
         <Spinner />
       ) : (
         <div>
-          <h4 className="mb-2">Informações</h4>
-          <table className="table">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Id:</strong>
-                </td>
-                <td>{roleTypeStore.roleType.id}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Nome:</strong>
-                </td>
-                <td>{roleTypeStore.roleType.name}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Descrição:</strong>
-                </td>
-                <td>{roleTypeStore.roleType.description}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Escopo:</strong>
-                </td>
-                <td>{roleTypeStore.roleType.global ? "Global" : "Curso"}</td>
-              </tr>
-            </tbody>
-          </table>
+          <p>
+            <strong>Id: </strong>
+          {roleTypeStore.roleType.id}
+          </p>
+          <p>
+            <strong>Nome: </strong>
+          {roleTypeStore.roleType.name}
+          </p>
+          <p>
+            <strong>Descrição: </strong>
+          {roleTypeStore.roleType.description}
+          </p>
+          <p>
+            <strong>Escopo: </strong>
+            {roleTypeStore.roleType.global ? "Global" : "Curso"}
+          </p>
         </div>
       );
 
@@ -99,23 +86,31 @@ class RoleTypeDelete extends Component {
     return (
       <div className="roletypes">
         <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to={`/parameters/roletypes/${this.props.match.params.roletype_id}`} className="btn btn-light">
-                Voltar para tipo de papel
-              </Link>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to="/parameters/roletypes" className="breadcrumb-link">
+              Tipos de papel
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</span>
+          </div>
 
-              <h1 className="display-4 mb-4 text-center">Excluir tipo de Papel</h1>
+          <div className="form-container" id="main">
+              <h1>Excluir tipo de Papel</h1>
 
               {alertsList}
 
-              <p className="lead text-center">Você solicitou excluir o item:</p>
+              {/* <p className="lead text-center">Você solicitou excluir o item:</p> */}
               {infoTable}
-              <p className="lead text-center">Confirma a operação?</p>
+              <p className="lead">Confirma a operação?</p>
 
               <div className="row">
                 <div className="col">
-                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+                  <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
                 </div>
                 <div className="col">
                   <input
@@ -126,7 +121,6 @@ class RoleTypeDelete extends Component {
                       this.props.history.goBack();
                     }}
                   />
-                </div>
               </div>
             </div>
           </div>

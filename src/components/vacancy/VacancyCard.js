@@ -28,14 +28,14 @@ export default class VacancyCard extends Component {
                 <p className="text-right">
                   <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
                     <Link
-                      className="icon-edit"
+                      className="btn-icon"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
                       <i class="fas fa-pencil-alt"></i>
                     </Link>
                   </DrawFilter>{' '}
                   <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
                     <Link
-                      className="icon-delete"
+                      className="btn-icon"
                       to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
                       <i class="fas fa-trash"></i>
                     </Link>

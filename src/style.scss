@@ -39,18 +39,16 @@ footer {
   margin-bottom: 6rem;
 }
 
-a {
-  color: $azulRegular;
+a, .btn-link {
+  color: $laranjaMedio;
 
   &:hover {
+    color: $laranjaMedio;
     text-decoration: none;
-
-    &:after{
-      content: "";
-      height: 1px;
-      width: auto;
-      background-color: inherit;
-    }
+    border-bottom-color: $laranjaMedio;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    margin-bottom: -1px;
   }
 }
 
@@ -76,14 +74,17 @@ ul {
   font-weight: 500;
   height: 2.25rem;
   padding: 0 1.5rem;
-  // line-height: 1;
+  line-height: 1;
 
   &:hover, &:active{
     background-color: $laranjaEscuro !important;
     border: none !important;
   }
 
-  i{ font-size: 1rem; }
+  i{ 
+    font-size: 1rem;
+    line-height: 2.2;
+  }
 }
 
 .btn-secondary{
@@ -94,7 +95,7 @@ ul {
   font-size: 1.3rem;
   font-weight: 500;
   height: 2.25rem;
-  padding: 0 1.5rem;
+  padding: 0 1.5rem !important;
   line-height: 1;
   border: 1px solid $laranjaMedio;
   border-radius: 2px;
@@ -114,20 +115,6 @@ ul {
   font-weight: 500;
   padding: 0;
 
-  &:hover{ 
-    color: $laranjaMedio;
-    
-    &:after{ 
-      content: "";
-      height: 1px;
-      width: 100%;
-      background-color: $laranjaMedio;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-  }
-
   i{ font-size: 1rem; }
 }
 
@@ -142,6 +129,24 @@ ul {
   }
 }
 
+.btn-icon{
+  color: $azulRegular;
+
+  &:hover{
+    border: none;
+    margin-bottom: 0;
+    color: darken($azulRegular, 20);
+  }
+
+  i{ padding: 0 .3rem; }
+
+  &.laranja{
+    color: $laranjaMedio;
+
+    &:hover{ color: darken($laranjaMedio, 10);  }
+  }
+}
+
 .breadcrumb{
   background: none;
   padding: 0;
@@ -149,8 +154,12 @@ ul {
   margin: 3rem 0 1.5rem;
 
   a{
-    color: #043166;
+    color: $azulMedio;
     font-weight: 500;
+
+    &:hover{
+      border-bottom-color: $azulMedio;
+    }
   }
 
   i{

@@ -30,6 +30,7 @@ header{
       font-variant: small-caps;
       font-weight: 700;
       font-size: 1.5rem;
+      color: $azulRegular;
 
       span{
         color: $laranjaMedio;
@@ -45,11 +46,19 @@ header{
           display: block;
         }
       }
+
+      &:hover{ 
+        border: none;
+        margin-bottom: 0;
+      }
     }
 
     .nav-link{
       color: $laranjaMedio;
       font-weight: 500;
+      padding: 0 !important;
+      margin-right: .5rem;
+      margin-left: .5rem;
     }
 
     .navbar-nav{
@@ -63,6 +72,12 @@ header{
             color: $azulRegular;
             font-weight: 400;
             padding: 0;
+
+            &:hover{ 
+              border: none;
+              margin-bottom: 0;
+              text-decoration: underline;
+            }
           }
 
           button{

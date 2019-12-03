@@ -91,7 +91,7 @@ class PublicationTypeModalDelete extends Component {
               </p>
             </div>
             <div className="modal-footer">
-              <input type="submit" className="btn btn-danger" onClick={this.onSubmit} value="Excluir" />
+              <input type="submit" className="btn btn-primary" onClick={this.onSubmit} value="Excluir" />
 
               <button type="button" className="btn btn-secondary" data-dismiss="modal">
                 Cancelar

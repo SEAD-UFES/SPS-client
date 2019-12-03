@@ -138,7 +138,7 @@ class RegionModalForm extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id={`${this.props.targetName}-ModalLabel`}>
-                {this.props.mode === 'edit' ? 'Editar região' : 'Adicionar região'}
+                {this.props.mode === 'edit' ? 'Editar polo' : 'Adicionar polo'}
               </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -151,7 +151,7 @@ class RegionModalForm extends Component {
                     <TextFieldGroup
                       type="text"
                       name="name"
-                      placeholder="* Nome"
+                      label="Nome"
                       value={this.state.name}
                       onChange={this.onChange}
                       error={errors.name}
@@ -160,7 +160,7 @@ class RegionModalForm extends Component {
                     <TextFieldAreaGroup
                       type="text"
                       name="description"
-                      placeholder="Descrição"
+                      label="Descrição"
                       value={this.state.description}
                       onChange={this.onChange}
                       error={errors.description}

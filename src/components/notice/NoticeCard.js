@@ -18,7 +18,7 @@ class NoticeCard extends Component {
           <React.Fragment>
             <DrawFilter permission="notice_update" course_id={processStore.process.Course.id}>
               <Link
-                className="icon-edit"
+                className="btn-icon"
                 to={`/processes/${processStore.process.id}/notices/${notices[0].id}/update`}>
                 <i class="fas fa-pencil-alt"></i>
               </Link>
@@ -26,7 +26,7 @@ class NoticeCard extends Component {
             <DrawFilter permission="notice_delete" course_id={processStore.process.Course.id}>
               {' '}
               <Link
-                className="icon-delete"
+                className="btn-icon"
                 to={`/processes/${processStore.process.id}/notices/${notices[0].id}/delete`}>
                 <i class="fas fa-trash"></i>
               </Link>
@@ -36,7 +36,7 @@ class NoticeCard extends Component {
       } else {
         return (
           <DrawFilter permission="notice_create" course_id={processStore.process.Course.id}>
-            <Link className="btn btn-add" to={`/processes/${processStore.process.id}/notices/create`}>
+            <Link className="btn btn-terciary" to={`/processes/${processStore.process.id}/notices/create`}>
               <i className="fas fa-plus-circle" /> Adicionar
             </Link>
           </DrawFilter>
@@ -63,7 +63,7 @@ class NoticeCard extends Component {
     return (
       <section class="quadro">
         <h4>{renderTitle(notices)}</h4>
-        <div className="admin-buttons">{renderOptions(notices)}</div>
+        <div className="btn-right">{renderOptions(notices)}</div>
 
         <div>
           <span dangerouslySetInnerHTML={{ __html: renderBody(notices) }} />

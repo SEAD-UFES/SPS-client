@@ -144,11 +144,10 @@ class RoleTypeCreateUpdate extends Component {
 
     const roletypeForm = (
       <form noValidate onSubmit={this.onSubmit}>
-        <div className="form-group">
           <TextFieldGroup
             type="text"
             name="name"
-            placeholder="* Nome"
+            label="Nome"
             value={this.state.name}
             onChange={this.onChange}
             error={errors.name}
@@ -157,7 +156,7 @@ class RoleTypeCreateUpdate extends Component {
           <TextAreaFieldGroup
             type="text"
             name="description"
-            placeholder="Descrição"
+            label="Descrição"
             value={this.state.description}
             onChange={this.onChange}
             error={errors.description}
@@ -171,29 +170,37 @@ class RoleTypeCreateUpdate extends Component {
             onChange={this.onCheck}
           />
 
-          <input type="submit" className="btn btn-primary btn-block mt-4" />
-        </div>
+          <input type="submit" className="btn btn-primary" value="Salvar" />
       </form>
     )
 
     return (
       <div className="roletypes-create">
         <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to="/parameters/roletypes" className="btn btn-light">
-                Voltar para lista de tipos de papel
-              </Link>
-              <h1 className="display-4 text-center">
-                {this.state.mode === 'create' ? 'Criar tipo de papel' : 'Editar tipo de papel'}
-              </h1>
-              <p className="lead text-center">
-                {this.state.mode === 'create' ? 'Dê entrada nos dados básicos' : 'Altere os dados básicos'}
-              </p>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to="/parameters/roletypes" className="breadcrumb-link">
+              Tipos de papel
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</span>
+          </div>
 
-              {alertsList}
-              {roletypeForm}
-            </div>
+          <div className="form-container" id="main">
+            
+            <h1>
+              {this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}
+            </h1>
+            {/* <p className="lead text-center">
+              {this.state.mode === 'create' ? 'Dê entrada nos dados básicos' : 'Altere os dados básicos'}
+            </p> */}
+
+            {alertsList}
+            {roletypeForm}
           </div>
         </div>
       </div>

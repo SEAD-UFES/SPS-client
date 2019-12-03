@@ -14,6 +14,7 @@ footer {
       font-size: 1.2rem;
       font-weight: 600;
       color: white;
+      display: block;
 
       &:after {
         content: "";
@@ -90,10 +91,13 @@ footer {
   }
 
   @media screen and (min-width: 992px) {
+
+    text-align: center;
       
     div {
       width: calc(50% - 0.7rem);
       vertical-align: top;
+      text-align: left;
 
       &:nth-child(even) {
         float: right;

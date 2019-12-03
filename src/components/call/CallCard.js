@@ -30,7 +30,7 @@ export default class CallCard extends Component {
               </p>
               <p className="text-right">
                 <DrawFilter permission="call_read" course_id={process.Course.id}>
-                  <Link className="text-primary icon-read" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
+                  <Link className="btn-icon laranja" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
                     <i class="fas fa-eye"></i>
                   </Link>
                 </DrawFilter>{' '}
@@ -40,7 +40,7 @@ export default class CallCard extends Component {
                   </Link>
                 </DrawFilter>{' '} */}
                 <DrawFilter permission="call_delete" course_id={process.Course.id}>
-                  <Link className="icon-delete" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
+                  <Link className="btn-icon" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
                     <i class="fas fa-trash"></i>
                   </Link>
                 </DrawFilter>

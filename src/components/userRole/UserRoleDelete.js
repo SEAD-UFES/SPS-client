@@ -123,7 +123,7 @@ class UserRoleDelete extends Component {
 
               <div className="row">
                 <div className="col">
-                  <input type="button" value="Excluir" className="btn btn-danger btn-block mt-4" onClick={this.onSubmit} />
+                  <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
                 </div>
                 <div className="col">
                   <input

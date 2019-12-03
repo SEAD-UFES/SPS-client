@@ -159,22 +159,25 @@ class UserCreate extends Component {
           onChange={this.onChange}
           error={errors.email}
         />
-        <TextFieldGroup
-          type="password"
-          name="password"
-          label="Senha"
-          value={this.state.password}
-          onChange={this.onChange}
-          error={errors.password}
-        />
-        <TextFieldGroup
-          type="password"
-          name="password2"
-          label="Confirmar senha"
-          value={this.state.password2}
-          onChange={this.onChange}
-          error={errors.password2}
-        />
+
+        <div className="form-spacing">
+          <TextFieldGroup
+            type="password"
+            name="password"
+            label="Senha"
+            value={this.state.password}
+            onChange={this.onChange}
+            error={errors.password}
+          />
+          <TextFieldGroup
+            type="password"
+            name="password2"
+            label="Confirmar senha"
+            value={this.state.password2}
+            onChange={this.onChange}
+            error={errors.password2}
+          />
+        </div>
 
         <input type="submit" className="btn btn-primary" value="Cadastrar"/>
       </form>
@@ -185,13 +188,24 @@ class UserCreate extends Component {
     const { errors } = this.state
 
     return (
-      <div className="register" id="main">
-        <Link to="/users" className="btn btn-light">
-          Voltar para lista de usuários
-        </Link>
-        <div className="form-container">
-          <h1>Novo usuário</h1>
-          {this.renderCreateUser(errors)}
+      <div className="register">
+        <div className="container">
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to="/users" className="breadcrumb-link">
+              Usuários
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Novo usuário</span>
+          </div>
+          <div className="form-container" id="main">
+            <h1>Novo usuário</h1>
+            {this.renderCreateUser(errors)}
+          </div>
         </div>
       </div>
     )
