@@ -229,7 +229,17 @@ class ProcessList extends Component {
                 </h3>
                 <p class="tipo-de-curso">{process.Course.GraduationType ? process.Course.GraduationType.name : '-'}</p>
                 <p class="curso">{process.Course.name}</p>
-                <p class="atribuicao">teste</p>
+                <p class="atribuicao">
+                  {process.Assignments.length > 0
+                    ? process.Assignments.map((assignment, key) => {
+                        if (key === 0) {
+                          return assignment.name
+                        } else {
+                          return `, ${assignment.name}`
+                        }
+                      })
+                    : 'Atribuições não definidas'}
+                </p>
                 <p tabIndex="-1"></p>
               </li>
             )
@@ -404,7 +414,6 @@ class ProcessList extends Component {
 
             {processTable}
           </div>
-
         </div>
       </div>
     )
