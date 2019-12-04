@@ -25,7 +25,7 @@ class ProcessView extends Component {
     return <React.Fragment>{`Edital ${process.number}/${process.year}`}</React.Fragment>
   }
 
-  renderProcessEdit(process, loading){
+  renderProcessEdit(process, loading) {
     if (process === null || loading) {
       return <Spinner />
     }
@@ -49,9 +49,7 @@ class ProcessView extends Component {
     return (
       <section id="info">
         <div>
-          <p>
-            {process.description}
-          </p>
+          <p>{process.description}</p>
         </div>
 
         <div>
@@ -71,6 +69,19 @@ class ProcessView extends Component {
               {process.visible ? 'Processo visível' : 'Processo oculto'}
             </p>
           </DrawFilter>
+
+          <p>
+            <strong>Atribuições: </strong>
+            {process.Assignments.length > 0
+              ? process.Assignments.map((assignment, key) => {
+                  if (key === 0) {
+                    return assignment.name
+                  } else {
+                    return `, ${assignment.name}`
+                  }
+                })
+              : 'Atribuições não definidas'}
+          </p>
         </div>
       </section>
     )
@@ -151,9 +162,9 @@ class ProcessView extends Component {
     const noticeStore = this.props.noticeStore
 
     return (
-      <div className="process-view" >
+      <div className="process-view">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
@@ -169,7 +180,6 @@ class ProcessView extends Component {
             {this.renderNoticeCard(noticeStore, processStore)}
             {this.renderOther(noticeStore, processStore)}
           </div>
-
         </div>
       </div>
     )
