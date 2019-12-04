@@ -55,19 +55,6 @@
 				margin: 0.8rem 0;
 				display: inline-block;
 				flex: 1 1 auto;
-
-				&:nth-of-type(1) {
-					width: 12%;
-				}
-				&:nth-of-type(2) {
-					width: 30%;
-				}
-				&:nth-of-type(3) {
-					width: 30%;
-				}
-				&:nth-of-type(4) {
-					width: 28%;
-				}
 			}
 		}
 
@@ -92,20 +79,9 @@
 				font-weight: 300;
 				color: black;
 				font-style: normal;
-
-				&:nth-of-type(1) {
-					width: 30%;
-				}
-				&:nth-of-type(2) {
-					width: 30%;
-				}
-				&:nth-of-type(3) {
-					width: 28%;
-				}
 			}
 
 			h3 {
-				width: 12%;
 				font-weight: 600;
 
 				span {
@@ -116,100 +92,59 @@
 	}
 }
 
-#ofertas {
+@mixin table-cell-width($um, $dois, $tres: unset, $quatro: unset, $cinco: unset, $seis: unset){
 	.table-list {
 		@media screen and (min-width: 800px) {
 			.titulos {
 				span {
-					&:nth-of-type(1) {
-						width: 20%;
-					}
-					&:nth-of-type(2) {
-						width: 10%;
-					}
-					&:nth-of-type(3) {
-						width: 15%;
-					}
-					&:nth-of-type(4) {
-						width: 20%;
-					}
-					&:nth-of-type(5) {
-						width: 10%;
-					}
-					&:nth-of-type(6) {
-						width: 15%;
-					}
+					&:nth-of-type(1){ width: $um;	}
+					&:nth-of-type(2){	width: $dois; }
+					&:nth-of-type(3){	width: $tres; }
+					&:nth-of-type(4){ width: $quatro; }
+					&:nth-of-type(5){	width: $cinco; }
+					&:nth-of-type(6){	width: $seis; }
 				}
 			}
 
 			li {
-				h3 {
-					width: 20%;
-				}
+				h3 { width: $um; }
 
 				p {
-					&:nth-of-type(1) {
-						width: 10%;
-					}
-					&:nth-of-type(2) {
-						width: 15%;
-					}
-					&:nth-of-type(3) {
-						width: 20%;
-					}
-					&:nth-of-type(4) {
-						width: 10%;
-					}
-					&:nth-of-type(5) {
-						width: 15%;
-					}
+					&:nth-of-type(1){ width: $dois;	}
+					&:nth-of-type(2){	width: $tres;	}
+					&:nth-of-type(3){ width: $quatro;	}
+					&:nth-of-type(4){	width: $cinco; }
+					&:nth-of-type(5){	width: $seis;	}
 				}
 			}
 		}
 	}
 }
 
-.assignments, .userRole-list {
+// Padrão
+@include table-cell-width(12%, 30%, 30%, 28%);
 
-	.table-list {
-		
-		button{ padding: 0; }
+
+#ofertas {
+	@include table-cell-width(20%, 10%, 15%, 20%, 10%, 15%);
+}
+
+.assignments, .userRole-list {
+	@include table-cell-width( 30%, 18% ,40% ,12% );
+
+	li > p {
+			button{ padding: 0; }
+	}
+}
+
+.user-list {
+	.tipo-de-curso {
+		font-style: italic;
 
 		@media screen and (min-width: 800px) {
-			.titulos {
-				span {
-					&:nth-of-type(1) {
-						width: 30%;
-					}
-					&:nth-of-type(2) {
-						width: 18%;
-					}
-					&:nth-of-type(3) {
-						width: 40%;
-					}
-					&:nth-of-type(4) {
-						width: 12%;
-					}
-				}
-			}
-
-			li {
-				h3 {
-					width: 30%;
-				}
-
-				p {
-					&:nth-of-type(1) {
-						width: 18%;
-					}
-					&:nth-of-type(2) {
-						width: 40%;
-					}
-					&:nth-of-type(3) {
-						width: 12%;
-					}
-				}
-			}
+			font-style: normal;
 		}
 	}
+
+	@include table-cell-width( 12%, 25% ,25% ,25%, 13% );
 }

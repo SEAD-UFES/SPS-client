@@ -79,6 +79,7 @@ ul {
   &:hover, &:active{
     background-color: $laranjaEscuro !important;
     border: none !important;
+    margin-bottom: 0;
   }
 
   i{ 
@@ -244,7 +245,6 @@ h2, h3, h4{
 @import 'scss/pagination';
 @import 'scss/nav';
 @import 'scss/filtros';
-@import 'scss/processesList';
 @import 'scss/forms';
 @import 'scss/process';
 @import 'scss/footer';

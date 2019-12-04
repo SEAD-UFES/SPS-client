@@ -14,6 +14,7 @@
       margin-bottom: 0.5rem;
       margin-right: 1rem;
       border-radius: 2px;
+      font-weight: 500;
 
       i {
         padding: 0 8px;
@@ -122,8 +123,7 @@
         border-top: solid 0.5px $azulClaro;
 
         &:hover {
-          background-color: $azulRegular;
-          color: white;
+          background-color: $azulClaro;
         }
       }
     }
@@ -146,12 +146,13 @@
 
       .seletor {
         display: inline-block;
-        border: solid 0.5px $azulRegular;
-        margin-right: 15px;
+        
+        padding-right: 15px;
         position: relative;
         flex: 1 1 auto;
 
         button.exibe-filtros {
+          border: solid 0.5px $azulRegular;
           &:after {
             color: gray;
           }
@@ -161,9 +162,9 @@
           position: absolute;
           background-color: $azulExtraClaro;
           border: solid 1px $azulRegular;
-          margin-top: 0;
+          margin-top: -1px;
           border-radius: 1px;
-          width: 100%;
+          width: calc(100% - 15px);
           z-index: 1;
         }
 

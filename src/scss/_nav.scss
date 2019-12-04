@@ -39,7 +39,6 @@ header{
         font-weight: 400;
         font-size: 12px;
         margin-top: -.4rem;
-
         display: none;
 
         @media screen and (min-width: 576px){
@@ -62,16 +61,17 @@ header{
     }
 
     .navbar-nav{
-
       &.logged{
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        margin-top: .8rem;
 
           a{ 
             color: $azulRegular;
             font-weight: 400;
             padding: 0;
+            line-height: 1;
 
             &:hover{ 
               border: none;
@@ -85,10 +85,8 @@ header{
             padding: 0;
             right: 0;
           }
-    
       }
     }
-
     
   }
 }

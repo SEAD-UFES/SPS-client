@@ -210,12 +210,12 @@ class ProcessList extends Component {
   renderTable(processes) {
     return (
       <React.Fragment>
-        <ul id="editais" class="content">
+        <ul className="table-list">
           <div class="titulos">
             <span>Edital</span>
             <span>Nível</span>
             <span>Curso</span>
-            <span></span>
+            <span>Atribuição</span>
             <span></span>
           </div>
 
@@ -229,8 +229,8 @@ class ProcessList extends Component {
                 </h3>
                 <p class="tipo-de-curso">{process.Course.GraduationType ? process.Course.GraduationType.name : '-'}</p>
                 <p class="curso">{process.Course.name}</p>
-                <p class="atribuicao"></p>
-                <p tabIndex="0"></p>
+                <p class="atribuicao">teste</p>
+                <p tabIndex="-1"></p>
               </li>
             )
           })}
