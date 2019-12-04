@@ -102,43 +102,36 @@ class RoleTypesList extends Component {
         <Spinner />
       ) : roleTypesList.length > 0 ? (
         <div>
-          <h4 className="mb-2">Lista de tipos de papel</h4>
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
-                <th onClick={() => this.sortBy('scope')}>Escopo {this.orderIcon('scope')}</th>
-                <th>
-                  <Link className="text-success" to="/parameters/roletypes/create">
-                    <i className="fas fa-plus-circle" />
-                  </Link>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+            <div className="titulos">
+              <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+              {/* <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th> */}
+              {/* <th onClick={() => this.sortBy('scope')}>Escopo {this.orderIcon('scope')}</th> */}
+              <span>Escopo</span>
+              <span>Descrição</span>
+              <span></span>
+            </div>
               {roleTypesList.map(roleType => {
                 return (
-                  <tr key={roleType.id}>
-                    <td>{roleType.name}</td>
-                    <td>{roleType.description}</td>
-                    <td>{roleType.global ? 'Global' : 'Curso'}</td>
-                    <td>
-                      <Link className="text-success" to={`/parameters/roletypes/${roleType.id}`}>
+                  <li key={roleType.id}>
+                    <h3>{roleType.name}</h3>
+                    <p>{roleType.global ? 'Global' : 'Curso'}</p>
+                    <p>{roleType.description}</p>
+                    <p className="text-right">
+                      {/* <Link className="btn-icon laranja" to={`/parameters/roletypes/${roleType.id}`}>
                         <i className="fas fa-eye" />
+                      </Link>{' '} */}
+                      <Link className="btn-icon" to={`/parameters/roletypes/${roleType.id}/update`}>
+                        <i className="fas fa-pencil-alt" />
                       </Link>{' '}
-                      <Link className="text-primary" to={`/parameters/roletypes/${roleType.id}/update`}>
-                        <i className="fas fa-cog" />
-                      </Link>{' '}
-                      <Link className="text-danger" to={`/parameters/roletypes/${roleType.id}/delete`}>
-                        <i className="fas fa-times-circle" />
+                      <Link className="btn-icon" to={`/parameters/roletypes/${roleType.id}/delete`}>
+                        <i className="fas fa-trash" />
                       </Link>
-                    </td>
-                  </tr>
+                    </p>
+                  </li>
                 )
               })}
-            </tbody>
-          </table>
+          </ul>
         </div>
       ) : (
         <div>
@@ -153,10 +146,9 @@ class RoleTypesList extends Component {
       )
 
     const addButton = (
-      <div className="btn-group mb-4" role="group">
-        <Link to={`${this.props.match.url}/create`} className="btn btn-light">
-          <i className="fas fa-user-circle text-primary mr-1" />
-          Adicionar tipo de papel
+      <div className="btn-right">
+        <Link to={`${this.props.match.url}/create`} className="btn btn-primary">
+          <i className="fas fa-plus-circle" /> Adicionar
         </Link>
       </div>
     )
@@ -164,13 +156,20 @@ class RoleTypesList extends Component {
     return (
       <div className="assignments">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Tipos de papel</h1>
-              <p className="lead text-muted">Papéis que podem ser atribuidos a usuários dentro do sistema</p>
-              {addButton}
-              {roleTypesTable}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Tipos de papel</span>
+          </div>
+
+          <div id="main">
+            <h1>Tipos de papel</h1>
+            {addButton}
+            {/* <p className="lead text-muted">Papéis que podem ser atribuidos a usuários dentro do sistema</p> */}
+            {roleTypesTable}
           </div>
         </div>
       </div>

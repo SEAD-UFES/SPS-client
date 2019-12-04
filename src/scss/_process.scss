@@ -1,0 +1,92 @@
+.process-view, .register, .view-page{
+
+  section{
+    margin-bottom: 2rem;
+  }
+  
+  #info{
+    > div{
+      strong{ color: $laranjaMedio; }
+    }
+  }
+
+  .quadro{
+    position: relative;
+    border-top: 2px solid $azulClaro;
+    margin-bottom: 4rem;
+
+    h4{
+      margin-top: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    &#anexos{
+      li{
+
+        div{ 
+          &:first-of-type{ margin-right: 1rem; }
+          
+          &:nth-of-type(2){ 
+            a{
+              color: black;
+  
+              i{ 
+                margin-right: .5rem; 
+                color: $laranjaRegular;
+              }
+
+              &:hover{ 
+                border: none;
+                margin-bottom: none;
+                text-decoration: underline;
+              }
+            }
+          }   
+
+        }
+      }
+    }
+
+    .admin-buttons{
+      position: absolute;
+      right: 0;
+      top: .5rem;
+
+      i{ padding: 0 .3rem; }
+    }
+
+  }
+
+  @media screen and (min-width: 800px) {
+
+    #info{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  
+      > div{
+        width: calc(50% - 1rem);
+      }
+    }
+
+    .quadro#anexos{
+      li{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        div{          
+          &:nth-of-type(2){ 
+            flex-grow: 1;
+          }
+
+          &:last-of-type{ 
+            align-self: flex-end;
+          }         
+
+        }
+      }
+    }
+
+  }
+}

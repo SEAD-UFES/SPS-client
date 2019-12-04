@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -109,9 +110,9 @@ class RegionList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar região
+            <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
 
@@ -127,55 +128,52 @@ class RegionList extends Component {
     //item list
     const regionsTable = (
       <div>
-        <h4 className="mb-2">Lista de regiões</h4>
         {RegionList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+              <div className="titulos">
+                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+                {/* <span onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</span> */}
+                <span>Descrição</span>
+                <span></span>
+              </div>
               {regionsList.length > 0 ? (
                 regionsList.map(region => {
                   return (
-                    <tr key={region.id}>
-                      <td>{region.name}</td>
-                      <td>
+                    <li key={region.id}>
+                      <h3>{region.name}</h3>
+                      <p>
                         {region.description ? region.description : <span className="text-muted">Sem descrição.</span>}
-                      </td>
-                      <td>
+                      </p>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${region.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <RegionModalForm
+                        <button
+                          type="button"
+                          className="btn btn-icon"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${region.id}`}>
+                          <i className="fas fa-trash" />
+                        </button>
+                      </p>
+                      <RegionModalForm
                           targetName={`editModal-${region.id}`}
                           mode="edit"
                           item={region}
                           editFunction={this.props.updateRegion}
                           reloadFunction={this.props.getRegions}
                         />{' '}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-danger"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${region.id}`}>
-                          <i className="fas fa-times-circle" />
-                        </button>
                         <RegionsModalDelete
                           targetName={`deleteModal-${region.id}`}
                           item={region}
                           deleteFunction={this.props.deleteRegion}
                           reloadFunction={this.props.getRegions}
                         />
-                      </td>
-                    </tr>
+                    </li>
                   )
                 })
               ) : (
@@ -183,8 +181,7 @@ class RegionList extends Component {
                   <td colSpan="3">Sem itens para exibir</td>
                 </tr>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
           <tr>
             <td colSpan="3">Sem itens para exibir</td>
@@ -196,13 +193,19 @@ class RegionList extends Component {
     return (
       <div className="regions">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Regiões</h1>
-              <p className="lead text-muted">Regiões que serão ofertadas pelo sistema</p>
-              {addItemTool}
-              {regionsTable}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Polos</span>
+          </div>
+          <div id="main">
+            <h1>Polos</h1>
+            {addItemTool}
+              {/* <p className="lead text-muted">Regiões que serão ofertadas pelo sistema</p> */}
+            {regionsTable}
           </div>
         </div>
       </div>

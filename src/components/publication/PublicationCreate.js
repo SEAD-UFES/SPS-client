@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import TextFieldGroup from 'components/common/TextFieldGroup'
 import SelectListGroup from 'components/common/SelectListGroup'
-// import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
+import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
 import FileFieldGroup from '../common/FileFieldGroup'
 import CheckBoxFieldGroup from 'components/common/CheckBoxFieldGroup'
 
@@ -18,7 +18,7 @@ import { validateDateRequired, validateName } from 'validation'
 import { validatePublicationForm } from './validatePublicationForm'
 import { validateFileType } from '../../validation'
 import AlertError from 'components/common/AlertError'
-import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
+//import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class PublicationCreate extends Component {
   constructor() {
@@ -221,126 +221,123 @@ class PublicationCreate extends Component {
 
   renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Criar publicação</h4>
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="date"
+          name="creation_date"
+          label="Data"
+          placeholder="__/__/__"
+          value={this.state.creation_date}
+          onChange={this.onChange}
+          error={errors.creation_date}
+        />
+
+        <TextFieldGroup
+          type="title"
+          name="title"
+          label="Título"
+          value={this.state.title}
+          onChange={this.onChange}
+          error={errors.title}
+        />
+        
+        <FileFieldGroup
+          name="file"
+          label="Arquivo"
+          info="Apenas arquivos to tipo pdf"
+          error={errors.file}
+          onChange={this.onChangeFile}
+        />
+
+        <div className="form-spacing">
+
+          <SelectListGroup
+            placeholder="Selecione o processo seletivo"
+            name="selectiveProcess_id"
+            label="Processo"
+            value={this.state.selectiveProcess_id}
+            options={processOptions}
+            onChange={this.onChange}
+            error={errors.selectiveProcess_id}
+            disabled={this.state.lock_process ? true : false}
+          />
+
+          <SelectListGroup
+            placeholder="Selecione o tipo de publicação"
+            name="publicationType_id"
+            label="Tipo"
+            value={this.state.publicationType_id}
+            options={processPublicationTypeOptions}
+            onChange={this.onChange}
+            error={errors.publicationType_id}
+          />
+
+          <CheckBoxFieldGroup
+            id="valid-checkbox"
+            name="valid"
+            text="Validade"
+            value="Este documento é a versão mais recente de seu tipo"
+            checked={this.state.valid}
+            error={errors.valid}
+            info="Documentos mais antigos devem ser atualizados manualmente"
+            onChange={this.onCheck}
+          />          
+
+          {this.state.selectiveProcess_id ? (
+            <SelectListGroup
+              placeholder="Selecione a chamada"
+              name="call_id"
+              label="Chamada"
+              value={this.state.call_id}
+              options={callOptions}
+              onChange={this.onChange}
+              error={errors.call_id}
+              disabled={this.state.lock_call ? true : false}
+              info="Campo opcional"
+            />
+          ) : (
+            ''
+          )}
+
+          {this.state.call_id ? (
+            <SelectListGroup
+              placeholder="Selecione a etapa"
+              name="step_id"
+              label="Etapa"
+              value={this.state.step_id}
+              options={stepOptions}
+              onChange={this.onChange}
+              error={errors.step_id}
+            />
+          ) : (
+            ''
+          )}
+
+          <TextAreaFieldGroup
+            type="text"
+            name="description"
+            label="Observações"
+            value={this.state.description}
+            onChange={this.onChange}
+            error={errors.description}
+            info="Corpo da mensagem da publicação, se houver"
+          />
+
+          {/* <TextAreaFieldTinyMCE
+            placeholder="Conteúdo"
+            name="description"
+            label="Observações"
+            value={this.state.description}
+            onChange={this.onChange_TinyMCE}
+            error={errors.description}
+            info="Corpo da mensagem da publicação, se houver."
+          />*/}
+
         </div>
 
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="date"
-              name="creation_date"
-              label="Lançamento: *"
-              placeholder="Data da publicação"
-              value={this.state.creation_date}
-              onChange={this.onChange}
-              error={errors.creation_date}
-            />
-
-            <SelectListGroup
-              placeholder="* Selecione o tipo de publicação"
-              name="publicationType_id"
-              label="Tipo: *"
-              value={this.state.publicationType_id}
-              options={processPublicationTypeOptions}
-              onChange={this.onChange}
-              error={errors.publicationType_id}
-            />
-
-            <SelectListGroup
-              placeholder="* Selecione o processo seletivo"
-              name="selectiveProcess_id"
-              label="Processo: *"
-              value={this.state.selectiveProcess_id}
-              options={processOptions}
-              onChange={this.onChange}
-              error={errors.selectiveProcess_id}
-              disabled={this.state.lock_process ? true : false}
-            />
-
-            {this.state.selectiveProcess_id ? (
-              <SelectListGroup
-                placeholder="* Selecione a chamada"
-                name="call_id"
-                label="Chamada:"
-                value={this.state.call_id}
-                options={callOptions}
-                onChange={this.onChange}
-                error={errors.call_id}
-                disabled={this.state.lock_call ? true : false}
-              />
-            ) : (
-              ''
-            )}
-
-            {this.state.call_id ? (
-              <SelectListGroup
-                placeholder="* Selecione a etapa"
-                name="step_id"
-                label="Etapa:"
-                value={this.state.step_id}
-                options={stepOptions}
-                onChange={this.onChange}
-                error={errors.step_id}
-              />
-            ) : (
-              ''
-            )}
-
-            <TextFieldGroup
-              type="title"
-              name="title"
-              label="Título: *"
-              placeholder="Título da publicação"
-              value={this.state.title}
-              onChange={this.onChange}
-              error={errors.title}
-            />
-
-            {/* <TextAreaFieldGroup
-              type="text"
-              name="description"
-              label="Observações:"
-              placeholder="Observações sobre a publicação"
-              value={this.state.description}
-              onChange={this.onChange}
-              error={errors.description}
-            /> */}
-
-            <TextAreaFieldTinyMCE
-              placeholder="Conteúdo"
-              name="description"
-              label="Observações:"
-              value={this.state.description}
-              onChange={this.onChange_TinyMCE}
-              error={errors.description}
-              info="corpo da mensagem da publicação, se houver."
-            />
-
-            <FileFieldGroup
-              name="file"
-              label="Arquivo: *"
-              info="Apenas arquivos to tipo pdf."
-              error={errors.file}
-              onChange={this.onChangeFile}
-            />
-
-            <CheckBoxFieldGroup
-              id="valid-checkbox"
-              name="valid"
-              text="Validade:"
-              value="Este documento é a versão mais recente de seu tipo."
-              checked={this.state.valid}
-              error={errors.valid}
-              info="Documentos mais antigos devem ser atualizados manualmente."
-              onChange={this.onCheck}
-            />
-
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
-          </form>
-        </div>
-      </div>
+        <input type="submit" className="btn btn-primary" value="Cadastrar"/>
+        
+      </form>
     )
   }
 
@@ -367,7 +364,7 @@ class PublicationCreate extends Component {
           })[0].Steps
         : []
 
-    const processPublicationTypeOptions = [{ label: '* Selecione o tipo de publicação', value: '' }].concat(
+    const processPublicationTypeOptions = [{ label: 'Selecione o tipo de publicação', value: '' }].concat(
       publicationTypes
         ? publicationTypes.map(procPubTypes => {
             return {
@@ -378,7 +375,7 @@ class PublicationCreate extends Component {
         : []
     )
 
-    const processOptions = [{ label: '* Selecione o processo seletivo', value: '' }].concat(
+    const processOptions = [{ label: 'Selecione o processo seletivo', value: '' }].concat(
       processes
         ? processes.map(process => {
             return {
@@ -389,7 +386,7 @@ class PublicationCreate extends Component {
         : []
     )
 
-    const callOptions = [{ label: '* Selecione a chamada', value: '' }].concat(
+    const callOptions = [{ label: 'Selecione a chamada', value: '' }].concat(
       calls
         ? calls.map(call => {
             return {
@@ -400,7 +397,7 @@ class PublicationCreate extends Component {
         : []
     )
 
-    const stepOptions = [{ label: '* Selecione a etapa', value: '' }].concat(
+    const stepOptions = [{ label: 'Selecione a etapa', value: '' }].concat(
       steps
         ? steps.map(step => {
             return {
@@ -414,15 +411,23 @@ class PublicationCreate extends Component {
     return (
       <div className="publication-create">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${process_id}`} className="btn btn-light">
-                Voltar para processo seletivo
-              </Link>
-              <h1 className="display-4">Publicação</h1>
-              <AlertError errors={this.props.errorStore} />
-              {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${process_id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Nova publicação</span>
+          </div>
+
+          <div className="form-container" id="main">             
+            <h1 className="display-4">Nova publicação</h1>
+            <AlertError errors={this.props.errorStore} />
+            {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
           </div>
         </div>
       </div>

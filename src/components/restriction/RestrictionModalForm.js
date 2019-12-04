@@ -151,7 +151,7 @@ class RestrictionModalForm extends Component {
                     <TextFieldGroup
                       type="text"
                       name="name"
-                      placeholder="* Nome"
+                      label="Nome"
                       value={this.state.name}
                       onChange={this.onChange}
                       error={errors.name}
@@ -160,7 +160,7 @@ class RestrictionModalForm extends Component {
                     <TextFieldAreaGroup
                       type="text"
                       name="description"
-                      placeholder="Descrição"
+                      label="Descrição"
                       value={this.state.description}
                       onChange={this.onChange}
                       error={errors.description}

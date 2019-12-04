@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -109,9 +110,9 @@ class StepTypesList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar tipo de etapa
+            <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
 
@@ -127,66 +128,59 @@ class StepTypesList extends Component {
     //item list
     const stepTypesTable = (
       <div>
-        <h4 className="mb-2">Lista de tipos de estapa</h4>
         {stepTypeList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th>Descrição</th>
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+              <div className="titulos">
+                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+                <span>Descrição</span>
+                <span></span>
+              </div>
               {stepTypeList.length > 0 ? (
                 stepTypeList.map(stepType => {
                   return (
-                    <tr key={stepType.id}>
-                      <td>{stepType.name}</td>
-                      <td>{stepType.description ? stepType.description : ''}</td>
-                      <td>
+                    <li key={stepType.id}>
+                      <h3>{stepType.name}</h3>
+                      <p>{stepType.description ? stepType.description : ''}</p>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${stepType.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <StepTypeModalForm
+                        <button
+                          type="button"
+                          className="btn btn-icon"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${stepType.id}`}>
+                          <i className="fas fa-trash" />
+                        </button>
+                      </p>
+                      <StepTypeModalForm
                           targetName={`editModal-${stepType.id}`}
                           mode="edit"
                           item={stepType}
                           editFunction={this.props.updateStepType}
                           reloadFunction={this.props.getStepTypes}
                         />{' '}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-danger"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${stepType.id}`}>
-                          <i className="fas fa-times-circle" />
-                        </button>
                         <StepTypeModalDelete
                           targetName={`deleteModal-${stepType.id}`}
                           item={stepType}
                           deleteFunction={this.props.deleteStepType}
                           reloadFunction={this.props.getStepTypes}
                         />
-                      </td>
-                    </tr>
+                    </li>
                   )
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
+                <li>
+                  Sem itens para exibir
+                </li>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
+            <p colSpan="3">Sem itens para exibir</p>
         )}
       </div>
     )
@@ -194,13 +188,20 @@ class StepTypesList extends Component {
     return (
       <div className="stepTypes">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Tipos de etapa</h1>
-              <p className="lead text-muted">Tipos de etapa disponíveis dentro do sistema</p>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Cursos</span>
+          </div>
+
+          <div id="main">
+              <h1>Tipos de etapa</h1>
               {addItemTool}
+              {/* <p className="lead text-muted">Tipos de etapa disponíveis dentro do sistema</p> */}
               {stepTypesTable}
-            </div>
           </div>
         </div>
       </div>

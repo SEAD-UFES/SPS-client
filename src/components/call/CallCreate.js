@@ -101,47 +101,41 @@ class CallCreate extends Component {
 
   renderForm(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Criar chamada</h4>
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="text"
+          name="number"
+          label="Número"
+          value={this.state.number}
+          onChange={this.onChange}
+          error={errors.number}
+        />
+
+        <div className="form-lateral">
+          <TextFieldGroup
+            placeholder="__/__/__"
+            type="date"
+            label="Data de abertura"
+            name="openingDate"
+            value={this.state.openingDate}
+            onChange={this.onChange}
+            error={errors.openingDate}
+          />
+
+          <TextFieldGroup
+            placeholder="__/__/__"
+            type="date"
+            label="Data de encerramento"
+            name="endingDate"
+            value={this.state.endingDate}
+            onChange={this.onChange}
+            error={errors.endingDate}
+          />
         </div>
 
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="number"
-              label="Número: *"
-              placeholder="Número da chamada"
-              value={this.state.number}
-              onChange={this.onChange}
-              error={errors.number}
-            />
+        <input type="submit" className="btn btn-primary" value="Cadastrar" />
+      </form>
 
-            <TextFieldGroup
-              placeholder="Abertura da chamada"
-              type="date"
-              label="Abertura: *"
-              name="openingDate"
-              value={this.state.openingDate}
-              onChange={this.onChange}
-              error={errors.openingDate}
-            />
-
-            <TextFieldGroup
-              placeholder="Encerramento da chamada"
-              type="date"
-              label="Encerramento: *"
-              name="endingDate"
-              value={this.state.endingDate}
-              onChange={this.onChange}
-              error={errors.endingDate}
-            />
-
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
-          </form>
-        </div>
-      </div>
     )
   }
 
@@ -151,15 +145,23 @@ class CallCreate extends Component {
     return (
       <div className="call-create">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
-              </Link>
-              <h1 className="display-4">Chamada</h1>
-              <AlertError errors={this.props.errorStore} />
-              {this.renderForm(errors)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Nova chamada</span>
+          </div>
+          
+          <div className="form-container"  id="main">
+            <h1>Nova chamada</h1>
+            <AlertError errors={this.props.errorStore} />
+            {this.renderForm(errors)}
           </div>
         </div>
       </div>

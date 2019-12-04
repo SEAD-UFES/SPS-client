@@ -130,71 +130,65 @@ class Register extends Component {
 
   renderRegister(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Registre-se</h4>
+      <form noValidate onSubmit={this.onSubmit}>
+        <div className="form-lateral">
+          <TextFieldGroup
+            type="text"
+            name="name"
+            label="Nome"
+            value={this.state.name}
+            onChange={this.onChange}
+            error={errors.name}
+          />
+          <TextFieldGroup
+            type="text"
+            name="surname"
+            label="Sobrenome"
+            value={this.state.surname}
+            onChange={this.onChange}
+            error={errors.surname}
+          />
         </div>
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="name"
-              label="Nome: *"
-              placeholder="Nome"
-              value={this.state.name}
-              onChange={this.onChange}
-              error={errors.name}
-            />
-            <TextFieldGroup
-              type="text"
-              name="surname"
-              label="Sobrenome: *"
-              placeholder="Sobrenome"
-              value={this.state.surname}
-              onChange={this.onChange}
-              error={errors.surname}
-            />
-            <TextFieldGroup
-              type="text"
-              name="cpf"
-              label="C.P.F.: *"
-              placeholder="C.P.F."
-              value={this.state.cpf}
-              onChange={this.onChange}
-              error={errors.cpf}
-            />
-            <TextFieldGroup
-              type="text"
-              name="email"
-              label="Email: *"
-              placeholder="Endereço de email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={errors.email}
-            />
-            <TextFieldGroup
-              type="password"
-              name="password"
-              label="Senha: *"
-              placeholder="Senha"
-              value={this.state.password}
-              onChange={this.onChange}
-              error={errors.password}
-            />
-            <TextFieldGroup
-              type="password"
-              name="password2"
-              label="Confirmar senha: *"
-              placeholder="Confirmar senha"
-              value={this.state.password2}
-              onChange={this.onChange}
-              error={errors.password2}
-            />
+        <TextFieldGroup
+          type="text"
+          name="cpf"
+          label="CPF"
+          placeholder="___.___.___-__"
+          value={this.state.cpf}
+          onChange={this.onChange}
+          error={errors.cpf}
+        />
+        <TextFieldGroup
+          type="text"
+          name="email"
+          label="Email"
+          value={this.state.email}
+          onChange={this.onChange}
+          error={errors.email}
+        />
 
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
-          </form>
+        <div class="form-spacing">
+          <TextFieldGroup
+            type="password"
+            name="password"
+            label="Senha"
+            info="Mínimo de 6 caractéres"
+            value={this.state.password}
+            onChange={this.onChange}
+            error={errors.password}
+          />
+          <TextFieldGroup
+            type="password"
+            name="password2"
+            label="Confirmar senha"
+            value={this.state.password2}
+            onChange={this.onChange}
+            error={errors.password2}
+          />
         </div>
-      </div>
+
+        <input type="submit" className="btn btn-primary" value="Cadastrar" />
+      </form>
     )
   }
 
@@ -202,14 +196,10 @@ class Register extends Component {
     const { errors } = this.state
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Novo usuário</h1>
-              {this.renderRegister(errors)}
-            </div>
-          </div>
+      <div className="register" id="main">
+        <div className="form-container">
+          <h1>Cadastro</h1>
+          {this.renderRegister(errors)}
         </div>
       </div>
     )

@@ -171,15 +171,9 @@ class UserEditUser extends Component {
 
   renderEditUser(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar dados de usuário</h4>
-        </div>
-        <div className="card-body">
           <form onSubmit={this.onSubmit}>
             <TextFieldGroup
-              label="Email: *"
-              placeholder="* Endereço de email"
+              label="Email"
               type="email"
               name="email"
               value={this.state.email}
@@ -191,7 +185,7 @@ class UserEditUser extends Component {
             <CheckBoxFieldGroup
               id="active"
               name="active"
-              text="Ativo:"
+              text="Ativo"
               value="Este usuário está ativo."
               checked={this.state.active}
               error={errors.active}
@@ -201,16 +195,15 @@ class UserEditUser extends Component {
             <CheckBoxFieldGroup
               id="changePassword"
               name="changePassword"
-              text="Editar senha:"
-              value="Altere a senha do usuário"
+              text="Alterar senha"
+              value="Desejo alterar a senha de acesso."
               checked={this.state.changePassword}
               error={errors.changePassword}
               onChange={this.onCheck}
             />
 
             <TextFieldGroup
-              label="Senha: *"
-              placeholder="* Senha"
+              label="Senha"
               type="password"
               name="password"
               value={this.state.password}
@@ -220,8 +213,7 @@ class UserEditUser extends Component {
             />
 
             <TextFieldGroup
-              label="Repita a senha: *"
-              placeholder="* Repita a senha"
+              label="Repita a senha"
               type="password"
               name="password2"
               value={this.state.password2}
@@ -230,10 +222,8 @@ class UserEditUser extends Component {
               disabled={!this.state.changePassword}
             />
 
-            <input value="Enviar" type="submit" className="btn btn-primary btn-block mt-4" />
+            <input value="Enviar" type="submit" className="btn btn-primary" value="Salvar" />
           </form>
-        </div>
-      </div>
     )
   }
 
@@ -243,14 +233,26 @@ class UserEditUser extends Component {
     return (
       <div className="user-edit-user">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/users/${this.props.match.params.id}`} className="btn btn-light">
-                Voltar para perfil do usuário
-              </Link>
-              <h1 className="display-4">Usuário</h1>
-              {this.renderEditUser(errors)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to="/users" className="breadcrumb-link">
+              Usuários
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/users/${this.props.match.params.id}`} className="breadcrumb-link">
+              Usuário X
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Editar dados de acesso</span>
+          </div>
+
+          <div className="form-container" id="main">
+            <h1>Editar dados de acesso</h1>
+            {this.renderEditUser(errors)}
           </div>
         </div>
       </div>

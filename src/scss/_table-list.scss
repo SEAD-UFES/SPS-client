@@ -1,0 +1,150 @@
+.table-list {
+	width: 100%;
+	margin-bottom: 3rem;
+
+	.titulos {
+		display: none;
+	}
+
+	li {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		padding-bottom: 1.2rem;
+		border-bottom: 1px solid $azulClaro;
+
+		&:first-of-type {
+			border-top: 1px solid $azulClaro;
+		}
+
+		h3 {
+			font-size: 1.15rem;
+			font-weight: 500;
+			margin-top: 1rem;
+			color: $laranjaMedio;
+		}
+
+		p {
+			margin: 0.3rem 0 !important;
+		}
+
+		.text-right {
+			i {
+				padding: 0 0.3rem;
+			}
+
+			.icon-read {
+				color: $laranjaMedio !important;
+
+				i {
+					color: $laranjaMedio;
+				}
+			}
+		}
+	}
+
+	@media screen and (min-width: 800px) {
+		.titulos {
+			display: flex;
+			justify-content: space-between;
+
+			span {
+				font-weight: 600;
+				color: $azulMedio;
+				font-size: 1.1rem;
+				margin: 0.8rem 0;
+				display: inline-block;
+				flex: 1 1 auto;
+			}
+		}
+
+		li {
+			flex-direction: row;
+			margin-bottom: 0;
+			display: flex;
+			justify-content: space-between;
+			border: none !important;
+
+			p,
+			h3 {
+				margin: 1rem 0 !important;
+				position: relative !important;
+				display: inline-block;
+				font-size: 1rem;
+				vertical-align: top;
+				flex: 1 1 auto;
+			}
+
+			p {
+				font-weight: 300;
+				color: black;
+				font-style: normal;
+			}
+
+			h3 {
+				font-weight: 600;
+
+				span {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+@mixin table-cell-width($um, $dois, $tres: unset, $quatro: unset, $cinco: unset, $seis: unset){
+	.table-list {
+		@media screen and (min-width: 800px) {
+			.titulos {
+				span {
+					&:nth-of-type(1){ width: $um;	}
+					&:nth-of-type(2){	width: $dois; }
+					&:nth-of-type(3){	width: $tres; }
+					&:nth-of-type(4){ width: $quatro; }
+					&:nth-of-type(5){	width: $cinco; }
+					&:nth-of-type(6){	width: $seis; }
+				}
+			}
+
+			li {
+				h3 { width: $um; }
+
+				p {
+					&:nth-of-type(1){ width: $dois;	}
+					&:nth-of-type(2){	width: $tres;	}
+					&:nth-of-type(3){ width: $quatro;	}
+					&:nth-of-type(4){	width: $cinco; }
+					&:nth-of-type(5){	width: $seis;	}
+				}
+			}
+		}
+	}
+}
+
+// Padrão
+@include table-cell-width(12%, 30%, 30%, 28%);
+
+
+#ofertas {
+	@include table-cell-width(20%, 10%, 15%, 20%, 10%, 15%);
+}
+
+.assignments, .userRole-list {
+	@include table-cell-width( 30%, 18% ,40% ,12% );
+
+	li > p {
+			button{ padding: 0; }
+	}
+}
+
+.user-list {
+	.tipo-de-curso {
+		font-style: italic;
+
+		@media screen and (min-width: 800px) {
+			font-style: normal;
+		}
+	}
+
+	@include table-cell-width( 12%, 25% ,25% ,25%, 13% );
+}

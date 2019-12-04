@@ -29,66 +29,54 @@ class CallView extends Component {
     })
   }
 
+  renderCallName(call, loading) {
+    if (call === null || loading) {
+      return <Spinner />
+    }
+
+    return <React.Fragment>{`Chamada ${call.number}`}</React.Fragment>
+  }
+
+  renderCallEdit(call, loading) {
+    if (call === null || loading) {
+      return <Spinner />
+    }
+    return (
+      <div className="btn-right">
+          <DrawFilter permission="call_update" course_id={this.state.course_id}>
+            <Link
+              className="btn btn-primary"
+              to={{
+                pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
+                prevLocation: this.props.location
+              }}>
+              <i className="fas fa-cog" /> Editar
+            </Link>
+          </DrawFilter>
+        </div>
+    )
+  }
+
   renderInfo(call, loading) {
     if (call === null || loading) {
       return <Spinner />
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Informações</h4>
-            </div>
-            <div className="col">
-              <div className="text-right">
-                <DrawFilter permission="call_update" course_id={this.state.course_id}>
-                  <Link
-                    className="text-primary"
-                    to={{
-                      pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
-                      prevLocation: this.props.location
-                    }}>
-                    <i className="fas fa-cog" /> Editar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="card-body">
-          <table className="table table-hover mt-0 mb-0">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Número:</strong>
-                </td>
-                <td>{call.number}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Abertura:</strong>
-                </td>
-                <td>{moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Encerramento:</strong>
-                </td>
-                <td>{moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Status:</strong>
-                </td>
-                <td>{getCallStatus(call)}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <section>
+        <p>
+          <strong>Abertura: </strong>
+           {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+        </p>
+        <p>
+          <strong>Encerramento: </strong>
+          {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+        </p>
+        <p>
+          <strong>Status: </strong>
+          {getCallStatus(call)}
+        </p>
+      </section>
     )
   }
 
@@ -102,19 +90,29 @@ class CallView extends Component {
   render() {
     const { errors, call, loading } = this.props
     return (
-      <div className="register">
+      <div className="view-page">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
+
+          <div className="breadcrumb">              
+              <span>Você está em:</span>
+              <Link to="/processes" className="breadcrumb-link">
+                Processos Seletivos
               </Link>
-              <h1 className="display-4">Chamada</h1>
+              <i class="fas fa-greater-than"></i>
+              <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+                Edital XXX/XXXX
+              </Link>
+              <i class="fas fa-greater-than"></i>
+              <span>{this.renderCallName(call, loading)}</span>
+            </div>
+
+            <div id="main">
+              <h1>{this.renderCallName(call, loading)}</h1>
+              {this.renderCallEdit(call, loading)}
               <AlertError errors={errors} />
               {this.renderInfo(call, loading)}
               {this.renderVacancys(call, loading)}
             </div>
-          </div>
         </div>
       </div>
     )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -113,9 +114,9 @@ class CourseList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar curso
+            <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
 
@@ -132,71 +133,70 @@ class CourseList extends Component {
     //item list
     const coursesTable = (
       <div>
-        <h4 className="mb-2">Lista de cursos</h4>
         {coursesList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('level')}>Nível {this.orderIcon('level')}</th>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th>
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+            <div className="titulos">
+              <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+              {/* <span onClick={() => this.sortBy('level')}>Nível {this.orderIcon('level')}</span> */}
+              <span>Nível</span>
+              {/* <span onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</span> */}
+              <span>Descrição</span>
+              <span></span>
+            </div>
+
               {coursesList.length > 0 ? (
                 coursesList.map(course => {
                   return (
-                    <tr key={course.id}>
-                      <td>{course.GraduationType.name}</td>
-                      <td>{course.name}</td>
-                      <td>
+                    <li key={course.id}>
+                      <h3>{course.name}</h3>
+                      <p>{course.GraduationType.name}</p>
+                      <p>
                         {course.description ? course.description : <span className="text-muted">Sem descrição.</span>}
-                      </td>
-                      <td>
+                      </p>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${course.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <CourseModalForm
-                          targetName={`editModal-${course.id}`}
-                          mode="edit"
-                          item={course}
-                          editFunction={this.props.updateCourse}
-                          reloadFunction={this.props.getCourses}
-                          graduationTypes={graduationTypes}
-                        />{' '}
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-danger"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#deleteModal-${course.id}`}>
-                          <i className="fas fa-times-circle" />
+                          <i className="fas fa-trash" />
                         </button>
-                        <CourseModalDelete
-                          targetName={`deleteModal-${course.id}`}
-                          item={course}
-                          deleteFunction={this.props.deleteCourse}
-                          reloadFunction={this.props.getCourses}
-                        />
-                      </td>
-                    </tr>
+                      </p>
+                      <CourseModalForm
+                        targetName={`editModal-${course.id}`}
+                        mode="edit"
+                        item={course}
+                        editFunction={this.props.updateCourse}
+                        reloadFunction={this.props.getCourses}
+                        graduationTypes={graduationTypes}
+                      />
+                      <CourseModalDelete
+                        targetName={`deleteModal-${course.id}`}
+                        item={course}
+                        deleteFunction={this.props.deleteCourse}
+                        reloadFunction={this.props.getCourses}
+                      />
+                    </li>
+                    
                   )
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
+                <li>
+                  Sem itens para exibir
+                </li>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
+          <p>
+            Sem itens para exibir
+          </p>
         )}
       </div>
     )
@@ -204,13 +204,20 @@ class CourseList extends Component {
     return (
       <div className="assignments">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Cursos</h1>
-              <p className="lead text-muted">Cursos que fazem uso do sistema de processo seletivo</p>
-              {addItemTool}
-              {coursesTable}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Cursos</span>
+          </div>
+
+          <div id="main">
+            <h1>Cursos</h1>
+            {addItemTool}
+            {/* <p className="lead text-muted">Cursos que fazem uso do sistema de processo seletivo</p> */}
+            {coursesTable}
           </div>
         </div>
       </div>

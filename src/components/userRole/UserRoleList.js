@@ -121,31 +121,23 @@ class UserRoleList extends Component {
         <Spinner />
       ) : userRoleList.length > 0 ? (
         <div>
-          <h4 className="mb-2">Lista de atribuições de papel</h4>
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('user')}>Usuário {this.orderIcon('user')}</th>
-                <th onClick={() => this.sortBy('role')}>Atribuição {this.orderIcon('role')}</th>
-                <th onClick={() => this.sortBy('course')}>Curso {this.orderIcon('course')}</th>
-                <th>
-                  <Link className="text-success" to={`${this.props.match.url}/create`}>
-                    <i className="fas fa-plus-circle" />
-                  </Link>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+            <div className="titulos">
+                <span onClick={() => this.sortBy('user')}>Usuário {this.orderIcon('user')}</span>
+                <span onClick={() => this.sortBy('role')}>Atribuição {this.orderIcon('role')}</span>
+                <span onClick={() => this.sortBy('course')}>Curso {this.orderIcon('course')}</span>
+                <span></span>
+            </div>
               {userRoleList.map(userRole => {
                 return (
-                  <tr key={userRole.id}>
-                    <td>
+                  <li key={userRole.id}>
+                    <h3>
                       <Link to={`/users/${userRole.User.id}`}>{userRole.User.login}</Link>
-                    </td>
-                    <td>
+                    </h3>
+                    <p>
                       <Link to={`/parameters/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
-                    </td>
-                    <td>
+                    </p>
+                    <p>
                       {userRole.RoleType.global ? (
                         'Papel global'
                       ) : userRole.Course ? (
@@ -153,17 +145,16 @@ class UserRoleList extends Component {
                       ) : (
                         <span className="text-muted">n/a</span>
                       )}
-                    </td>
-                    <td>
-                      <Link className="text-danger" to={`${this.props.match.url}/${userRole.id}/delete`}>
-                        <i className="fas fa-times-circle" />
+                    </p>
+                    <p className="text-right">
+                      <Link className="btn-icon" to={`${this.props.match.url}/${userRole.id}/delete`}>
+                        <i className="fas fa-trash" />
                       </Link>
-                    </td>
-                  </tr>
+                    </p>
+                  </li>
                 )
               })}
-            </tbody>
-          </table>
+          </ul>
         </div>
       ) : (
         <div>
@@ -178,10 +169,9 @@ class UserRoleList extends Component {
       )
 
     const addButton = (
-      <div className="btn-group mb-4" role="group">
-        <Link to={`${this.props.match.url}/create`} className="btn btn-light">
-          <i className="fas fa-user-circle text-primary mr-1" />
-          Adicionar atribuição de papel
+      <div className="btn-right" role="group">
+        <Link to={`${this.props.match.url}/create`} className="btn btn-primary">
+          <i className="fas fa-plus-circle" /> Adicionar
         </Link>
       </div>
     )
@@ -189,14 +179,21 @@ class UserRoleList extends Component {
     return (
       <div className="userRole-list">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Atribuições de papel</h1>
-              <p className="lead text-muted">Atribuições de papel a usuários do sistema</p>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Atribuições de papel</span>
+          </div>
+
+            <div id="main">
+              <h1>Atribuições de papel</h1>
               {addButton}
+              {/* <p className="lead text-muted">Atribuições de papel a usuários do sistema</p> */}
               {userRolesTable}
             </div>
-          </div>
         </div>
       </div>
     )

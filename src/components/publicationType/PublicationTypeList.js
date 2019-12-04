@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -114,9 +115,9 @@ class ProcessPublicationTypesList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="mb-2">
+        <div className="btn-right">
           <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            + Adicionar tipo de publicação
+            <i className="fas fa-plus-circle" /> Adicionar
           </button>
         </div>
 
@@ -132,64 +133,55 @@ class ProcessPublicationTypesList extends Component {
     //item list
     const publicationTypesTable = (
       <div>
-        <h4 className="mb-2">Lista de tipos de papel</h4>
         {publicationTypeList ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</th>
-                <th>Opções</th>
-              </tr>
-            </thead>
-            <tbody>
+          <ul className="table-list">
+            <div className="titulos">
+                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+                <span></span>
+            </div>
               {publicationTypeList.length > 0 ? (
                 publicationTypeList.map(publicationType => {
                   return (
-                    <tr key={publicationType.id}>
-                      <td>{publicationType.name}</td>
-                      <td>
+                    <li key={publicationType.id}>
+                      <p>{publicationType.name}</p>
+                      <p className="text-right">
                         <button
                           type="button"
-                          className="btn btn-link buttonAsLink text-primary"
+                          className="btn btn-icon"
                           data-toggle="modal"
                           data-target={`#editModal-${publicationType.id}`}>
-                          <i className="fas fa-cog" />
+                          <i className="fas fa-pencil-alt" />
                         </button>
-                        <PublicationTypeModalForm
+                        <button
+                          type="button"
+                          className="btn btn-icon"
+                          data-toggle="modal"
+                          data-target={`#deleteModal-${publicationType.id}`}>
+                          <i className="fas fa-trash" />
+                        </button>
+                      </p>
+                      <PublicationTypeModalForm
                           targetName={`editModal-${publicationType.id}`}
                           mode="edit"
                           item={publicationType}
                           editFunction={this.props.updatePublicationType}
                           reloadFunction={this.props.getPublicationTypes}
                         />{' '}
-                        <button
-                          type="button"
-                          className="btn btn-link buttonAsLink text-danger"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${publicationType.id}`}>
-                          <i className="fas fa-times-circle" />
-                        </button>
                         <PublicationTypeModalDelete
                           targetName={`deleteModal-${publicationType.id}`}
                           item={publicationType}
                           deleteFunction={this.props.deletePublicationType}
                           reloadFunction={this.props.getPublicationTypes}
                         />
-                      </td>
-                    </tr>
+                    </li>
                   )
                 })
               ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
+                <li>Sem itens para exibir</li>
               )}
-            </tbody>
-          </table>
+          </ul>
         ) : (
-          <tr>
-            <td colSpan="3">Sem itens para exibir</td>
-          </tr>
+            <p>Sem itens para exibir</p>
         )}
       </div>
     )
@@ -197,13 +189,20 @@ class ProcessPublicationTypesList extends Component {
     return (
       <div className="publicationTypes">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Tipos de publicação</h1>
-              <p className="lead text-muted">Tipos de publicação efetuadas dentro do sistema</p>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Tipos de publicação</span>
+          </div>
+
+          <div id="main">
+              <h1>Tipos de publicação</h1>
               {addItemTool}
+              {/* <p className="lead text-muted">Tipos de publicação efetuadas dentro do sistema</p> */}
               {publicationTypesTable}
-            </div>
           </div>
         </div>
       </div>

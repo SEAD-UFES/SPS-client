@@ -129,68 +129,59 @@ class ProcessEdit extends Component {
 
   renderForm(state, errors, courseOptions) {
     return (
-      <div className="card">
-        <div className="card-header">
-          <h4 className="mb-0">Editar processo</h4>
+      <form noValidate onSubmit={this.onSubmit}>
+        <div className="form-lateral">
+          <TextFieldGroup
+            type="text"
+            name="number"
+            label="Número"
+            value={this.state.number}
+            onChange={this.onChange}
+            error={errors.number}
+          />
+
+          <TextFieldGroup
+            type="text"
+            name="year"
+            label="Ano"
+            value={this.state.year}
+            onChange={this.onChange}
+            error={errors.year}
+          />
         </div>
 
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="number"
-              label="Número: *"
-              placeholder="* Número"
-              value={this.state.number}
-              onChange={this.onChange}
-              error={errors.number}
-            />
+        <SelectListGroup
+          placeholder=""
+          name="course_id"
+          label="Curso"
+          value={this.state.course_id}
+          options={courseOptions}
+          onChange={this.onChange}
+          error={errors.course_id}
+        />
 
-            <TextFieldGroup
-              type="text"
-              name="year"
-              label="Ano: *"
-              placeholder="* Ano"
-              value={this.state.year}
-              onChange={this.onChange}
-              error={errors.year}
-            />
+        <TextAreaFieldGroup
+          placeholder="* Descrição"
+          name="description"
+          label="Descrição"
+          value={this.state.description}
+          onChange={this.onChange}
+          error={errors.description}
+          info="Apresentação básica do processo seletivo"
+        />
 
-            <SelectListGroup
-              placeholder=""
-              name="course_id"
-              label="Curso: *"
-              value={this.state.course_id}
-              options={courseOptions}
-              onChange={this.onChange}
-              error={errors.course_id}
-            />
+        <CheckBoxFieldGroup
+          id="visible-checkbox"
+          name="visible"
+          text="Visibilidade"
+          value="Tornar processo visível"
+          checked={this.state.visible}
+          error={errors.visible}
+          onChange={this.onCheck}
+        />
 
-            <TextAreaFieldGroup
-              placeholder="* Descrição"
-              name="description"
-              label="Descrição: *"
-              value={this.state.description}
-              onChange={this.onChange}
-              error={errors.description}
-              info="Apresentação básica do processo seletivo"
-            />
-
-            <CheckBoxFieldGroup
-              id="visible-checkbox"
-              name="visible"
-              text="Visibilidade:"
-              value="Tornar processo visível"
-              checked={this.state.visible}
-              error={errors.visible}
-              info=""
-              onChange={this.onCheck}
-            />
-
-            <input type="submit" className="btn mt-4 btn-primary btn-block" />
-          </form>
-        </div>
-      </div>
+        <input type="submit" className="btn btn-primary" value="Editar"/>
+      </form>
     )
   }
 
@@ -212,15 +203,23 @@ class ProcessEdit extends Component {
     return (
       <div className="process-edit">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.id}`} className="btn btn-light">
-                Voltar para o processo
-              </Link>
-              <h1 className="display-4">Processo seletivo</h1>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Editar</span>
+          </div>
+
+          <div className="form-container" id="main">
+            <h1>Editar processo</h1>
               <AlertError errors={this.props.errorStore} />
               {this.renderForm(this.state, errors, courseOptions)}
-            </div>
           </div>
         </div>
       </div>

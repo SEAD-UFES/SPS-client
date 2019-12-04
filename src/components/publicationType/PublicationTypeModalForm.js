@@ -145,7 +145,7 @@ class PublicationTypeModalForm extends Component {
                     <TextFieldGroup
                       type="text"
                       name="name"
-                      placeholder="* Nome"
+                      label="Nome"
                       value={this.state.name}
                       onChange={this.onChange}
                       error={errors.name}

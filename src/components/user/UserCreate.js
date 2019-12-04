@@ -124,65 +124,63 @@ class UserCreate extends Component {
 
   renderCreateUser(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Criar usuário</h4>
+      <form noValidate onSubmit={this.onSubmit}>
+        <div className="form-lateral">
+          <TextFieldGroup
+            type="text"
+            name="name"
+            label="Nome"
+            value={this.state.name}
+            onChange={this.onChange}
+            error={errors.name}
+          />
+          <TextFieldGroup
+            type="text"
+            name="surname"
+            label="Sobrenome"
+            value={this.state.surname}
+            onChange={this.onChange}
+            error={errors.surname}
+          />
         </div>
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="name"
-              placeholder="Nome"
-              value={this.state.name}
-              onChange={this.onChange}
-              error={errors.name}
-            />
-            <TextFieldGroup
-              type="text"
-              name="surname"
-              placeholder="Sobrenome"
-              value={this.state.surname}
-              onChange={this.onChange}
-              error={errors.surname}
-            />
-            <TextFieldGroup
-              type="text"
-              name="cpf"
-              placeholder="C.P.F."
-              value={this.state.cpf}
-              onChange={this.onChange}
-              error={errors.cpf}
-            />
-            <TextFieldGroup
-              type="text"
-              name="email"
-              placeholder="Endereço de email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={errors.email}
-            />
-            <TextFieldGroup
-              type="password"
-              name="password"
-              placeholder="Senha"
-              value={this.state.password}
-              onChange={this.onChange}
-              error={errors.password}
-            />
-            <TextFieldGroup
-              type="password"
-              name="password2"
-              placeholder="Confirmar senha"
-              value={this.state.password2}
-              onChange={this.onChange}
-              error={errors.password2}
-            />
+        <TextFieldGroup
+          type="text"
+          name="cpf"
+          label="CPF"
+          value={this.state.cpf}
+          onChange={this.onChange}
+          error={errors.cpf}
+        />
+        <TextFieldGroup
+          type="text"
+          name="email"
+          label="E-mail"
+          value={this.state.email}
+          onChange={this.onChange}
+          error={errors.email}
+        />
 
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
-          </form>
+        <div className="form-spacing">
+          <TextFieldGroup
+            type="password"
+            name="password"
+            label="Senha"
+            value={this.state.password}
+            onChange={this.onChange}
+            error={errors.password}
+          />
+          <TextFieldGroup
+            type="password"
+            name="password2"
+            label="Confirmar senha"
+            value={this.state.password2}
+            onChange={this.onChange}
+            error={errors.password2}
+          />
         </div>
-      </div>
+
+        <input type="submit" className="btn btn-primary" value="Cadastrar"/>
+      </form>
     )
   }
 
@@ -192,14 +190,21 @@ class UserCreate extends Component {
     return (
       <div className="register">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to="/users" className="btn btn-light">
-                Voltar para lista de usuários
-              </Link>
-              <h1 className="display-4">Usuário</h1>
-              {this.renderCreateUser(errors)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to="/users" className="breadcrumb-link">
+              Usuários
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Novo usuário</span>
+          </div>
+          <div className="form-container" id="main">
+            <h1>Novo usuário</h1>
+            {this.renderCreateUser(errors)}
           </div>
         </div>
       </div>

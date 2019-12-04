@@ -19,14 +19,13 @@ class TextAreaFieldTinyMCE extends React.Component {
     }
 
     return (
-      <div className="form-group row">
-        <label className="col-lg-2 col-form-label form-control-label font-weight-bold">
-          {this.props.label ? this.props.label : 'Texto:'}
-        </label>
-        <div className="col-lg-10">
+      <div className="form-group">
+        <label className="form-control-label">{this.props.label ? this.props.label : 'Texto'}</label>
+        <div>
+          {this.props.info && <small>{this.props.info}</small>}
           <div
             style={style}
-            className={classnames('form-control form-control-lg', {
+            className={classnames('form-control', {
               'is-invalid': this.props.error
             })}>
             <Editor
@@ -36,13 +35,11 @@ class TextAreaFieldTinyMCE extends React.Component {
               init={{
                 plugins: 'link image code',
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
-                height: 500
+                height: 300
               }}
               onChange={this.props.onChange}
             />
-          </div>
-
-          {this.props.info && <small className="form-text text-muted">{this.props.info}</small>}
+          </div>          
           {this.props.error && <div className="invalid-feedback">{this.props.error}</div>}
         </div>
       </div>

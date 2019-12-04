@@ -8,78 +8,71 @@ import { getCallStatus } from './callHelpers'
 export default class CallCard extends Component {
   renderTable(process) {
     return (
-      <table className="table table-hover mt-0 mb-0">
-        <thead>
-          <tr>
-            <th>Número</th>
-            <th>Periodo</th>
-            <th>Status</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {process.Calls.map(call => {
-            return (
-              <tr key={call.id}>
-                <td>{call.number}</td>
-                <td>
-                  {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
-                  {' - '}
-                  {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
-                </td>
-                <td>{getCallStatus(call)}</td>
-                <td className="text-right">
-                  <DrawFilter permission="call_read" course_id={process.Course.id}>
-                    <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
-                      <i className="fas fa-search-plus" />
-                    </Link>
-                  </DrawFilter>{' '}
-                  <DrawFilter permission="call_update" course_id={process.Course.id}>
-                    <Link className="text-primary" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-                      <i className="fas fa-cog" />
-                    </Link>
-                  </DrawFilter>{' '}
-                  <DrawFilter permission="call_delete" course_id={process.Course.id}>
-                    <Link className="text-danger" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
-                      <i className="fas fa-times-circle" />
-                    </Link>
-                  </DrawFilter>
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      <ul className="table-list">
+        <div class="titulos">
+          <span>Número</span>
+          <span>Periodo</span>
+          <span>Status</span>
+          <span></span>
+        </div>
+
+        {process.Calls.map(call => {
+          return (
+            <li key={call.id}>
+              <h3><span>Chamada </span>{call.number}</h3>
+              <p>
+                {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
+                {' - '}
+                {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
+              </p>
+              <p>
+                {getCallStatus(call)}
+              </p>
+              <p className="text-right">
+                <DrawFilter permission="call_read" course_id={process.Course.id}>
+                  <Link className="btn-icon laranja" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
+                    <i class="fas fa-eye"></i>
+                  </Link>
+                </DrawFilter>{' '}
+                {/* <DrawFilter permission="call_update" course_id={process.Course.id}>
+                  <Link className="icon-edit" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                    <i class="fas fa-pencil-alt"></i>
+                  </Link>
+                </DrawFilter>{' '} */}
+                <DrawFilter permission="call_delete" course_id={process.Course.id}>
+                  <Link className="btn-icon" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
+                    <i class="fas fa-trash"></i>
+                  </Link>
+                </DrawFilter>
+              </p>
+            </li>
+          )
+        })}
+      </ul>
     )
   }
 
   render() {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Chamadas</h4>
-            </div>
-            <div className="col">
-              <div className="float-right">
-                <DrawFilter permission="call_create" course_id={this.props.process.Course.id}>
-                  <Link className="text-success" to={`/processes/${this.props.process.id}/calls/create`}>
-                    <i className="fas fa-plus-circle" /> Adicionar
-                  </Link>
-                </DrawFilter>
-              </div>
-            </div>
-          </div>
+      <section id="chamadas" class="quadro">
+        <h4>Chamadas</h4>
+
+        <div className="btn-right">
+          <DrawFilter permission="call_create" course_id={this.props.process.Course.id}>
+            <Link className="btn btn-terciary" to={`/processes/${this.props.process.id}/calls/create`}>
+              <i className="fas fa-plus-circle" /> Adicionar
+            </Link>
+          </DrawFilter>
         </div>
-        <div className="card-body">
+
+        <div>
           {this.props.process.Calls.length > 0 ? (
             this.renderTable(this.props.process)
           ) : (
-            <p className="mb-0">Sem chamadas cadastradas.</p>
+            <p>Sem chamadas cadastradas.</p>
           )}
         </div>
-      </div>
+      </section>
     )
   }
 }

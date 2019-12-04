@@ -39,19 +39,19 @@ class Navbar extends Component {
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           <Link className="nav-link" to="/register">
-            Registre-se
+            Cadastre-se
           </Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/login">
-            Login
+            Entrar
           </Link>
         </li>
       </ul>
     )
 
     const authLinks = !(profile === null || loading) ? (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav logged ml-auto">
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
             {profile.Person ? profile.Person.name : profile.login}
@@ -59,14 +59,7 @@ class Navbar extends Component {
         </li>
         <li className="nav-item">
           <button type="button" onClick={this.onLogoutClick.bind(this)} className="btn btn-link nav-link">
-            <img
-              className="rounded-circle"
-              src={avatar}
-              alt={profile.Person ? profile.Person.name : profile.login}
-              style={{ width: '25px', marginRight: '5px' }}
-              title={profile.Person ? profile.Person.name : profile.login}
-            />{' '}
-            Logout
+            Sair
           </button>
         </li>
       </ul>
@@ -75,38 +68,36 @@ class Navbar extends Component {
     )
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
-        <div className="container">
-          <Link className="navbar-brand" to="/">
-            SEAD SPS
-          </Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
-            <span className="navbar-toggler-icon" />
-          </button>
+      <header>
+        <div id="barra-ufes"></div>
+        
+        <nav className="navbar navbar-expand-sm">
+          <div className="container">
+            <Link className="navbar-brand" to="/processes">
+              Sistema de Seleção
+              <span>Processos Seletivos EaD</span>
+            </Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+              <i class="fas fa-bars"></i>
+            </button>
 
-          <div className="collapse navbar-collapse" id="mobile-nav">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/processes">
-                  {' '}
-                  Processos
-                </Link>
-              </li>
+            <div className="collapse navbar-collapse" id="mobile-nav">
+              <ul className="navbar-nav mr-auto">
+                <DrawFilter permission="parameter_list">
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/parameters">
+                      {' '}
+                      Parâmetros
+                    </Link>
+                  </li>
+                </DrawFilter>
+              </ul>
 
-              <DrawFilter permission="parameter_list">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/parameters">
-                    {' '}
-                    Parâmetros
-                  </Link>
-                </li>
-              </DrawFilter>
-            </ul>
-
-            {isAuthenticated ? authLinks : guestLinks}
+              {isAuthenticated ? authLinks : guestLinks}
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
     )
   }
 }

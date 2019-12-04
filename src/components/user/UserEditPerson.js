@@ -150,55 +150,72 @@ class UserEditPerson extends Component {
 
   renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar dados pessoais</h4>
-        </div>
-        <div className="card-body">
           <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              label="Nome: *"
-              placeholder="* Nome"
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={this.onChange}
-              error={errors.name}
-            />
+            <div className="form-lateral">
+              <TextFieldGroup
+                label="Nome"
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                error={errors.name}
+              />
+
+              <TextFieldGroup
+                label="Sobrenome"
+                type="text"
+                name="surname"
+                value={this.state.surname}
+                onChange={this.onChange}
+                error={errors.surname}
+              />
+            </div>
+
+            <div className="form-lateral">
+              <TextFieldGroup
+                label="Data de nascimento"
+                placeholder="__/__/__"
+                type="date"
+                name="birthdate"
+                value={this.state.birthdate}
+                onChange={this.onChange}
+                error={errors.birthdate}
+              />
+
+              <TextFieldGroup
+                label="CPF"
+                placeholder="___.___.___-__"
+                type="text"
+                name="cpf"
+                value={this.state.cpf}
+                onChange={this.onChange}
+                error={errors.cpf}
+              />
+            </div>
+
+            <div className="form-lateral">
+              <TextFieldGroup
+                label="Número do RG"
+                placeholder="_______"
+                type="text"
+                name="rgNumber"
+                value={this.state.rgNumber}
+                onChange={this.onChange}
+                error={errors.rgNumber}
+              />
+
+              <TextFieldGroup
+                label="Órgão expeditor"
+                type="text"
+                name="rgDispatcher"
+                value={this.state.rgDispatcher}
+                onChange={this.onChange}
+                error={errors.rgDispatcher}
+              />
+            </div>
 
             <TextFieldGroup
-              label="Sobrenome: *"
-              placeholder="* Sobrenome"
-              type="text"
-              name="surname"
-              value={this.state.surname}
-              onChange={this.onChange}
-              error={errors.surname}
-            />
-
-            <TextFieldGroup
-              label="Nascimento: *"
-              placeholder="Data de nascimento"
-              type="date"
-              name="birthdate"
-              value={this.state.birthdate}
-              onChange={this.onChange}
-              error={errors.birthdate}
-            />
-
-            <TextFieldGroup
-              label="C.P.F.: *"
-              placeholder="* C.P.F."
-              type="text"
-              name="cpf"
-              value={this.state.cpf}
-              onChange={this.onChange}
-              error={errors.cpf}
-            />
-
-            <TextFieldGroup
-              label="Nascionalidade: *"
-              placeholder="Nacionalidade"
+              label="Nacionalidade"
               type="text"
               name="nationality"
               value={this.state.nationality}
@@ -206,28 +223,8 @@ class UserEditPerson extends Component {
               error={errors.nationality}
             />
 
-            <TextFieldGroup
-              label="RG - Número:"
-              placeholder="Número do RG"
-              type="text"
-              name="rgNumber"
-              value={this.state.rgNumber}
-              onChange={this.onChange}
-              error={errors.rgNumber}
-            />
-
-            <TextFieldGroup
-              label="RG - Expeditor:"
-              placeholder="Expeditor do RG"
-              type="text"
-              name="rgDispatcher"
-              value={this.state.rgDispatcher}
-              onChange={this.onChange}
-              error={errors.rgDispatcher}
-            />
-
             <SelectListGroup
-              label="Etnia:"
+              label="Etnia"
               placeholder="Escolha cor/etnia"
               name="ethnicity"
               value={this.state.ethnicity}
@@ -237,7 +234,7 @@ class UserEditPerson extends Component {
             />
 
             <SelectListGroup
-              label="Gênero:"
+              label="Gênero"
               placeholder="Escolha gênero"
               name="gender"
               value={this.state.gender}
@@ -247,7 +244,7 @@ class UserEditPerson extends Component {
             />
 
             <SelectListGroup
-              label="Estado civil:"
+              label="Estado civil"
               placeholder="Escolha estado civil"
               name="civilStatus"
               value={this.state.civilStatus}
@@ -256,10 +253,9 @@ class UserEditPerson extends Component {
               error={errors.civilStatus}
             />
 
-            <input value="Enviar" type="submit" className="btn btn-primary btn-block mt-4" />
+            <input value="Enviar" type="submit" className="btn btn-primary" value="Salvar" />
           </form>
-        </div>
-      </div>
+
     )
   }
 
@@ -303,14 +299,25 @@ class UserEditPerson extends Component {
     return (
       <div className="user-edit-person">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/users/${this.props.match.params.id}`} className="btn btn-light">
-                Voltar para perfil do usuário
-              </Link>
-              <h1 className="display-4">Usuário</h1>
-              {this.renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions)}
-            </div>
+        <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/parameters" className="breadcrumb-link">
+              Parâmetros
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to="/users" className="breadcrumb-link">
+              Usuários
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/users/${this.props.match.params.id}`} className="breadcrumb-link">
+              Usuário X
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Editar dados pessoais</span>
+          </div>
+          <div className="form-container" id="main">
+            <h1>Editar dados pessoais</h1>
+            {this.renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions)}
           </div>
         </div>
       </div>

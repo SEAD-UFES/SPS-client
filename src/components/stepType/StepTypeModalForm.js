@@ -141,7 +141,7 @@ class StepTypeModalForm extends Component {
                     <TextFieldGroup
                       type="text"
                       name="name"
-                      placeholder="* Nome"
+                      label="Nome"
                       value={this.state.name}
                       onChange={this.onChange}
                       error={errors.name}
@@ -149,7 +149,7 @@ class StepTypeModalForm extends Component {
                     <TextAreaFieldGroup
                       type="text"
                       name="description"
-                      placeholder="Descrição"
+                      label="Descrição"
                       value={this.state.description}
                       onChange={this.onChange}
                       error={errors.description}

@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 
 const CheckBoxFieldGroup = ({ id, name, text, value, checked, error, info, onChange }) => {
   return (
-    <div className="row">
-      <span className="col-lg-2 col-form-label form-control-label font-weight-bold">{text}</span>
-      <div className="col-lg-10">
-        <div className="form-check mt-2">
+    <div className="form-group">
+      <span className="form-control-label">{text}</span>
+      <div>
+        {info && <small>{info}</small>}
+        <div className="form-check">
           <input className="form-check-input" type="checkbox" name={name} id={id} checked={checked} onChange={onChange} />
           <label className="form-check-label" htmlFor="id">
             {value}
           </label>
         </div>
-        {info && <small className="form-text text-muted">{info}</small>}
+        
         {error && <div className="invalid-feedback">{error}</div>}
       </div>
     </div>

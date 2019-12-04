@@ -18,17 +18,17 @@ class NoticeCard extends Component {
           <React.Fragment>
             <DrawFilter permission="notice_update" course_id={processStore.process.Course.id}>
               <Link
-                className="text-primary"
+                className="btn-icon"
                 to={`/processes/${processStore.process.id}/notices/${notices[0].id}/update`}>
-                <i className="fas fa-cog" /> Editar
+                <i class="fas fa-pencil-alt"></i>
               </Link>
             </DrawFilter>
             <DrawFilter permission="notice_delete" course_id={processStore.process.Course.id}>
               {' '}
               <Link
-                className="text-danger"
+                className="btn-icon"
                 to={`/processes/${processStore.process.id}/notices/${notices[0].id}/delete`}>
-                <i className="fas fa-times-circle" /> Excluir
+                <i class="fas fa-trash"></i>
               </Link>
             </DrawFilter>
           </React.Fragment>
@@ -36,7 +36,7 @@ class NoticeCard extends Component {
       } else {
         return (
           <DrawFilter permission="notice_create" course_id={processStore.process.Course.id}>
-            <Link className="text-success" to={`/processes/${processStore.process.id}/notices/create`}>
+            <Link className="btn btn-terciary" to={`/processes/${processStore.process.id}/notices/create`}>
               <i className="fas fa-plus-circle" /> Adicionar
             </Link>
           </DrawFilter>
@@ -61,21 +61,14 @@ class NoticeCard extends Component {
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">{renderTitle(notices)}</h4>
-            </div>
-            <div className="col">
-              <div className="float-right">{renderOptions(notices)}</div>
-            </div>
-          </div>
-        </div>
-        <div className="card-body">
+      <section class="quadro">
+        <h4>{renderTitle(notices)}</h4>
+        <div className="btn-right">{renderOptions(notices)}</div>
+
+        <div>
           <span dangerouslySetInnerHTML={{ __html: renderBody(notices) }} />
         </div>
-      </div>
+      </section>
     )
   }
 

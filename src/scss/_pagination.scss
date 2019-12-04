@@ -1,0 +1,52 @@
+.pagination{
+  margin-top: 5rem;
+
+  .page-item{
+
+    button{
+      border: none;
+      border-radius: 0 !important;
+      background: none;
+      color: $laranjaMedio;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 24px;
+      padding: 0;
+      height: 24px;
+      margin: 0 .25rem;
+
+      &:hover{
+        border-bottom: 1px solid $laranjaMedio;
+        bottom: -1px;
+        cursor: pointer;
+      }
+    }
+
+    &.disabled button{
+      color: rgba(black, .3);
+
+      &:hover{
+        border: none;
+        cursor: initial;
+      }
+    }
+
+    &.active button{
+      background-color: $azulClaro;
+      color: $azulRegular;
+      border-radius: 2px;
+
+      &:hover{
+        border: none;
+        cursor: initial;
+      }
+    }
+
+    &.arrow button{
+      width: auto;
+
+      &:first-of-type{ margin-right: 1rem; }
+      &:last-of-type{ margin-left: 1rem; }
+    }
+  }
+}

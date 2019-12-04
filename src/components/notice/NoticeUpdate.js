@@ -11,7 +11,8 @@ import { getNotice, updateNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
 import { isEmpty } from '../../validation'
 
-import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
+// import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
+import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
 
 class NoticeUpdate extends Component {
   constructor() {
@@ -143,59 +144,59 @@ class NoticeUpdate extends Component {
 
   renderForm(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar notícia</h4>
-        </div>
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="text"
+          name="title"
+          label="Título"
+          value={this.state.title}
+          onChange={this.onChange}
+          error={errors.title}
+        />
 
-        <div className="card-body">
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="title"
-              label="Título: *"
-              placeholder="Título"
-              value={this.state.title}
-              onChange={this.onChange}
-              error={errors.title}
-            />
+        <TextAreaFieldGroup
+          name="content"
+          label="Conteúdo"
+          value={this.state.content}
+          onChange={this.onChange}
+          error={errors.content}
+          info="Mensagem para os candidatos em potencial"
+        />
 
-            <TextAreaFieldTinyMCE
-              placeholder="Conteúdo"
-              name="content"
-              label="Conteúdo: *"
-              value={this.state.content}
-              onChange={this.onChange_TinyMCE}
-              error={errors.content}
-              info="Mensagem para os candidatos em potencial."
-            />
+        {/* <TextAreaFieldTinyMCE
+          placeholder="Conteúdo"
+          name="content"
+          label="Conteúdo"
+          value={this.state.content}
+          onChange={this.onChange_TinyMCE}
+          error={errors.content}
+          info="Mensagem para os candidatos em potencial."
+        /> */}
 
-            <CheckBoxFieldGroup
-              id="visible-checkbox"
-              name="visible"
-              text="Visibilidade:"
-              value="Tornar visível para os usuários"
-              checked={this.state.visible}
-              error={errors.visible}
-              info=""
-              onChange={this.onCheck}
-            />
+        <CheckBoxFieldGroup
+          id="visible-checkbox"
+          name="visible"
+          text="Visibilidade"
+          value="Tornar visível para os usuários"
+          checked={this.state.visible}
+          error={errors.visible}
+          info=""
+          onChange={this.onCheck}
+        />
 
-            <CheckBoxFieldGroup
-              id="override-checkbox"
-              name="override"
-              text="Sobreposição:"
-              value="Sobrepor o conteúdo do sistema"
-              checked={this.state.override}
-              error={errors.override}
-              info=""
-              onChange={this.onCheck}
-            />
+        <CheckBoxFieldGroup
+          id="override-checkbox"
+          name="override"
+          text="Sobreposição"
+          value="Sobrepor o conteúdo do sistema"
+          checked={this.state.override}
+          error={errors.override}
+          info=""
+          onChange={this.onCheck}
+        />
 
-            <input type="submit" className="btn btn-primary btn-block mt-4" />
-          </form>
-        </div>
-      </div>
+        <input type="submit" className="btn btn-primary" value="Editar"/>
+      </form>
     )
   }
 
@@ -205,15 +206,23 @@ class NoticeUpdate extends Component {
     return (
       <div className="notice-update">
         <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
-                Voltar para o processo
-              </Link>
-              <h1 className="display-4">Notícia</h1>
-              <AlertError errors={this.props.errorStore} />
-              {this.renderForm(errors)}
-            </div>
+          <div className="breadcrumb">              
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+              Edital XXX/XXXX
+            </Link>
+            <i class="fas fa-greater-than"></i>
+            <span>Editar notícia</span>
+          </div>
+
+          <div className="form-container" id="main">
+            <h1>Editar notícia</h1>
+            <AlertError errors={this.props.errorStore} />
+            {this.renderForm(errors)}
           </div>
         </div>
       </div>
