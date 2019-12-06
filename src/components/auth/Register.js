@@ -197,9 +197,11 @@ class Register extends Component {
 
     return (
       <div className="register" id="main">
-        <div className="form-container">
-          <h1>Cadastro</h1>
-          {this.renderRegister(errors)}
+        <div className="container">
+          <div className="form-container">
+            <h1>Cadastro</h1>
+            {this.renderRegister(errors)}
+          </div>
         </div>
       </div>
     )

@@ -26,6 +26,8 @@
 
 		p {
 			margin: 0.3rem 0 !important;
+
+			button{ padding: 0; }
 		}
 
 		.text-right {
@@ -131,10 +133,6 @@
 
 .assignments, .userRole-list {
 	@include table-cell-width( 30%, 18% ,40% ,12% );
-
-	li > p {
-			button{ padding: 0; }
-	}
 }
 
 .user-list {

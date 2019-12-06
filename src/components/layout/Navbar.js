@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { logoutUser } from '../auth/authActions'
 import { getCurrentProfile, clearCurrentProfile } from '../profile/profileActions'
-import avatar from '../../img/none.png'
+import marca_ufes from '../../img/marca-ufes.svg'
 import DrawFilter from 'components/profile/DrawFilter'
 
 class Navbar extends Component {
@@ -36,7 +36,7 @@ class Navbar extends Component {
     const { loading, profile } = this.props.profileStore
 
     const guestLinks = (
-      <ul className="navbar-nav ml-auto">
+      <div className="not-logged">
         <li className="nav-item">
           <Link className="nav-link" to="/register">
             Cadastre-se
@@ -47,11 +47,11 @@ class Navbar extends Component {
             Entrar
           </Link>
         </li>
-      </ul>
+      </div>
     )
 
     const authLinks = !(profile === null || loading) ? (
-      <ul className="navbar-nav logged ml-auto">
+      <div className="logged">
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
             {profile.Person ? profile.Person.name : profile.login}
@@ -62,16 +62,37 @@ class Navbar extends Component {
             Sair
           </button>
         </li>
-      </ul>
+      </div>
     ) : (
       <span className="text-white">Carregando...</span>
     )
 
     return (
       <header>
-        <div id="barra-ufes"></div>
-        
+        <div id="barra-ufes">
+          <div className="container">
+            <a href="http://www.ufes.br" target="_blank" title="Abrir portal da Ufes em nova aba">
+              <img src={marca_ufes} alt=""/>
+              <span>Universidade Federal do Espírito Santo</span>
+            </a>
+    
+            <ul className="links-externos">
+              <li>
+                <a href="http://www.ufes.br" target="_blank" title="Abrir portal da Ufes em nova aba">
+                  <span>Portal Ufes</span>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.sead.ufes.br" target="_blank" title="Abrir portal da Ufes em nova aba">
+                  <span>Portal Sead</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <nav className="navbar navbar-expand-sm">
+
           <div className="container">
             <Link className="navbar-brand" to="/processes">
               Sistema de Seleção
@@ -83,19 +104,21 @@ class Navbar extends Component {
 
             <div className="collapse navbar-collapse" id="mobile-nav">
               <ul className="navbar-nav mr-auto">
-                <DrawFilter permission="parameter_list">
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/parameters">
-                      {' '}
-                      Parâmetros
-                    </Link>
-                  </li>
-                </DrawFilter>
+                <div>
+                  <DrawFilter permission="parameter_list">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/parameters">
+                        {' '}
+                        Parâmetros
+                      </Link>
+                    </li>
+                  </DrawFilter>
+                </div>
+                {isAuthenticated ? authLinks : guestLinks}
               </ul>
 
-              {isAuthenticated ? authLinks : guestLinks}
             </div>
-          </div>
+            </div>
         </nav>
       </header>
     )

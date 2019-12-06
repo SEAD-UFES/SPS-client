@@ -325,31 +325,91 @@ h4 {
 }
 
 header #barra-ufes {
-  height: 36px;
   background-color: #05427b;
+}
+
+header #barra-ufes .container {
+  height: 36px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+header #barra-ufes .container img {
+  width: 32px;
+  margin-right: 0.5rem;
+}
+
+header #barra-ufes .container span {
+  vertical-align: middle;
+}
+
+header #barra-ufes .container .links-externos {
+  display: none;
+  line-height: 1;
+}
+
+header #barra-ufes .container a {
+  color: white;
+}
+
+header #barra-ufes .container a:hover {
+  border: none;
+}
+
+header #barra-ufes .container a:hover span {
+  border-bottom: 1px solid #f06c00;
+}
+
+@media screen and (min-width: 576px) {
+  header #barra-ufes .container .links-externos {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    text-transform: lowercase;
+    font-variant: small-caps;
+    font-size: 1.25rem;
+  }
+  header #barra-ufes .container .links-externos li {
+    margin-left: 1rem;
+  }
 }
 
 header nav {
   background-color: white !important;
-  height: 72px;
+  padding: 5px 1.5rem !important;
   -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
   color: #1765ab;
 }
 
-header nav .navbar-toggler i {
-  color: #c75000;
+header nav .container {
+  padding: 0;
 }
 
-header nav .navbar-collapse.show {
-  background-color: white;
-  -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-  position: absolute;
-  top: 65px;
-  width: 100%;
-  left: 0;
-  z-index: 1;
+@media screen and (min-width: 720px) {
+  header nav {
+    padding: 5px 2rem !important;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  header nav {
+    height: 72px;
+  }
+}
+
+header nav .navbar-toggler i {
+  color: #c75000;
 }
 
 header nav .navbar-brand {
@@ -381,15 +441,28 @@ header nav .navbar-brand:hover {
   margin-bottom: 0;
 }
 
-header nav .nav-link {
-  color: #c75000;
-  font-weight: 500;
-  padding: 0 !important;
-  margin-right: 0.5rem;
-  margin-left: 0.5rem;
+header nav .nav-item {
+  line-height: 3;
 }
 
-header nav .navbar-nav.logged {
+header nav .nav-item .nav-link {
+  color: #c75000;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 !important;
+  line-height: 1;
+  margin-top: 1.5rem;
+}
+
+header nav .nav-item .nav-link:hover {
+  margin-bottom: -1px;
+}
+
+header nav .navbar-nav {
+  padding: 0.5rem 0 1rem;
+}
+
+header nav .navbar-nav .logged {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -400,26 +473,56 @@ header nav .navbar-nav.logged {
   -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: flex-end;
-  margin-top: 0.8rem;
+  text-align: right;
 }
 
-header nav .navbar-nav.logged a {
-  color: #1765ab;
-  font-weight: 400;
-  padding: 0;
+header nav .navbar-nav .logged .nav-item {
   line-height: 1;
 }
 
-header nav .navbar-nav.logged a:hover {
+header nav .navbar-nav .logged .nav-item a {
+  color: #1765ab;
+  font-weight: 400;
+  margin-top: 1.2rem;
+}
+
+header nav .navbar-nav .logged .nav-item a:hover {
   border: none;
   margin-bottom: 0;
   text-decoration: underline;
 }
 
-header nav .navbar-nav.logged button {
+header nav .navbar-nav .logged .nav-item button {
   font-size: 14px;
   padding: 0;
   right: 0;
+  margin-top: 0;
+}
+
+@media screen and (min-width: 576px) {
+  header nav .navbar-nav {
+    padding: 0.3rem 0 0.5rem;
+    width: 100%;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  header nav .navbar-nav .not-logged {
+    width: 100%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  header nav .navbar-nav .not-logged .nav-item {
+    margin-left: 1rem;
+  }
 }
 
 #filtros {
@@ -1011,6 +1114,10 @@ footer #copyright p span a:hover {
   margin: 0.3rem 0 !important;
 }
 
+.table-list li p button {
+  padding: 0;
+}
+
 .table-list li .text-right i {
   padding: 0 0.3rem;
 }
@@ -1207,11 +1314,6 @@ footer #copyright p span a:hover {
   .userRole-list .table-list li p:nth-of-type(5) {
     width: unset;
   }
-}
-
-.assignments li > p button,
-.userRole-list li > p button {
-  padding: 0;
 }
 
 .user-list .tipo-de-curso {

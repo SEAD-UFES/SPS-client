@@ -242,7 +242,7 @@ class ProcessList extends Component {
                 </p>
                 <p tabIndex="-1"></p>
               </li>
-            )
+            )       
           })}
         </ul>
 
