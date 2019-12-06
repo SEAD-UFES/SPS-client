@@ -71,21 +71,21 @@ class Navbar extends Component {
       <header>
         <div id="barra-ufes">
           <div className="container">
-            <Link to="http://www.ufes.br">
+            <a href="http://www.ufes.br" target="_blank" title="Abrir portal da Ufes em nova aba">
               <img src={marca_ufes} alt=""/>
               <span>Universidade Federal do Espírito Santo</span>
-            </Link>
+            </a>
     
             <ul className="links-externos">
               <li>
-                <Link to="http://www.ufes.br">
+                <a href="http://www.ufes.br" target="_blank" title="Abrir portal da Ufes em nova aba">
                   <span>Portal Ufes</span>
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="http://www.ufes.br">
+                <a href="http://www.sead.ufes.br" target="_blank" title="Abrir portal da Ufes em nova aba">
                   <span>Portal Sead</span>
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
