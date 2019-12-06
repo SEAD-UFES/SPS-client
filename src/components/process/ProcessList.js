@@ -232,7 +232,7 @@ class ProcessList extends Component {
                 <p class="atribuicao">teste</p>
                 <p tabIndex="-1"></p>
               </li>
-            )
+            )       
           })}
         </ul>
 

@@ -150,9 +150,11 @@ class Login extends Component {
 
     return (
       <div className="login" id="main">
-        <div className="form-container">
-              <h1 className="display-4">Entrar</h1>
+        <div className="container">
+          <div className="form-container">
+              <h1>Entrar</h1>
               {this.renderLogin(errors)}
+          </div>
         </div>
       </div>
     )
