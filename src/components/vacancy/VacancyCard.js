@@ -17,33 +17,33 @@ export default class VacancyCard extends Component {
           <span></span>
         </div>
 
-          {call.Vacancies.sort(compareByAssignmentName).map(vacancy => {
-            return (
-              <li key={vacancy.id}>
-                <h3>{vacancy.Assignment.name}</h3>
-                <p>{vacancy.qp}</p>
-                <p>{vacancy.Region ? vacancy.Region.name : <span className="text-secondary">...</span>}</p>
-                <p>{vacancy.Restriction ? vacancy.Restriction.name : <span className="text-secondary">...</span>}</p>
-                <p>{vacancy.reserve ? 'C.R.' : 'Não'}</p>
-                <p className="text-right">
-                  <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
-                    <Link
-                      className="btn-icon"
-                      to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
-                      <i class="fas fa-pencil-alt"></i>
-                    </Link>
-                  </DrawFilter>{' '}
-                  <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
-                    <Link
-                      className="btn-icon"
-                      to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
-                      <i class="fas fa-trash"></i>
-                    </Link>
-                  </DrawFilter>
-                </p>
-              </li>
-            )
-          })}
+        {call.Vacancies.sort(compareByAssignmentName).map(vacancy => {
+          return (
+            <li key={vacancy.id}>
+              <h3>{vacancy.Assignment.name}</h3>
+              <p>{vacancy.qtd}</p>
+              <p>{vacancy.Region ? vacancy.Region.name : <span className="text-secondary">...</span>}</p>
+              <p>{vacancy.Restriction ? vacancy.Restriction.name : <span className="text-secondary">...</span>}</p>
+              <p>{vacancy.reserve ? 'C.R.' : 'Não'}</p>
+              <p className="text-right">
+                <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
+                  <Link
+                    className="btn-icon"
+                    to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
+                    <i class="fas fa-pencil-alt"></i>
+                  </Link>
+                </DrawFilter>{' '}
+                <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
+                  <Link
+                    className="btn-icon"
+                    to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
+                    <i class="fas fa-trash"></i>
+                  </Link>
+                </DrawFilter>
+              </p>
+            </li>
+          )
+        })}
       </ul>
     )
   }
