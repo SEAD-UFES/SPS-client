@@ -8,7 +8,6 @@ import { getProcessList, getProcessFilters, setProcessFilters } from './processA
 import Spinner from '../common/Spinner'
 import Pagination from '../common/Pagination'
 import DrawFilter from 'components/profile/DrawFilter'
-import FilterFieldGroup from 'components/common/FilterFieldGroup'
 import { buildFilterStrings } from 'utils/buildFilterOptions'
 import { isEmpty } from 'validation'
 import ProcessFilters from './ProcessFilters'
@@ -221,7 +220,9 @@ class ProcessList extends Component {
 
           {processes.selectiveProcesses.map(process => {
             return (
-              <li key={process.id} className={process.visible ? '' : 'text-black-50'} className="edital edital-item">
+              <li
+                key={process.id}
+                className={process.visible ? 'edital edital-item' : 'edital edital-item text-black-50'}>
                 <h3>
                   <Link to={`${this.props.match.url}/${process.id}`}>
                     {process.number}/{process.year}
@@ -242,7 +243,7 @@ class ProcessList extends Component {
                 </p>
                 <p tabIndex="-1"></p>
               </li>
-            )       
+            )
           })}
         </ul>
 
@@ -275,124 +276,6 @@ class ProcessList extends Component {
 
   render() {
     const { processes, loading } = this.props.processStore
-    //const { filters } = this.state;
-    const { filters } = this.props
-
-    const renderFilterBadges = filters => {
-      //console.log(" renderBadges filters:", filters);
-
-      let indexes = Object.keys(filters)
-
-      let resultFilters = []
-
-      for (let index of indexes) {
-        let filter = filters[index]
-        let resultFilter = filter
-          .filter(it => {
-            return it.applied === true
-          })
-          .map((item, key) => {
-            return (
-              <span key={key} className="badge badge-primary mr-1">
-                {item.label}{' '}
-                <i
-                  onClick={() => {
-                    this.removeFilter(index, item.value)
-                  }}
-                  className="fas fa-times-circle"
-                  style={{ cursor: 'pointer' }}
-                />
-              </span>
-            )
-          })
-        resultFilters.push(resultFilter)
-      }
-
-      return resultFilters
-    }
-
-    const filterBox = (
-      <div className="card mb-2">
-        <div className="card-header">
-          <button
-            ref="filterButton"
-            className="btn btn-primary mr-2"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapse1"
-            aria-expanded="false"
-            aria-controls="collapse1">
-            <i className="fas fa-filter" />
-          </button>
-
-          {renderFilterBadges(filters)
-            .map(filter => {
-              return filter
-            })
-            .map(item => {
-              return item
-            })}
-        </div>
-
-        <div id="collapse1" className="panel-collapse collapse">
-          <div className="card-body">
-            <form onSubmit={this.addFilter}>
-              <FilterFieldGroup id="numbers" label="Número" items={filters.numbers} onChange={this.markFilter} />
-              <FilterFieldGroup id="years" label="Ano" items={filters.years} onChange={this.markFilter} />
-              <FilterFieldGroup
-                id="graduationTypes"
-                label="Nível"
-                items={filters.graduationTypes}
-                onChange={this.markFilter}
-              />
-              <FilterFieldGroup id="courses" label="Curso" items={filters.courses} onChange={this.markFilter} />
-              <FilterFieldGroup
-                id="assignments"
-                label="Atribuição"
-                items={filters.assignments}
-                onChange={this.markFilter}
-              />
-
-              <div className="d-none">
-                <input
-                  ref="filterSubmit"
-                  type="submit"
-                  onClick={this.applyFilters}
-                  value="Aplicar filtros"
-                  className="btn btn-primary"
-                />
-              </div>
-            </form>
-          </div>
-
-          <div className="card-footer">
-            <div className="text-right">
-              <input
-                type="button"
-                onClick={() => {
-                  this.refs.filterSubmit.click()
-                }}
-                value="Aplicar filtros"
-                className="btn btn-primary ml-1  mb-1"
-              />
-              <input
-                type="button"
-                onClick={this.clearFilters}
-                value="Limpar filtros"
-                className="btn btn-primary ml-1 mb-1"
-              />
-              <input
-                type="button"
-                onClick={this.cancelFilters}
-                value="Cancelar"
-                className="btn btn-primary ml-1  mb-1"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-
     const processTable = processes === null || loading ? <Spinner /> : this.renderProcesses(processes)
 
     return (

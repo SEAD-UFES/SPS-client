@@ -22,8 +22,6 @@ import vacancyReducer from 'components/vacancy/vacancyReducer'
 import graduationTypeReducer from 'components/graduationType/graduationTypeReducer'
 import noticeReducer from 'components/notice/noticeReducer'
 
-import graduationTypeReducer_V2 from 'components/graduationType_V2/graduationTypeReducer_V2'
-
 export default combineReducers({
   errorStore: errorReducer,
   authStore: authReducer,
@@ -45,6 +43,5 @@ export default combineReducers({
   stepTypeStore: stepTypeReducer,
   vacancyStore: vacancyReducer,
   graduationTypeStore: graduationTypeReducer,
-  noticeStore: noticeReducer,
-  graduationTypeStore_V2: graduationTypeReducer_V2
+  noticeStore: noticeReducer
 })

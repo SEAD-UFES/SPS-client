@@ -171,59 +171,59 @@ class UserEditUser extends Component {
 
   renderEditUser(errors) {
     return (
-          <form onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              label="Email"
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={errors.email}
-              info="Email principal para comunicação e acesso a plataforma"
-            />
+      <form onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          label="Email"
+          type="email"
+          name="email"
+          value={this.state.email}
+          onChange={this.onChange}
+          error={errors.email}
+          info="Email principal para comunicação e acesso a plataforma"
+        />
 
-            <CheckBoxFieldGroup
-              id="active"
-              name="active"
-              text="Ativo"
-              value="Este usuário está ativo."
-              checked={this.state.active}
-              error={errors.active}
-              onChange={this.onCheck}
-            />
+        <CheckBoxFieldGroup
+          id="active"
+          name="active"
+          text="Ativo"
+          value="Este usuário está ativo."
+          checked={this.state.active}
+          error={errors.active}
+          onChange={this.onCheck}
+        />
 
-            <CheckBoxFieldGroup
-              id="changePassword"
-              name="changePassword"
-              text="Alterar senha"
-              value="Desejo alterar a senha de acesso."
-              checked={this.state.changePassword}
-              error={errors.changePassword}
-              onChange={this.onCheck}
-            />
+        <CheckBoxFieldGroup
+          id="changePassword"
+          name="changePassword"
+          text="Alterar senha"
+          value="Desejo alterar a senha de acesso."
+          checked={this.state.changePassword}
+          error={errors.changePassword}
+          onChange={this.onCheck}
+        />
 
-            <TextFieldGroup
-              label="Senha"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChange}
-              error={errors.password}
-              disabled={!this.state.changePassword}
-            />
+        <TextFieldGroup
+          label="Senha"
+          type="password"
+          name="password"
+          value={this.state.password}
+          onChange={this.onChange}
+          error={errors.password}
+          disabled={!this.state.changePassword}
+        />
 
-            <TextFieldGroup
-              label="Repita a senha"
-              type="password"
-              name="password2"
-              value={this.state.password2}
-              onChange={this.onChange}
-              error={errors.password2}
-              disabled={!this.state.changePassword}
-            />
+        <TextFieldGroup
+          label="Repita a senha"
+          type="password"
+          name="password2"
+          value={this.state.password2}
+          onChange={this.onChange}
+          error={errors.password2}
+          disabled={!this.state.changePassword}
+        />
 
-            <input value="Enviar" type="submit" className="btn btn-primary" value="Salvar" />
-          </form>
+        <input type="submit" className="btn btn-primary" value="Salvar" />
+      </form>
     )
   }
 
@@ -233,7 +233,7 @@ class UserEditUser extends Component {
     return (
       <div className="user-edit-user">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros

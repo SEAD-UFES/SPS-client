@@ -29,13 +29,11 @@ import UserRoutes from './components/user/UserRoutes'
 import ProcessRoutes from './components/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
 import NotFound from './components/common/NotFound'
-import VerificationRoutes from './components/verification/VerificationRoutes'
 
 //Teste
 import Teste from 'Teste01'
 import TwoWayBinding from 'Teste02'
 import Teste03 from 'Teste03'
-import GT_V2 from 'components/graduationType_V2/GraduationTypeMain_V2'
 
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
@@ -73,12 +71,9 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Landing} />
 
-              <Route path="/verification" component={VerificationRoutes} />
-
               <Route exact path="/teste01" component={Teste} />
               <Route exact path="/teste02" component={TwoWayBinding} />
               <Route exact path="/teste03" component={Teste03} />
-              <Route exact path="/teste04" component={GT_V2} />
 
               <Route exact path="/register" component={Register} />
 
