@@ -110,7 +110,7 @@ class Navbar extends Component {
               <span>Processos Seletivos EaD</span>
             </Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
-              <i class="fas fa-bars"></i>
+              <i className="fas fa-bars"></i>
             </button>
 
             <div className="collapse navbar-collapse" id="mobile-nav">
