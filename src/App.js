@@ -28,6 +28,8 @@ import ProfileRoutes from './components/profile/ProfileRoutes'
 import UserRoutes from './components/user/UserRoutes'
 import ProcessRoutes from './components/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
+import RecoverRoutes from './components/recover/RecoverRoutes'
+
 import NotFound from './components/common/NotFound'
 
 //Teste
@@ -88,6 +90,8 @@ class App extends Component {
               <Route path="/processes" component={ProcessRoutes} />
 
               <PrivateRoute path="/parameters" component={ParameterRoutes} permission="parameter_list" />
+
+              <Route path="/recover" component={RecoverRoutes} />
 
               <Route component={NotFound} />
             </Switch>

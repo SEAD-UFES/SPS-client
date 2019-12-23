@@ -53,7 +53,7 @@ class Footer extends Component {
             <p>
               Av. Fernando Ferrari, 514, Vitória - ES <br /> Térreo do Teatro Universitário - Ufes Campus Goiabeiras
             </p>
-            <p class="enderecoLink">
+            <p className="enderecoLink">
               <span>
                 <img src={icon_googleMaps} alt="" />
                 <a

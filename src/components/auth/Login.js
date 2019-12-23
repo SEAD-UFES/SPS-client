@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { loginUser } from './authActions'
 import { getCurrentProfile } from '../profile/profileActions'
@@ -141,6 +142,7 @@ class Login extends Component {
           error={errors.password}
         />
         <input type="submit" className="btn btn-primary" />
+        <Link to={'/recover/request'}>Esqueci minha senha.</Link>
       </form>
     )
   }
@@ -152,8 +154,8 @@ class Login extends Component {
       <div className="login" id="main">
         <div className="container">
           <div className="form-container">
-              <h1>Entrar</h1>
-              {this.renderLogin(errors)}
+            <h1>Entrar</h1>
+            {this.renderLogin(errors)}
           </div>
         </div>
       </div>
