@@ -160,9 +160,9 @@ class ProfileEditUser extends Component {
         updateUserData.User.password = this.state.password
       }
 
-      const profile = this.props.profile.profile
+      const profile = this.props.profileStore.profile
 
-      this.props.updateProfileUser(profile.user.id, updateUserData, this.props.history)
+      this.props.updateProfileUser(profile.id, updateUserData, this.props.history)
     }
   }
 

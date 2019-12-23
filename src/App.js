@@ -29,6 +29,7 @@ import UserRoutes from './components/user/UserRoutes'
 import ProcessRoutes from './components/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
 import NotFound from './components/common/NotFound'
+import VerificationRoutes from './components/verification/VerificationRoutes'
 
 //Teste
 import Teste from 'Teste01'
@@ -71,6 +72,8 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Landing} />
+
+              <Route path="/verification" component={VerificationRoutes} />
 
               <Route exact path="/teste01" component={Teste} />
               <Route exact path="/teste02" component={TwoWayBinding} />
