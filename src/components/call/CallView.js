@@ -52,7 +52,7 @@ class CallView extends Component {
           <Link
             className="btn btn-primary"
             to={{
-              pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
+              pathname: `/processes/${call.selectiveProcess_id}/call/${call.id}/update`,
               prevLocation: this.props.location
             }}>
             <i className="fas fa-cog" /> Editar

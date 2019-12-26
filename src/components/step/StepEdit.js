@@ -249,7 +249,7 @@ class StepEdit extends Component {
         <Link
           className="text-danger"
           to={{
-            pathname: `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}/steps/${this.props.match.params.step_id}/delete`
+            pathname: `/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}/steps/${this.props.match.params.step_id}/delete`
           }}>
           <i className="fas fa-times-circle" /> Excluir esta etapa
         </Link>

@@ -10,7 +10,7 @@ import ProcessEdit from './ProcessEdit'
 
 import CallView from 'components/call/CallView'
 import CallCreate from '../call/CallCreate'
-import CallEdit from '../call/CallEdit'
+import CallUpdate from '../call/CallUpdate'
 import CallDelete from '../call/CallDelete'
 
 import StepCreate from '../step/StepCreate'
@@ -42,69 +42,65 @@ export default class ProcessRoutes extends Component {
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/edit`} component={ProcessEdit} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/create`} component={CallCreate} />
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/create`} component={CallCreate} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id`} component={CallView} />
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id`} component={CallView} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/:process_id/calls/:call_id/edit`} component={CallEdit} />
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id/update`} component={CallUpdate} />
 
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/delete`}
-          component={CallDelete}
-        />
+        <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id/delete`} component={CallDelete} />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/steps/create`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/steps/create`}
           component={StepCreate}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/steps/:step_id/edit`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/steps/:step_id/edit`}
           component={StepEdit}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/steps/:step_id/delete`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/steps/:step_id/delete`}
           component={StepDelete}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/vacancies/create`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/vacancies/create`}
           component={VacancyCreate}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/vacancies/:vacancy_id/edit`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/vacancies/:vacancy_id/edit`}
           component={VacancyEdit}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/vacancies/:vacancy_id/delete`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/vacancies/:vacancy_id/delete`}
           component={VacancyDelete}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/create`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/publications/create`}
           component={PublicationCreate}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/delete`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/publications/:publication_id/delete`}
           component={PublicationDelete}
         />
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:process_id/calls/:call_id/publications/:publication_id/update`}
+          path={`${this.props.match.path}/:process_id/call/:call_id/publications/:publication_id/update`}
           component={PublicationUpdate}
         />
 

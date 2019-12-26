@@ -1,28 +1,28 @@
-import spsApi from "apis/spsServer";
+import spsApi from 'apis/spsServer'
 
-import { GET_ERRORS } from "actions/types";
-import { GET_CALL, CALLS_LOADING } from "./callActionTypes";
+import { GET_ERRORS } from 'actions/types'
+import { GET_CALL, CALLS_LOADING } from './callActionTypes'
 
 //calls loading
 export const setCallsLoading = () => {
   return {
     type: CALLS_LOADING
-  };
-};
+  }
+}
 
 export const createCall = (callData, callback_ok) => dispatch => {
   spsApi
-    .post("/v1/calls", callData)
+    .post('/v1/calls', callData)
     .then(res => {
-      callback_ok();
+      callback_ok()
     })
     .catch(err => {
-      handleErrors(err, dispatch);
-    });
-};
+      handleErrors(err, dispatch)
+    })
+}
 
 export const getCall = call_id => dispatch => {
-  dispatch(setCallsLoading());
+  dispatch(setCallsLoading())
   spsApi
     .get(`/v1/calls/${call_id}`)
     .then(res =>
@@ -32,45 +32,45 @@ export const getCall = call_id => dispatch => {
       })
     )
     .catch(err => {
-      handleErrors(err, dispatch);
-    });
-};
+      handleErrors(err, dispatch)
+    })
+}
 
 export const updateCall = (call_id, callData, callback_ok) => dispatch => {
   spsApi
     .put(`/v1/calls/${call_id}`, callData)
     .then(res => {
-      callback_ok();
+      callback_ok()
     })
     .catch(err => {
-      handleErrors(err, dispatch);
-    });
-};
+      handleErrors(err, dispatch)
+    })
+}
 
 export const deleteCall = (call_id, callback_ok) => dispatch => {
   spsApi
     .delete(`/v1/calls/${call_id}`)
     .then(res => {
-      callback_ok();
+      callback_ok()
     })
     .catch(err => {
-      handleErrors(err, dispatch);
-    });
-};
+      handleErrors(err, dispatch)
+    })
+}
 
 const handleErrors = (err, dispatch) => {
   if (err.response) {
-    let errors = {};
-    errors.data = err.response.data;
-    errors.serverError = true;
+    let errors = {}
+    errors.data = err.response.data
+    errors.serverError = true
     dispatch({
       type: GET_ERRORS,
       payload: errors
-    });
+    })
   } else {
     dispatch({
       type: GET_ERRORS,
       payload: { anotherError: true }
-    });
+    })
   }
-};
+}

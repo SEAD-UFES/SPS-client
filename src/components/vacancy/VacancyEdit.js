@@ -142,7 +142,7 @@ class VacancyEdit extends Component {
     } else {
       this.props.updateVacancy(this.props.match.params.vacancy_id, vacancyData, () => {
         this.props.history.push(
-          `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`
+          `/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`
         )
       })
     }
@@ -150,61 +150,60 @@ class VacancyEdit extends Component {
 
   renderForm(assignmentOptions, regionsOptions, restrictionsOptions, errors) {
     return (
-          <form noValidate onSubmit={this.onSubmit}>
-            <SelectListGroup
-              name="assignment_id"
-              label="Atribuição"
-              placeholder="Selecione a atribuição"
-              value={this.state.assignment_id}
-              options={assignmentOptions}
-              onChange={this.onChange}
-              error={errors.assignment_id}
-            />
+      <form noValidate onSubmit={this.onSubmit}>
+        <SelectListGroup
+          name="assignment_id"
+          label="Atribuição"
+          placeholder="Selecione a atribuição"
+          value={this.state.assignment_id}
+          options={assignmentOptions}
+          onChange={this.onChange}
+          error={errors.assignment_id}
+        />
 
-            <TextFieldGroup
-              type="text"
-              name="qtd"
-              label="Quantidade"
-              placeholder="Quantidade"
-              value={this.state.qtd}
-              onChange={this.onChange}
-              error={errors.qtd}
-            />
+        <TextFieldGroup
+          type="text"
+          name="qtd"
+          label="Quantidade"
+          placeholder="Quantidade"
+          value={this.state.qtd}
+          onChange={this.onChange}
+          error={errors.qtd}
+        />
 
-            <SelectListGroup
-              name="region_id"
-              label="Polo"
-              placeholder="Selecione o polo associado"
-              value={this.state.region_id}
-              options={regionsOptions}
-              onChange={this.onChange}
-              error={errors.region_id}
-            />
+        <SelectListGroup
+          name="region_id"
+          label="Polo"
+          placeholder="Selecione o polo associado"
+          value={this.state.region_id}
+          options={regionsOptions}
+          onChange={this.onChange}
+          error={errors.region_id}
+        />
 
-            <SelectListGroup
-              name="restriction_id"
-              label="Restrição"
-              placeholder="Selecione a restrição da vaga"
-              value={this.state.restriction_id}
-              options={restrictionsOptions}
-              onChange={this.onChange}
-              error={errors.restriction_id}
-            />
+        <SelectListGroup
+          name="restriction_id"
+          label="Restrição"
+          placeholder="Selecione a restrição da vaga"
+          value={this.state.restriction_id}
+          options={restrictionsOptions}
+          onChange={this.onChange}
+          error={errors.restriction_id}
+        />
 
-            <CheckBoxFieldGroup
-              id="reserve-checkbox"
-              name="reserve"
-              text="Reserva:"
-              value="Esta oferta de vagas permite cadastro de reserva."
-              checked={this.state.reserve}
-              error={errors.reserve}
-              info=""
-              onChange={this.onCheck}
-            />
+        <CheckBoxFieldGroup
+          id="reserve-checkbox"
+          name="reserve"
+          text="Reserva:"
+          value="Esta oferta de vagas permite cadastro de reserva."
+          checked={this.state.reserve}
+          error={errors.reserve}
+          info=""
+          onChange={this.onCheck}
+        />
 
-            <input type="submit" className="btn btn-primary" value="Salvar"/>
-          </form>
-
+        <input type="submit" className="btn btn-primary" value="Salvar" />
+      </form>
     )
   }
 
@@ -248,7 +247,7 @@ class VacancyEdit extends Component {
     return (
       <div className="vacancy-update">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
@@ -259,17 +258,18 @@ class VacancyEdit extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link
-                to={`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`} className="breadcrumb-link"                >
-                Chamada XXX
-              </Link>
+              to={`/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`}
+              className="breadcrumb-link">
+              Chamada XXX
+            </Link>
             <i className="fas fa-greater-than"></i>
             <span>Editar oferta de vaga</span>
           </div>
 
           <div className="form-container" id="main">
-              <h1>Editar oferta de vaga</h1>
-              <AlertError errors={errors} />
-              {this.renderForm(assignmentOptions, regionsOptions, restrictionsOptions, errors)}
+            <h1>Editar oferta de vaga</h1>
+            <AlertError errors={errors} />
+            {this.renderForm(assignmentOptions, regionsOptions, restrictionsOptions, errors)}
           </div>
         </div>
       </div>

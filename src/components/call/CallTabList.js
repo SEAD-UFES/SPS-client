@@ -41,7 +41,7 @@ class CallTabList extends Component {
         })}
         <li className="nav-item" key="call-add">
           <DrawFilter permission="call_create" course_id={this.props.course_id}>
-            <Link className="nav-link text-success" to={`/processes/${this.props.process_id}/calls/create`}>
+            <Link className="nav-link text-success" to={`/processes/${this.props.process_id}/call/create`}>
               <i className="fas fa-plus-circle" />
             </Link>
           </DrawFilter>

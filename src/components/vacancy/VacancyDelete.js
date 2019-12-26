@@ -24,7 +24,7 @@ class VacancyDelete extends Component {
     e.preventDefault()
     this.props.deleteVacancy(this.props.match.params.vacancy_id, () => {
       this.props.history.push(
-        `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`
+        `/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`
       )
     })
   }
@@ -57,32 +57,37 @@ class VacancyDelete extends Component {
     return (
       <div>
         <p>
-          <strong>Id: </strong>{vacancy.id}
+          <strong>Id: </strong>
+          {vacancy.id}
         </p>
         <p>
-          <strong>Processo: </strong>{`${vacancy.Call.SelectiveProcess.number}/${vacancy.Call.SelectiveProcess.year} - ${
-          vacancy.Call.SelectiveProcess.Course.name
-        } | Chamada ${vacancy.Call.number}`}
-        </p>
-
-        <p>
-          <strong>Atribuição: </strong>{vacancy.Assignment.name}
+          <strong>Processo: </strong>
+          {`${vacancy.Call.SelectiveProcess.number}/${vacancy.Call.SelectiveProcess.year} - ${vacancy.Call.SelectiveProcess.Course.name} | Chamada ${vacancy.Call.number}`}
         </p>
 
         <p>
-          <strong>Região: </strong>{vacancy.Region ? vacancy.Region.name : 'Sem região'}
+          <strong>Atribuição: </strong>
+          {vacancy.Assignment.name}
         </p>
 
         <p>
-          <strong>Restrição: </strong>{vacancy.Restriction ? vacancy.Restriction.name : 'Sem restrição'}
+          <strong>Região: </strong>
+          {vacancy.Region ? vacancy.Region.name : 'Sem região'}
         </p>
 
         <p>
-          <strong>Vagas: </strong>{vacancy.qtd}
-          </p>
+          <strong>Restrição: </strong>
+          {vacancy.Restriction ? vacancy.Restriction.name : 'Sem restrição'}
+        </p>
 
         <p>
-          <strong>Reserva: </strong>{vacancy.reserve ? 'Sim' : 'Não'}
+          <strong>Vagas: </strong>
+          {vacancy.qtd}
+        </p>
+
+        <p>
+          <strong>Reserva: </strong>
+          {vacancy.reserve ? 'Sim' : 'Não'}
         </p>
 
         {this.renderChoices()}
@@ -97,7 +102,7 @@ class VacancyDelete extends Component {
     return (
       <div className="roleassignments">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
@@ -108,9 +113,10 @@ class VacancyDelete extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link
-                to={`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`} className="breadcrumb-link"                >
-                Chamada XXX
-              </Link>
+              to={`/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`}
+              className="breadcrumb-link">
+              Chamada XXX
+            </Link>
             <i className="fas fa-greater-than"></i>
             <span>Excluir oferta de vaga</span>
           </div>
@@ -137,10 +143,7 @@ const mapStateToProps = state => ({
   errorStore: state.errorStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    getVacancy,
-    deleteVacancy
-  }
-)(VacancyDelete)
+export default connect(mapStateToProps, {
+  getVacancy,
+  deleteVacancy
+})(VacancyDelete)

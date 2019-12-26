@@ -31,17 +31,17 @@ export default class CallCard extends Component {
               <p>{getCallStatus(call)}</p>
               <p className="text-right">
                 <DrawFilter permission="call_read" course_id={process.Course.id}>
-                  <Link className="btn-icon laranja" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
+                  <Link className="btn-icon laranja" to={`/processes/${call.selectiveProcess_id}/call/${call.id}`}>
                     <i className="fas fa-eye"></i>
                   </Link>
                 </DrawFilter>{' '}
                 {/* <DrawFilter permission="call_update" course_id={process.Course.id}>
-                  <Link className="icon-edit" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
+                  <Link className="icon-edit" to={`/processes/${call.selectiveProcess_id}/call/${call.id}/edit`}>
                     <i className="fas fa-pencil-alt"></i>
                   </Link>
                 </DrawFilter>{' '} */}
                 <DrawFilter permission="call_delete" course_id={process.Course.id}>
-                  <Link className="btn-icon" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
+                  <Link className="btn-icon" to={`/processes/${call.selectiveProcess_id}/call/${call.id}/delete`}>
                     <i className="fas fa-trash"></i>
                   </Link>
                 </DrawFilter>
@@ -60,7 +60,7 @@ export default class CallCard extends Component {
 
         <div className="btn-right">
           <DrawFilter permission="call_create" course_id={this.props.process.Course.id}>
-            <Link className="btn btn-terciary" to={`/processes/${this.props.process.id}/calls/create`}>
+            <Link className="btn btn-terciary" to={`/processes/${this.props.process.id}/call/create`}>
               <i className="fas fa-plus-circle" /> Adicionar
             </Link>
           </DrawFilter>

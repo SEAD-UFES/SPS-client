@@ -29,14 +29,14 @@ export default class VacancyCard extends Component {
                 <DrawFilter permission="vacancy_update" course_id={this.props.course_id}>
                   <Link
                     className="btn-icon"
-                    to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
+                    to={`/processes/${call.selectiveProcess_id}/call/${call.id}/vacancies/${vacancy.id}/edit`}>
                     <i className="fas fa-pencil-alt"></i>
                   </Link>
                 </DrawFilter>{' '}
                 <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
                   <Link
                     className="btn-icon"
-                    to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
+                    to={`/processes/${call.selectiveProcess_id}/call/${call.id}/vacancies/${vacancy.id}/delete`}>
                     <i className="fas fa-trash"></i>
                   </Link>
                 </DrawFilter>
@@ -57,7 +57,7 @@ export default class VacancyCard extends Component {
           <DrawFilter permission="vacancy_create" course_id={this.props.process_id}>
             <Link
               className="btn btn-terciary"
-              to={`/processes/${this.props.call.selectiveProcess_id}/calls/${this.props.call.id}/vacancies/create`}>
+              to={`/processes/${this.props.call.selectiveProcess_id}/call/${this.props.call.id}/vacancies/create`}>
               <i className="fas fa-plus-circle" /> Adicionar
             </Link>
           </DrawFilter>

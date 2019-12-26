@@ -12,7 +12,7 @@ import { clearErrors } from '../../actions/errorActions'
 import AlertError from 'components/common/AlertError'
 import { getProcess } from 'components/process/processActions'
 
-class CallEdit extends Component {
+class CallUpdate extends Component {
   constructor() {
     super()
     this.state = {
@@ -182,7 +182,7 @@ class CallEdit extends Component {
               to={
                 back_url
                   ? back_url
-                  : `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`
+                  : `/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`
               }
               className="breadcrumb-link">
               {`Chamada ${this.props.callStore.call ? this.props.callStore.call.number : '000'}`}
@@ -203,7 +203,7 @@ class CallEdit extends Component {
 }
 
 // Call Edit props
-CallEdit.proptypes = {
+CallUpdate.proptypes = {
   createCall: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errorStore: PropTypes.object.isRequired
@@ -218,5 +218,5 @@ const mapStateToProps = state => ({
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
 export default connect(mapStateToProps, { createCall, getCall, updateCall, clearErrors, getProcess })(
-  withRouter(CallEdit)
+  withRouter(CallUpdate)
 )
