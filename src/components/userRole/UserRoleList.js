@@ -184,7 +184,7 @@ class UserRoleList extends Component {
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Atribuições de papel</span>
           </div>
 

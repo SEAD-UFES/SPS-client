@@ -37,29 +37,28 @@ export default class PublicationCard extends Component {
 
   renderPublicationLine(process, publication) {
     return (
-      <li>
+      <li key={publication.id}>
         <div>{moment(publication.date, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}</div>
         <div>
-          <a className={publication.valid ? '' : 'isDisabled'}
-          onClick={publication.valid ? e => {} : e => e.preventDefault()}
-          href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
-          target="_blank"
-          rel="noopener noreferrer">
-
+          <a
+            className={publication.valid ? '' : 'isDisabled'}
+            onClick={publication.valid ? e => {} : e => e.preventDefault()}
+            href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
+            target="_blank"
+            rel="noopener noreferrer">
             <i className="fas fa-file-download" />
             {publication.title}
-
           </a>
         </div>
         <div className="text-right">
           <DrawFilter permission="publication_update" course_id={process.Course.id}>
-             <Link
+            <Link
               className="btn-icon"
               to={{
                 pathname: `/processes/${process.id}/publications/${publication.id}/update`,
                 state: { publication: publication }
               }}>
-              <i class="fas fa-pencil-alt"></i>
+              <i className="fas fa-pencil-alt"></i>
             </Link>
           </DrawFilter>{' '}
           <DrawFilter permission="publication_delete" course_id={process.Course.id}>
@@ -69,7 +68,7 @@ export default class PublicationCard extends Component {
                 pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
                 state: { publication: publication }
               }}>
-              <i class="fas fa-trash"></i>
+              <i className="fas fa-trash"></i>
             </Link>
           </DrawFilter>
         </div>
@@ -89,12 +88,14 @@ export default class PublicationCard extends Component {
 
   render() {
     return (
-      <section id="anexos" class="quadro">
+      <section id="anexos" className="quadro">
         <h4>Anexos</h4>
 
         <div className="btn-right">
           <DrawFilter permission="publication_create" course_id={this.props.process.Course.id}>
-            <Link className="btn btn-terciary" to={{
+            <Link
+              className="btn btn-terciary"
+              to={{
                 pathname: `/processes/${this.props.process.id}/publications/create`,
                 state: { selectiveProcess: this.props.process }
               }}>
@@ -103,11 +104,11 @@ export default class PublicationCard extends Component {
           </DrawFilter>
         </div>
 
-          {this.props.process.Publications.length > 0 ? (
-            this.renderTable(this.props.process)
-          ) : (
-            <p>Sem publicações cadastradas.</p>
-          )}
+        {this.props.process.Publications.length > 0 ? (
+          this.renderTable(this.props.process)
+        ) : (
+          <p>Sem publicações cadastradas.</p>
+        )}
       </section>
     )
   }

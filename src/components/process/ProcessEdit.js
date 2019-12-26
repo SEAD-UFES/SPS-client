@@ -180,7 +180,7 @@ class ProcessEdit extends Component {
           onChange={this.onCheck}
         />
 
-        <input type="submit" className="btn btn-primary" value="Editar"/>
+        <input type="submit" className="btn btn-primary" value="Editar" />
       </form>
     )
   }
@@ -203,23 +203,23 @@ class ProcessEdit extends Component {
     return (
       <div className="process-edit">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.id}`} className="breadcrumb-link">
               Edital XXX/XXXX
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Editar</span>
           </div>
 
           <div className="form-container" id="main">
             <h1>Editar processo</h1>
-              <AlertError errors={this.props.errorStore} />
-              {this.renderForm(this.state, errors, courseOptions)}
+            <AlertError errors={this.props.errorStore} />
+            {this.renderForm(this.state, errors, courseOptions)}
           </div>
         </div>
       </div>

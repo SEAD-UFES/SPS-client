@@ -112,58 +112,58 @@ class ProcessCreate extends Component {
 
   renderForm(state, errors, courseOptions) {
     return (
-          <form noValidate onSubmit={this.onSubmit}>
-            <div className="form-lateral">
-              <TextFieldGroup
-                type="text"
-                name="number"
-                label="Número"
-                value={this.state.number}
-                onChange={this.onChange}
-                error={errors.number}
-              />
+      <form noValidate onSubmit={this.onSubmit}>
+        <div className="form-lateral">
+          <TextFieldGroup
+            type="text"
+            name="number"
+            label="Número"
+            value={this.state.number}
+            onChange={this.onChange}
+            error={errors.number}
+          />
 
-              <TextFieldGroup
-                type="text"
-                name="year"
-                label="Ano"
-                value={this.state.year}
-                onChange={this.onChange}
-                error={errors.year}
-              />
-            </div>
-            
-            <SelectListGroup
-              placeholder=""
-              name="course_id"
-              label="Curso"
-              value={this.state.course_id}
-              options={courseOptions}
-              onChange={this.onChange}
-              error={errors.course_id}
-            />
+          <TextFieldGroup
+            type="text"
+            name="year"
+            label="Ano"
+            value={this.state.year}
+            onChange={this.onChange}
+            error={errors.year}
+          />
+        </div>
 
-            <TextAreaFieldGroup
-              name="description"
-              label="Descrição"
-              value={this.state.description}
-              onChange={this.onChange}
-              error={errors.description}
-              info="Apresentação básica do processo seletivo"
-            />
+        <SelectListGroup
+          placeholder=""
+          name="course_id"
+          label="Curso"
+          value={this.state.course_id}
+          options={courseOptions}
+          onChange={this.onChange}
+          error={errors.course_id}
+        />
 
-            <CheckBoxFieldGroup
-              id="visible-checkbox"
-              name="visible"
-              text="Visibilidade"
-              value="Tornar processo visível"
-              checked={this.state.visible}
-              error={errors.visible}
-              onChange={this.onCheck}
-            />
+        <TextAreaFieldGroup
+          name="description"
+          label="Descrição"
+          value={this.state.description}
+          onChange={this.onChange}
+          error={errors.description}
+          info="Apresentação básica do processo seletivo"
+        />
 
-            <input type="submit" className="btn btn-primary" value="Cadastrar" />
-          </form>
+        <CheckBoxFieldGroup
+          id="visible-checkbox"
+          name="visible"
+          text="Visibilidade"
+          value="Tornar processo visível"
+          checked={this.state.visible}
+          error={errors.visible}
+          onChange={this.onCheck}
+        />
+
+        <input type="submit" className="btn btn-primary" value="Cadastrar" />
+      </form>
     )
   }
 
@@ -185,14 +185,14 @@ class ProcessCreate extends Component {
     return (
       <div className="register">
         <div className="container">
-          <div className="breadcrumb">              
-              <span>Você está em:</span>
-              <Link to="/processes" className="breadcrumb-link">
-                Processos Seletivos
-              </Link>
-              <i class="fas fa-greater-than"></i>
-              <span>Novo processo</span>
-            </div>
+          <div className="breadcrumb">
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i className="fas fa-greater-than"></i>
+            <span>Novo processo</span>
+          </div>
 
           <div className="form-container" id="main">
             <h1>Novo processo</h1>

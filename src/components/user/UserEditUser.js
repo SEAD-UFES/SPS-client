@@ -238,15 +238,15 @@ class UserEditUser extends Component {
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to="/users" className="breadcrumb-link">
               Usuários
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/users/${this.props.match.params.id}`} className="breadcrumb-link">
               Usuário X
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Editar dados de acesso</span>
           </div>
 

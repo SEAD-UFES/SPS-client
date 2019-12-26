@@ -10,6 +10,7 @@ import { validateCallForm, validateOpeningDate, validateEndingDate } from './val
 import { createCall, getCall, updateCall } from './callActions'
 import { clearErrors } from '../../actions/errorActions'
 import AlertError from 'components/common/AlertError'
+import { getProcess } from 'components/process/processActions'
 
 class CallEdit extends Component {
   constructor() {
@@ -34,6 +35,10 @@ class CallEdit extends Component {
   componentDidMount() {
     if (this.props.match.params.call_id) {
       this.props.getCall(this.props.match.params.call_id)
+    }
+    //get process if needed
+    if (this.props.process === null || typeof this.props.process === 'undefined') {
+      this.props.getProcess(this.props.match.params.process_id)
     }
   }
 
@@ -117,40 +122,40 @@ class CallEdit extends Component {
 
   renderForm(errors) {
     return (
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              type="text"
-              name="number"
-              label="Número"
-              value={this.state.number}
-              onChange={this.onChange}
-              error={errors.number}
-            />
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          type="text"
+          name="number"
+          label="Número"
+          value={this.state.number}
+          onChange={this.onChange}
+          error={errors.number}
+        />
 
-            <div className="form-lateral">
-              <TextFieldGroup
-                placeholder="__/__/__"
-                type="date"
-                label="Data de abertura"
-                name="openingDate"
-                value={this.state.openingDate}
-                onChange={this.onChange}
-                error={errors.openingDate}
-              />
+        <div className="form-lateral">
+          <TextFieldGroup
+            placeholder="__/__/__"
+            type="date"
+            label="Data de abertura"
+            name="openingDate"
+            value={this.state.openingDate}
+            onChange={this.onChange}
+            error={errors.openingDate}
+          />
 
-              <TextFieldGroup
-                placeholder="__/__/__"
-                type="date"
-                label="Data de encerramento"
-                name="endingDate"
-                value={this.state.endingDate}
-                onChange={this.onChange}
-                error={errors.endingDate}
-              />
-            </div>
+          <TextFieldGroup
+            placeholder="__/__/__"
+            type="date"
+            label="Data de encerramento"
+            name="endingDate"
+            value={this.state.endingDate}
+            onChange={this.onChange}
+            error={errors.endingDate}
+          />
+        </div>
 
-            <input type="submit" className="btn btn-primary" value="Salvar"/>
-          </form>
+        <input type="submit" className="btn btn-primary" value="Salvar" />
+      </form>
     )
   }
 
@@ -161,21 +166,28 @@ class CallEdit extends Component {
     return (
       <div className="register">
         <div className="container">
-
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
             </Link>
-            <i class="fas fa-greater-than"></i>
-            <Link to={back_url ? back_url : `/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Chamada XXX
+            <i className="fas fa-greater-than"></i>
+            <Link
+              to={
+                back_url
+                  ? back_url
+                  : `/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`
+              }
+              className="breadcrumb-link">
+              {`Chamada ${this.props.callStore.call ? this.props.callStore.call.number : '000'}`}
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Editar chamada</span>
           </div>
 
@@ -200,8 +212,11 @@ CallEdit.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   errorStore: state.errorStore,
-  callStore: state.callStore
+  callStore: state.callStore,
+  process: state.processStore.process
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { createCall, getCall, updateCall, clearErrors })(withRouter(CallEdit))
+export default connect(mapStateToProps, { createCall, getCall, updateCall, clearErrors, getProcess })(
+  withRouter(CallEdit)
+)

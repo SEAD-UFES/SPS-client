@@ -416,11 +416,11 @@ class PublicationCreate extends Component {
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${process_id}`} className="breadcrumb-link">
               Edital XXX/XXXX
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Nova publicação</span>
           </div>
 

@@ -67,14 +67,14 @@ class RoleTypeDelete extends Component {
     const alertsList = (
       <div>
         {errors.serverError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro do servidor
           </div>
         ) : (
           ""
         )}
         {errors.anotherError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro desconhecido
           </div>
         ) : (
@@ -91,11 +91,11 @@ class RoleTypeDelete extends Component {
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to="/parameters/roletypes" className="breadcrumb-link">
               Tipos de papel
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</span>
           </div>
 

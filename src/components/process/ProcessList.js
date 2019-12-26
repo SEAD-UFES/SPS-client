@@ -210,7 +210,7 @@ class ProcessList extends Component {
     return (
       <React.Fragment>
         <ul className="table-list">
-          <div class="titulos">
+          <div className="titulos">
             <span>Edital</span>
             <span>Nível</span>
             <span>Curso</span>
@@ -228,9 +228,11 @@ class ProcessList extends Component {
                     {process.number}/{process.year}
                   </Link>
                 </h3>
-                <p class="tipo-de-curso">{process.Course.GraduationType ? process.Course.GraduationType.name : '-'}</p>
-                <p class="curso">{process.Course.name}</p>
-                <p class="atribuicao">
+                <p className="tipo-de-curso">
+                  {process.Course.GraduationType ? process.Course.GraduationType.name : '-'}
+                </p>
+                <p className="curso">{process.Course.name}</p>
+                <p className="atribuicao">
                   {process.Assignments.length > 0
                     ? process.Assignments.map((assignment, key) => {
                         if (key === 0) {

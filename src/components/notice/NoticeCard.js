@@ -17,18 +17,14 @@ class NoticeCard extends Component {
         return (
           <React.Fragment>
             <DrawFilter permission="notice_update" course_id={processStore.process.Course.id}>
-              <Link
-                className="btn-icon"
-                to={`/processes/${processStore.process.id}/notices/${notices[0].id}/update`}>
-                <i class="fas fa-pencil-alt"></i>
+              <Link className="btn-icon" to={`/processes/${processStore.process.id}/notices/${notices[0].id}/update`}>
+                <i className="fas fa-pencil-alt"></i>
               </Link>
             </DrawFilter>
             <DrawFilter permission="notice_delete" course_id={processStore.process.Course.id}>
               {' '}
-              <Link
-                className="btn-icon"
-                to={`/processes/${processStore.process.id}/notices/${notices[0].id}/delete`}>
-                <i class="fas fa-trash"></i>
+              <Link className="btn-icon" to={`/processes/${processStore.process.id}/notices/${notices[0].id}/delete`}>
+                <i className="fas fa-trash"></i>
               </Link>
             </DrawFilter>
           </React.Fragment>
@@ -61,7 +57,7 @@ class NoticeCard extends Component {
     }
 
     return (
-      <section class="quadro">
+      <section className="quadro">
         <h4>{renderTitle(notices)}</h4>
         <div className="btn-right">{renderOptions(notices)}</div>
 

@@ -64,7 +64,7 @@ class NoticeDelete extends Component {
       return <Spinner />
     }
 
-    return (    
+    return (
       <div>
         <p>
           <strong>Título: </strong>
@@ -74,10 +74,9 @@ class NoticeDelete extends Component {
           <strong>Id: </strong>
           {notice.id}
         </p>
-        
+
         {this.renderChoices()}
       </div>
-
     )
   }
 
@@ -87,16 +86,16 @@ class NoticeDelete extends Component {
     return (
       <div className="notice-delete">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
               Edital XXX/XXXX
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Excluir notícia</span>
           </div>
 
@@ -105,7 +104,6 @@ class NoticeDelete extends Component {
             <AlertError errors={errorStore} />
             {this.renderInfo(notice, loading)}
           </div>
-
         </div>
       </div>
     )
@@ -136,11 +134,8 @@ const mapStateToProps = (state, ownProps) => ({
   errorStore: state.errorStore
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    clearErrors,
-    getNotice,
-    deleteNotice
-  }
-)(NoticeDelete)
+export default connect(mapStateToProps, {
+  clearErrors,
+  getNotice,
+  deleteNotice
+})(NoticeDelete)

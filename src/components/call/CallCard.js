@@ -9,7 +9,7 @@ export default class CallCard extends Component {
   renderTable(process) {
     return (
       <ul className="table-list">
-        <div class="titulos">
+        <div className="titulos">
           <span>Número</span>
           <span>Periodo</span>
           <span>Status</span>
@@ -19,29 +19,30 @@ export default class CallCard extends Component {
         {process.Calls.map(call => {
           return (
             <li key={call.id}>
-              <h3><span>Chamada </span>{call.number}</h3>
+              <h3>
+                <span>Chamada </span>
+                {call.number}
+              </h3>
               <p>
                 {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
                 {' - '}
                 {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
               </p>
-              <p>
-                {getCallStatus(call)}
-              </p>
+              <p>{getCallStatus(call)}</p>
               <p className="text-right">
                 <DrawFilter permission="call_read" course_id={process.Course.id}>
                   <Link className="btn-icon laranja" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}`}>
-                    <i class="fas fa-eye"></i>
+                    <i className="fas fa-eye"></i>
                   </Link>
                 </DrawFilter>{' '}
                 {/* <DrawFilter permission="call_update" course_id={process.Course.id}>
                   <Link className="icon-edit" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`}>
-                    <i class="fas fa-pencil-alt"></i>
+                    <i className="fas fa-pencil-alt"></i>
                   </Link>
                 </DrawFilter>{' '} */}
                 <DrawFilter permission="call_delete" course_id={process.Course.id}>
                   <Link className="btn-icon" to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/delete`}>
-                    <i class="fas fa-trash"></i>
+                    <i className="fas fa-trash"></i>
                   </Link>
                 </DrawFilter>
               </p>
@@ -54,7 +55,7 @@ export default class CallCard extends Component {
 
   render() {
     return (
-      <section id="chamadas" class="quadro">
+      <section id="chamadas" className="quadro">
         <h4>Chamadas</h4>
 
         <div className="btn-right">

@@ -8,6 +8,7 @@ import { validateProcessNumber } from '../../validation'
 import { validateCallForm, validateEndingDate, validateOpeningDate } from './validateCallForm'
 import AlertError from 'components/common/AlertError'
 import { createCall } from './callActions'
+import { getProcess } from 'components/process/processActions'
 import { clearErrors } from 'actions/errorActions'
 import moment from 'moment'
 
@@ -29,6 +30,10 @@ class CallCreate extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.clearErrors()
+    //get process if needed
+    if (this.props.process === null || typeof this.props.process === 'undefined') {
+      this.props.getProcess(this.props.match.params.process_id)
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -94,8 +99,6 @@ class CallCreate extends Component {
       this.props.createCall(callData, () => {
         this.props.history.push(`/processes/${callData.selectiveProcess_id}`)
       })
-
-      console.log(this.state.errors)
     }
   }
 
@@ -135,7 +138,6 @@ class CallCreate extends Component {
 
         <input type="submit" className="btn btn-primary" value="Cadastrar" />
       </form>
-
     )
   }
 
@@ -145,20 +147,22 @@ class CallCreate extends Component {
     return (
       <div className="call-create">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Nova chamada</span>
           </div>
-          
-          <div className="form-container"  id="main">
+
+          <div className="form-container" id="main">
             <h1>Nova chamada</h1>
             <AlertError errors={this.props.errorStore} />
             {this.renderForm(errors)}
@@ -176,8 +180,9 @@ CallCreate.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
+  process: state.processStore.process,
   errorStore: state.errorStore
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { createCall, clearErrors })(withRouter(CallCreate))
+export default connect(mapStateToProps, { createCall, clearErrors, getProcess })(withRouter(CallCreate))

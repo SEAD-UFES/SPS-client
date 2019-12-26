@@ -8,7 +8,7 @@ export default class VacancyCard extends Component {
   renderTable(call) {
     return (
       <ul className="table-list">
-        <div class="titulos">
+        <div className="titulos">
           <span>Atribuição</span>
           <span>Vagas</span>
           <span>Local</span>
@@ -30,14 +30,14 @@ export default class VacancyCard extends Component {
                   <Link
                     className="btn-icon"
                     to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/edit`}>
-                    <i class="fas fa-pencil-alt"></i>
+                    <i className="fas fa-pencil-alt"></i>
                   </Link>
                 </DrawFilter>{' '}
                 <DrawFilter permission="vacancy_delete" course_id={this.props.course_id}>
                   <Link
                     className="btn-icon"
                     to={`/processes/${call.selectiveProcess_id}/calls/${call.id}/vacancies/${vacancy.id}/delete`}>
-                    <i class="fas fa-trash"></i>
+                    <i className="fas fa-trash"></i>
                   </Link>
                 </DrawFilter>
               </p>
@@ -50,7 +50,7 @@ export default class VacancyCard extends Component {
 
   render() {
     return (
-      <section id="ofertas" class="quadro">
+      <section id="ofertas" className="quadro">
         <h4>Ofertas de vaga</h4>
 
         <div className="btn-right">

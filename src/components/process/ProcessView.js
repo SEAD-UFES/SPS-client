@@ -169,7 +169,7 @@ class ProcessView extends Component {
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>{this.renderProcessName(process, loading)}</span>
           </div>
 

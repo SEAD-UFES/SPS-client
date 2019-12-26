@@ -253,16 +253,16 @@ class VacancyEdit extends Component {
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
               Edital XXX/XXXX
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link
                 to={`/processes/${this.props.match.params.process_id}/calls/${this.props.match.params.call_id}`} className="breadcrumb-link"                >
                 Chamada XXX
               </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Editar oferta de vaga</span>
           </div>
 

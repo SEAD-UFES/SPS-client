@@ -130,14 +130,14 @@ class rolePermissionCreate extends Component {
     const alertsList = (
       <div>
         {errors.serverError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro do servidor
           </div>
         ) : (
           ''
         )}
         {errors.anotherError ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Erro!</strong> Erro desconhecido
           </div>
         ) : (

@@ -195,7 +195,7 @@ class NoticeUpdate extends Component {
           onChange={this.onCheck}
         />
 
-        <input type="submit" className="btn btn-primary" value="Editar"/>
+        <input type="submit" className="btn btn-primary" value="Editar" />
       </form>
     )
   }
@@ -206,16 +206,16 @@ class NoticeUpdate extends Component {
     return (
       <div className="notice-update">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
               Edital XXX/XXXX
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Editar notícia</span>
           </div>
 

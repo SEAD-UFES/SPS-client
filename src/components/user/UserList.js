@@ -63,7 +63,7 @@ class UserList extends Component {
     return (
       <div>
         <ul className="table-list">
-          <div class="titulos">
+          <div className="titulos">
             <span>Nome</span>
             <span>Login/Email</span>
             <span>Status</span>
@@ -107,7 +107,7 @@ class UserList extends Component {
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Usuários</span>
           </div>
 

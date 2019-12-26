@@ -167,7 +167,7 @@ class Register extends Component {
           error={errors.email}
         />
 
-        <div class="form-spacing">
+        <div className="form-spacing">
           <TextFieldGroup
             type="password"
             name="password"

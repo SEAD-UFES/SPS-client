@@ -12,6 +12,7 @@ import DrawFilter from 'components/profile/DrawFilter'
 import { getCallStatus } from './callHelpers'
 import VacancyCard from 'components/vacancy/VacancyCard'
 import { findCourse } from 'components/course/courseActions'
+import { getProcess } from 'components/process/processActions'
 
 class CallView extends Component {
   constructor() {
@@ -27,6 +28,10 @@ class CallView extends Component {
     this.props.findCourse({ call_id: this.props.match.params.call_id }, course => {
       this.setState({ course_id: course.id })
     })
+    //get process if needed
+    if (this.props.process === null || typeof this.props.process === 'undefined') {
+      this.props.getProcess(this.props.match.params.process_id)
+    }
   }
 
   renderCallName(call, loading) {
@@ -43,17 +48,17 @@ class CallView extends Component {
     }
     return (
       <div className="btn-right">
-          <DrawFilter permission="call_update" course_id={this.state.course_id}>
-            <Link
-              className="btn btn-primary"
-              to={{
-                pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
-                prevLocation: this.props.location
-              }}>
-              <i className="fas fa-cog" /> Editar
-            </Link>
-          </DrawFilter>
-        </div>
+        <DrawFilter permission="call_update" course_id={this.state.course_id}>
+          <Link
+            className="btn btn-primary"
+            to={{
+              pathname: `/processes/${call.selectiveProcess_id}/calls/${call.id}/edit`,
+              prevLocation: this.props.location
+            }}>
+            <i className="fas fa-cog" /> Editar
+          </Link>
+        </DrawFilter>
+      </div>
     )
   }
 
@@ -66,7 +71,7 @@ class CallView extends Component {
       <section>
         <p>
           <strong>Abertura: </strong>
-           {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
+          {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
         </p>
         <p>
           <strong>Encerramento: </strong>
@@ -92,27 +97,28 @@ class CallView extends Component {
     return (
       <div className="view-page">
         <div className="container">
+          <div className="breadcrumb">
+            <span>Você está em:</span>
+            <Link to="/processes" className="breadcrumb-link">
+              Processos Seletivos
+            </Link>
+            <i className="fas fa-greater-than"></i>
+            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
+            </Link>
+            <i className="fas fa-greater-than"></i>
+            <span>{this.renderCallName(call, loading)}</span>
+          </div>
 
-          <div className="breadcrumb">              
-              <span>Você está em:</span>
-              <Link to="/processes" className="breadcrumb-link">
-                Processos Seletivos
-              </Link>
-              <i class="fas fa-greater-than"></i>
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-                Edital XXX/XXXX
-              </Link>
-              <i class="fas fa-greater-than"></i>
-              <span>{this.renderCallName(call, loading)}</span>
-            </div>
-
-            <div id="main">
-              <h1>{this.renderCallName(call, loading)}</h1>
-              {this.renderCallEdit(call, loading)}
-              <AlertError errors={errors} />
-              {this.renderInfo(call, loading)}
-              {this.renderVacancys(call, loading)}
-            </div>
+          <div id="main">
+            <h1>{this.renderCallName(call, loading)}</h1>
+            {this.renderCallEdit(call, loading)}
+            <AlertError errors={errors} />
+            {this.renderInfo(call, loading)}
+            {this.renderVacancys(call, loading)}
+          </div>
         </div>
       </div>
     )
@@ -132,8 +138,9 @@ CallView.proptypes = {
 const mapStateToProps = state => ({
   errors: state.errorStore,
   call: state.callStore.call,
-  loading: state.callStore.loading
+  loading: state.callStore.loading,
+  process: state.processStore.process
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { getCall, clearErrors, findCourse })(withRouter(CallView))
+export default connect(mapStateToProps, { getCall, clearErrors, findCourse, getProcess })(withRouter(CallView))

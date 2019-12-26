@@ -95,7 +95,7 @@ class Pagination extends React.Component {
       <ul className="pagination justify-content-center">
         <li className={`page-item arrow ${pager.currentPage === 1 ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => this.setPage(pager.currentPage - 1)}>
-          <i class="fas fa-angle-left"></i> Anterior
+          <i className="fas fa-angle-left"></i> Anterior
           </button>
         </li>
 
@@ -109,7 +109,7 @@ class Pagination extends React.Component {
 
         <li className={`page-item arrow ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => this.setPage(pager.currentPage + 1)}>
-          Próxima <i class="fas fa-angle-right"></i> 
+          Próxima <i className="fas fa-angle-right"></i> 
           </button>
         </li>
       </ul>

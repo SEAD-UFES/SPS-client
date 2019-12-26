@@ -175,7 +175,7 @@ class GraduationTypeList extends Component {
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Níveis de formação</span>
           </div>
 

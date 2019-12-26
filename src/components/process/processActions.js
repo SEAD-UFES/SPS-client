@@ -59,7 +59,6 @@ export const updateProcess = (processId, processData, history) => dispatch => {
 //get Process List
 export const getProcessList = (options = {}) => dispatch => {
   let url = '/v1/selectiveprocesses'
-  //console.log("getProcessList:", options);
 
   if (!options.page) {
     options.page = 1

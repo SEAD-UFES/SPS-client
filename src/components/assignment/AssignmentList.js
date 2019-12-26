@@ -203,7 +203,7 @@ class AssignmentList extends Component {
             <Link to="/parameters" className="breadcrumb-link">
               Parâmetros
             </Link>
-            <i class="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than"></i>
             <span>Atribuições</span>
           </div>
 
