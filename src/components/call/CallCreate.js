@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
+import moment from 'moment'
 
 import TextFieldGroup from '../common/TextFieldGroup'
 import { validateProcessNumber } from '../../validation'
@@ -10,7 +11,6 @@ import AlertError from 'components/common/AlertError'
 import { createCall } from './callActions'
 import { getProcess } from 'components/process/processActions'
 import { clearErrors } from 'actions/errorActions'
-import moment from 'moment'
 
 class CallCreate extends Component {
   constructor() {

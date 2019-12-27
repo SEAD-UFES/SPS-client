@@ -10,6 +10,7 @@ import { validateNoticeForm, validateTitle, validateContent } from './validateNo
 import AlertError from 'components/common/AlertError'
 import { createNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
+import { getProcess } from 'components/process/processActions'
 
 //import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
@@ -32,6 +33,14 @@ class NoticeCreate extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.clearErrors()
+    //get process if needed
+    if (
+      this.props.process === null ||
+      typeof this.props.process === 'undefined' ||
+      this.props.process.id !== this.props.match.params.process_id
+    ) {
+      this.props.getProcess(this.props.match.params.process_id)
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -215,7 +224,9 @@ class NoticeCreate extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Editar notícia</span>
@@ -239,8 +250,9 @@ NoticeCreate.proptypes = {
 
 //Put redux store data on props
 const mapStateToProps = state => ({
-  errorStore: state.errorStore
+  errorStore: state.errorStore,
+  process: state.processStore.process
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { createNotice, clearErrors })(withRouter(NoticeCreate))
+export default connect(mapStateToProps, { createNotice, clearErrors, getProcess })(withRouter(NoticeCreate))

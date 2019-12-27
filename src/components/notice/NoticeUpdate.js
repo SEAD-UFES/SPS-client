@@ -10,6 +10,7 @@ import AlertError from 'components/common/AlertError'
 import { getNotice, updateNotice } from './noticeActions'
 import { clearErrors } from 'actions/errorActions'
 import { isEmpty } from '../../validation'
+import { getProcess } from 'components/process/processActions'
 
 // import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 import TextAreaFieldGroup from 'components/common/TextAreaFieldGroup'
@@ -34,6 +35,14 @@ class NoticeUpdate extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.clearErrors()
+    //get process if needed
+    if (
+      this.props.process === null ||
+      typeof this.props.process === 'undefined' ||
+      this.props.process.id !== this.props.match.params.process_id
+    ) {
+      this.props.getProcess(this.props.match.params.process_id)
+    }
   }
 
   componentDidMount() {
@@ -213,7 +222,9 @@ class NoticeUpdate extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Editar notícia</span>
@@ -239,8 +250,9 @@ NoticeUpdate.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   noticeStore: state.noticeStore,
-  errorStore: state.errorStore
+  errorStore: state.errorStore,
+  process: state.processStore.process
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { getNotice, updateNotice, clearErrors })(withRouter(NoticeUpdate))
+export default connect(mapStateToProps, { getNotice, updateNotice, clearErrors, getProcess })(withRouter(NoticeUpdate))
