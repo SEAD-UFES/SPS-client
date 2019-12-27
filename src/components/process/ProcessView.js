@@ -4,17 +4,14 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { getProcess } from './processActions'
-import { getNoticeList } from 'components/notice/noticeActions'
 import Spinner from '../common/Spinner'
 import DrawFilter from '../profile/DrawFilter'
 import CallCard from 'components/call/CallCard'
 import PublicationCard from 'components/publication/PublicationCard'
-import NoticeCard from 'components/notice/NoticeCard'
 
 class ProcessView extends Component {
   componentDidMount() {
     this.props.getProcess(this.props.match.params.id)
-    this.props.getNoticeList({ selectiveProcess_id: this.props.match.params.id })
   }
 
   renderProcessName(process, loading) {
@@ -101,65 +98,9 @@ class ProcessView extends Component {
     return <PublicationCard process={process} course_id={process.id} />
   }
 
-  renderNoticeCard(noticeStore, processStore) {
-    if (noticeStore.notices === null || noticeStore.loading || processStore.process === null || processStore.loading) {
-      return <Spinner />
-    }
-
-    const notices = noticeStore.notices.filter(notice => notice.selectiveProcess_id === processStore.process.id)
-    const notice = notices.length > 0 ? notices[0] : null
-
-    if (notice) {
-      return <NoticeCard noticeStore={noticeStore} processStore={processStore} />
-    } else {
-      return (
-        <DrawFilter permission="notice_read" course_id={processStore.process.Course.id}>
-          <NoticeCard noticeStore={noticeStore} processStore={processStore} />
-        </DrawFilter>
-      )
-    }
-  }
-
-  renderOther(noticeStore, processStore) {
-    if (noticeStore.notices === null || noticeStore.loading || processStore.process === null || processStore.loading) {
-      return <Spinner />
-    }
-
-    const notices = noticeStore.notices.filter(notice => notice.selectiveProcess_id === processStore.process.id)
-    const notice = notices.length > 0 ? notices[0] : null
-
-    if (notice) {
-      if (notice.override) {
-        return (
-          <DrawFilter permission="notice_read" course_id={processStore.process.Course.id}>
-            <React.Fragment>
-              {this.renderPublications(processStore.process, processStore.loading)}
-              {this.renderCalls(processStore.process, processStore.loading)}
-            </React.Fragment>
-          </DrawFilter>
-        )
-      } else {
-        return (
-          <React.Fragment>
-            {this.renderPublications(processStore.process, processStore.loading)}
-            {this.renderCalls(processStore.process, processStore.loading)}
-          </React.Fragment>
-        )
-      }
-    } else {
-      return (
-        <React.Fragment>
-          {this.renderPublications(processStore.process, processStore.loading)}
-          {this.renderCalls(processStore.process, processStore.loading)}
-        </React.Fragment>
-      )
-    }
-  }
-
   render() {
     const { process, loading } = this.props.processStore
     const processStore = this.props.processStore
-    const noticeStore = this.props.noticeStore
 
     return (
       <div className="process-view">
@@ -177,8 +118,8 @@ class ProcessView extends Component {
             <h1>{this.renderProcessName(process, loading)}</h1>
             {this.renderProcessEdit(process, loading)}
             {this.renderInfoTable(process, loading)}
-            {this.renderNoticeCard(noticeStore, processStore)}
-            {this.renderOther(noticeStore, processStore)}
+            {this.renderPublications(processStore.process, processStore.loading)}
+            {this.renderCalls(processStore.process, processStore.loading)}
           </div>
         </div>
       </div>
@@ -189,17 +130,14 @@ class ProcessView extends Component {
 ProcessView.propTypes = {
   getProcess: PropTypes.func.isRequired,
   processStore: PropTypes.object.isRequired,
-  authStore: PropTypes.object.isRequired,
-  getNoticeList: PropTypes.func.isRequired
+  authStore: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   processStore: state.processStore,
-  authStore: state.authStore,
-  noticeStore: state.noticeStore
+  authStore: state.authStore
 })
 
 export default connect(mapStateToProps, {
-  getProcess,
-  getNoticeList
+  getProcess
 })(ProcessView)

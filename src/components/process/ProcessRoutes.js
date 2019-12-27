@@ -26,8 +26,6 @@ import PublicationUpdate from 'components/publication/PublicationUpdate'
 import PublicationDelete from 'components/publication/PublicationDelete'
 import PublicationRoutes from 'components/publication/PublicationRoutes'
 
-import NoticeRoutes from 'components/notice/NoticeRoutes'
-
 import NotFound from 'components/common/NotFound'
 
 export default class ProcessRoutes extends Component {
@@ -105,8 +103,6 @@ export default class ProcessRoutes extends Component {
         />
 
         <Route path={`${this.props.match.path}/:process_id/publications`} component={PublicationRoutes} />
-
-        <PrivateRoute path={`${this.props.match.path}/:process_id/notices`} component={NoticeRoutes} />
 
         <Route component={NotFound} />
       </Switch>

@@ -20,7 +20,6 @@ import stepReducer from 'components/step/stepReducer'
 import stepTypeReducer from 'components/stepType/stepTypeReducer'
 import vacancyReducer from 'components/vacancy/vacancyReducer'
 import graduationTypeReducer from 'components/graduationType/graduationTypeReducer'
-import noticeReducer from 'components/notice/noticeReducer'
 
 export default combineReducers({
   errorStore: errorReducer,
@@ -42,6 +41,5 @@ export default combineReducers({
   stepStore: stepReducer,
   stepTypeStore: stepTypeReducer,
   vacancyStore: vacancyReducer,
-  graduationTypeStore: graduationTypeReducer,
-  noticeStore: noticeReducer
+  graduationTypeStore: graduationTypeReducer
 })
