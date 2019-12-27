@@ -8,6 +8,7 @@ import Spinner from 'components/common/Spinner'
 import { getCall, deleteCall } from 'components/call/callActions'
 import AlertError from 'components/common/AlertError'
 import { clearErrors } from 'actions/errorActions'
+import { getProcess } from 'components/process/processActions'
 
 class CallDelete extends Component {
   constructor() {
@@ -18,6 +19,14 @@ class CallDelete extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.clearErrors()
+    //get process if needed
+    if (
+      this.props.process === null ||
+      typeof this.props.process === 'undefined' ||
+      this.props.process.id !== this.props.match.params.process_id
+    ) {
+      this.props.getProcess(this.props.match.params.process_id)
+    }
   }
 
   componentDidMount() {
@@ -102,7 +111,9 @@ class CallDelete extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Excluir chamada</span>
@@ -131,11 +142,13 @@ CallDelete.propTypes = {
 const mapStateToProps = state => ({
   call: state.callStore.call,
   loading: state.callStore.loading,
-  errorStore: state.errorStore
+  errorStore: state.errorStore,
+  process: state.processStore.process
 })
 
 export default connect(mapStateToProps, {
   clearErrors,
   getCall,
-  deleteCall
+  deleteCall,
+  getProcess
 })(CallDelete)

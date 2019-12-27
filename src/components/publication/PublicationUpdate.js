@@ -304,8 +304,8 @@ class PublicationUpdate extends Component {
               disabled={this.state.lock_call ? true : false}
             />
           ) : (
-              ''
-            )}
+            ''
+          )}
 
           {this.state.call_id ? (
             <SelectListGroup
@@ -318,8 +318,8 @@ class PublicationUpdate extends Component {
               error={errors.step_id}
             />
           ) : (
-              ''
-            )}
+            ''
+          )}
 
           <TextAreaFieldGroup
             type="text"
@@ -340,7 +340,6 @@ class PublicationUpdate extends Component {
               error={errors.description}
               info="corpo da mensagem da publicação, se houver."
             /> */}
-
         </div>
 
         <input type="submit" className="btn btn-primary" value="Salvar" />
@@ -367,8 +366,8 @@ class PublicationUpdate extends Component {
     const steps =
       selectiveProcess && this.state.call_id
         ? selectiveProcess.Calls.filter(item => {
-          return item.id === this.state.call_id
-        })[0].Steps
+            return item.id === this.state.call_id
+          })[0].Steps
         : []
 
     //mounting render pieces
@@ -376,44 +375,44 @@ class PublicationUpdate extends Component {
     const processPublicationTypeOptions = [{ label: 'Selecione o tipo de publicação', value: '' }].concat(
       publicationTypes
         ? publicationTypes.map(procPubTypes => {
-          return {
-            label: procPubTypes.name,
-            value: procPubTypes.id
-          }
-        })
+            return {
+              label: procPubTypes.name,
+              value: procPubTypes.id
+            }
+          })
         : []
     )
 
     const processOptions = [{ label: 'Selecione o processo seletivo', value: '' }].concat(
       processes
         ? processes.map(process => {
-          return {
-            label: `${process.number}/${process.year} - ${process.Course.name}`,
-            value: process.id
-          }
-        })
+            return {
+              label: `${process.number}/${process.year} - ${process.Course.name}`,
+              value: process.id
+            }
+          })
         : []
     )
 
     const callOptions = [{ label: 'Selecione a chamada', value: '' }].concat(
       calls
         ? calls.map(call => {
-          return {
-            label: `Chamada ${call.number}`,
-            value: `${call.id}`
-          }
-        })
+            return {
+              label: `Chamada ${call.number}`,
+              value: `${call.id}`
+            }
+          })
         : []
     )
 
     const stepOptions = [{ label: 'Selecione a etapa', value: '' }].concat(
       steps
         ? steps.map(step => {
-          return {
-            label: `Etapa ${step.number} | ${step.StepType.name}`,
-            value: `${step.id}`
-          }
-        })
+            return {
+              label: `Etapa ${step.number} | ${step.StepType.name}`,
+              value: `${step.id}`
+            }
+          })
         : []
     )
 
@@ -427,7 +426,9 @@ class PublicationUpdate extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.state.selectiveProcess
+                ? `Edital ${this.state.selectiveProcess.number}/${this.state.selectiveProcess.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Editar publicação</span>

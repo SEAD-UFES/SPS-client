@@ -31,7 +31,11 @@ class CallCreate extends Component {
   UNSAFE_componentWillMount() {
     this.props.clearErrors()
     //get process if needed
-    if (this.props.process === null || typeof this.props.process === 'undefined') {
+    if (
+      this.props.process === null ||
+      typeof this.props.process === 'undefined' ||
+      this.props.process.id !== this.props.match.params.process_id
+    ) {
       this.props.getProcess(this.props.match.params.process_id)
     }
   }

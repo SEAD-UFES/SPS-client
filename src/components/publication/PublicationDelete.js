@@ -8,6 +8,7 @@ import { getPublication, deletePublication } from 'components/publication/public
 import { clearErrors } from 'actions/errorActions'
 import AlertError from 'components/common/AlertError'
 import Spinner from 'components/common/Spinner'
+import { getProcess } from 'components/process/processActions'
 
 class PublicationDelete extends Component {
   constructor() {
@@ -17,6 +18,14 @@ class PublicationDelete extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.clearErrors()
+    //get process if needed
+    if (
+      this.props.process === null ||
+      typeof this.props.process === 'undefined' ||
+      this.props.process.id !== this.props.match.params.process_id
+    ) {
+      this.props.getProcess(this.props.match.params.process_id)
+    }
   }
 
   componentDidMount() {
@@ -59,22 +68,27 @@ class PublicationDelete extends Component {
     return (
       <div>
         <p>
-          <strong>Id: </strong>{publication.id}
+          <strong>Id: </strong>
+          {publication.id}
         </p>
 
         <p>
-          <strong>Data: </strong>{moment(publication.creation_date).format('DD/MM/YYYY')}
+          <strong>Data: </strong>
+          {moment(publication.creation_date).format('DD/MM/YYYY')}
         </p>
         <p>
-          <strong>Título: </strong>{publication.title}
+          <strong>Título: </strong>
+          {publication.title}
         </p>
         <p>
-          <strong>Arquivo: </strong>{publication.file}
+          <strong>Arquivo: </strong>
+          {publication.file}
         </p>
         <p>
-            <strong>Atualizado: </strong>{publication.valid ? 'Documento atualizado' : 'Documento desatualizado'}
+          <strong>Atualizado: </strong>
+          {publication.valid ? 'Documento atualizado' : 'Documento desatualizado'}
         </p>
-         
+
         {this.renderChoices()}
       </div>
     )
@@ -87,24 +101,25 @@ class PublicationDelete extends Component {
     return (
       <div className="publication-delete">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.process
+                ? `Edital ${this.props.process.number}/${this.props.process.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Excluir publicação</span>
           </div>
-              <div className="form-container" id="main">
-                <h1>Publicação</h1>
-                <AlertError errors={errorStore} />
-                {this.renderInfo(publication, loading)}
-              </div>
-
+          <div className="form-container" id="main">
+            <h1>Publicação</h1>
+            <AlertError errors={errorStore} />
+            {this.renderInfo(publication, loading)}
+          </div>
         </div>
       </div>
     )
@@ -121,14 +136,13 @@ PublicationDelete.proptypes = {
 
 const mapStateToProps = state => ({
   publicationStore: state.publicationStore,
-  errorStore: state.errorStore
+  errorStore: state.errorStore,
+  process: state.processStore.process
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    clearErrors,
-    getPublication,
-    deletePublication
-  }
-)(PublicationDelete)
+export default connect(mapStateToProps, {
+  clearErrors,
+  getPublication,
+  deletePublication,
+  getProcess
+})(PublicationDelete)

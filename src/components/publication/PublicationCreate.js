@@ -240,7 +240,7 @@ class PublicationCreate extends Component {
           onChange={this.onChange}
           error={errors.title}
         />
-        
+
         <FileFieldGroup
           name="file"
           label="Arquivo"
@@ -250,7 +250,6 @@ class PublicationCreate extends Component {
         />
 
         <div className="form-spacing">
-
           <SelectListGroup
             placeholder="Selecione o processo seletivo"
             name="selectiveProcess_id"
@@ -281,7 +280,7 @@ class PublicationCreate extends Component {
             error={errors.valid}
             info="Documentos mais antigos devem ser atualizados manualmente"
             onChange={this.onCheck}
-          />          
+          />
 
           {this.state.selectiveProcess_id ? (
             <SelectListGroup
@@ -332,11 +331,9 @@ class PublicationCreate extends Component {
             error={errors.description}
             info="Corpo da mensagem da publicação, se houver."
           />*/}
-
         </div>
 
-        <input type="submit" className="btn btn-primary" value="Cadastrar"/>
-        
+        <input type="submit" className="btn btn-primary" value="Cadastrar" />
       </form>
     )
   }
@@ -411,20 +408,22 @@ class PublicationCreate extends Component {
     return (
       <div className="publication-create">
         <div className="container">
-          <div className="breadcrumb">              
+          <div className="breadcrumb">
             <span>Você está em:</span>
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.state.selectiveProcess
+                ? `Edital ${this.state.selectiveProcess.number}/${this.state.selectiveProcess.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Nova publicação</span>
           </div>
 
-          <div className="form-container" id="main">             
+          <div className="form-container" id="main">
             <h1 className="display-4">Nova publicação</h1>
             <AlertError errors={this.props.errorStore} />
             {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
