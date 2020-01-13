@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -19,7 +21,7 @@ class ProcessCreate extends Component {
     super()
     this.state = {
       number: '',
-      year: '',
+      year: new Date().getFullYear().toString(),
       course_id: '',
       description: '',
       visible: false,
@@ -190,7 +192,7 @@ class ProcessCreate extends Component {
             <Link to="/processes" className="breadcrumb-link">
               Processos Seletivos
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className="fas fa-greater-than" />
             <span>Novo processo</span>
           </div>
 
@@ -219,4 +221,7 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { createProcess, getCourses, clearErrors })(withRouter(ProcessCreate))
+export default connect(
+  mapStateToProps,
+  { createProcess, getCourses, clearErrors }
+)(withRouter(ProcessCreate))
