@@ -42,8 +42,13 @@ class ProcessEdit extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     //Tratando errors
-    if (nextProps.errorStore) {
-      let errors = nextProps.errorStore
+    if (
+      nextProps.errorStore &&
+      nextProps.errorStore.data &&
+      nextProps.errorStore.data.devMessage &&
+      nextProps.errorStore.data.devMessage.errors
+    ) {
+      let errors = nextProps.errorStore.data.devMessage.errors
       this.setState({ errors: errors })
     }
 
@@ -210,7 +215,9 @@ class ProcessEdit extends Component {
             </Link>
             <i className="fas fa-greater-than"></i>
             <Link to={`/processes/${this.props.match.params.id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
+              {this.props.processStore.process
+                ? `Edital ${this.props.processStore.process.number}/${this.props.processStore.process.year}`
+                : 'Edital 000/0000'}
             </Link>
             <i className="fas fa-greater-than"></i>
             <span>Editar</span>

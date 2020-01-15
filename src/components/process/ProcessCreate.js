@@ -39,8 +39,13 @@ class ProcessCreate extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.errorStore) {
-      let errors = nextProps.errorStore
+    if (
+      nextProps.errorStore &&
+      nextProps.errorStore.data &&
+      nextProps.errorStore.data.devMessage &&
+      nextProps.errorStore.data.devMessage.errors
+    ) {
+      let errors = nextProps.errorStore.data.devMessage.errors
       this.setState({ errors: errors })
     }
   }
@@ -221,7 +226,4 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(
-  mapStateToProps,
-  { createProcess, getCourses, clearErrors }
-)(withRouter(ProcessCreate))
+export default connect(mapStateToProps, { createProcess, getCourses, clearErrors })(withRouter(ProcessCreate))
