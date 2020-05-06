@@ -7,12 +7,11 @@ import { readCallV2 } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { clearErrors } from '../../store/actions/error'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
-import CallReadV2 from '../../components/callV2/callReadV2'
+import CallRead from '../../components/callV2/CallRead'
 
 const CallReadContainerV2 = props => {
   const id = props.match.params.id
-  const { call } = props
-  const { readCallV2, getProcess } = props
+  const { readCallV2, getProcess, clearErrors } = props
 
   useEffect(() => {
     //clear errors
@@ -30,9 +29,7 @@ const CallReadContainerV2 = props => {
     })
   }, [])
 
-  console.log('call: ', call)
-
-  return <CallReadV2 {...props} />
+  return <CallRead {...props} />
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -21,7 +21,7 @@ const VacancyListOnCall = props => {
     return (
       <div className='btn-right'>
         <DrawFilter permission='vacancy_create' course_id={course_id}>
-          <Link className='btn btn-terciary' to={`/call/${call ? call.id : null}/vacancy/create`}>
+          <Link className='btn btn-terciary' to={`/call/read/${call ? call.id : null}/vacancy/create`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>

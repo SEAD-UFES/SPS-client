@@ -6,7 +6,7 @@ const selectAssignmentStore = store => store.assignmentStoreV2
 
 export const selectAssignment = createSelector(
   [selectAssignmentStore],
-  vs => vs.allIds.map(id => ({ ...vs.byId[id] }))
+  as => as.allIds.map(id => ({ ...as.byId[id] }))
 )
 
 export const selectAssignmentById = createSelector(

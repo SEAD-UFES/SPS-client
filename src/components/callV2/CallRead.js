@@ -4,11 +4,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
-import DrawFilter from '../../components/profile/DrawFilter'
+import DrawFilter from '../profile/DrawFilter'
 import { getCallStatus } from '../call/callHelpers'
 import AlertError from 'components/common/AlertError'
-import VacancyListOnCall from '../../components/vacancyV2/VacancyListOnCall'
-import CalendarListOnCall from '../../components/calendar/CalendarListOnCall'
+import VacancyListOnCall from '../vacancyV2/VacancyListOnCall'
+import CalendarListOnCall from '../calendar/CalendarListOnCall'
 
 const CallRead = props => {
   const { location } = props
@@ -46,7 +46,7 @@ const CallRead = props => {
           <Link
             className='btn btn-primary'
             to={{
-              pathname: `/processes/${process ? process.id : null}/call/${call ? call.id : null}/update`,
+              pathname: `/call/update/${call ? call.id : null}`,
               prevLocation: location
             }}>
             <i className='fas fa-cog' /> Editar

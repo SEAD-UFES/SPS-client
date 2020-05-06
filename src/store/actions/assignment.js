@@ -1,6 +1,6 @@
 /** @format */
 import { GET_ERRORS } from '../../store/actionTypes'
-import { LOADING_ASSIGNMENTV2, READ_ASSIGNMENTV2 } from '../../store/actionTypes'
+import { LOADING_ASSIGNMENTV2, READ_ASSIGNMENTV2, READ_LIST_ASSIGNMENTV2 } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 
 //Assignment loading
@@ -15,6 +15,20 @@ export const readAssignmentV2 = (id, options = {}) => (dispatch, getState) => {
     .get(`/v1/assignments/${id}`)
     .then(res => {
       dispatch({ type: READ_ASSIGNMENTV2, payload: res.data })
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => handleErrors(err, dispatch))
+}
+
+//Assginemtn list
+export const listAssignment = (options = {}) => (dispatch, getState) => {
+  dispatch(setAssignmentLoadingV2())
+  spsApi
+    .get(`/v1/assignments`)
+    .then(res => {
+      dispatch({ type: READ_LIST_ASSIGNMENTV2, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)

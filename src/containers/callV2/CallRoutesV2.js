@@ -5,15 +5,16 @@ import { Route, Switch } from 'react-router-dom'
 
 import PrivateRoute from '../../components/common/PrivateRoute'
 import CallReadContainerV2 from './CallReadContainerV2'
-import CallUpdateContainerV2 from './CallUpdateContainerV2'
+import CallUpdateContainer from './CallUpdateContainer'
 import CallDeleteContainerV2 from './CallDeleteContainerV2'
+import VacancyCreateContainerOnCall from '../vacancy/VacancyCreateContainerOnCall'
 import NotFound from 'components/common/NotFound'
 
 export default class ProcessRoutes extends Component {
   render() {
     return (
       <Switch>
-        {/* Create feito by process */}
+        {/* Create on process */}
 
         <PrivateRoute
           exact
@@ -26,7 +27,7 @@ export default class ProcessRoutes extends Component {
           exact
           path={`${this.props.match.path}/update/:id`}
           permission='call_update'
-          component={CallUpdateContainerV2}
+          component={CallUpdateContainer}
         />
 
         <PrivateRoute
@@ -34,6 +35,13 @@ export default class ProcessRoutes extends Component {
           path={`${this.props.match.path}/delete/:id`}
           permission='call_delete'
           component={CallDeleteContainerV2}
+        />
+
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/read/:id/vacancy/create`}
+          permission='vacancy_create'
+          component={VacancyCreateContainerOnCall}
         />
 
         <Route component={NotFound} />

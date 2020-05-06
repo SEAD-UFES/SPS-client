@@ -3,7 +3,7 @@
 import _ from 'lodash'
 
 import { GET_ERRORS } from '../actionTypes'
-import { LOADING_CALLV2, READ_CALLV2 } from '../actionTypes'
+import { LOADING_CALLV2, READ_CALLV2, UPDATE_CALLV2 } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readListVacancyV2 } from './vacancy'
 
@@ -27,6 +27,19 @@ export const readCallV2 = (id, options = {}) => (dispatch, getState) => {
       }
 
       //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => handleErrors(err, dispatch))
+}
+
+//update Call
+export const updateCall = (id, updateData, options = {}) => dispatch => {
+  spsApi
+    .put(`/v1/calls/${id}`, updateData)
+    .then(res => {
+      dispatch({ type: UPDATE_CALLV2, payload: res.data })
+
+      //run callbackOK
       if (options.callbackOk) options.callbackOk(res.data)
     })
     .catch(err => handleErrors(err, dispatch))

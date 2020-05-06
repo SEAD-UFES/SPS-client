@@ -6,7 +6,7 @@ const selectRegionStore = store => store.regionStoreV2
 
 export const selectRegion = createSelector(
   [selectRegionStore],
-  vs => vs.allIds.map(id => ({ ...vs.byId[id] }))
+  rs => rs.allIds.map(id => ({ ...rs.byId[id] }))
 )
 
 export const selectRegionById = createSelector(

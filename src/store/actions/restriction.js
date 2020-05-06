@@ -1,6 +1,6 @@
 /** @format */
 import { GET_ERRORS } from '../../store/actionTypes'
-import { LOADING_RESTRICTIONV2, READ_RESTRICTIONV2 } from '../../store/actionTypes'
+import { LOADING_RESTRICTIONV2, READ_RESTRICTIONV2, READ_LIST_RESTRICTIONV2 } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 
 //Restriction loading
@@ -15,6 +15,20 @@ export const readRestrictionV2 = (id, options = {}) => (dispatch, getState) => {
     .get(`/v1/restrictions/${id}`)
     .then(res => {
       dispatch({ type: READ_RESTRICTIONV2, payload: res.data })
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => handleErrors(err, dispatch))
+}
+
+//Region list
+export const listRestriction = (options = {}) => (dispatch, getState) => {
+  dispatch(setRestrictionLoadingV2())
+  spsApi
+    .get(`/v1/restrictions`)
+    .then(res => {
+      dispatch({ type: READ_LIST_RESTRICTIONV2, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
