@@ -10,16 +10,19 @@ import { getProcess } from '../../store/actions/process'
 import { listAssignment } from '../../store/actions/assignment'
 import { listRegion } from '../../store/actions/region'
 import { listRestriction } from '../../store/actions/restriction'
+import { createVacancy } from '../../store/actions/vacancy'
 import VacancyCreateOnCall from '../../components/vacancyV2/VacancyCreateOnCall'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
 import { selectAssignment } from '../../store/selectors/assignment'
 import { selectRestriction } from '../../store/selectors/restriction'
 import { selectRegion } from '../../store/selectors/region'
+import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
+import { validateAssignmentId, validateQtd, validateReserve, validateBody } from '../../validation/vacancy'
 
 const VacancyCreateContainerOnCall = props => {
   const id = props.match.params.id
-  const { clearErrors, listAssignment, listRegion, listRestriction, readCallV2, getProcess } = props
+  const { clearErrors, listAssignment, listRegion, listRestriction, readCallV2, getProcess, createVacancy } = props
   const { assignments, regions, restrictions } = props
 
   const initialCreateData = {
@@ -58,14 +61,93 @@ const VacancyCreateContainerOnCall = props => {
   //onChange
   const onChange = e => {
     e.preventDefault()
+    let errorList = {}
+    let newErrors = { ...errors }
+
+    switch (e.target.name) {
+      case 'assignment_id':
+        errorList[e.target.name] = validateAssignmentId(e.target.value, 'create')
+        break
+      case 'qtd':
+        errorList[e.target.name] = validateQtd(e.target.value, 'create')
+        break
+      default:
+        break
+    }
+
+    //remove empty errors if needed
+    const keysToRemove = getEmptyKeys(errorList)
+    if (!isEmpty(keysToRemove)) newErrors = _.omit(newErrors, keysToRemove)
+
+    //add errors if needed
+    const toAdd = removeEmptyKeys(errorList)
+    if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
+
+    setCreateData({ ...createData, [e.target.name]: e.target.value })
+    setErrors(newErrors)
+  }
+
+  const onCheck = e => {
+    let errorList = {}
+    let newErrors = { ...errors }
+
+    switch (e.target.name) {
+      case 'reserve':
+        errorList[e.target.name] = validateReserve(e.target.value, 'create')
+        break
+      default:
+        break
+    }
+
+    //remove empty errors if needed
+    const keysToRemove = getEmptyKeys(errorList)
+    if (!isEmpty(keysToRemove)) newErrors = _.omit(newErrors, keysToRemove)
+
+    //add errors if needed
+    const toAdd = removeEmptyKeys(errorList)
+    if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
+
+    setCreateData({ ...createData, [e.target.name]: !createData[e.target.name] })
+    setErrors(newErrors)
+  }
+
+  const onSubmit = e => {
+    e.preventDefault()
+
+    console.log('tentando submit')
+
+    const submitErrors = validateBody(createData, 'create')
+
+    if (submitErrors) {
+      setErrors(submitErrors)
+    } else {
+      const data = {
+        ...createData,
+        region_id: createData.region_id ? createData.region_id : null,
+        restriction_id: createData.restriction_id ? createData.restriction_id : null
+      }
+
+      console.log('vour enviar: ', data)
+
+      createVacancy(data, {
+        callbackOk: vac => {
+          console.log('valor que retornou de createVacancy:', vac)
+          props.history.push(`/call/read/${vac.call_id}`)
+        }
+      })
+    }
   }
 
   const allProps = {
     ...props,
-    createData: createData,
     assignmentOptions: assignmentOptions,
     regionOptions: regionOptions,
-    restrictionOptions: restrictionOptions
+    restrictionOptions: restrictionOptions,
+    createData: createData,
+    errors: errors,
+    onChange: onChange,
+    onCheck: onCheck,
+    onSubmit: onSubmit
   }
 
   return <VacancyCreateOnCall {...allProps} />
@@ -91,7 +173,8 @@ const mapActionsToProps = {
   listRegion,
   listRestriction,
   readCallV2,
-  getProcess
+  getProcess,
+  createVacancy
 }
 
 export default connect(

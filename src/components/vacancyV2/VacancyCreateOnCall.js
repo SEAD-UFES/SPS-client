@@ -9,13 +9,11 @@ import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import AlertError from '../../components/common/AlertError'
 
 const VacancyCreateOnCall = props => {
-  const { process, call, assignmentOptions, regionOptions, restrictionOptions } = props
-  const errors = {}
+  const { process, call } = props
+  const { createData, assignmentOptions, regionOptions, restrictionOptions, errors } = props
+  const { onChange, onCheck, onSubmit } = props
+
   const errorStore = {}
-  const createData = {}
-  const onSubmit = () => {}
-  const onChange = () => {}
-  const onCheck = () => {}
 
   const renderBreadcrumb = (process, call) => {
     return (

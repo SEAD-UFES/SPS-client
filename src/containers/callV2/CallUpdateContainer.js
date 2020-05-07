@@ -10,8 +10,8 @@ import { readCallV2, updateCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import CallUpdate from '../../components/callV2/CallUpdate'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
-import isEmpty from '../../validation/is-empty'
 import { validateNumber, validateOpeningDate, validateEndingDate, validateBody } from '../../validation/call'
+import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
 
 const CallUpdateContainer = props => {
   const id = props.match.params.id
@@ -86,14 +86,11 @@ const CallUpdateContainer = props => {
     }
 
     //remove empty errors if needed
-    const toRemove = Object.keys(errorList).filter(key => typeof errorList[key] === 'undefined')
-    if (!isEmpty(toRemove)) newErrors = _.omit(newErrors, toRemove)
+    const keysToRemove = getEmptyKeys(errorList)
+    if (!isEmpty(keysToRemove)) newErrors = _.omit(newErrors, keysToRemove)
 
     //add errors if needed
-    const toAdd = {}
-    Object.keys(errorList)
-      .filter(key => typeof errorList[key] !== 'undefined')
-      .map(key => (toAdd[key] = errorList[key]))
+    const toAdd = removeEmptyKeys(errorList)
     if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
 
     setUpdateData({ ...updateData, [e.target.name]: e.target.value })

@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 import { GET_ERRORS } from '../../store/actionTypes'
-import { LOADING_VACANCYV2, READ_VACANCYV2, READ_LIST_VACANCYV2 } from '../../store/actionTypes'
+import { LOADING_VACANCYV2, CREATE_VACANCYV2, READ_VACANCYV2, READ_LIST_VACANCYV2 } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readAssignmentV2 } from './assignment'
 import { readRegionV2 } from './region'
@@ -11,6 +11,20 @@ import { readRestrictionV2 } from './restriction'
 //Vacancy loading
 export const setVacancyLoadingV2 = () => {
   return { type: LOADING_VACANCYV2 }
+}
+
+//Vacancy create
+export const createVacancy = (data, options = {}) => (dispatch, getState) => {
+  spsApi
+    .post('/v1/vacancies', data)
+    .then(res => {
+      dispatch({ type: CREATE_VACANCYV2, payload: res.data })
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
 }
 
 //Vacancy read
@@ -29,6 +43,7 @@ export const readVacancyV2 = (id, options = {}) => (dispatch, getState) => {
 
 //Vacancy Add List
 export const readListVacancyV2 = (options = {}) => dispatch => {
+  //helper function
   const convertArrayToQueryString = (arrayName, simpleArray) => {
     const strings = simpleArray.map(item => `${arrayName}[]=${item}`)
     const result = strings.reduce((acc, cur, idx, src) => {
