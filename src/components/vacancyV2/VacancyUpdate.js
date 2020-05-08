@@ -13,17 +13,6 @@ const VacancyUpdate = props => {
   const { updateData, assignmentOptions, regionOptions, restrictionOptions, errors, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
 
-  //dummy values
-  //const process = null
-  //const call = null
-  //const vacancy = null
-  //const updateData = {}
-  //const errors = {}
-  //const errorStore = {}
-  //const onChange = () => {}
-  //const onCheck = () => {}
-  //const onSubmit = () => {}
-
   const renderBreadcrumb = (process, call) => {
     return (
       <div className='breadcrumb'>
