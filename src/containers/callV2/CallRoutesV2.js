@@ -10,7 +10,7 @@ import CallDeleteContainerV2 from './CallDeleteContainerV2'
 import VacancyCreateContainerOnCall from '../vacancy/VacancyCreateContainerOnCall'
 import NotFound from 'components/common/NotFound'
 
-export default class ProcessRoutes extends Component {
+export default class VacancyRoutes extends Component {
   render() {
     return (
       <Switch>

@@ -1,7 +1,13 @@
 /** @format */
 
 import _ from 'lodash'
-import { LOADING_VACANCYV2, CREATE_VACANCYV2, READ_VACANCYV2, READ_LIST_VACANCYV2 } from '../actionTypes'
+import {
+  LOADING_VACANCYV2,
+  CREATE_VACANCYV2,
+  READ_VACANCYV2,
+  READ_LIST_VACANCYV2,
+  UPDATE_VACANCYV2
+} from '../actionTypes'
 
 const initialState = {
   loading: false,
@@ -34,6 +40,7 @@ export default function(state = initialState, action) {
       return { ...state, loading: true }
     case CREATE_VACANCYV2:
     case READ_VACANCYV2:
+    case UPDATE_VACANCYV2:
       newState = putItem(state, action.payload)
       return {
         ...state,

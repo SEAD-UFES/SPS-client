@@ -32,6 +32,7 @@ import ProcessRoutes from './components/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
 import RecoverRoutes from './components/recover/RecoverRoutes'
 import CallRoutesV2 from './containers/callV2/CallRoutesV2'
+import VacancyRoutes from './containers/vacancy/VacancyRoutes'
 
 import NotFound from './components/common/NotFound'
 
@@ -83,11 +84,13 @@ class App extends Component {
 
               <Route path='/processes' component={ProcessRoutes} />
 
-              <Route path='/call' component={CallRoutesV2} />
-
               <PrivateRoute path='/parameters' component={ParameterRoutes} permission='parameter_list' />
 
               <Route path='/recover' component={RecoverRoutes} />
+
+              <Route path='/call' component={CallRoutesV2} />
+
+              <Route path='/vacancy' component={VacancyRoutes} />
 
               <Route component={NotFound} />
             </Switch>

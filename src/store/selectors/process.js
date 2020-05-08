@@ -1,6 +1,45 @@
 /** @format */
 
-export const selectProcessById = (store, id, options = {}) => {
-  console.log('Valor de id: ', id)
-  return null
+import { makeSelectCallById } from './call'
+import { makeSelectVacancyById } from './vacancy'
+
+//make selector process by id
+export const makeSelectProcessById = () => (store, id, options = {}) => {
+  const process = store.processStore.process
+  return process ? process : null
 }
+
+//make selector process by call id
+export const makeSelectProcessByCallId = () => (store, call_id, options = {}) => {
+  const selectCallById = makeSelectCallById()
+  const call = selectCallById(store, call_id, {})
+  if (!call) return null
+
+  const selectProcessById = makeSelectProcessById()
+  const process = selectProcessById(store, call.selectiveProcess_id, options)
+  if (!process) return null
+
+  return process
+}
+
+//make selector process by vacancy id
+export const makeSelectProcessByVacancyId = () => (store, vacancy_id, options = {}) => {
+  const selectVacancyById = makeSelectVacancyById()
+  const vacancy = selectVacancyById(store, vacancy_id, {})
+  if (!vacancy) return null
+
+  const selectProcessByCallId = makeSelectProcessByCallId()
+  const process = selectProcessByCallId(store, vacancy.call_id, options)
+  if (!process) return null
+
+  return process
+}
+
+//single instance of selectProcessById
+export const selectProcessById = makeSelectProcessById()
+
+//single instance of selectProcessByCallId
+export const selectProcessByCallId = makeSelectProcessByCallId()
+
+//single instance of selectProcessByVacancyId
+export const selectProcessByVacancyId = makeSelectProcessByVacancyId()

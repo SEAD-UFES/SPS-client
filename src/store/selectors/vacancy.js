@@ -13,6 +13,42 @@ const selectVacancy = createSelector(
   vs => vs.allIds.map(id => ({ ...vs.byId[id] }))
 )
 
+export const makeSelectVacancyById = () => {
+  return createSelector(
+    [
+      selectVacancy,
+      selectAssignment,
+      selectRegion,
+      selectRestriction,
+      (state, id, options = {}) => id,
+      (store, id, options = {}) => options
+    ],
+    (vacancies, assignments, regions, restrictions, id, options) => {
+      let vacancy = vacancies.find(vacancy => vacancy.id === id)
+
+      if (vacancy && options.withAssignment) {
+        const assig = assignments.find(x => x.id === vacancy.assignment_id)
+        return { ...vacancy, assignment: assig ? assig : null }
+      }
+
+      if (vacancy && options.withRegion) {
+        const reg = regions.find(x => x.id === vacancy.region_id)
+        return { ...vacancy, region: reg ? reg : null }
+      }
+
+      if (vacancy && options.withRestriction) {
+        const rest = restrictions.find(x => x.id === vacancy.restriction_id)
+        return { ...vacancy, restriction: rest ? rest : null }
+      }
+
+      return vacancy
+    }
+  )
+}
+
+//for single use
+export const selectVacancyById = makeSelectVacancyById()
+
 export const selectVacancyByCallId = createSelector(
   [
     selectVacancy,
@@ -49,10 +85,3 @@ export const selectVacancyByCallId = createSelector(
     return selectedVacancies
   }
 )
-
-export const selectVacancy_old = store => {
-  const byId = store.vacancyStoreV2.byId
-  const allIds = store.vacancyStoreV2.allIds
-  const vacancies = allIds.map(id => ({ ...byId[id] }))
-  return vacancies
-}

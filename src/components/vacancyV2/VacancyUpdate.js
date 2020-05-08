@@ -8,10 +8,21 @@ import SelectListGroup from '../../components/common/SelectListGroup'
 import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import AlertError from '../../components/common/AlertError'
 
-const VacancyCreateOnCall = props => {
+const VacancyUpdate = props => {
   const { process, call } = props
-  const { createData, assignmentOptions, regionOptions, restrictionOptions, errors, errorStore } = props
+  const { updateData, assignmentOptions, regionOptions, restrictionOptions, errors, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
+
+  //dummy values
+  //const process = null
+  //const call = null
+  //const vacancy = null
+  //const updateData = {}
+  //const errors = {}
+  //const errorStore = {}
+  //const onChange = () => {}
+  //const onCheck = () => {}
+  //const onSubmit = () => {}
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -32,7 +43,7 @@ const VacancyCreateOnCall = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Criar oferta de vaga</span>
+        <span>Editar oferta de vaga</span>
       </div>
     )
   }
@@ -44,7 +55,7 @@ const VacancyCreateOnCall = props => {
           name='assignment_id'
           label='Atribuição'
           placeholder='Selecione a atribuição'
-          value={createData.assignment_id}
+          value={updateData.assignment_id}
           options={assignmentOptions}
           onChange={onChange}
           error={errors.assignment_id}
@@ -54,7 +65,7 @@ const VacancyCreateOnCall = props => {
           type='text'
           name='qtd'
           label='Quantidade'
-          value={createData.qtd}
+          value={updateData.qtd}
           onChange={onChange}
           error={errors.qtd}
         />
@@ -63,7 +74,7 @@ const VacancyCreateOnCall = props => {
           name='region_id'
           label='Polo'
           placeholder='Selecione o polo associado'
-          value={createData.region_id}
+          value={updateData.region_id}
           options={regionOptions}
           onChange={onChange}
           error={errors.region_id}
@@ -74,7 +85,7 @@ const VacancyCreateOnCall = props => {
           name='restriction_id'
           label='Restrição'
           placeholder='Selecione a restrição da vaga'
-          value={createData.restriction_id}
+          value={updateData.restriction_id}
           options={restrictionOptions}
           onChange={onChange}
           error={errors.restriction_id}
@@ -86,7 +97,7 @@ const VacancyCreateOnCall = props => {
           name='reserve'
           text='Reserva'
           value='Esta oferta de vagas permite cadastro de reserva.'
-          checked={createData.reserve}
+          checked={updateData.reserve}
           error={errors.reserve}
           onChange={onCheck}
         />
@@ -101,7 +112,7 @@ const VacancyCreateOnCall = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Nova oferta de vaga</h1>
+          <h1>Editar oferta de vaga</h1>
           <AlertError errors={errorStore} />
           {renderForm(assignmentOptions, regionOptions, restrictionOptions, errors)}
         </div>
@@ -110,4 +121,4 @@ const VacancyCreateOnCall = props => {
   )
 }
 
-export default VacancyCreateOnCall
+export default VacancyUpdate

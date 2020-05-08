@@ -2,7 +2,13 @@
 import _ from 'lodash'
 
 import { GET_ERRORS } from '../../store/actionTypes'
-import { LOADING_VACANCYV2, CREATE_VACANCYV2, READ_VACANCYV2, READ_LIST_VACANCYV2 } from '../../store/actionTypes'
+import {
+  LOADING_VACANCYV2,
+  CREATE_VACANCYV2,
+  READ_VACANCYV2,
+  UPDATE_VACANCYV2,
+  READ_LIST_VACANCYV2
+} from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readAssignmentV2 } from './assignment'
 import { readRegionV2 } from './region'
@@ -39,6 +45,20 @@ export const readVacancyV2 = (id, options = {}) => (dispatch, getState) => {
       if (options.callbackOk) options.callbackOk(res.data)
     })
     .catch(err => handleErrors(err, dispatch))
+}
+
+//Vacancy update
+export const updateVacancy = (id, data, options = {}) => (dispatch, getState) => {
+  spsApi
+    .put(`/v1/vacancies/${id}`, data)
+    .then(res => {
+      dispatch({ type: UPDATE_VACANCYV2, payload: res.data })
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
 }
 
 //Vacancy Add List
