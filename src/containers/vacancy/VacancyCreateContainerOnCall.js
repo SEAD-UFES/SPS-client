@@ -17,13 +17,13 @@ import { convertObjetsToOptions } from '../../utils/selectorHelpers'
 import { selectAssignment } from '../../store/selectors/assignment'
 import { selectRestriction } from '../../store/selectors/restriction'
 import { selectRegion } from '../../store/selectors/region'
-import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
+import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 import { validateAssignmentId, validateQtd, validateReserve, validateBody } from '../../validation/vacancy'
 
 const VacancyCreateContainerOnCall = props => {
   const id = props.match.params.id
   const { clearErrors, listAssignment, listRegion, listRestriction, readCallV2, getProcess, createVacancy } = props
-  const { assignments, regions, restrictions } = props
+  const { assignments, regions, restrictions, errorStore } = props
 
   const initialCreateData = {
     call_id: id,
@@ -57,6 +57,20 @@ const VacancyCreateContainerOnCall = props => {
       }
     })
   }, [])
+
+  //get errors from store (onPropsUpdate)
+  useEffect(
+    () => {
+      const errorsOnStore = checkNested(errorStore, 'data', 'devMessage', 'errors')
+        ? errorStore.data.devMessage.errors
+        : null
+      if (errorsOnStore) {
+        const errorsOnState = { ...errors }
+        setErrors({ ...errorsOnState, ...errorsOnStore })
+      }
+    },
+    [errorStore]
+  )
 
   //onChange
   const onChange = e => {

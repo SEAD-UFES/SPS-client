@@ -14,7 +14,7 @@ import { readVacancyV2, updateVacancy } from '../../store/actions/vacancy'
 
 import VacancyUpdate from '../../components/vacancyV2/VacancyUpdate'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
-import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
+import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 import { validateAssignmentId, validateQtd, validateReserve, validateBody } from '../../validation/vacancy'
 
 import { selectAssignment } from '../../store/selectors/assignment'
@@ -34,7 +34,8 @@ const VacancyUpdateContainer = props => {
     readCallV2,
     getProcess,
     readVacancyV2,
-    updateVacancy
+    updateVacancy,
+    errorStore
   } = props
   const { vacancy, vacancyLoading, assignments, regions, restrictions } = props
 
@@ -99,6 +100,20 @@ const VacancyUpdateContainer = props => {
       }
     },
     [readyToLoad]
+  )
+
+  //get errors from store (onPropsUpdate)
+  useEffect(
+    () => {
+      const errorsOnStore = checkNested(errorStore, 'data', 'devMessage', 'errors')
+        ? errorStore.data.devMessage.errors
+        : null
+      if (errorsOnStore) {
+        const errorsOnState = { ...errors }
+        setErrors({ ...errorsOnState, ...errorsOnStore })
+      }
+    },
+    [errorStore]
   )
 
   //onChange

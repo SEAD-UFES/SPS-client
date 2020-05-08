@@ -3,16 +3,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import TextFieldGroup from '../../components/common/TextFieldGroup'
-import SelectListGroup from '../../components/common/SelectListGroup'
-import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import AlertError from '../../components/common/AlertError'
 import { checkNested } from '../../utils/objectHelpers'
 
 const VacancyDelete = props => {
   const { process, call, vacancy, history } = props
-  const { updateData, assignmentOptions, regionOptions, restrictionOptions, errors, errorStore } = props
-  const { onChange, onCheck, onSubmit } = props
+  const { errorStore } = props
+  const { onSubmit } = props
 
   const renderBreadcrumb = (process, call) => {
     return (
