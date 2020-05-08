@@ -7,6 +7,7 @@ import {
   CREATE_VACANCYV2,
   READ_VACANCYV2,
   UPDATE_VACANCYV2,
+  DELETE_VACANCYV2,
   READ_LIST_VACANCYV2
 } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
@@ -35,7 +36,6 @@ export const createVacancy = (data, options = {}) => (dispatch, getState) => {
 
 //Vacancy read
 export const readVacancyV2 = (id, options = {}) => (dispatch, getState) => {
-  console.log(getState)
   dispatch(setVacancyLoadingV2())
   spsApi
     .get(`/v1/vacancies/${id}`)
@@ -53,6 +53,20 @@ export const updateVacancy = (id, data, options = {}) => (dispatch, getState) =>
     .put(`/v1/vacancies/${id}`, data)
     .then(res => {
       dispatch({ type: UPDATE_VACANCYV2, payload: res.data })
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
+}
+
+//Vacancy update
+export const deleteVacancy = (id, options = {}) => (dispatch, getState) => {
+  spsApi
+    .delete(`/v1/vacancies/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_VACANCYV2, payload: id })
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })

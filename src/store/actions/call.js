@@ -14,7 +14,6 @@ export const setCallLoadingV2 = () => {
 
 //Call read
 export const readCallV2 = (id, options = {}) => (dispatch, getState) => {
-  console.log('rodando action readCallV2')
   dispatch(setCallLoadingV2())
   spsApi
     .get(`/v1/calls/${id}`)

@@ -5,8 +5,9 @@ import {
   LOADING_VACANCYV2,
   CREATE_VACANCYV2,
   READ_VACANCYV2,
-  READ_LIST_VACANCYV2,
-  UPDATE_VACANCYV2
+  UPDATE_VACANCYV2,
+  DELETE_VACANCYV2,
+  READ_LIST_VACANCYV2
 } from '../actionTypes'
 
 const initialState = {
@@ -27,6 +28,12 @@ const putItem = (state, payload) => {
   return { byId: newById, allIds: newAllIds }
 }
 
+const removeItem = (state, id) => {
+  const newById = _.omit(state.byId, id)
+  const newAllIds = Object.keys(newById)
+  return { byId: newById, allIds: newAllIds }
+}
+
 const putList = (state, list) => {
   const newById = { ...state.byId, ..._.mapKeys(list, 'id') }
   const newAllIds = Object.keys(newById)
@@ -42,6 +49,14 @@ export default function(state = initialState, action) {
     case READ_VACANCYV2:
     case UPDATE_VACANCYV2:
       newState = putItem(state, action.payload)
+      return {
+        ...state,
+        loading: false,
+        byId: newState.byId,
+        allIds: newState.allIds.sort(sortAllIdsByCreatedAt(newState.byId))
+      }
+    case DELETE_VACANCYV2:
+      newState = removeItem(state, action.payload)
       return {
         ...state,
         loading: false,
