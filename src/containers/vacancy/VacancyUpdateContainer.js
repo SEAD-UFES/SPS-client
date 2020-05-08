@@ -92,8 +92,8 @@ const VacancyUpdateContainer = props => {
         setUpdateData({
           call_id: vacancy.call_id,
           assignment_id: vacancy.assignment_id,
-          qtd: vacancy.qtd.toString(),
-          region_id: vacancy.region_id,
+          qtd: vacancy.qtd,
+          region_id: vacancy.region_id ? vacancy.region_id : '',
           restriction_id: vacancy.restriction_id ? vacancy.restriction_id : '',
           reserve: vacancy.reserve
         })
