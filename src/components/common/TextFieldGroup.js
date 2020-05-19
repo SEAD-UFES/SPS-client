@@ -5,7 +5,6 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
 const TextFieldGroup = ({ name, placeholder, value, error, label, info, type, onChange, disabled }) => {
-  console.log('info:', info)
   return (
     <div className='form-group'>
       <label className='form-control-label'>{label ? label : placeholder}</label>

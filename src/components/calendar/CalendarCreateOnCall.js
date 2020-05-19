@@ -10,21 +10,16 @@ import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import AlertError from '../../components/common/AlertError'
 
 const CalendarCreateOnCall = props => {
-  const { process, call } = props
-  const {
-    //createData,
-    //errors,
-    errorStore
-  } = props
-  //const { onChange, onCheck, onSubmit } = props
+  const { createData, calendarOptions, errors } = props
+  const { process, call, errorStore } = props
+  const { onChange, onCheck, onSubmit } = props
 
   //dummy data
-  const createData = {}
-  const errors = {}
-  const calendarOptions = []
-  const onChange = () => {}
-  const onCheck = () => {}
-  const onSubmit = () => {}
+  //const createData = {}
+  //const errors = {}
+  //const onChange = () => {}
+  // const onCheck = () => {}
+  //const onSubmit = () => {}
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -55,7 +50,7 @@ const CalendarCreateOnCall = props => {
       <form noValidate onSubmit={onSubmit}>
         <TextFieldGroup
           type='text'
-          name='nome'
+          name='name'
           label='Nome'
           value={createData.name}
           onChange={onChange}
@@ -85,13 +80,13 @@ const CalendarCreateOnCall = props => {
         </div>
 
         <SelectListGroup
-          name='dependsOn'
+          name='calendar_id'
           label='Depende de...'
-          placeholder='Selecione a atribuição (opcional)'
-          value={createData.dependsOn}
+          placeholder='Selecione o evento pai (opcional)'
+          value={createData.calendar_id}
           options={calendarOptions}
           onChange={onChange}
-          error={errors.dependsOn}
+          error={errors.calendar_id}
           info='Campo opcional'
         />
 

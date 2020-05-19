@@ -3,54 +3,42 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
 import { readCallV2 } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { listAssignment } from '../../store/actions/assignment'
-import { listRegion } from '../../store/actions/region'
-import { listRestriction } from '../../store/actions/restriction'
-import { createCalendar } from '../../store/actions/calendar'
+import { createCalendar, readListCalendar } from '../../store/actions/calendar'
 import CalendarCreateOnCall from '../../components/calendar/CalendarCreateOnCall'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
+import { selectCalendarByCallId } from '../../store/selectors/calendar'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
-import { selectAssignment } from '../../store/selectors/assignment'
-import { selectRestriction } from '../../store/selectors/restriction'
-import { selectRegion } from '../../store/selectors/region'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
-import { validateAssignmentId, validateQtd, validateReserve, validateBody } from '../../validation/vacancy'
+import { validateName, validateStart, validateEnd, validateReady, validateBody } from '../../validation/calendar'
 
 const VacancyCreateContainerOnCall = props => {
   const id = props.match.params.id
-  const { clearErrors, listAssignment, listRegion, listRestriction, readCallV2, getProcess, createCalendar } = props
-  const { assignments, regions, restrictions, errorStore } = props
+  const { clearErrors, readCallV2, getProcess, createCalendar, readListCalendar } = props
+  const { calendars, errorStore } = props
 
   const initialCreateData = {
     call_id: id,
-    assignment_id: '',
-    qtd: '',
-    region_id: '',
-    restriction_id: '',
-    reserve: true
+    calendar_id: '',
+    name: '',
+    ready: false,
+    start: '',
+    end: ''
   }
   const [createData, setCreateData] = useState(initialCreateData)
   const [errors, setErrors] = useState({})
 
-  const assignmentOptions = convertObjetsToOptions(assignments)
-  assignmentOptions.unshift({ label: 'Escolha o cargo', value: '' })
-
-  const regionOptions = convertObjetsToOptions(regions)
-  regionOptions.unshift({ label: 'Escolha a região', value: '' })
-
-  const restrictionOptions = convertObjetsToOptions(restrictions)
-  restrictionOptions.unshift({ label: 'Escolha a restrição', value: '' })
+  const calendarOptions = convertObjetsToOptions(calendars)
+  calendarOptions.unshift({ label: 'Escolha o evento', value: '' })
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    listAssignment()
-    listRegion()
-    listRestriction()
+    readListCalendar({ call_ids: [id] })
     readCallV2(id, {
       callbackOk: call => {
         getProcess(call.selectiveProcess_id)
@@ -78,12 +66,19 @@ const VacancyCreateContainerOnCall = props => {
     let errorList = {}
     let newErrors = { ...errors }
 
+    console.log('Entrei')
+    console.log(e.target.name)
+    console.log(e.target.value)
+
     switch (e.target.name) {
-      case 'assignment_id':
-        errorList[e.target.name] = validateAssignmentId(e.target.value, 'create')
+      case 'name':
+        errorList[e.target.name] = validateName(e.target.value, 'create')
         break
-      case 'qtd':
-        errorList[e.target.name] = validateQtd(e.target.value, 'create')
+      case 'start':
+        errorList[e.target.name] = validateStart(e.target.value, 'create')
+        break
+      case 'end':
+        errorList[e.target.name] = validateEnd(e.target.value, 'create')
         break
       default:
         break
@@ -106,8 +101,8 @@ const VacancyCreateContainerOnCall = props => {
     let newErrors = { ...errors }
 
     switch (e.target.name) {
-      case 'reserve':
-        errorList[e.target.name] = validateReserve(e.target.value, 'create')
+      case 'ready':
+        errorList[e.target.name] = validateReady(e.target.value, 'create')
         break
       default:
         break
@@ -135,13 +130,14 @@ const VacancyCreateContainerOnCall = props => {
     } else {
       const data = {
         ...createData,
-        region_id: createData.region_id ? createData.region_id : null,
-        restriction_id: createData.restriction_id ? createData.restriction_id : null
+        calendar_id: createData.calendar_id ? createData.calendar_id : null,
+        start: moment(createData.start, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00',
+        end: moment(createData.end, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
       }
 
       createCalendar(data, {
-        callbackOk: vac => {
-          props.history.push(`/call/read/${vac.call_id}`)
+        callbackOk: cal => {
+          props.history.push(`/call/read/${cal.call_id}`)
         }
       })
     }
@@ -149,11 +145,9 @@ const VacancyCreateContainerOnCall = props => {
 
   const allProps = {
     ...props,
-    assignmentOptions: assignmentOptions,
-    regionOptions: regionOptions,
-    restrictionOptions: restrictionOptions,
     createData: createData,
     errors: errors,
+    calendarOptions: calendarOptions,
     onChange: onChange,
     onCheck: onCheck,
     onSubmit: onSubmit
@@ -167,9 +161,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     errorStore: state.errorStore,
-    assignments: selectAssignment(state),
-    regions: selectRegion(state),
-    restrictions: selectRestriction(state),
+    calendars: selectCalendarByCallId(state, call_id),
     call: selectCallById(state, call_id, {}),
     callLoading: state.callStoreV2.loading,
     process: selectProcessByCallId(state, call_id, { withCourse: true })
@@ -178,12 +170,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapActionsToProps = {
   clearErrors,
-  listAssignment,
-  listRegion,
-  listRestriction,
   readCallV2,
   getProcess,
-  createCalendar
+  createCalendar,
+  readListCalendar
 }
 
 export default connect(
