@@ -89,7 +89,7 @@ const CalendarListOnCall = props => {
     return (
       <div className='btn-right'>
         <DrawFilter permission='calendar_create' course_id={course_id}>
-          <Link className='btn btn-terciary' to={`/call/${call ? call.id : null}/calendar/create`}>
+          <Link className='btn btn-terciary' to={`/call/read/${call ? call.id : null}/calendar/create`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
@@ -145,11 +145,13 @@ const CalendarListOnCall = props => {
   }
 
   return (
-    <section id='ofertas' className='quadro'>
-      <h4>Calendário de eventos</h4>
-      {renderCreateButton(call, course_id)}
-      {renderCalendarList(call, course_id)}
-    </section>
+    <div style={{ border: '1px solid red', margin: '5px', padding: '5px' }}>
+      <section id='ofertas' className='quadro'>
+        <h4>Calendário de eventos</h4>
+        {renderCreateButton(call, course_id)}
+        {renderCalendarList(call, course_id)}
+      </section>
+    </div>
   )
 }
 

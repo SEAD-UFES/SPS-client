@@ -28,6 +28,7 @@ import vacancyReducerV2 from './reducers/vacancy'
 import assignmentReducerV2 from './reducers/assignment'
 import regionReducerV2 from './reducers/region'
 import restrictionReducerV2 from './reducers/restriction'
+import calendarReducer from './reducers/calendar'
 
 export default combineReducers({
   errorStore: errorReducer,
@@ -55,5 +56,6 @@ export default combineReducers({
   vacancyStoreV2: vacancyReducerV2,
   assignmentStoreV2: assignmentReducerV2,
   regionStoreV2: regionReducerV2,
-  restrictionStoreV2: restrictionReducerV2
+  restrictionStoreV2: restrictionReducerV2,
+  calendarStore: calendarReducer
 })

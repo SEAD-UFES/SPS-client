@@ -8,6 +8,8 @@ import CallReadContainerV2 from './CallReadContainerV2'
 import CallUpdateContainer from './CallUpdateContainer'
 import CallDeleteContainerV2 from './CallDeleteContainerV2'
 import VacancyCreateContainerOnCall from '../vacancy/VacancyCreateContainerOnCall'
+import CalendarCreateContainerOnCall from '../calendar/CalendarCreateContainerOnCall'
+
 import NotFound from 'components/common/NotFound'
 
 export default class VacancyRoutes extends Component {
@@ -35,6 +37,13 @@ export default class VacancyRoutes extends Component {
           path={`${this.props.match.path}/delete/:id`}
           permission='call_delete'
           component={CallDeleteContainerV2}
+        />
+
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/read/:id/calendar/create`}
+          permission='calendar_create'
+          component={CalendarCreateContainerOnCall}
         />
 
         <PrivateRoute

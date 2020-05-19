@@ -4,13 +4,21 @@ import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
-const TextFieldGroup = ({ name, placeholder, value, error, label, info, type, onChange, disabled }) => {
-  console.log('info:', info)
+const TextFieldGroupOptional = props => {
+  const { name, placeholder, value, error, label, info, type, onChange, disabled } = props
+
   return (
     <div className='form-group'>
       <label className='form-control-label'>{label ? label : placeholder}</label>
-      <div>
-        {info && <small>{info}</small>}
+      {info && <small>{info}</small>}
+
+      <div className='input-group'>
+        <div className='input-group-prepend'>
+          <div className='input-group-text'>
+            <input type='checkbox' aria-label='Checkbox for following text input' />
+          </div>
+        </div>
+
         <input
           type={type}
           className={classnames('form-control', {
@@ -22,13 +30,14 @@ const TextFieldGroup = ({ name, placeholder, value, error, label, info, type, on
           onChange={onChange}
           disabled={disabled}
         />
-        {error && <div className='invalid-feedback'>{error}</div>}
       </div>
+
+      {error && <div className='invalid-feedback'>{error}</div>}
     </div>
   )
 }
 
-TextFieldGroup.propTypes = {
+TextFieldGroupOptional.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -39,8 +48,8 @@ TextFieldGroup.propTypes = {
   disabled: PropTypes.bool
 }
 
-TextFieldGroup.defaultProps = {
+TextFieldGroupOptional.defaultProps = {
   type: 'text'
 }
 
-export default TextFieldGroup
+export default TextFieldGroupOptional
