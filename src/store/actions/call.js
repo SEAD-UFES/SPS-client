@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { GET_ERRORS } from '../actionTypes'
 import { LOADING_CALLV2, READ_CALLV2, UPDATE_CALLV2 } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
+import { readListCalendar } from './calendar'
 import { readListVacancyV2 } from './vacancy'
 
 //Call loading
@@ -20,6 +21,11 @@ export const readCallV2 = (id, options = {}) => (dispatch, getState) => {
     .then(res => {
       dispatch({ type: READ_CALLV2, payload: res.data })
       const newOptions = _.omit(options, 'callbackOk')
+
+      //get calendars if need
+      if (options.withCalendar) {
+        dispatch(readListCalendar({ ...newOptions, call_ids: [res.data.id] }))
+      }
 
       //get vacancies if need
       if (options.withVacancy) {

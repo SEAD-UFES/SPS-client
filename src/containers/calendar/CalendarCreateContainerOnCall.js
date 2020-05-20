@@ -14,9 +14,16 @@ import { selectCallById, selectProcessByCallId } from '../../store/selectors/cal
 import { selectCalendarByCallId } from '../../store/selectors/calendar'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
-import { validateName, validateStart, validateEnd, validateReady, validateBody } from '../../validation/calendar'
+import {
+  validateName,
+  validateStart,
+  validateEnd,
+  validateReady,
+  validateEndPeriod,
+  validateBody
+} from '../../validation/calendar'
 
-const VacancyCreateContainerOnCall = props => {
+const CalendarCreateContainerOnCall = props => {
   const id = props.match.params.id
   const { clearErrors, readCallV2, getProcess, createCalendar, readListCalendar } = props
   const { calendars, errorStore } = props
@@ -66,19 +73,17 @@ const VacancyCreateContainerOnCall = props => {
     let errorList = {}
     let newErrors = { ...errors }
 
-    console.log('Entrei')
-    console.log(e.target.name)
-    console.log(e.target.value)
-
     switch (e.target.name) {
       case 'name':
         errorList[e.target.name] = validateName(e.target.value, 'create')
         break
       case 'start':
         errorList[e.target.name] = validateStart(e.target.value, 'create')
+        errorList['end'] = validateEndPeriod(errorList.start, newErrors.end, e.target.value, createData.end)
         break
       case 'end':
         errorList[e.target.name] = validateEnd(e.target.value, 'create')
+        errorList['end'] = validateEndPeriod(newErrors.start, errorList.end, createData.start, e.target.value)
         break
       default:
         break
@@ -132,7 +137,7 @@ const VacancyCreateContainerOnCall = props => {
         ...createData,
         calendar_id: createData.calendar_id ? createData.calendar_id : null,
         start: moment(createData.start, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00',
-        end: moment(createData.end, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
+        end: createData.end ? moment(createData.end, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59' : null
       }
 
       createCalendar(data, {
@@ -158,13 +163,16 @@ const VacancyCreateContainerOnCall = props => {
 
 const mapStateToProps = (state, ownProps) => {
   const call_id = ownProps.match.params.id
-
-  return {
-    errorStore: state.errorStore,
-    calendars: selectCalendarByCallId(state, call_id),
-    call: selectCallById(state, call_id, {}),
-    callLoading: state.callStoreV2.loading,
-    process: selectProcessByCallId(state, call_id, { withCourse: true })
+  try {
+    return {
+      errorStore: state.errorStore,
+      calendars: selectCalendarByCallId(state, call_id),
+      call: selectCallById(state, call_id, {}),
+      callLoading: state.callStoreV2.loading,
+      process: selectProcessByCallId(state, call_id, { withCourse: true })
+    }
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -179,4 +187,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(VacancyCreateContainerOnCall)
+)(CalendarCreateContainerOnCall)

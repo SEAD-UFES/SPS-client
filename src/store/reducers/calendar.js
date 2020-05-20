@@ -29,7 +29,7 @@ const compareAllIdsByStart = byId => (a, b) => {
 }
 
 //Ordenar por call_id
-const compareAllIdsByCallId = byId => (a, b) => {
+const compareAllIdsByName = byId => (a, b) => {
   const itemA = byId[a].name.toLowerCase()
   const itemB = byId[b].name.toLowerCase()
 
@@ -69,7 +69,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         byId: newState.byId,
-        allIds: newState.allIds.sort(compareAllIdsByStart(newState.byId)).sort(compareAllIdsByCallId(newState.byId))
+        allIds: newState.allIds.sort(compareAllIdsByName(newState.byId)).sort(compareAllIdsByStart(newState.byId))
       }
     case DELETE_CALENDAR:
       newState = removeItem(state, action.payload)
@@ -77,7 +77,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         byId: newState.byId,
-        allIds: newState.allIds.sort(compareAllIdsByStart(newState.byId)).sort(compareAllIdsByCallId(newState.byId))
+        allIds: newState.allIds.sort(compareAllIdsByName(newState.byId)).sort(compareAllIdsByStart(newState.byId))
       }
     case READ_LIST_CALENDAR:
       newState = putList(state, action.payload)
@@ -85,7 +85,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         byId: newState.byId,
-        allIds: newState.allIds.sort(compareAllIdsByStart(newState.byId)).sort(compareAllIdsByCallId(newState.byId))
+        allIds: newState.allIds.sort(compareAllIdsByName(newState.byId)).sort(compareAllIdsByStart(newState.byId))
       }
     default:
       return state

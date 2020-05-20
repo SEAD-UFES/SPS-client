@@ -13,7 +13,7 @@ import {
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 
 //Calendar loading
-export const setCalendarLoadingV2 = () => {
+export const setCalendarLoading = () => {
   return { type: LOADING_CALENDAR }
 }
 
@@ -34,7 +34,7 @@ export const createCalendar = (data, options = {}) => (dispatch, getState) => {
 
 //Calendar read
 export const readCalendar = (id, options = {}) => (dispatch, getState) => {
-  dispatch(setCalendarLoadingV2())
+  dispatch(setCalendarLoading())
   spsApi
     .get(`/v1/calendars/${id}`)
     .then(res => {
@@ -78,6 +78,7 @@ export const deleteCalendar = (id, options = {}) => (dispatch, getState) => {
 
 //Calendar Add List
 export const readListCalendar = (options = {}) => dispatch => {
+  dispatch(setCalendarLoading())
   let url = `/v1/calendars`
   const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
   url = `${url}?${callIdsString}`

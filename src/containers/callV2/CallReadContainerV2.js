@@ -18,6 +18,7 @@ const CallReadContainerV2 = props => {
     clearErrors()
     //get call
     readCallV2(id, {
+      withCalendar: true,
       withVacancy: true,
       withAssignment: true,
       withRegion: true,
@@ -37,6 +38,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     call: selectCallById(state, call_id, {
+      withCalendar: true,
       withVacancy: true,
       withAssignment: true,
       withRegion: true,

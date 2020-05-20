@@ -4,15 +4,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import DrawFilter from '../../components/profile/DrawFilter'
-
-export const compareByAssignmentName = (a, b) => {
-  const valueA = a.assignment ? a.assignment.name.toLowerCase() : ''
-  const valueB = b.assignment ? b.assignment.name.toLowerCase() : ''
-
-  if (valueA < valueB) return -1
-  if (valueA > valueB) return 1
-  return 0
-}
+import moment from 'moment'
 
 const CalendarListOnCall = props => {
   const { call, course_id } = props
@@ -100,7 +92,7 @@ const CalendarListOnCall = props => {
   const renderCalendarList = (call, course_id) => {
     return (
       <div>
-        {call && dummyCalendars.length > 0 ? (
+        {call && call.calendars.length > 0 ? (
           <ul className='table-list'>
             <div className='titulos'>
               <span>Evento</span>
@@ -109,14 +101,14 @@ const CalendarListOnCall = props => {
               <span />
             </div>
 
-            {dummyCalendars.map(calendar => {
+            {call.calendars.map(calendar => {
               return (
                 <li key={calendar.id}>
                   <h3>{calendar.name}</h3>
                   <p>
                     {' '}
-                    {calendar.start}
-                    {calendar.end ? ` - ${calendar.end}` : null}
+                    {moment(calendar.start).format('DD/MM/YYYY')}
+                    {calendar.end ? ` - ${moment(calendar.end).format('DD/MM/YYYY')}` : null}
                   </p>
                   <p>
                     {calendar.ready ? 'Pronto' : 'Não'}/{calendar.status}

@@ -14,6 +14,7 @@ import spsApi from '../../apis/spsServer'
 import { readAssignmentV2 } from './assignment'
 import { readRegionV2 } from './region'
 import { readRestrictionV2 } from './restriction'
+import { convertArrayToQueryString } from '../../utils/queryHelpers'
 
 //Vacancy loading
 export const setVacancyLoadingV2 = () => {
@@ -77,16 +78,6 @@ export const deleteVacancy = (id, options = {}) => (dispatch, getState) => {
 
 //Vacancy Add List
 export const readListVacancyV2 = (options = {}) => dispatch => {
-  //helper function
-  const convertArrayToQueryString = (arrayName, simpleArray) => {
-    const strings = simpleArray.map(item => `${arrayName}[]=${item}`)
-    const result = strings.reduce((acc, cur, idx, src) => {
-      const andOp = idx + 1 < src.length ? '&' : ''
-      return `${acc}${cur}${andOp}`
-    }, '')
-    return result
-  }
-
   let url = `/v1/vacancies`
   const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
   url = `${url}?${callIdsString}`

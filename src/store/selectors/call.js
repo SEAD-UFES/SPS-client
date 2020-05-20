@@ -2,7 +2,8 @@
 
 import { createSelector } from 'reselect'
 
-import { makeSelectVacancyById, selectVacancyByCallId } from './vacancy'
+import { makeSelectVacancyById, makeSelectVacancyByCallId } from './vacancy'
+import { makeSelectCalendarByCallId } from './calendar'
 
 const selectSingleCallById = (store, call_id, options = {}) => {
   let call = store.callStoreV2.byId[call_id] ? { ...store.callStoreV2.byId[call_id] } : null
@@ -11,12 +12,18 @@ const selectSingleCallById = (store, call_id, options = {}) => {
 
 //make selector call by id
 export const makeSelectCallById = () => {
+  const selectCalendarByCallId = makeSelectCalendarByCallId()
+  const selectVacancyByCallId = makeSelectVacancyByCallId()
+  const getStore = store => store
+  const getOptions = (store, id, options) => options
   return createSelector(
-    [selectSingleCallById, selectVacancyByCallId, (store, id, options = {}) => options],
-    (call, vacancies, options) => {
+    [getStore, selectSingleCallById, getOptions],
+    (store, call, options) => {
       let newCall = call
 
-      if (call && options.withVacancy) newCall.vacancies = vacancies
+      if (call && options.withCalendar) newCall.calendars = selectCalendarByCallId(store, call.id, options)
+
+      if (call && options.withVacancy) newCall.vacancies = selectVacancyByCallId(store, call.id, options)
 
       return newCall
     }
