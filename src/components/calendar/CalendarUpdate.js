@@ -11,26 +11,16 @@ import AlertError from '../../components/common/AlertError'
 
 const CalendarUpdate = props => {
   const { process, call } = props
-  const {
-    //createData,
-    //assignmentOptions,
-    //regionOptions,
-    //restrictionOptions,
-    //errors,
-    errorStore
-  } = props
-  //const { onChange, onCheck, onSubmit } = props
+  const { updateData, calendarOptions, errors, errorStore } = props
+  const { onChange, onCheck, onSubmit } = props
 
   //dummy data
-  const createData = {}
-  const assignmentOptions = []
-  const regionOptions = []
-  const restrictionOptions = []
-  const errors = {}
-  const calendarOptions = []
-  const onChange = () => {}
-  const onCheck = () => {}
-  const onSubmit = () => {}
+  // const updateData = {}
+  //const errors = {}
+  //const calendarOptions = []
+  //const onChange = () => {}
+  //const onCheck = () => {}
+  //const onSubmit = () => {}
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -51,19 +41,19 @@ const CalendarUpdate = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Criar evento</span>
+        <span>Editar evento</span>
       </div>
     )
   }
 
-  const renderForm = (assignmentOptions, regionOptions, restrictionOptions, errors) => {
+  const renderForm = (calendarOptions, errors) => {
     return (
       <form noValidate onSubmit={onSubmit}>
         <TextFieldGroup
           type='text'
-          name='nome'
+          name='name'
           label='Nome'
-          value={createData.name}
+          value={updateData.name}
           onChange={onChange}
           error={errors.name}
         />
@@ -74,7 +64,7 @@ const CalendarUpdate = props => {
             type='date'
             label='Data de abertura'
             name='start'
-            value={createData.start}
+            value={updateData.start}
             onChange={onChange}
             error={errors.start}
           />
@@ -84,7 +74,7 @@ const CalendarUpdate = props => {
             type='date'
             label='Data de encerramento'
             name='end'
-            value={createData.end}
+            value={updateData.end}
             onChange={onChange}
             error={errors.end}
           />
@@ -94,7 +84,7 @@ const CalendarUpdate = props => {
           name='dependsOn'
           label='Depende de...'
           placeholder='Selecione a atribuição (opcional)'
-          value={createData.dependsOn}
+          value={updateData.calendar_id}
           options={calendarOptions}
           onChange={onChange}
           error={errors.dependsOn}
@@ -106,24 +96,24 @@ const CalendarUpdate = props => {
           name='ready'
           text='Pronto'
           value='Este evento está pronto para execução.'
-          checked={createData.ready}
+          checked={updateData.ready}
           error={errors.ready}
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Criar' />
+        <input type='submit' className='btn btn-primary' value='Atualizar' />
       </form>
     )
   }
 
   return (
-    <div className='vacancy-create'>
+    <div className='calendar-update'>
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Novo evento</h1>
+          <h1>Editar evento</h1>
           <AlertError errors={errorStore} />
-          {renderForm(assignmentOptions, regionOptions, restrictionOptions, errors)}
+          {renderForm(calendarOptions, errors)}
         </div>
       </div>
     </div>

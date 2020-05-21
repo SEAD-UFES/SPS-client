@@ -3,60 +3,89 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
 import { readCallV2 } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { listAssignment } from '../../store/actions/assignment'
-import { listRegion } from '../../store/actions/region'
-import { listRestriction } from '../../store/actions/restriction'
-import { createVacancy } from '../../store/actions/vacancy'
+import { readCalendar, readListCalendar, updateCalendar } from '../../store/actions/calendar'
 import CalendarUpdate from '../../components/calendar/CalendarUpdate'
-import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
-import { selectAssignment } from '../../store/selectors/assignment'
-import { selectRestriction } from '../../store/selectors/restriction'
-import { selectRegion } from '../../store/selectors/region'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
-import { validateAssignmentId, validateQtd, validateReserve, validateBody } from '../../validation/vacancy'
+import {
+  validateName,
+  validateStart,
+  validateEnd,
+  validateEndPeriod,
+  validateReady,
+  validateBody
+} from '../../validation/calendar'
+import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar'
+import { selectCallByCalendarId } from '../../store/selectors/call'
+import { selectProcessByCalendarId } from '../../store/selectors/process'
 
-const VacancyCreateContainerOnCall = props => {
+const CalendarUpdateContainer = props => {
   const id = props.match.params.id
-  const { clearErrors, listAssignment, listRegion, listRestriction, readCallV2, getProcess, createVacancy } = props
-  const { assignments, regions, restrictions, errorStore } = props
+  const { clearErrors, readCalendar, readListCalendar, readCallV2, getProcess, updateCalendar } = props
+  const { calendar, calendarLoading, calendars, errorStore } = props
 
-  const initialCreateData = {
-    call_id: id,
-    assignment_id: '',
-    qtd: '',
-    region_id: '',
-    restriction_id: '',
-    reserve: true
+  console.log('calendar:', calendar)
+  console.log('calendarLoading:', calendarLoading)
+
+  const initialUpdateData = {
+    call_id: '',
+    calendar_id: '',
+    name: '',
+    ready: false,
+    start: '',
+    end: ''
   }
-  const [createData, setCreateData] = useState(initialCreateData)
+  const [updateData, setUpdateData] = useState(initialUpdateData)
+  const [readyToLoad, setReadyToLoad] = useState(false)
   const [errors, setErrors] = useState({})
 
-  const assignmentOptions = convertObjetsToOptions(assignments)
-  assignmentOptions.unshift({ label: 'Escolha o cargo', value: '' })
-
-  const regionOptions = convertObjetsToOptions(regions)
-  regionOptions.unshift({ label: 'Escolha a região', value: '' })
-
-  const restrictionOptions = convertObjetsToOptions(restrictions)
-  restrictionOptions.unshift({ label: 'Escolha a restrição', value: '' })
+  const calendarOptions = convertObjetsToOptions(calendars)
+  calendarOptions.unshift({ label: 'Escolha o evento', value: '' })
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    listAssignment()
-    listRegion()
-    listRestriction()
-    readCallV2(id, {
-      callbackOk: call => {
-        getProcess(call.selectiveProcess_id)
+    readCalendar(id, {
+      callbackOk: cld => {
+        readListCalendar({ call_ids: [cld.call_id] })
+        readCallV2(cld.call_id, {
+          callbackOk: call => {
+            getProcess(call.selectiveProcess_id)
+          }
+        })
       }
     })
   }, [])
+
+  //Check if have the data to put on form
+  useEffect(
+    () => {
+      if (calendar && calendarLoading === false) setReadyToLoad(true)
+    },
+    [calendar, calendarLoading]
+  )
+
+  //load Data on form
+  useEffect(
+    () => {
+      if (readyToLoad) {
+        setUpdateData({
+          call_id: calendar.call_id,
+          calendar_id: calendar.calendar_id ? calendar.calendar_id : '',
+          name: calendar.name,
+          ready: calendar.ready,
+          start: moment(calendar.start).format('YYYY-MM-DD'),
+          end: calendar.end ? moment(calendar.end).format('YYYY-MM-DD') : ''
+        })
+      }
+    },
+    [readyToLoad]
+  )
 
   //get errors from store (onPropsUpdate)
   useEffect(
@@ -79,11 +108,16 @@ const VacancyCreateContainerOnCall = props => {
     let newErrors = { ...errors }
 
     switch (e.target.name) {
-      case 'assignment_id':
-        errorList[e.target.name] = validateAssignmentId(e.target.value, 'create')
+      case 'name':
+        errorList[e.target.name] = validateName(e.target.value, 'create')
         break
-      case 'qtd':
-        errorList[e.target.name] = validateQtd(e.target.value, 'create')
+      case 'start':
+        errorList[e.target.name] = validateStart(e.target.value, 'create')
+        errorList['end'] = validateEndPeriod(errorList.start, newErrors.end, e.target.value, updateData.end)
+        break
+      case 'end':
+        errorList[e.target.name] = validateEnd(e.target.value, 'create')
+        errorList['end'] = validateEndPeriod(newErrors.start, errorList.end, updateData.start, e.target.value)
         break
       default:
         break
@@ -97,7 +131,7 @@ const VacancyCreateContainerOnCall = props => {
     const toAdd = removeEmptyKeys(errorList)
     if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
 
-    setCreateData({ ...createData, [e.target.name]: e.target.value })
+    setUpdateData({ ...updateData, [e.target.name]: e.target.value })
     setErrors(newErrors)
   }
 
@@ -106,8 +140,8 @@ const VacancyCreateContainerOnCall = props => {
     let newErrors = { ...errors }
 
     switch (e.target.name) {
-      case 'reserve':
-        errorList[e.target.name] = validateReserve(e.target.value, 'create')
+      case 'ready':
+        errorList[e.target.name] = validateReady(e.target.value, 'update')
         break
       default:
         break
@@ -121,27 +155,28 @@ const VacancyCreateContainerOnCall = props => {
     const toAdd = removeEmptyKeys(errorList)
     if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
 
-    setCreateData({ ...createData, [e.target.name]: !createData[e.target.name] })
+    setUpdateData({ ...updateData, [e.target.name]: !updateData[e.target.name] })
     setErrors(newErrors)
   }
 
   const onSubmit = e => {
     e.preventDefault()
 
-    const submitErrors = validateBody(createData, 'create')
+    const submitErrors = validateBody(updateData, 'update')
 
     if (submitErrors) {
       setErrors(submitErrors)
     } else {
       const data = {
-        ...createData,
-        region_id: createData.region_id ? createData.region_id : null,
-        restriction_id: createData.restriction_id ? createData.restriction_id : null
+        ...updateData,
+        calendar_id: updateData.calendar_id ? updateData.calendar_id : null,
+        start: moment(updateData.start, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00',
+        end: updateData.end ? moment(updateData.end, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59' : null
       }
 
-      createVacancy(data, {
-        callbackOk: vac => {
-          props.history.push(`/call/read/${vac.call_id}`)
+      updateCalendar(id, data, {
+        callbackOk: cld => {
+          props.history.push(`/call/read/${cld.call_id}`)
         }
       })
     }
@@ -149,10 +184,8 @@ const VacancyCreateContainerOnCall = props => {
 
   const allProps = {
     ...props,
-    assignmentOptions: assignmentOptions,
-    regionOptions: regionOptions,
-    restrictionOptions: restrictionOptions,
-    createData: createData,
+    updateData: updateData,
+    calendarOptions: calendarOptions,
     errors: errors,
     onChange: onChange,
     onCheck: onCheck,
@@ -163,30 +196,30 @@ const VacancyCreateContainerOnCall = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const call_id = ownProps.match.params.id
+  const calendar_id = ownProps.match.params.id
+
+  console.log('calendar_id', calendar_id)
 
   return {
     errorStore: state.errorStore,
-    assignments: selectAssignment(state),
-    regions: selectRegion(state),
-    restrictions: selectRestriction(state),
-    call: selectCallById(state, call_id, {}),
-    callLoading: state.callStoreV2.loading,
-    process: selectProcessByCallId(state, call_id, { withCourse: true })
+    calendars: selectBrotherCalendarById(state, calendar_id, {}),
+    calendar: selectCalendarById(state, calendar_id, {}),
+    calendarLoading: state.calendarStore.loading,
+    call: selectCallByCalendarId(state, calendar_id, {}),
+    process: selectProcessByCalendarId(state, calendar_id, { withCourse: true })
   }
 }
 
 const mapActionsToProps = {
   clearErrors,
-  listAssignment,
-  listRegion,
-  listRestriction,
+  readCalendar,
+  readListCalendar,
   readCallV2,
   getProcess,
-  createVacancy
+  updateCalendar
 }
 
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(VacancyCreateContainerOnCall)
+)(CalendarUpdateContainer)

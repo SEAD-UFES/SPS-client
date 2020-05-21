@@ -49,7 +49,7 @@ export const makeSelectCalendarById = () => {
     [selectCalendar, getId, getOptions],
     (calendars, id, options) => {
       let calendar = calendars.find(cld => cld.id === id)
-      return calendar
+      return calendar ? calendar : null
     }
   )
 }
@@ -57,6 +57,7 @@ export const makeSelectCalendarById = () => {
 export const makeSelectCalendarByCallId = () => {
   const getId = (store, id, options) => id
   const getOptions = (store, id, options) => options
+
   return createSelector(
     [selectCalendar, getId, getOptions],
     (calendars, id, options) => {
@@ -65,8 +66,23 @@ export const makeSelectCalendarByCallId = () => {
         cld.status = calcCalendarStatus(cld, calendars)
         return cld
       })
-
       return selectedCalendars
+    }
+  )
+}
+
+export const makeSelectBrotherCalendarById = () => {
+  const selectCalendarById = makeSelectCalendarById()
+  const getId = (store, id, options) => id
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectCalendar, selectCalendarById, getId, getOptions],
+    (calendars, calendar, id, options) => {
+      const calendar_id = calendar ? calendar.id : null
+      const call_id = calendar ? calendar.call_id : null
+      const brotherCalendars = calendars.filter(cld => cld.call_id === call_id && cld.id !== calendar_id)
+      return brotherCalendars
     }
   )
 }
@@ -76,3 +92,6 @@ export const selectCalendarById = makeSelectCalendarById()
 
 //single instance of selectCalendarByCallId
 export const selectCalendarByCallId = makeSelectCalendarByCallId()
+
+//single instance of selectBrotherCalendarById
+export const selectBrotherCalendarById = makeSelectBrotherCalendarById()

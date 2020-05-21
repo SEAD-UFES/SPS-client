@@ -1,7 +1,8 @@
 /** @format */
 
-import { makeSelectCallById } from './call'
+import { makeSelectCallById, makeSelectCallByCalendarId } from './call'
 import { makeSelectVacancyById } from './vacancy'
+import { createSelector } from 'reselect'
 
 //make selector process by id
 export const makeSelectProcessById = () => (store, id, options = {}) => {
@@ -22,7 +23,7 @@ export const makeSelectProcessByCallId = () => (store, call_id, options = {}) =>
   return process
 }
 
-//make selector process by vacancy id
+//make selector process by VacancyId
 export const makeSelectProcessByVacancyId = () => (store, vacancy_id, options = {}) => {
   const selectVacancyById = makeSelectVacancyById()
   const vacancy = selectVacancyById(store, vacancy_id, {})
@@ -35,6 +36,23 @@ export const makeSelectProcessByVacancyId = () => (store, vacancy_id, options = 
   return process
 }
 
+//make selector process by CalendarId
+export const makeSelectProcessByCalendarId = () => {
+  const selectCallByCalendarId = makeSelectCallByCalendarId()
+  const selectProcessById = makeSelectProcessById()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectCallByCalendarId, getStore, getOptions],
+    (call, store, options) => {
+      const process_id = call ? call.selectiveProcess_id : null
+      const process = selectProcessById(store, process_id, options)
+      return process
+    }
+  )
+}
+
 //single instance of selectProcessById
 export const selectProcessById = makeSelectProcessById()
 
@@ -43,3 +61,6 @@ export const selectProcessByCallId = makeSelectProcessByCallId()
 
 //single instance of selectProcessByVacancyId
 export const selectProcessByVacancyId = makeSelectProcessByVacancyId()
+
+//single instance of selectProcessByCalendarId
+export const selectProcessByCalendarId = makeSelectProcessByCalendarId()
