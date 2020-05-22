@@ -47,7 +47,7 @@ const CallDeleteContainer = props => {
 
     deleteCall(call.id, {
       callbackOk: () => {
-        props.history.push(`/process/${process.id}`)
+        props.history.push(`/processes/${process.id}`)
       }
     })
   }
@@ -68,6 +68,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     errorStore: state.errorStore,
     call: selectCallById(state, call_id, {}),
+    callLoading: state.callStoreV2.loading,
     process: selectProcessByCallId(state, call_id, { withCourse: true })
   }
 }

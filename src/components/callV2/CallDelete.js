@@ -9,12 +9,9 @@ import { isEmpty } from '../../utils/objectHelpers'
 import Spinner from '../common/Spinner'
 
 const VacancyDelete = props => {
-  const { process, call, history } = props
+  const { process, call, callLoading, history } = props
   const { errorStore, errors } = props
   const { onSubmit } = props
-
-  //dummy
-  const callLoading = false
 
   const renderBreadcrumb = process => {
     return (
@@ -57,16 +54,12 @@ const VacancyDelete = props => {
           {call ? call.number : null}
         </p>
         <p>
-          <strong>Id: </strong>
-          {call ? call.id : null}
-        </p>
-        <p>
           <strong>Data de abertura: </strong>
-          {call ? moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY') : null}
+          {call ? moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY HH:mm:ss') : null}
         </p>
         <p>
           <strong>Data de encerramento: </strong>
-          {call ? moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY') : null}
+          {call ? moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY HH:mm:ss') : null}
         </p>
       </div>
     )
