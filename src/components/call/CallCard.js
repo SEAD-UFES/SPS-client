@@ -43,7 +43,7 @@ export default class CallCard extends Component {
                   </Link>
                 </DrawFilter>{' '} */}
                 <DrawFilter permission='call_delete' course_id={process.Course.id}>
-                  <Link className='btn-icon' to={`/processes/${call.selectiveProcess_id}/call/${call.id}/delete`}>
+                  <Link className='btn-icon' to={`/call/delete/${call.id}`}>
                     <i className='fas fa-trash' />
                   </Link>
                 </DrawFilter>

@@ -8,7 +8,7 @@ import AlertError from '../../components/common/AlertError'
 import { isEmpty } from '../../utils/objectHelpers'
 import Spinner from '../common/Spinner'
 
-const VacancyDelete = props => {
+const CallDelete = props => {
   const { process, call, callLoading, history } = props
   const { errorStore, errors } = props
   const { onSubmit } = props
@@ -107,4 +107,4 @@ const VacancyDelete = props => {
   )
 }
 
-export default VacancyDelete
+export default CallDelete
