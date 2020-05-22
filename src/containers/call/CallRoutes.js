@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import PrivateRoute from '../../components/common/PrivateRoute'
-import CallReadContainerV2 from './CallReadContainerV2'
+import CallReadContainer from './CallReadContainer'
 import CallUpdateContainer from './CallUpdateContainer'
-import CallDeleteContainerV2 from './CallDeleteContainerV2'
-import VacancyCreateContainerOnCall from '../vacancy/VacancyCreateContainerOnCall'
-import CalendarCreateContainerOnCall from '../calendar/CalendarCreateContainerOnCall'
+import CallDeleteContainer from './CallDeleteContainer'
+import VacancyCreateOnCallContainer from '../vacancy/VacancyCreateOnCallContainer'
+import CalendarCreateOnCallContainer from '../calendar/CalendarCreateOnCallContainer'
 
 import NotFound from 'components/common/NotFound'
 
@@ -22,7 +22,7 @@ export default class VacancyRoutes extends Component {
           exact
           path={`${this.props.match.path}/read/:id`}
           permission='call_read'
-          component={CallReadContainerV2}
+          component={CallReadContainer}
         />
 
         <PrivateRoute
@@ -36,21 +36,21 @@ export default class VacancyRoutes extends Component {
           exact
           path={`${this.props.match.path}/delete/:id`}
           permission='call_delete'
-          component={CallDeleteContainerV2}
+          component={CallDeleteContainer}
         />
 
         <PrivateRoute
           exact
           path={`${this.props.match.path}/read/:id/calendar/create`}
           permission='calendar_create'
-          component={CalendarCreateContainerOnCall}
+          component={CalendarCreateOnCallContainer}
         />
 
         <PrivateRoute
           exact
           path={`${this.props.match.path}/read/:id/vacancy/create`}
           permission='vacancy_create'
-          component={VacancyCreateContainerOnCall}
+          component={VacancyCreateOnCallContainer}
         />
 
         <Route component={NotFound} />

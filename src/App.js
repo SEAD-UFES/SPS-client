@@ -31,7 +31,7 @@ import UserRoutes from './components/user/UserRoutes'
 import ProcessRoutes from './components/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
 import RecoverRoutes from './components/recover/RecoverRoutes'
-import CallRoutesV2 from './containers/callV2/CallRoutesV2'
+import CallRoutes from './containers/call/CallRoutes'
 import VacancyRoutes from './containers/vacancy/VacancyRoutes'
 import CalendarRoutes from './containers/calendar/CalendarRoutes'
 
@@ -89,10 +89,8 @@ class App extends Component {
 
               <Route path='/recover' component={RecoverRoutes} />
 
-              <Route path='/call' component={CallRoutesV2} />
-
+              <Route path='/call' component={CallRoutes} />
               <Route path='/vacancy' component={VacancyRoutes} />
-
               <Route path='/calendar' component={CalendarRoutes} />
 
               <Route component={NotFound} />

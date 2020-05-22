@@ -9,7 +9,7 @@ import { clearErrors } from '../../store/actions/error'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
 import CallRead from '../../components/callV2/CallRead'
 
-const CallReadContainerV2 = props => {
+const CallReadContainer = props => {
   const id = props.match.params.id
   const { readCallV2, getProcess, clearErrors } = props
 
@@ -58,4 +58,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(CallReadContainerV2)
+)(CallReadContainer)

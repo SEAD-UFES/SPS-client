@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
@@ -26,7 +28,7 @@ import PublicationUpdate from 'components/publication/PublicationUpdate'
 import PublicationDelete from 'components/publication/PublicationDelete'
 import PublicationRoutes from 'components/publication/PublicationRoutes'
 
-import NotFound from 'components/common/NotFound'
+import NotFound from '../../components/common/NotFound'
 
 export default class ProcessRoutes extends Component {
   render() {
