@@ -4,11 +4,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import AlertError from '../../components/common/AlertError'
-import { checkNested } from '../../utils/objectHelpers'
+import { checkNested, isEmpty } from '../../utils/objectHelpers'
 
 const VacancyDelete = props => {
   const { process, call, vacancy, history } = props
-  const { errorStore } = props
+  const { errorStore, errors } = props
   const { onSubmit } = props
 
   const renderBreadcrumb = (process, call) => {
@@ -97,6 +97,12 @@ const VacancyDelete = props => {
     )
   }
 
+  const renderErrorMessage = errors => {
+    if (!isEmpty(errors)) {
+      return <p className='text-danger'>{errors.message || errors.id}</p>
+    }
+  }
+
   return (
     <div className='vacancy-create'>
       <div className='container'>
@@ -104,6 +110,7 @@ const VacancyDelete = props => {
         <div className='form-container' id='main'>
           <h1>Excluir oferta de vaga</h1>
           <AlertError errors={errorStore} />
+          {renderErrorMessage(errors)}
           {renderInfo(process, call, vacancy)}
           {renderChoices(onSubmit, history)}
         </div>

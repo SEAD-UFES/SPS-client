@@ -14,14 +14,6 @@ const CalendarUpdate = props => {
   const { updateData, calendarOptions, errors, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
 
-  //dummy data
-  // const updateData = {}
-  //const errors = {}
-  //const calendarOptions = []
-  //const onChange = () => {}
-  //const onCheck = () => {}
-  //const onSubmit = () => {}
-
   const renderBreadcrumb = (process, call) => {
     return (
       <div className='breadcrumb'>

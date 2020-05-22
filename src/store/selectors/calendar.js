@@ -43,12 +43,22 @@ const selectCalendar = createSelector(
 )
 
 export const makeSelectCalendarById = () => {
+  const getStore = store => store
   const getId = (store, id, options) => id
   const getOptions = (store, id, options) => options
+
   return createSelector(
-    [selectCalendar, getId, getOptions],
-    (calendars, id, options) => {
+    [selectCalendar, getStore, getId, getOptions],
+    (calendars, store, id, options) => {
       let calendar = calendars.find(cld => cld.id === id)
+
+      //add father calendar
+      if (calendar && options.withCalendar) {
+        const selectCalendarById = makeSelectCalendarById()
+        const fatherCalendar = selectCalendarById(store, calendar.calendar_id, options)
+        calendar = { ...calendar, calendar: fatherCalendar ? fatherCalendar : null }
+      }
+
       return calendar ? calendar : null
     }
   )

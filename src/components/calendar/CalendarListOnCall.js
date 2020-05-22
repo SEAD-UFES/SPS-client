@@ -28,8 +28,7 @@ const CalendarListOnCall = props => {
           <ul className='table-list'>
             <div className='titulos'>
               <span>Evento</span>
-              <span>Início</span>
-              <span>Encerramento</span>
+              <span>Datas</span>
               <span>Pronto</span>
               <span>Status</span>
               <span />
@@ -39,8 +38,10 @@ const CalendarListOnCall = props => {
               return (
                 <li key={calendar.id}>
                   <h3>{calendar.name}</h3>
-                  <p>{moment(calendar.start).format('DD/MM/YYYY')}</p>
-                  <p>{calendar.end ? `${moment(calendar.end).format('DD/MM/YYYY')}` : null}</p>
+                  <p>
+                    {moment(calendar.start).format('DD/MM/YYYY')}
+                    {calendar.end ? ` até ${moment(calendar.end).format('DD/MM/YYYY')}` : null}
+                  </p>
                   <p>{calendar.ready ? 'Pronto' : 'Pendente'}</p>
                   <p>{calendar.status}</p>
                   <p className='text-right'>
@@ -67,13 +68,11 @@ const CalendarListOnCall = props => {
   }
 
   return (
-    <div style={{ border: '1px solid red', margin: '5px', padding: '5px' }}>
-      <section id='ofertas' className='quadro'>
-        <h4>Calendário de eventos</h4>
-        {renderCreateButton(call, course_id)}
-        {renderCalendarList(call, course_id)}
-      </section>
-    </div>
+    <section id='ofertas' className='quadro'>
+      <h4>Calendário de eventos</h4>
+      {renderCreateButton(call, course_id)}
+      {renderCalendarList(call, course_id)}
+    </section>
   )
 }
 

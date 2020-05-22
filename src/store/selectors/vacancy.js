@@ -14,15 +14,11 @@ const selectVacancy = createSelector(
 )
 
 export const makeSelectVacancyById = () => {
+  const getId = (store, id, options = {}) => id
+  const getOptions = (store, id, options = {}) => options
+
   return createSelector(
-    [
-      selectVacancy,
-      selectAssignment,
-      selectRegion,
-      selectRestriction,
-      (store, id, options = {}) => id,
-      (store, id, options = {}) => options
-    ],
+    [selectVacancy, selectAssignment, selectRegion, selectRestriction, getId, getOptions],
     (vacancies, assignments, regions, restrictions, id, options) => {
       let vacancy = vacancies.find(vacancy => vacancy.id === id)
 

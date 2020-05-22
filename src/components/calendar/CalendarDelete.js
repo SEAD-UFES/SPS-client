@@ -2,13 +2,14 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import AlertError from '../../components/common/AlertError'
-import { checkNested } from '../../utils/objectHelpers'
+import { checkNested, isEmpty } from '../../utils/objectHelpers'
 
 const CalendarDelete = props => {
-  const { process, call, vacancy, history } = props
-  const { errorStore } = props
+  const { process, call, vacancy, calendar, history } = props
+  const { errorStore, errors } = props
   const { onSubmit } = props
 
   const renderBreadcrumb = (process, call) => {
@@ -30,7 +31,7 @@ const CalendarDelete = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Excluir oferta de vaga</span>
+        <span>Excluir evento</span>
       </div>
     )
   }
@@ -40,7 +41,7 @@ const CalendarDelete = props => {
       <div>
         <p>
           <strong>Id: </strong>
-          {vacancy ? vacancy.id : null}
+          {calendar ? calendar.id : null}
         </p>
         <p>
           <strong>Processo: </strong>
@@ -50,28 +51,28 @@ const CalendarDelete = props => {
         </p>
 
         <p>
-          <strong>Atribuição: </strong>
-          {checkNested(vacancy, 'assignment', 'name') ? vacancy.assignment.name : null}
+          <strong>Nome: </strong>
+          {checkNested(calendar, 'name') ? calendar.name : null}
         </p>
 
         <p>
-          <strong>Região: </strong>
-          {checkNested(vacancy, 'region', 'name') ? vacancy.region.name : 'Sem região'}
+          <strong>Início: </strong>
+          {checkNested(calendar, 'start') ? moment(calendar.start).format('DD/MM/YYYY HH:mm:ss') : null}
         </p>
 
         <p>
-          <strong>Restrição: </strong>
-          {checkNested(vacancy, 'restriction', 'name') ? vacancy.restriction.name : 'Sem restrição'}
+          <strong>Encerramento: </strong>
+          {checkNested(calendar, 'end') ? moment(calendar.end).format('DD/MM/YYYY HH:mm:ss') : null}
         </p>
 
         <p>
-          <strong>Vagas: </strong>
-          {vacancy ? vacancy.qtd : null}
+          <strong>Depende de: </strong>
+          {checkNested(calendar, 'calendar', 'name') ? calendar.calendar.name : 'Sem dependência'}
         </p>
 
         <p>
-          <strong>Reserva: </strong>
-          {vacancy ? (vacancy.reserve ? 'Sim' : 'Não') : null}
+          <strong>Pronto: </strong>
+          {calendar ? (calendar.ready ? 'Sim' : 'Não') : 'Não'}
         </p>
       </div>
     )
@@ -97,13 +98,20 @@ const CalendarDelete = props => {
     )
   }
 
+  const renderErrorMessage = errors => {
+    if (!isEmpty(errors)) {
+      return <p className='text-danger'>{errors.message || errors.id}</p>
+    }
+  }
+
   return (
-    <div className='vacancy-create'>
+    <div className='calendar-delete'>
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Excluir oferta de vaga</h1>
+          <h1>Excluir evento</h1>
           <AlertError errors={errorStore} />
+          {renderErrorMessage(errors)}
           {renderInfo(process, call, vacancy)}
           {renderChoices(onSubmit, history)}
         </div>

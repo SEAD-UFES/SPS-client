@@ -40,6 +40,13 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
     .then(res => {
       dispatch({ type: READ_CALENDAR, payload: res.data })
 
+      //baixar calendarios associados
+      if (options.withCalendar) {
+        if (res.data.calendar_id !== null) {
+          dispatch(readCalendar(res.data.calendar_id, options))
+        }
+      }
+
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })

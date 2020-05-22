@@ -6,28 +6,26 @@ import { connect } from 'react-redux'
 import { clearErrors } from '../../store/actions/error'
 import { readCallV2 } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { readVacancyV2, deleteVacancy } from '../../store/actions/vacancy'
-import VacancyDelete from '../../components/vacancyV2/VacancyDelete'
-import { selectVacancyById } from '../../store/selectors/vacancy'
-import { selectCallByVacancyId } from '../../store/selectors/call'
-import { selectProcessByVacancyId } from '../../store/selectors/process'
+import { readCalendar, deleteCalendar } from '../../store/actions/calendar'
+import CalendarDelete from '../../components/calendar/CalendarDelete'
+import { selectCalendarById } from '../../store/selectors/calendar'
+import { selectCallByCalendarId } from '../../store/selectors/call'
+import { selectProcessByCalendarId } from '../../store/selectors/process'
 import { checkNested } from '../../utils/objectHelpers'
 
 const CalendarDeleteContainer = props => {
   const id = props.match.params.id
-  const { call, vacancy, errorStore } = props
-  const { clearErrors, readCallV2, getProcess, readVacancyV2, deleteVacancy } = props
+  const { calendar, call, errorStore } = props
+  const { clearErrors, readCallV2, getProcess, readCalendar, deleteCalendar } = props
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readVacancyV2(id, {
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true,
-      callbackOk: vac => {
-        readCallV2(vac.call_id, {
+    readCalendar(id, {
+      withCalendar: true,
+      callbackOk: cld => {
+        readCallV2(cld.call_id, {
           callbackOk: call => {
             getProcess(call.selectiveProcess_id)
           }
@@ -54,7 +52,7 @@ const CalendarDeleteContainer = props => {
   const onSubmit = e => {
     e.preventDefault()
 
-    deleteVacancy(vacancy.id, {
+    deleteCalendar(calendar.id, {
       callbackOk: () => {
         props.history.push(`/call/read/${call.id}`)
       }
@@ -69,26 +67,25 @@ const CalendarDeleteContainer = props => {
   }
 
   //render
-  return <VacancyDelete {...allProps} />
+  return <CalendarDelete {...allProps} />
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const vacancy_id = ownProps.match.params.id
-
+  const calendar_id = ownProps.match.params.id
   return {
     errorStore: state.errorStore,
-    vacancy: selectVacancyById(state, vacancy_id, { withAssignment: true, withRegion: true, withRestriction: true }),
-    call: selectCallByVacancyId(state, vacancy_id, {}),
-    process: selectProcessByVacancyId(state, vacancy_id, {})
+    calendar: selectCalendarById(state, calendar_id, { withCalendar: true }),
+    call: selectCallByCalendarId(state, calendar_id, {}),
+    process: selectProcessByCalendarId(state, calendar_id, { withCourse: true })
   }
 }
 
 const mapActionsToProps = {
   clearErrors,
-  readVacancyV2,
   readCallV2,
   getProcess,
-  deleteVacancy
+  readCalendar,
+  deleteCalendar
 }
 
 export default connect(

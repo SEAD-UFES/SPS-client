@@ -23,14 +23,12 @@ import {
 import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar'
 import { selectCallByCalendarId } from '../../store/selectors/call'
 import { selectProcessByCalendarId } from '../../store/selectors/process'
+import { removePotentialCircRef } from '../../utils/calendarHelpers'
 
 const CalendarUpdateContainer = props => {
   const id = props.match.params.id
   const { clearErrors, readCalendar, readListCalendar, readCallV2, getProcess, updateCalendar } = props
   const { calendar, calendarLoading, calendars, errorStore } = props
-
-  console.log('calendar:', calendar)
-  console.log('calendarLoading:', calendarLoading)
 
   const initialUpdateData = {
     call_id: '',
@@ -44,7 +42,9 @@ const CalendarUpdateContainer = props => {
   const [readyToLoad, setReadyToLoad] = useState(false)
   const [errors, setErrors] = useState({})
 
-  const calendarOptions = convertObjetsToOptions(calendars)
+  //Gerando as opções possiveis para calendar_id
+  const filtredCalendars = removePotentialCircRef(calendar, calendars)
+  const calendarOptions = convertObjetsToOptions(filtredCalendars)
   calendarOptions.unshift({ label: 'Escolha o evento', value: '' })
 
   //ComponentDidMount
@@ -197,9 +197,6 @@ const CalendarUpdateContainer = props => {
 
 const mapStateToProps = (state, ownProps) => {
   const calendar_id = ownProps.match.params.id
-
-  console.log('calendar_id', calendar_id)
-
   return {
     errorStore: state.errorStore,
     calendars: selectBrotherCalendarById(state, calendar_id, {}),
