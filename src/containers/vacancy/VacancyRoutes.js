@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from '../../components/common/PrivateRoute'
 import VacancyUpdateContainer from './VacancyUpdateContainer'
 import VacancyDeleteContainer from './VacancyDeleteContainer'
-import NotFound from 'components/common/NotFound'
+import NotFound from '../../components/common/NotFound'
 
 export default class VacancyRoutes extends Component {
   render() {

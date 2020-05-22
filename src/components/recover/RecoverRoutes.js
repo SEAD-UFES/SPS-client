@@ -1,9 +1,11 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import RecoverRequest from './RecoverRequest'
 import RecoverToken from './RecoverToken'
-import NotFound from 'components/common/NotFound'
+import NotFound from '../../components/common/NotFound'
 
 export default class ProcessRoutes extends Component {
   render() {

@@ -1,22 +1,24 @@
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+/** @format */
 
-import PrivateRoute from "../common/PrivateRoute";
+import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
 
-import AssignmentList from "../assignment/AssignmentList";
-import CourseList from "../course/CourseList";
-import RegionList from "../region/RegionList";
-import RestrictionList from "components/restriction/RestrictionList";
-import PublicationTypeList from "components/publicationType/PublicationTypeList";
-import StepTypeList from "components/stepType/StepTypeList";
-import GraduationTypeList from "components/graduationType/GraduationTypeList";
+import PrivateRoute from '../common/PrivateRoute'
 
-import RoleTypeRoutes from "components/roleType/RoleTypeRoutes";
-import UserRoleRoutes from "components/userRole/UserRoleRoutes";
+import AssignmentList from '../assignment/AssignmentList'
+import CourseList from '../course/CourseList'
+import RegionList from '../region/RegionList'
+import RestrictionList from 'components/restriction/RestrictionList'
+import PublicationTypeList from 'components/publicationType/PublicationTypeList'
+import StepTypeList from 'components/stepType/StepTypeList'
+import GraduationTypeList from 'components/graduationType/GraduationTypeList'
 
-import ParameterList from "./ParameterList";
+import RoleTypeRoutes from 'components/roleType/RoleTypeRoutes'
+import UserRoleRoutes from 'components/userRole/UserRoleRoutes'
 
-import NotFound from "components/common/NotFound";
+import ParameterList from './ParameterList'
+
+import NotFound from '../../components/common/NotFound'
 
 export default class ParametersRoutes extends Component {
   render() {
@@ -44,6 +46,6 @@ export default class ParametersRoutes extends Component {
 
         <Route component={NotFound} />
       </Switch>
-    );
+    )
   }
 }

@@ -8,7 +8,7 @@ import PrivateRoute from '../common/PrivateRoute'
 import Profile from './ProfileView'
 import ProfileEditUser from './ProfileEditUser'
 import ProfileEditPerson from './ProfileEditPerson'
-import NotFound from '../../components/common/NotFound'
+import NotFound from '../common/NotFound'
 
 export default class ProfileRoutes extends Component {
   render() {
