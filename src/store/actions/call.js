@@ -3,7 +3,7 @@
 import _ from 'lodash'
 
 import { GET_ERRORS } from '../actionTypes'
-import { LOADING_CALLV2, READ_CALLV2, UPDATE_CALLV2 } from '../actionTypes'
+import { LOADING_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readListCalendar } from './calendar'
 import { readListVacancyV2 } from './vacancy'
@@ -35,7 +35,10 @@ export const readCallV2 = (id, options = {}) => (dispatch, getState) => {
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })
-    .catch(err => handleErrors(err, dispatch))
+    .catch(err => {
+      console.log(err)
+      handleErrors(err, dispatch)
+    })
 }
 
 //update Call
@@ -49,6 +52,21 @@ export const updateCall = (id, updateData, options = {}) => dispatch => {
       if (options.callbackOk) options.callbackOk(res.data)
     })
     .catch(err => handleErrors(err, dispatch))
+}
+
+//Call delete
+export const deleteCall = (id, options = {}) => (dispatch, getState) => {
+  spsApi
+    .delete(`/v1/calls/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_CALLV2, payload: id })
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
 }
 
 //Function to handle errors

@@ -1,7 +1,8 @@
 /** @format */
 
-//import _ from 'lodash'
-import { LOADING_CALLV2, READ_CALLV2 } from '../actionTypes'
+import _ from 'lodash'
+
+import { LOADING_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
 
 const initialState = {
   loading: false,
@@ -22,13 +23,28 @@ const putItem = (state, payload) => {
   return { byId: newById, allIds: newAllIds }
 }
 
+const removeItem = (state, id) => {
+  const newById = _.omit(state.byId, id)
+  const newAllIds = Object.keys(newById)
+  return { byId: newById, allIds: newAllIds }
+}
+
 export default function(state = initialState, action) {
   let newState
   switch (action.type) {
     case LOADING_CALLV2:
       return { ...state, loading: true }
     case READ_CALLV2:
+    case UPDATE_CALLV2:
       newState = putItem(state, action.payload)
+      return {
+        ...state,
+        loading: false,
+        byId: newState.byId,
+        allIds: newState.allIds.sort(sortAllIdsByNumber(newState.byId))
+      }
+    case DELETE_CALLV2:
+      newState = removeItem(state, action.payload)
       return {
         ...state,
         loading: false,

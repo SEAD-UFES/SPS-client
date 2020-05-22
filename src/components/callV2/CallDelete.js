@@ -2,16 +2,21 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import AlertError from '../../components/common/AlertError'
-import { checkNested, isEmpty } from '../../utils/objectHelpers'
+import { isEmpty } from '../../utils/objectHelpers'
+import Spinner from '../common/Spinner'
 
 const VacancyDelete = props => {
-  const { process, call, vacancy, history } = props
+  const { process, call, history } = props
   const { errorStore, errors } = props
   const { onSubmit } = props
 
-  const renderBreadcrumb = (process, call) => {
+  //dummy
+  const callLoading = false
+
+  const renderBreadcrumb = process => {
     return (
       <div className='breadcrumb'>
         <span>Você está em:</span>
@@ -25,53 +30,43 @@ const VacancyDelete = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
-          {call ? `Chamada ${call.number}` : 'Chamada'}
-        </Link>
-
-        <i className='fas fa-greater-than' />
-        <span>Excluir oferta de vaga</span>
+        <span>Excluir chamada</span>
       </div>
     )
   }
 
-  const renderInfo = (process, call, vacancy) => {
+  const renderInfo = (process, call, callLoading) => {
+    if (call === null || callLoading) {
+      return <Spinner />
+    }
+
     return (
       <div>
         <p>
           <strong>Id: </strong>
-          {vacancy ? vacancy.id : null}
+          {call ? call.id : null}
         </p>
         <p>
           <strong>Processo: </strong>
           {`${process ? process.number : null}/${process ? process.year : null} - ${
             process ? process.Course.name : null
-          } | Chamada ${call ? call.number : null}`}
+          }`}
         </p>
-
         <p>
-          <strong>Atribuição: </strong>
-          {checkNested(vacancy, 'assignment', 'name') ? vacancy.assignment.name : null}
+          <strong>Número: </strong>
+          {call ? call.number : null}
         </p>
-
         <p>
-          <strong>Região: </strong>
-          {checkNested(vacancy, 'region', 'name') ? vacancy.region.name : 'Sem região'}
+          <strong>Id: </strong>
+          {call ? call.id : null}
         </p>
-
         <p>
-          <strong>Restrição: </strong>
-          {checkNested(vacancy, 'restriction', 'name') ? vacancy.restriction.name : 'Sem restrição'}
+          <strong>Data de abertura: </strong>
+          {call ? moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY') : null}
         </p>
-
         <p>
-          <strong>Vagas: </strong>
-          {vacancy ? vacancy.qtd : null}
-        </p>
-
-        <p>
-          <strong>Reserva: </strong>
-          {vacancy ? (vacancy.reserve ? 'Sim' : 'Não') : null}
+          <strong>Data de encerramento: </strong>
+          {call ? moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY') : null}
         </p>
       </div>
     )
@@ -104,14 +99,14 @@ const VacancyDelete = props => {
   }
 
   return (
-    <div className='vacancy-delete'>
+    <div className='call-delete'>
       <div className='container'>
-        {renderBreadcrumb(process, call)}
+        {renderBreadcrumb(process)}
         <div className='form-container' id='main'>
-          <h1>Excluir oferta de vaga</h1>
+          <h1>Excluir chamada</h1>
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
-          {renderInfo(process, call, vacancy)}
+          {renderInfo(process, call, callLoading)}
           {renderChoices(onSubmit, history)}
         </div>
       </div>

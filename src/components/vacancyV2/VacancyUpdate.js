@@ -91,13 +91,13 @@ const VacancyUpdate = props => {
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Atualizar' />
+        <input type='submit' className='btn btn-primary' value='Salvar' />
       </form>
     )
   }
 
   return (
-    <div className='vacancy-create'>
+    <div className='vacancy-update'>
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>

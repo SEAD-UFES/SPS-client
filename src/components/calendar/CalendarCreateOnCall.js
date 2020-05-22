@@ -106,7 +106,7 @@ const CalendarCreateOnCall = props => {
   }
 
   return (
-    <div className='vacancy-create'>
+    <div className='calendar-create'>
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
