@@ -6,16 +6,16 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2, updateCall } from '../../store/actions/call'
+import { readCall, updateCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import CallUpdate from '../../components/callV2/CallUpdate'
+import CallUpdate from '../../components/call/CallUpdate'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
 import { validateNumber, validateOpeningDate, validateEndingDate, validateBody } from '../../validation/call'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 
 const CallUpdateContainer = props => {
   const id = props.match.params.id
-  const { clearErrors, readCallV2, updateCall, getProcess } = props
+  const { clearErrors, readCall, updateCall, getProcess } = props
   const { call, callLoading, errorStore } = props
 
   const initialUpdateData = { selectiveProcess_id: '', number: '', openingDate: '', endingDate: '' }
@@ -26,7 +26,7 @@ const CallUpdateContainer = props => {
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readCallV2(id, {
+    readCall(id, {
       callbackOk: call => {
         getProcess(call.selectiveProcess_id)
       }
@@ -156,7 +156,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapActionsToProps = {
-  readCallV2,
+  readCall,
   updateCall,
   getProcess,
   clearErrors

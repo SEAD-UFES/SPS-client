@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import DrawFilter from '../profile/DrawFilter'
-import { getCallStatus } from '../call/callHelpers'
+import { getCallStatus } from '../../utils/callHelpers'
 import AlertError from 'components/common/AlertError'
 import VacancyListOnCall from '../vacancy/VacancyListOnCall'
 import CalendarListOnCall from '../calendar/CalendarListOnCall'

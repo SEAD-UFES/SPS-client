@@ -18,7 +18,6 @@ import permissionReducer from '../components/permission/permissionReducer'
 import rolePermissionReducer from '../components/rolePermission/rolePermissionReducer'
 import publicationReducer from '../components/publication/publicationReducer'
 import publicationTypeReducer from '../components/publicationType/publicationTypeReducer'
-import callReducer from '../components/call/callReducer'
 import stepReducer from '../components/step/stepReducer'
 import stepTypeReducer from '../components/stepType/stepTypeReducer'
 import graduationTypeReducer from '../components/graduationType/graduationTypeReducer'
@@ -47,7 +46,6 @@ export default combineReducers({
   rolePermissionStore: rolePermissionReducer,
   publicationStore: publicationReducer,
   publicationTypeStore: publicationTypeReducer,
-  callStore: callReducer,
   stepStore: stepReducer,
   stepTypeStore: stepTypeReducer,
   graduationTypeStore: graduationTypeReducer,

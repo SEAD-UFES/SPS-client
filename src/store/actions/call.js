@@ -3,14 +3,14 @@
 import _ from 'lodash'
 
 import { GET_ERRORS } from '../actionTypes'
-import { LOADING_CALLV2, CREATE_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
+import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readListCalendar } from './calendar'
 import { readListVacancy } from './vacancy'
 
 //Call loading
-export const setCallLoadingV2 = () => {
-  return { type: LOADING_CALLV2 }
+export const setCallLoading = () => {
+  return { type: LOADING_CALL }
 }
 
 //Call create
@@ -18,7 +18,7 @@ export const createCall = (data, options = {}) => (dispatch, getState) => {
   spsApi
     .post('/v1/calls', data)
     .then(res => {
-      dispatch({ type: CREATE_CALLV2, payload: res.data })
+      dispatch({ type: CREATE_CALL, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -29,12 +29,12 @@ export const createCall = (data, options = {}) => (dispatch, getState) => {
 }
 
 //Call read
-export const readCallV2 = (id, options = {}) => (dispatch, getState) => {
-  dispatch(setCallLoadingV2())
+export const readCall = (id, options = {}) => (dispatch, getState) => {
+  dispatch(setCallLoading())
   spsApi
     .get(`/v1/calls/${id}`)
     .then(res => {
-      dispatch({ type: READ_CALLV2, payload: res.data })
+      dispatch({ type: READ_CALL, payload: res.data })
       const newOptions = _.omit(options, 'callbackOk')
 
       //get calendars if need
@@ -61,7 +61,7 @@ export const updateCall = (id, updateData, options = {}) => dispatch => {
   spsApi
     .put(`/v1/calls/${id}`, updateData)
     .then(res => {
-      dispatch({ type: UPDATE_CALLV2, payload: res.data })
+      dispatch({ type: UPDATE_CALL, payload: res.data })
 
       //run callbackOK
       if (options.callbackOk) options.callbackOk(res.data)
@@ -74,7 +74,7 @@ export const deleteCall = (id, options = {}) => (dispatch, getState) => {
   spsApi
     .delete(`/v1/calls/${id}`)
     .then(res => {
-      dispatch({ type: DELETE_CALLV2, payload: id })
+      dispatch({ type: DELETE_CALL, payload: id })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)

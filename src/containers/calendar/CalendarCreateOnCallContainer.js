@@ -6,7 +6,7 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2 } from '../../store/actions/call'
+import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { createCalendar, readListCalendar } from '../../store/actions/calendar'
 import CalendarCreateOnCall from '../../components/calendar/CalendarCreateOnCall'
@@ -25,7 +25,7 @@ import {
 
 const CalendarCreateContainerOnCall = props => {
   const id = props.match.params.id
-  const { clearErrors, readCallV2, getProcess, createCalendar, readListCalendar } = props
+  const { clearErrors, readCall, getProcess, createCalendar, readListCalendar } = props
   const { calendars, errorStore } = props
 
   const initialCreateData = {
@@ -46,7 +46,7 @@ const CalendarCreateContainerOnCall = props => {
   useEffect(() => {
     clearErrors()
     readListCalendar({ call_ids: [id] })
-    readCallV2(id, {
+    readCall(id, {
       callbackOk: call => {
         getProcess(call.selectiveProcess_id)
       }
@@ -178,7 +178,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapActionsToProps = {
   clearErrors,
-  readCallV2,
+  readCall,
   getProcess,
   createCalendar,
   readListCalendar

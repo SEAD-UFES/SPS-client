@@ -6,7 +6,7 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2 } from '../../store/actions/call'
+import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { readCalendar, readListCalendar, updateCalendar } from '../../store/actions/calendar'
 import CalendarUpdate from '../../components/calendar/CalendarUpdate'
@@ -27,7 +27,7 @@ import { removePotentialCircRef } from '../../utils/calendarHelpers'
 
 const CalendarUpdateContainer = props => {
   const id = props.match.params.id
-  const { clearErrors, readCalendar, readListCalendar, readCallV2, getProcess, updateCalendar } = props
+  const { clearErrors, readCalendar, readListCalendar, readCall, getProcess, updateCalendar } = props
   const { calendar, calendarLoading, calendars, errorStore } = props
 
   const initialUpdateData = {
@@ -53,7 +53,7 @@ const CalendarUpdateContainer = props => {
     readCalendar(id, {
       callbackOk: cld => {
         readListCalendar({ call_ids: [cld.call_id] })
-        readCallV2(cld.call_id, {
+        readCall(cld.call_id, {
           callbackOk: call => {
             getProcess(call.selectiveProcess_id)
           }
@@ -211,7 +211,7 @@ const mapActionsToProps = {
   clearErrors,
   readCalendar,
   readListCalendar,
-  readCallV2,
+  readCall,
   getProcess,
   updateCalendar
 }

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2, deleteCall } from '../../store/actions/call'
+import { readCall, deleteCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import CallDelete from '../../components/callV2/CallDelete'
+import CallDelete from '../../components/call/CallDelete'
 import { selectCallById } from '../../store/selectors/call'
 import { selectProcessByCallId } from '../../store/selectors/process'
 import { checkNested } from '../../utils/objectHelpers'
@@ -14,13 +14,13 @@ import { checkNested } from '../../utils/objectHelpers'
 const CallDeleteContainer = props => {
   const id = props.match.params.id
   const { call, process, errorStore } = props
-  const { clearErrors, readCallV2, getProcess, deleteCall } = props
+  const { clearErrors, readCall, getProcess, deleteCall } = props
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readCallV2(id, {
+    readCall(id, {
       callbackOk: call => {
         getProcess(call.selectiveProcess_id)
       }
@@ -75,7 +75,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapActionsToProps = {
   clearErrors,
-  readCallV2,
+  readCall,
   getProcess,
   deleteCall
 }

@@ -10,15 +10,15 @@ export const GET_PROCESS = 'GET_PROCESS'
 export const GET_PROCESSES = 'GET_PROCESSES'
 export const GET_PROCESS_FILTERS = 'GET_PROCESS_FILTERS'
 
-//CallV2 actions
-export const LOADING_CALLV2 = 'LOADING_CALLV2'
-export const CREATE_CALLV2 = 'CREATE_CALLV2'
-export const READ_CALLV2 = 'READ_CALLV2'
-export const UPDATE_CALLV2 = 'UPDATE_CALLV2'
-export const DELETE_CALLV2 = 'DELETE_CALLV2'
+//Call actions
+export const LOADING_CALL = 'LOADING_CALL'
+export const CREATE_CALL = 'CREATE_CALL'
+export const READ_CALL = 'READ_CALL'
+export const UPDATE_CALL = 'UPDATE_CALL'
+export const DELETE_CALL = 'DELETE_CALL'
 export const LIST_CALLV2 = 'LIST_CALLV2'
 
-//VacancyV2 actions
+//Vacancy actions
 export const LOADING_VACANCY = 'LOADING_VACANCY'
 export const CREATE_VACANCY = 'CREATE_VACANCY'
 export const READ_VACANCY = 'READ_VACANCY'

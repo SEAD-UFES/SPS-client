@@ -4,7 +4,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import AlertError from 'components/common/AlertError'
-import TextFieldGroup from '../../components/common/TextFieldGroup'
+import TextFieldGroup from '../common/TextFieldGroup'
 
 const CallCreate = props => {
   const { process, call, errorStore, errors, createData } = props

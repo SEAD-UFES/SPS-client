@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2 } from '../../store/actions/call'
+import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { listAssignment } from '../../store/actions/assignment'
 import { listRegion } from '../../store/actions/region'
@@ -22,7 +22,7 @@ import { validateAssignmentId, validateQtd, validateReserve, validateBody } from
 
 const VacancyCreateContainerOnCall = props => {
   const id = props.match.params.id
-  const { clearErrors, listAssignment, listRegion, listRestriction, readCallV2, getProcess, createVacancy } = props
+  const { clearErrors, listAssignment, listRegion, listRestriction, readCall, getProcess, createVacancy } = props
   const { assignments, regions, restrictions, errorStore } = props
 
   const initialCreateData = {
@@ -51,7 +51,7 @@ const VacancyCreateContainerOnCall = props => {
     listAssignment()
     listRegion()
     listRestriction()
-    readCallV2(id, {
+    readCall(id, {
       callbackOk: call => {
         getProcess(call.selectiveProcess_id)
       }
@@ -181,7 +181,7 @@ const mapActionsToProps = {
   listAssignment,
   listRegion,
   listRestriction,
-  readCallV2,
+  readCall,
   getProcess,
   createVacancy
 }

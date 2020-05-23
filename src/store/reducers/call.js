@@ -2,7 +2,7 @@
 
 import _ from 'lodash'
 
-import { LOADING_CALLV2, CREATE_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
+import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL } from '../actionTypes'
 
 const initialState = {
   loading: false,
@@ -32,11 +32,11 @@ const removeItem = (state, id) => {
 export default function(state = initialState, action) {
   let newState
   switch (action.type) {
-    case LOADING_CALLV2:
+    case LOADING_CALL:
       return { ...state, loading: true }
-    case CREATE_CALLV2:
-    case READ_CALLV2:
-    case UPDATE_CALLV2:
+    case CREATE_CALL:
+    case READ_CALL:
+    case UPDATE_CALL:
       newState = putItem(state, action.payload)
       return {
         ...state,
@@ -44,7 +44,7 @@ export default function(state = initialState, action) {
         byId: newState.byId,
         allIds: newState.allIds.sort(sortAllIdsByNumber(newState.byId))
       }
-    case DELETE_CALLV2:
+    case DELETE_CALL:
       newState = removeItem(state, action.payload)
       return {
         ...state,

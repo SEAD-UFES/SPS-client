@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2 } from '../../store/actions/call'
+import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { readVacancy, deleteVacancy } from '../../store/actions/vacancy'
 import VacancyDelete from '../../components/vacancy/VacancyDelete'
@@ -16,7 +16,7 @@ import { checkNested } from '../../utils/objectHelpers'
 const VacancyDeleteContainer = props => {
   const id = props.match.params.id
   const { call, vacancy, errorStore } = props
-  const { clearErrors, readCallV2, getProcess, readVacancy, deleteVacancy } = props
+  const { clearErrors, readCall, getProcess, readVacancy, deleteVacancy } = props
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
@@ -27,7 +27,7 @@ const VacancyDeleteContainer = props => {
       withRegion: true,
       withRestriction: true,
       callbackOk: vac => {
-        readCallV2(vac.call_id, {
+        readCall(vac.call_id, {
           callbackOk: call => {
             getProcess(call.selectiveProcess_id)
           }
@@ -86,7 +86,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapActionsToProps = {
   clearErrors,
   readVacancy,
-  readCallV2,
+  readCall,
   getProcess,
   deleteVacancy
 }

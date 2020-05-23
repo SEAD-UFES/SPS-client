@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import DrawFilter from '../profile/DrawFilter'
-import { getCallStatus } from './callHelpers'
+import { getCallStatus } from '../../utils/callHelpers'
 
-export default class CallCard extends Component {
+export default class CallListOnProcess extends Component {
   renderTable(process) {
     return (
       <ul className='table-list'>

@@ -6,9 +6,9 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2, createCall } from '../../store/actions/call'
+import { readCall, createCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import CallCreate from '../../components/callV2/CallCreate'
+import CallCreate from '../../components/call/CallCreate'
 import { selectProcessById } from '../../store/selectors/process'
 import { validateNumber, validateOpeningDate, validateEndingDate, validateBody } from '../../validation/call'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
@@ -127,7 +127,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapActionsToProps = {
-  readCallV2,
+  readCall,
   createCall,
   getProcess,
   clearErrors

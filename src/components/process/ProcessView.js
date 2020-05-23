@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -6,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { getProcess } from './processActions'
 import Spinner from '../common/Spinner'
 import DrawFilter from '../profile/DrawFilter'
-import CallCard from 'components/call/CallCard'
+import CallListOnProcess from '../call/CallListOnProcess'
 import PublicationCard from 'components/publication/PublicationCard'
 
 class ProcessView extends Component {
@@ -28,10 +30,10 @@ class ProcessView extends Component {
     }
 
     return (
-      <div className="btn-right">
-        <DrawFilter permission="selectiveprocess_update" course_id={process.Course.id}>
-          <Link className="btn btn-primary" to={`/processes/${process.id}/edit`}>
-            <i className="fas fa-cog" /> Editar
+      <div className='btn-right'>
+        <DrawFilter permission='selectiveprocess_update' course_id={process.Course.id}>
+          <Link className='btn btn-primary' to={`/processes/${process.id}/edit`}>
+            <i className='fas fa-cog' /> Editar
           </Link>
         </DrawFilter>
       </div>
@@ -44,7 +46,7 @@ class ProcessView extends Component {
     }
 
     return (
-      <section id="info">
+      <section id='info'>
         <div>
           <p>{process.description}</p>
         </div>
@@ -60,7 +62,7 @@ class ProcessView extends Component {
             {process.Course.name}
           </p>
 
-          <DrawFilter permission="selectiveprocess_create" course_id={process.Course.id}>
+          <DrawFilter permission='selectiveprocess_create' course_id={process.Course.id}>
             <p>
               <strong>Visibilidade: </strong>
               {process.visible ? 'Processo visível' : 'Processo oculto'}
@@ -88,7 +90,7 @@ class ProcessView extends Component {
     if (process === null || loading) {
       return <Spinner />
     }
-    return <CallCard process={process} course_id={process.id} />
+    return <CallListOnProcess process={process} course_id={process.id} />
   }
 
   renderPublications(process, loading) {
@@ -103,18 +105,18 @@ class ProcessView extends Component {
     const processStore = this.props.processStore
 
     return (
-      <div className="process-view">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='process-view'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
+            <Link to='/processes' className='breadcrumb-link'>
               Processos Seletivos
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>{this.renderProcessName(process, loading)}</span>
           </div>
 
-          <div id="main">
+          <div id='main'>
             <h1>{this.renderProcessName(process, loading)}</h1>
             {this.renderProcessEdit(process, loading)}
             {this.renderInfoTable(process, loading)}
@@ -138,6 +140,9 @@ const mapStateToProps = state => ({
   authStore: state.authStore
 })
 
-export default connect(mapStateToProps, {
-  getProcess
-})(ProcessView)
+export default connect(
+  mapStateToProps,
+  {
+    getProcess
+  }
+)(ProcessView)

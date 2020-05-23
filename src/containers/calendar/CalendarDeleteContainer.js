@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2 } from '../../store/actions/call'
+import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { readCalendar, deleteCalendar } from '../../store/actions/calendar'
 import CalendarDelete from '../../components/calendar/CalendarDelete'
@@ -16,7 +16,7 @@ import { checkNested } from '../../utils/objectHelpers'
 const CalendarDeleteContainer = props => {
   const id = props.match.params.id
   const { calendar, call, errorStore } = props
-  const { clearErrors, readCallV2, getProcess, readCalendar, deleteCalendar } = props
+  const { clearErrors, readCall, getProcess, readCalendar, deleteCalendar } = props
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
@@ -25,7 +25,7 @@ const CalendarDeleteContainer = props => {
     readCalendar(id, {
       withCalendar: true,
       callbackOk: cld => {
-        readCallV2(cld.call_id, {
+        readCall(cld.call_id, {
           callbackOk: call => {
             getProcess(call.selectiveProcess_id)
           }
@@ -82,7 +82,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapActionsToProps = {
   clearErrors,
-  readCallV2,
+  readCall,
   getProcess,
   readCalendar,
   deleteCalendar

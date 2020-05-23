@@ -3,21 +3,21 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import { readCallV2 } from '../../store/actions/call'
+import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { clearErrors } from '../../store/actions/error'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
-import CallRead from '../../components/callV2/CallRead'
+import CallRead from '../../components/call/CallRead'
 
 const CallReadContainer = props => {
   const id = props.match.params.id
-  const { readCallV2, getProcess, clearErrors } = props
+  const { readCall, getProcess, clearErrors } = props
 
   useEffect(() => {
     //clear errors
     clearErrors()
     //get call
-    readCallV2(id, {
+    readCall(id, {
       withCalendar: true,
       withVacancy: true,
       withAssignment: true,
@@ -50,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapActionsToProps = {
-  readCallV2,
+  readCall,
   getProcess,
   clearErrors
 }
