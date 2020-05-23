@@ -2,6 +2,7 @@
 
 import { combineReducers } from 'redux'
 
+//Reducers V1
 import errorReducer from './reducers/error'
 import authReducer from '../components/auth/authReducer'
 import profileReducer from '../components/profile/profileReducer'
@@ -20,17 +21,17 @@ import publicationTypeReducer from '../components/publicationType/publicationTyp
 import callReducer from '../components/call/callReducer'
 import stepReducer from '../components/step/stepReducer'
 import stepTypeReducer from '../components/stepType/stepTypeReducer'
-import vacancyReducer from '../components/vacancy/vacancyReducer'
 import graduationTypeReducer from '../components/graduationType/graduationTypeReducer'
-
+//Reducers V2
 import callReducerV2 from './reducers/call'
-import vacancyReducerV2 from './reducers/vacancy'
+import vacancyReducer from './reducers/vacancy'
 import assignmentReducerV2 from './reducers/assignment'
 import regionReducerV2 from './reducers/region'
 import restrictionReducerV2 from './reducers/restriction'
 import calendarReducer from './reducers/calendar'
 
 export default combineReducers({
+  //Stores V1
   errorStore: errorReducer,
   authStore: authReducer,
   profileStore: profileReducer,
@@ -49,11 +50,10 @@ export default combineReducers({
   callStore: callReducer,
   stepStore: stepReducer,
   stepTypeStore: stepTypeReducer,
-  vacancyStore: vacancyReducer,
   graduationTypeStore: graduationTypeReducer,
-  //Novos reducers
+  //Stores V2
   callStoreV2: callReducerV2,
-  vacancyStoreV2: vacancyReducerV2,
+  vacancyStore: vacancyReducer,
   assignmentStoreV2: assignmentReducerV2,
   regionStoreV2: regionReducerV2,
   restrictionStoreV2: restrictionReducerV2,

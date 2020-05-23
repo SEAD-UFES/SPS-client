@@ -6,7 +6,7 @@ import { selectAssignment } from './assignment'
 import { selectRegion } from './region'
 import { selectRestriction } from './restriction'
 
-const selectVacancyStore = store => store.vacancyStoreV2
+const selectVacancyStore = store => store.vacancyStore
 
 const selectVacancy = createSelector(
   [selectVacancyStore],

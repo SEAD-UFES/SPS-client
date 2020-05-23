@@ -7,7 +7,7 @@ import moment from 'moment'
 import DrawFilter from '../profile/DrawFilter'
 import { getCallStatus } from '../call/callHelpers'
 import AlertError from 'components/common/AlertError'
-import VacancyListOnCall from '../vacancyV2/VacancyListOnCall'
+import VacancyListOnCall from '../vacancy/VacancyListOnCall'
 import CalendarListOnCall from '../calendar/CalendarListOnCall'
 
 const CallRead = props => {

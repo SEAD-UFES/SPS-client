@@ -12,7 +12,7 @@ import { listRegion } from '../../store/actions/region'
 import { listRestriction } from '../../store/actions/restriction'
 import { readVacancyV2, updateVacancy } from '../../store/actions/vacancy'
 
-import VacancyUpdate from '../../components/vacancyV2/VacancyUpdate'
+import VacancyUpdate from '../../components/vacancy/VacancyUpdate'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 import { validateAssignmentId, validateQtd, validateReserve, validateBody } from '../../validation/vacancy'
@@ -214,7 +214,7 @@ const mapStateToProps = (state, ownProps) => {
     regions: selectRegion(state),
     restrictions: selectRestriction(state),
     vacancy: selectVacancyById(state, vacancy_id, {}),
-    vacancyLoading: state.vacancyStoreV2.loading,
+    vacancyLoading: state.vacancyStore.loading,
     call: selectCallByVacancyId(state, vacancy_id, {}),
     process: selectProcessByVacancyId(state, vacancy_id, {})
   }

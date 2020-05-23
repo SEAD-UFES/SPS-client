@@ -19,10 +19,6 @@ import StepCreate from '../step/StepCreate'
 import StepEdit from '../step/StepEdit'
 import StepDelete from '../step/StepDelete'
 
-import VacancyCreate from '../vacancy/VacancyCreate'
-import VacancyEdit from '../vacancy/VacancyEdit'
-import VacancyDelete from '../vacancy/VacancyDelete'
-
 import PublicationCreate from 'components/publication/PublicationCreate'
 import PublicationUpdate from 'components/publication/PublicationUpdate'
 import PublicationDelete from 'components/publication/PublicationDelete'
@@ -70,24 +66,6 @@ export default class ProcessRoutes extends Component {
           exact
           path={`${this.props.match.path}/:process_id/call/:call_id/steps/:step_id/delete`}
           component={StepDelete}
-        />
-
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:process_id/call/:call_id/vacancies/create`}
-          component={VacancyCreate}
-        />
-
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:process_id/call/:call_id/vacancies/:vacancy_id/edit`}
-          component={VacancyEdit}
-        />
-
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/:process_id/call/:call_id/vacancies/:vacancy_id/delete`}
-          component={VacancyDelete}
         />
 
         <PrivateRoute

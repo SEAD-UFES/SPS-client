@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -10,7 +12,7 @@ import { getCall } from 'components/call/callActions'
 import { clearErrors } from 'actions/errorActions'
 import DrawFilter from 'components/profile/DrawFilter'
 import { getCallStatus } from './callHelpers'
-import VacancyCard from 'components/vacancy/VacancyCard'
+//import VacancyCard from 'components/vacancy/VacancyCard'
 import { findCourse } from 'components/course/courseActions'
 import { getProcess } from 'components/process/processActions'
 
@@ -51,15 +53,15 @@ class CallView extends Component {
       return <Spinner />
     }
     return (
-      <div className="btn-right">
-        <DrawFilter permission="call_update" course_id={this.state.course_id}>
+      <div className='btn-right'>
+        <DrawFilter permission='call_update' course_id={this.state.course_id}>
           <Link
-            className="btn btn-primary"
+            className='btn btn-primary'
             to={{
               pathname: `/processes/${call.selectiveProcess_id}/call/${call.id}/update`,
               prevLocation: this.props.location
             }}>
-            <i className="fas fa-cog" /> Editar
+            <i className='fas fa-cog' /> Editar
           </Link>
         </DrawFilter>
       </div>
@@ -93,30 +95,30 @@ class CallView extends Component {
     if (call === null || loading) {
       return <Spinner />
     }
-    return <VacancyCard call={call} process_id={this.props.match.params.process_id} course_id={this.state.course_id} />
+    //return <VacancyCard call={call} process_id={this.props.match.params.process_id} course_id={this.state.course_id} />
   }
 
   render() {
     const { errors, call, loading } = this.props
     return (
-      <div className="view-page">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='view-page'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
+            <Link to='/processes' className='breadcrumb-link'>
               Processos Seletivos
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to={`/processes/${this.props.match.params.process_id}`} className='breadcrumb-link'>
               {this.props.process
                 ? `Edital ${this.props.process.number}/${this.props.process.year}`
                 : 'Edital 000/0000'}
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>{this.renderCallName(call, loading)}</span>
           </div>
 
-          <div id="main">
+          <div id='main'>
             <h1>{this.renderCallName(call, loading)}</h1>
             {this.renderCallEdit(call, loading)}
             <AlertError errors={errors} />
@@ -147,4 +149,7 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { getCall, clearErrors, findCourse, getProcess })(withRouter(CallView))
+export default connect(
+  mapStateToProps,
+  { getCall, clearErrors, findCourse, getProcess }
+)(withRouter(CallView))
