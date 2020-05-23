@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { clearErrors } from '../../store/actions/error'
 import { readCallV2 } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { readVacancyV2, deleteVacancy } from '../../store/actions/vacancy'
+import { readVacancy, deleteVacancy } from '../../store/actions/vacancy'
 import VacancyDelete from '../../components/vacancy/VacancyDelete'
 import { selectVacancyById } from '../../store/selectors/vacancy'
 import { selectCallByVacancyId } from '../../store/selectors/call'
@@ -16,13 +16,13 @@ import { checkNested } from '../../utils/objectHelpers'
 const VacancyDeleteContainer = props => {
   const id = props.match.params.id
   const { call, vacancy, errorStore } = props
-  const { clearErrors, readCallV2, getProcess, readVacancyV2, deleteVacancy } = props
+  const { clearErrors, readCallV2, getProcess, readVacancy, deleteVacancy } = props
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readVacancyV2(id, {
+    readVacancy(id, {
       withAssignment: true,
       withRegion: true,
       withRestriction: true,
@@ -85,7 +85,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapActionsToProps = {
   clearErrors,
-  readVacancyV2,
+  readVacancy,
   readCallV2,
   getProcess,
   deleteVacancy

@@ -3,12 +3,12 @@ import _ from 'lodash'
 
 import { GET_ERRORS } from '../../store/actionTypes'
 import {
-  LOADING_VACANCYV2,
-  CREATE_VACANCYV2,
-  READ_VACANCYV2,
-  UPDATE_VACANCYV2,
-  DELETE_VACANCYV2,
-  READ_LIST_VACANCYV2
+  LOADING_VACANCY,
+  CREATE_VACANCY,
+  READ_VACANCY,
+  UPDATE_VACANCY,
+  DELETE_VACANCY,
+  READ_LIST_VACANCY
 } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readAssignmentV2 } from './assignment'
@@ -17,8 +17,8 @@ import { readRestrictionV2 } from './restriction'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 
 //Vacancy loading
-export const setVacancyLoadingV2 = () => {
-  return { type: LOADING_VACANCYV2 }
+export const setVacancyLoading = () => {
+  return { type: LOADING_VACANCY }
 }
 
 //Vacancy create
@@ -26,7 +26,7 @@ export const createVacancy = (data, options = {}) => (dispatch, getState) => {
   spsApi
     .post('/v1/vacancies', data)
     .then(res => {
-      dispatch({ type: CREATE_VACANCYV2, payload: res.data })
+      dispatch({ type: CREATE_VACANCY, payload: res.data })
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })
@@ -36,12 +36,12 @@ export const createVacancy = (data, options = {}) => (dispatch, getState) => {
 }
 
 //Vacancy read
-export const readVacancyV2 = (id, options = {}) => (dispatch, getState) => {
-  dispatch(setVacancyLoadingV2())
+export const readVacancy = (id, options = {}) => (dispatch, getState) => {
+  dispatch(setVacancyLoading())
   spsApi
     .get(`/v1/vacancies/${id}`)
     .then(res => {
-      dispatch({ type: READ_VACANCYV2, payload: res.data })
+      dispatch({ type: READ_VACANCY, payload: res.data })
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })
@@ -53,7 +53,7 @@ export const updateVacancy = (id, data, options = {}) => (dispatch, getState) =>
   spsApi
     .put(`/v1/vacancies/${id}`, data)
     .then(res => {
-      dispatch({ type: UPDATE_VACANCYV2, payload: res.data })
+      dispatch({ type: UPDATE_VACANCY, payload: res.data })
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })
@@ -67,7 +67,7 @@ export const deleteVacancy = (id, options = {}) => (dispatch, getState) => {
   spsApi
     .delete(`/v1/vacancies/${id}`)
     .then(res => {
-      dispatch({ type: DELETE_VACANCYV2, payload: id })
+      dispatch({ type: DELETE_VACANCY, payload: id })
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })
@@ -77,15 +77,16 @@ export const deleteVacancy = (id, options = {}) => (dispatch, getState) => {
 }
 
 //Vacancy Add List
-export const readListVacancyV2 = (options = {}) => dispatch => {
+export const readListVacancy = (options = {}) => dispatch => {
   let url = `/v1/vacancies`
   const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
   url = `${url}?${callIdsString}`
 
+  dispatch(setVacancyLoading())
   spsApi
     .get(url)
     .then(res => {
-      dispatch({ type: READ_LIST_VACANCYV2, payload: res.data })
+      dispatch({ type: READ_LIST_VACANCY, payload: res.data })
       const newOptions = _.omit(options, 'callbackOk')
 
       if (options.withAssignment) {

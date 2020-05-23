@@ -10,7 +10,7 @@ import { getProcess } from '../../store/actions/process'
 import { listAssignment } from '../../store/actions/assignment'
 import { listRegion } from '../../store/actions/region'
 import { listRestriction } from '../../store/actions/restriction'
-import { readVacancyV2, updateVacancy } from '../../store/actions/vacancy'
+import { readVacancy, updateVacancy } from '../../store/actions/vacancy'
 
 import VacancyUpdate from '../../components/vacancy/VacancyUpdate'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
@@ -33,7 +33,7 @@ const VacancyUpdateContainer = props => {
     listRestriction,
     readCallV2,
     getProcess,
-    readVacancyV2,
+    readVacancy,
     updateVacancy,
     errorStore
   } = props
@@ -66,7 +66,7 @@ const VacancyUpdateContainer = props => {
     listAssignment()
     listRegion()
     listRestriction()
-    readVacancyV2(id, {
+    readVacancy(id, {
       callbackOk: vac => {
         readCallV2(vac.call_id, {
           callbackOk: call => {
@@ -225,7 +225,7 @@ const mapActionsToProps = {
   listAssignment,
   listRegion,
   listRestriction,
-  readVacancyV2,
+  readVacancy,
   readCallV2,
   getProcess,
   updateVacancy

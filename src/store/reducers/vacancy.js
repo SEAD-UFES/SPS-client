@@ -2,12 +2,12 @@
 
 import _ from 'lodash'
 import {
-  LOADING_VACANCYV2,
-  CREATE_VACANCYV2,
-  READ_VACANCYV2,
-  UPDATE_VACANCYV2,
-  DELETE_VACANCYV2,
-  READ_LIST_VACANCYV2
+  LOADING_VACANCY,
+  CREATE_VACANCY,
+  READ_VACANCY,
+  UPDATE_VACANCY,
+  DELETE_VACANCY,
+  READ_LIST_VACANCY
 } from '../actionTypes'
 
 const initialState = {
@@ -43,11 +43,11 @@ const putList = (state, list) => {
 export default function(state = initialState, action) {
   let newState
   switch (action.type) {
-    case LOADING_VACANCYV2:
+    case LOADING_VACANCY:
       return { ...state, loading: true }
-    case CREATE_VACANCYV2:
-    case READ_VACANCYV2:
-    case UPDATE_VACANCYV2:
+    case CREATE_VACANCY:
+    case READ_VACANCY:
+    case UPDATE_VACANCY:
       newState = putItem(state, action.payload)
       return {
         ...state,
@@ -55,7 +55,7 @@ export default function(state = initialState, action) {
         byId: newState.byId,
         allIds: newState.allIds.sort(sortAllIdsByCreatedAt(newState.byId))
       }
-    case DELETE_VACANCYV2:
+    case DELETE_VACANCY:
       newState = removeItem(state, action.payload)
       return {
         ...state,
@@ -63,7 +63,7 @@ export default function(state = initialState, action) {
         byId: newState.byId,
         allIds: newState.allIds.sort(sortAllIdsByCreatedAt(newState.byId))
       }
-    case READ_LIST_VACANCYV2:
+    case READ_LIST_VACANCY:
       newState = putList(state, action.payload)
       return {
         ...state,

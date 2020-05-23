@@ -6,7 +6,7 @@ import { GET_ERRORS } from '../actionTypes'
 import { LOADING_CALLV2, CREATE_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readListCalendar } from './calendar'
-import { readListVacancyV2 } from './vacancy'
+import { readListVacancy } from './vacancy'
 
 //Call loading
 export const setCallLoadingV2 = () => {
@@ -44,7 +44,7 @@ export const readCallV2 = (id, options = {}) => (dispatch, getState) => {
 
       //get vacancies if need
       if (options.withVacancy) {
-        dispatch(readListVacancyV2({ ...newOptions, call_ids: [res.data.id] }))
+        dispatch(readListVacancy({ ...newOptions, call_ids: [res.data.id] }))
       }
 
       //run callBack
