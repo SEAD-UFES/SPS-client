@@ -2,7 +2,7 @@
 
 import _ from 'lodash'
 
-import { LOADING_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
+import { LOADING_CALLV2, CREATE_CALLV2, READ_CALLV2, UPDATE_CALLV2, DELETE_CALLV2 } from '../actionTypes'
 
 const initialState = {
   loading: false,
@@ -34,6 +34,7 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case LOADING_CALLV2:
       return { ...state, loading: true }
+    case CREATE_CALLV2:
     case READ_CALLV2:
     case UPDATE_CALLV2:
       newState = putItem(state, action.payload)

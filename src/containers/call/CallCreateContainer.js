@@ -6,31 +6,26 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import { clearErrors } from '../../store/actions/error'
-import { readCallV2, updateCall } from '../../store/actions/call'
+import { readCallV2, createCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import CallUpdate from '../../components/callV2/CallUpdate'
-import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
+import CallCreate from '../../components/callV2/CallCreate'
+import { selectProcessById } from '../../store/selectors/process'
 import { validateNumber, validateOpeningDate, validateEndingDate, validateBody } from '../../validation/call'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 
-const CallUpdateContainer = props => {
+const CallCreateContainer = props => {
   const id = props.match.params.id
-  const { clearErrors, readCallV2, updateCall, getProcess } = props
-  const { call, callLoading, errorStore } = props
+  const { clearErrors, getProcess, createCall } = props
+  const { errorStore } = props
 
-  const initialUpdateData = { selectiveProcess_id: '', number: '', openingDate: '', endingDate: '' }
-  const [updateData, setUpdateData] = useState(initialUpdateData)
-  const [readyToLoad, setReadyToLoad] = useState(false)
+  const initialCreateData = { selectiveProcess_id: id, number: '', openingDate: '', endingDate: '' }
+  const [createData, setCreateData] = useState(initialCreateData)
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readCallV2(id, {
-      callbackOk: call => {
-        getProcess(call.selectiveProcess_id)
-      }
-    })
+    getProcess(id)
   }, [])
 
   //get errors from store (onPropsUpdate)
@@ -47,29 +42,6 @@ const CallUpdateContainer = props => {
     [errorStore]
   )
 
-  //Check if have the data to put on form
-  useEffect(
-    () => {
-      if (call && callLoading === false) setReadyToLoad(true)
-    },
-    [call, callLoading]
-  )
-
-  //load Data on form
-  useEffect(
-    () => {
-      if (readyToLoad) {
-        setUpdateData({
-          selectiveProcess_id: call.selectiveProcess_id,
-          number: call.number,
-          openingDate: moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD'),
-          endingDate: moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD')
-        })
-      }
-    },
-    [readyToLoad]
-  )
-
   const onChange = e => {
     e.preventDefault()
     let errorList = {}
@@ -80,17 +52,17 @@ const CallUpdateContainer = props => {
         errorList[e.target.name] = validateNumber(e.target.value, 'update')
         break
       case 'openingDate':
-        errorList[e.target.name] = validateOpeningDate(e.target.value, 'update', updateData)
+        errorList[e.target.name] = validateOpeningDate(e.target.value, 'update', createData)
         if (isEmpty(errorList[e.target.name])) {
-          errorList['endingDate'] = validateEndingDate(updateData.endingDate, 'update', {
+          errorList['endingDate'] = validateEndingDate(createData.endingDate, 'update', {
             openingDate: e.target.value
           })
         }
         break
       case 'endingDate':
-        errorList[e.target.name] = validateEndingDate(e.target.value, 'update', updateData)
+        errorList[e.target.name] = validateEndingDate(e.target.value, 'update', createData)
         if (isEmpty(errorList[e.target.name])) {
-          errorList['openingDate'] = validateOpeningDate(updateData.openingDate, 'update', {
+          errorList['openingDate'] = validateOpeningDate(createData.openingDate, 'update', {
             endingDate: e.target.value
           })
         }
@@ -107,27 +79,27 @@ const CallUpdateContainer = props => {
     const toAdd = removeEmptyKeys(errorList)
     if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
 
-    setUpdateData({ ...updateData, [e.target.name]: e.target.value })
+    setCreateData({ ...createData, [e.target.name]: e.target.value })
     setErrors(newErrors)
   }
 
   const onSubmit = e => {
     e.preventDefault()
 
-    const submitErrors = validateBody(updateData, 'update')
+    const submitErrors = validateBody(createData, 'update')
 
     if (submitErrors) {
       setErrors(submitErrors)
     } else {
       const data = {
-        ...updateData,
-        openingDate: moment(updateData.openingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00',
-        endingDate: moment(updateData.endingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
+        ...createData,
+        openingDate: moment(createData.openingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00',
+        endingDate: moment(createData.endingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
       }
 
-      updateCall(call.id, data, {
+      createCall(data, {
         callbackOk: call => {
-          props.history.push(`/call/read/${call.id}`)
+          props.history.push(`/processes/${call.selectiveProcess_id}`)
         }
       })
     }
@@ -135,29 +107,28 @@ const CallUpdateContainer = props => {
 
   const allProps = {
     ...props,
-    updateData: updateData,
-    onChange: onChange,
+    createData: createData,
     errors: errors,
+    onChange: onChange,
     onSubmit: onSubmit
   }
 
-  return <CallUpdate {...allProps} />
+  return <CallCreate {...allProps} />
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const call_id = ownProps.match.params.id
+  const process_id = ownProps.match.params.id
 
   return {
-    call: selectCallById(state, call_id, {}),
-    callLoading: state.callStoreV2.loading,
-    process: selectProcessByCallId(state, call_id, { withCourse: true }),
+    process: selectProcessById(state, process_id, { withCourse: true }),
+    processLoading: state.processStore.loading,
     errorStore: state.errorStore
   }
 }
 
 const mapActionsToProps = {
   readCallV2,
-  updateCall,
+  createCall,
   getProcess,
   clearErrors
 }
@@ -165,4 +136,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(CallUpdateContainer)
+)(CallCreateContainer)
