@@ -1,67 +1,83 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+/** @format */
+
+import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
-import Spinner from 'components/common/Spinner'
-import { getCall, deleteCall } from 'components/call/callActions'
-import AlertError from 'components/common/AlertError'
-import { clearErrors } from 'actions/errorActions'
-import { getProcess } from 'components/process/processActions'
+import AlertError from '../../components/common/AlertError'
+import { isEmpty } from '../../utils/objectHelpers'
+import Spinner from '../common/Spinner'
 
-class CallDelete extends Component {
-  constructor() {
-    super()
-    this.state = { errors: [] }
-    this.onSubmit = this.onSubmit.bind(this)
-  }
+const CallDelete = props => {
+  const { process, call, callLoading, history } = props
+  const { errorStore, errors } = props
+  const { onSubmit } = props
 
-  UNSAFE_componentWillMount() {
-    this.props.clearErrors()
-    //get process if needed
-    if (
-      this.props.process === null ||
-      typeof this.props.process === 'undefined' ||
-      this.props.process.id !== this.props.match.params.process_id
-    ) {
-      this.props.getProcess(this.props.match.params.process_id)
-    }
-  }
-
-  componentDidMount() {
-    this.props.getCall(this.props.match.params.call_id)
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    //error handling
-    if (nextProps.errors) {
-      let errors = nextProps.errors
-      this.setState({ errors: errors })
-    }
-  }
-
-  onSubmit(e) {
-    e.preventDefault()
-    const { call } = this.props
-    this.props.deleteCall(call.id, () => {
-      this.props.history.push(`/processes/${this.props.match.params.process_id}`)
-    })
-  }
-
-  renderChoices() {
+  const renderBreadcrumb = process => {
     return (
-      <div className="row">
-        <div className="col">
-          <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
+      <div className='breadcrumb'>
+        <span>Você está em:</span>
+        <Link to='/processes' className='breadcrumb-link'>
+          Processos Seletivos
+        </Link>
+
+        <i className='fas fa-greater-than' />
+        <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
+          {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
+        </Link>
+
+        <i className='fas fa-greater-than' />
+        <span>Excluir chamada</span>
+      </div>
+    )
+  }
+
+  const renderInfo = (process, call, callLoading) => {
+    if (call === null || callLoading) {
+      return <Spinner />
+    }
+
+    return (
+      <div>
+        <p>
+          <strong>Id: </strong>
+          {call ? call.id : null}
+        </p>
+        <p>
+          <strong>Processo: </strong>
+          {`${process ? process.number : null}/${process ? process.year : null} - ${
+            process ? process.Course.name : null
+          }`}
+        </p>
+        <p>
+          <strong>Número: </strong>
+          {call ? call.number : null}
+        </p>
+        <p>
+          <strong>Data de abertura: </strong>
+          {call ? moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY HH:mm:ss') : null}
+        </p>
+        <p>
+          <strong>Data de encerramento: </strong>
+          {call ? moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY HH:mm:ss') : null}
+        </p>
+      </div>
+    )
+  }
+
+  const renderChoices = (onSubmit, history) => {
+    return (
+      <div className='row'>
+        <div className='col'>
+          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={onSubmit} />
         </div>
-        <div className="col">
+        <div className='col'>
           <input
-            type="button"
-            value="Cancelar"
-            className="btn btn-secondary btn-block mt-4"
+            type='button'
+            value='Cancelar'
+            className='btn btn-secondary btn-block mt-4'
             onClick={() => {
-              this.props.history.goBack()
+              history.goBack()
             }}
           />
         </div>
@@ -69,86 +85,26 @@ class CallDelete extends Component {
     )
   }
 
-  renderInfo(call, loading) {
-    if (call === null || loading) {
-      return <Spinner />
+  const renderErrorMessage = errors => {
+    if (!isEmpty(errors)) {
+      return <p className='text-danger'>{errors.message || errors.id}</p>
     }
-
-    return (
-      <div>
-        <p>
-          <strong>Número: </strong>
-          {call.number}
-        </p>
-        <p>
-          <strong>Id: </strong>
-          {call.id}
-        </p>
-        <p>
-          <strong>Data de abertura: </strong>
-          {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
-        </p>
-        <p>
-          <strong>Data de encerramento: </strong>
-          {moment(call.endingDate, 'YYYY-MM-DD HH:mm:ss ').format('DD/MM/YYYY')}
-        </p>
-
-        {this.renderChoices()}
-      </div>
-    )
   }
 
-  render() {
-    const { call, loading, errorStore } = this.props
-
-    return (
-      <div className="call-delete">
-        <div className="container">
-          <div className="breadcrumb">
-            <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
-              Processos Seletivos
-            </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              {this.props.process
-                ? `Edital ${this.props.process.number}/${this.props.process.year}`
-                : 'Edital 000/0000'}
-            </Link>
-            <i className="fas fa-greater-than"></i>
-            <span>Excluir chamada</span>
-          </div>
-
-          <div className="form-container" id="main">
-            <h1>Excluir chamada</h1>
-            <AlertError errors={errorStore} />
-            {this.renderInfo(call, loading)}
-          </div>
+  return (
+    <div className='call-delete'>
+      <div className='container'>
+        {renderBreadcrumb(process)}
+        <div className='form-container' id='main'>
+          <h1>Excluir chamada</h1>
+          <AlertError errors={errorStore} />
+          {renderErrorMessage(errors)}
+          {renderInfo(process, call, callLoading)}
+          {renderChoices(onSubmit, history)}
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-CallDelete.propTypes = {
-  clearErrors: PropTypes.func.isRequired,
-  getCall: PropTypes.func.isRequired,
-  deleteCall: PropTypes.func.isRequired,
-  call: PropTypes.object,
-  loading: PropTypes.bool.isRequired,
-  errorStore: PropTypes.object.isRequired
-}
-
-const mapStateToProps = state => ({
-  call: state.callStore.call,
-  loading: state.callStore.loading,
-  errorStore: state.errorStore,
-  process: state.processStore.process
-})
-
-export default connect(mapStateToProps, {
-  clearErrors,
-  getCall,
-  deleteCall,
-  getProcess
-})(CallDelete)
+export default CallDelete

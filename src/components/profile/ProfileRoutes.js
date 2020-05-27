@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+/** @format */
 
-import PrivateRoute from "../common/PrivateRoute";
+import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
 
-import Profile from "./ProfileView";
-import ProfileEditUser from "./ProfileEditUser";
-import ProfileEditPerson from "./ProfileEditPerson";
-import NotFound from "components/common/NotFound";
+import PrivateRoute from '../common/PrivateRoute'
+
+import Profile from './ProfileView'
+import ProfileEditUser from './ProfileEditUser'
+import ProfileEditPerson from './ProfileEditPerson'
+import NotFound from '../common/NotFound'
 
 export default class ProfileRoutes extends Component {
   render() {
@@ -20,6 +22,6 @@ export default class ProfileRoutes extends Component {
 
         <Route component={NotFound} />
       </Switch>
-    );
+    )
   }
 }

@@ -1,4 +1,9 @@
-/* Isabela */
+/**
+ * /* Isabela
+ *
+ * @format
+ */
+
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700&display=swap');
 * {
   font-family: 'Fira Sans', sans-serif;
@@ -1364,4 +1369,33 @@ footer #copyright p span a:hover {
     width: unset;
   }
 }
+
+form div.form-group div.input-group {
+  border: 1px solid rgba(23, 101, 171, 0.3);
+  padding: 0px;
+}
+
+form div.form-group div.input-group div.input-group-prepend {
+  /* border: 1px solid green; */
+  display: block;
+  margin: 0px;
+  height: 36px;
+}
+
+form div.form-group div.input-group div.input-group-prepend div.input-group-text {
+  /* border: 1px solid purple; */
+  border-radius: 0px;
+  margin: 0px;
+  margin-top: 7px;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background-color: transparent;
+}
+
+form div.form-group div.input-group input {
+  border: none;
+  /* border: 1px solid blue; */
+  margin: 0px;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,3 +1,5 @@
+/** @format */
+
 //Default react app imports
 //import logo from "./logo.svg";
 import React, { Component } from 'react'
@@ -29,12 +31,11 @@ import UserRoutes from './components/user/UserRoutes'
 import ProcessRoutes from './components/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
 import RecoverRoutes from './components/recover/RecoverRoutes'
+import CallRoutes from './containers/call/CallRoutes'
+import VacancyRoutes from './containers/vacancy/VacancyRoutes'
+import CalendarRoutes from './containers/calendar/CalendarRoutes'
 
 import NotFound from './components/common/NotFound'
-
-//Teste
-import TwoWayBinding from 'Teste02'
-import Teste03 from 'Teste03'
 
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
@@ -66,30 +67,31 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App">
+          <div className='App'>
             <Navbar />
 
             <Switch>
-              <Route exact path="/" component={Landing} />
+              <Route exact path='/' component={Landing} />
 
-              <Route exact path="/teste02" component={TwoWayBinding} />
-              <Route exact path="/teste03" component={Teste03} />
+              <Route exact path='/register' component={Register} />
 
-              <Route exact path="/register" component={Register} />
+              <Route exact path='/login' component={Login} />
 
-              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
 
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute path='/profile' component={ProfileRoutes} />
 
-              <PrivateRoute path="/profile" component={ProfileRoutes} />
+              <PrivateRoute path='/users' component={UserRoutes} />
 
-              <PrivateRoute path="/users" component={UserRoutes} />
+              <Route path='/processes' component={ProcessRoutes} />
 
-              <Route path="/processes" component={ProcessRoutes} />
+              <PrivateRoute path='/parameters' component={ParameterRoutes} permission='parameter_list' />
 
-              <PrivateRoute path="/parameters" component={ParameterRoutes} permission="parameter_list" />
+              <Route path='/recover' component={RecoverRoutes} />
 
-              <Route path="/recover" component={RecoverRoutes} />
+              <Route path='/call' component={CallRoutes} />
+              <Route path='/vacancy' component={VacancyRoutes} />
+              <Route path='/calendar' component={CalendarRoutes} />
 
               <Route component={NotFound} />
             </Switch>

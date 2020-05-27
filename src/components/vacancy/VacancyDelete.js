@@ -1,47 +1,95 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+/** @format */
+
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Spinner from 'components/common/Spinner'
-import { getVacancy, deleteVacancy } from 'components/vacancy/vacancyActions'
-import AlertError from 'components/common/AlertError'
+import AlertError from '../../components/common/AlertError'
+import { checkNested, isEmpty } from '../../utils/objectHelpers'
 
-class VacancyDelete extends Component {
-  constructor() {
-    super()
-    this.state = { errors: [] }
-    this.onSubmit = this.onSubmit.bind(this)
-  }
+const VacancyDelete = props => {
+  const { process, call, vacancy, history } = props
+  const { errorStore, errors } = props
+  const { onSubmit } = props
 
-  componentDidMount() {
-    if (this.props.match.params.vacancy_id) {
-      this.props.getVacancy(this.props.match.params.vacancy_id)
-    }
-  }
-
-  onSubmit(e) {
-    e.preventDefault()
-    this.props.deleteVacancy(this.props.match.params.vacancy_id, () => {
-      this.props.history.push(
-        `/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`
-      )
-    })
-  }
-
-  renderChoices() {
+  const renderBreadcrumb = (process, call) => {
     return (
-      <div className="row">
-        <div className="col">
-          <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
+      <div className='breadcrumb'>
+        <span>Você está em:</span>
+        <Link to='/processes' className='breadcrumb-link'>
+          Processos Seletivos
+        </Link>
+
+        <i className='fas fa-greater-than' />
+        <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
+          {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
+        </Link>
+
+        <i className='fas fa-greater-than' />
+        <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
+          {call ? `Chamada ${call.number}` : 'Chamada'}
+        </Link>
+
+        <i className='fas fa-greater-than' />
+        <span>Excluir oferta de vaga</span>
+      </div>
+    )
+  }
+
+  const renderInfo = (process, call, vacancy) => {
+    return (
+      <div>
+        <p>
+          <strong>Id: </strong>
+          {vacancy ? vacancy.id : null}
+        </p>
+        <p>
+          <strong>Processo: </strong>
+          {`${process ? process.number : null}/${process ? process.year : null} - ${
+            process ? process.Course.name : null
+          } | Chamada ${call ? call.number : null}`}
+        </p>
+
+        <p>
+          <strong>Atribuição: </strong>
+          {checkNested(vacancy, 'assignment', 'name') ? vacancy.assignment.name : null}
+        </p>
+
+        <p>
+          <strong>Região: </strong>
+          {checkNested(vacancy, 'region', 'name') ? vacancy.region.name : 'Sem região'}
+        </p>
+
+        <p>
+          <strong>Restrição: </strong>
+          {checkNested(vacancy, 'restriction', 'name') ? vacancy.restriction.name : 'Sem restrição'}
+        </p>
+
+        <p>
+          <strong>Vagas: </strong>
+          {vacancy ? vacancy.qtd : null}
+        </p>
+
+        <p>
+          <strong>Reserva: </strong>
+          {vacancy ? (vacancy.reserve ? 'Sim' : 'Não') : null}
+        </p>
+      </div>
+    )
+  }
+
+  const renderChoices = (onSubmit, history) => {
+    return (
+      <div className='row'>
+        <div className='col'>
+          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={onSubmit} />
         </div>
-        <div className="col">
+        <div className='col'>
           <input
-            type="button"
-            value="Cancelar"
-            className="btn btn-secondary btn-block mt-4"
+            type='button'
+            value='Cancelar'
+            className='btn btn-secondary btn-block mt-4'
             onClick={() => {
-              this.props.history.goBack()
+              history.goBack()
             }}
           />
         </div>
@@ -49,101 +97,26 @@ class VacancyDelete extends Component {
     )
   }
 
-  renderInfo(vacancy, loading) {
-    if (vacancy === null || loading) {
-      return <Spinner />
+  const renderErrorMessage = errors => {
+    if (!isEmpty(errors)) {
+      return <p className='text-danger'>{errors.message || errors.id}</p>
     }
-
-    return (
-      <div>
-        <p>
-          <strong>Id: </strong>
-          {vacancy.id}
-        </p>
-        <p>
-          <strong>Processo: </strong>
-          {`${vacancy.Call.SelectiveProcess.number}/${vacancy.Call.SelectiveProcess.year} - ${vacancy.Call.SelectiveProcess.Course.name} | Chamada ${vacancy.Call.number}`}
-        </p>
-
-        <p>
-          <strong>Atribuição: </strong>
-          {vacancy.Assignment.name}
-        </p>
-
-        <p>
-          <strong>Região: </strong>
-          {vacancy.Region ? vacancy.Region.name : 'Sem região'}
-        </p>
-
-        <p>
-          <strong>Restrição: </strong>
-          {vacancy.Restriction ? vacancy.Restriction.name : 'Sem restrição'}
-        </p>
-
-        <p>
-          <strong>Vagas: </strong>
-          {vacancy.qtd}
-        </p>
-
-        <p>
-          <strong>Reserva: </strong>
-          {vacancy.reserve ? 'Sim' : 'Não'}
-        </p>
-
-        {this.renderChoices()}
-      </div>
-    )
   }
 
-  render() {
-    const { vacancy, loading } = this.props
-    const { errorStore } = this.props
-
-    return (
-      <div className="roleassignments">
-        <div className="container">
-          <div className="breadcrumb">
-            <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
-              Processos Seletivos
-            </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
-              Edital XXX/XXXX
-            </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link
-              to={`/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}`}
-              className="breadcrumb-link">
-              Chamada XXX
-            </Link>
-            <i className="fas fa-greater-than"></i>
-            <span>Excluir oferta de vaga</span>
-          </div>
-
-          <div className="form-container" id="main">
-            <h1>Excluir oferta de vaga</h1>
-            <AlertError errors={errorStore} />
-            {this.renderInfo(vacancy, loading)}
-          </div>
+  return (
+    <div className='vacancy-delete'>
+      <div className='container'>
+        {renderBreadcrumb(process, call)}
+        <div className='form-container' id='main'>
+          <h1>Excluir oferta de vaga</h1>
+          <AlertError errors={errorStore} />
+          {renderErrorMessage(errors)}
+          {renderInfo(process, call, vacancy)}
+          {renderChoices(onSubmit, history)}
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-VacancyDelete.propTypes = {
-  getVacancy: PropTypes.func.isRequired,
-  deleteVacancy: PropTypes.func.isRequired
-}
-
-const mapStateToProps = state => ({
-  vacancy: state.vacancyStore.vacancy,
-  loading: state.vacancyStore.loading,
-  errorStore: state.errorStore
-})
-
-export default connect(mapStateToProps, {
-  getVacancy,
-  deleteVacancy
-})(VacancyDelete)
+export default VacancyDelete

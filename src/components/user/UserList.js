@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -24,23 +26,23 @@ class UserList extends Component {
     this.props.getUserList()
   }
 
-  //componentWillReceiveProps(nextProps) {}
+  //UNSAFE_componentWillReceiveProps(nextProps) {}
 
   onChangePage(page, pageSize) {
     //this.setState({ pageOfItems: pageOfItems });
     this.props.getUserList(page, pageSize)
   }
 
-  renderUserAdd(users, loading){
+  renderUserAdd(users, loading) {
     if (users === null || loading) {
       return <Spinner />
     }
 
     return (
-      <div className="btn-right">
-        <DrawFilter permission="user_create">
-          <Link className="btn btn-primary" to={`${this.props.match.url}/create`}>
-            <i className="fas fa-plus-circle" /> Adicionar
+      <div className='btn-right'>
+        <DrawFilter permission='user_create'>
+          <Link className='btn btn-primary' to={`${this.props.match.url}/create`}>
+            <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
       </div>
@@ -55,15 +57,15 @@ class UserList extends Component {
     if (users.length === 0) {
       return (
         <div>
-            <p>Sem resultados para exibir.</p>
+          <p>Sem resultados para exibir.</p>
         </div>
       )
     }
 
     return (
       <div>
-        <ul className="table-list">
-          <div className="titulos">
+        <ul className='table-list'>
+          <div className='titulos'>
             <span>Nome</span>
             <span>Login/Email</span>
             <span>Status</span>
@@ -100,22 +102,22 @@ class UserList extends Component {
     //const { users, loading } = { users: [], loading: false };
 
     return (
-      <div className="user-list">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='user-list'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Usuários</span>
           </div>
 
-          <div id="main">
+          <div id='main'>
             <h1>Lista de usuários</h1>
             {this.renderUserAdd(users, loading)}
 
-            <p className="lead text-muted" />
+            <p className='lead text-muted' />
 
             {this.renderUserList(users, loading)}
 
@@ -136,4 +138,7 @@ const mapStateToProps = state => ({
   userStore: state.userStore
 })
 
-export default connect(mapStateToProps, { getUserList })(UserList)
+export default connect(
+  mapStateToProps,
+  { getUserList }
+)(UserList)
