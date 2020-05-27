@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -17,7 +19,6 @@ import { getPublication, updatePublication } from 'components/publication/public
 import { validateDateRequired, validateName } from 'validation'
 import { validatePublicationForm } from './validatePublicationForm'
 import AlertError from 'components/common/AlertError'
-// import TextAreaFieldTinyMCE from 'components/common/TextAreaFieldTinyMCE'
 
 class PublicationUpdate extends Component {
   constructor() {
@@ -190,13 +191,6 @@ class PublicationUpdate extends Component {
     })
   }
 
-  onChange_TinyMCE = event => {
-    const value = event.target.getContent()
-    let errors = this.state.errors
-
-    this.setState({ description: value, errors: errors })
-  }
-
   onSubmit(e) {
     e.preventDefault()
 
@@ -229,41 +223,41 @@ class PublicationUpdate extends Component {
     return (
       <form noValidate onSubmit={this.onSubmit}>
         <TextFieldGroup
-          type="date"
-          name="creation_date"
-          label="Data"
-          placeholder="__/__/__"
+          type='date'
+          name='creation_date'
+          label='Data'
+          placeholder='__/__/__'
           value={this.state.creation_date}
           onChange={this.onChange}
           error={errors.creation_date}
         />
 
         <TextFieldGroup
-          type="title"
-          name="title"
-          label="Título"
-          placeholder="Título da publicação"
+          type='title'
+          name='title'
+          label='Título'
+          placeholder='Título da publicação'
           value={this.state.title}
           onChange={this.onChange}
           error={errors.title}
         />
 
-        <div className="form-group row">
-          <label className="col-lg-2 col-form-label form-control-label font-weight-bold">Arquivo</label>
-          <div className="col-lg-10">
-            <div className="mt-2">
-              <a className="" href={`${spsServerUrl}/v1/publications/download/${this.state.fileName}`}>
-                <i className="fas fa-file" /> {this.state.fileName}
+        <div className='form-group row'>
+          <label className='col-lg-2 col-form-label form-control-label font-weight-bold'>Arquivo</label>
+          <div className='col-lg-10'>
+            <div className='mt-2'>
+              <a className='' href={`${spsServerUrl}/v1/publications/download/${this.state.fileName}`}>
+                <i className='fas fa-file' /> {this.state.fileName}
               </a>
             </div>
           </div>
         </div>
 
-        <div className="form-spacing">
+        <div className='form-spacing'>
           <SelectListGroup
-            placeholder="Selecione o processo seletivo"
-            name="selectiveProcess_id"
-            label="Processo"
+            placeholder='Selecione o processo seletivo'
+            name='selectiveProcess_id'
+            label='Processo'
             value={this.state.selectiveProcess_id}
             options={processOptions}
             onChange={this.onChange}
@@ -272,9 +266,9 @@ class PublicationUpdate extends Component {
           />
 
           <SelectListGroup
-            placeholder="Selecione o tipo de publicação"
-            name="publicationType_id"
-            label="Tipo"
+            placeholder='Selecione o tipo de publicação'
+            name='publicationType_id'
+            label='Tipo'
             value={this.state.publicationType_id}
             options={processPublicationTypeOptions}
             onChange={this.onChange}
@@ -282,21 +276,21 @@ class PublicationUpdate extends Component {
           />
 
           <CheckBoxFieldGroup
-            id="valid-checkbox"
-            name="valid"
-            text="Validade"
-            value="Este documento é a versão mais recente de seu tipo."
+            id='valid-checkbox'
+            name='valid'
+            text='Validade'
+            value='Este documento é a versão mais recente de seu tipo.'
             checked={this.state.valid}
             error={errors.valid}
-            info="Documentos mais antigos devem ser atualizados manualmente."
+            info='Documentos mais antigos devem ser atualizados manualmente.'
             onChange={this.onCheck}
           />
 
           {this.state.selectiveProcess_id ? (
             <SelectListGroup
-              placeholder="Selecione a chamada"
-              name="call_id"
-              label="Chamada"
+              placeholder='Selecione a chamada'
+              name='call_id'
+              label='Chamada'
               value={this.state.call_id}
               options={callOptions}
               onChange={this.onChange}
@@ -309,9 +303,9 @@ class PublicationUpdate extends Component {
 
           {this.state.call_id ? (
             <SelectListGroup
-              placeholder="Selecione a etapa"
-              name="step_id"
-              label="Etapa"
+              placeholder='Selecione a etapa'
+              name='step_id'
+              label='Etapa'
               value={this.state.step_id}
               options={stepOptions}
               onChange={this.onChange}
@@ -322,27 +316,17 @@ class PublicationUpdate extends Component {
           )}
 
           <TextAreaFieldGroup
-            type="text"
-            name="description"
-            label="Observações"
+            type='text'
+            name='description'
+            label='Observações'
             value={this.state.description}
             onChange={this.onChange}
             error={errors.description}
-            info="Corpo da mensagem da publicação, se houver"
+            info='Corpo da mensagem da publicação, se houver'
           />
-
-          {/* <TextAreaFieldTinyMCE
-              placeholder="Conteúdo"
-              name="description"
-              label="Observações:"
-              value={this.state.description}
-              onChange={this.onChange_TinyMCE}
-              error={errors.description}
-              info="corpo da mensagem da publicação, se houver."
-            /> */}
         </div>
 
-        <input type="submit" className="btn btn-primary" value="Salvar" />
+        <input type='submit' className='btn btn-primary' value='Salvar' />
       </form>
     )
   }
@@ -417,24 +401,24 @@ class PublicationUpdate extends Component {
     )
 
     return (
-      <div className="publication-update">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='publication-update'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
+            <Link to='/processes' className='breadcrumb-link'>
               Processos Seletivos
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/processes/${process_id}`} className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to={`/processes/${process_id}`} className='breadcrumb-link'>
               {this.state.selectiveProcess
                 ? `Edital ${this.state.selectiveProcess.number}/${this.state.selectiveProcess.year}`
                 : 'Edital 000/0000'}
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Editar publicação</span>
           </div>
 
-          <div className="form-container" id="main">
+          <div className='form-container' id='main'>
             <h1>Editar publicação</h1>
             <AlertError errors={this.props.errorStore} />
             {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
@@ -460,9 +444,12 @@ const mapStateToProps = state => ({
   errorStore: state.errorStore
 })
 
-export default connect(mapStateToProps, {
-  getPublicationTypes,
-  getProcess,
-  getPublication,
-  updatePublication
-})(PublicationUpdate)
+export default connect(
+  mapStateToProps,
+  {
+    getPublicationTypes,
+    getProcess,
+    getPublication,
+    updatePublication
+  }
+)(PublicationUpdate)
