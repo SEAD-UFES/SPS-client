@@ -68,7 +68,7 @@ const CalendarListOnCall = props => {
   }
 
   return (
-    <section id='ofertas' className='quadro'>
+    <section id='calendarios' className='quadro'>
       <h4>Calendário de eventos</h4>
       {renderCreateButton(call, course_id)}
       {renderCalendarList(call, course_id)}
