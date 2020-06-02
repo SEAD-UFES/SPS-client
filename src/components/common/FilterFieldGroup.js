@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 class FilterFieldGroup extends React.Component {
   constructor() {
     super()
-
     this.onCheck = this.onCheck.bind(this)
   }
 
@@ -17,47 +16,33 @@ class FilterFieldGroup extends React.Component {
     const { label, items } = this.props
 
     return (
-      <div className="form-group dropdown cq-dropdown" data-name="statuses">
-        <button
-          className="btn btn-primary btn-sm dropdown-toggle form-control form-control-lg text-truncate"
-          type="button"
-          id="btndropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="true">
-          {label}:{' '}
-          {items.find(it => {
-            return it.marked === true
-          })
-            ? items
-                .filter(item => {
-                  return item.marked === true
-                })
-                .map((item, key) => {
+      <React.Fragment>
+        <div className="btn-group seletor">
+          <button
+            className="btn exibe-filtros"
+            type="button"
+            id={`btndropdown-${this.props.id}`}
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="true">
+            {label}
+          </button>
+          <ul className="dropdown-menu" aria-labelledby={`btndropdown-${this.props.id}`}>
+            {items.length > 0
+              ? items.map((item, key) => {
                   return (
-                    <span className="badge badge-primary mr-1" key={key}>
-                      {item.label}
-                    </span>
+                    <li className="" key={key}>
+                      <label className="radio-btn">
+                        <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} />
+                        <span>{item.label}</span>
+                      </label>
+                    </li>
                   )
                 })
-            : ''}
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="btndropdown">
-          {items.length > 0
-            ? items.map((item, key) => {
-                return (
-                  <li className="dropdown-item" key={key}>
-                    <label className="radio-btn">
-                      <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} />{' '}
-                      {item.label}
-                    </label>
-                  </li>
-                )
-              })
-            : ''}
-        </ul>
-      </div>
+              : ''}
+          </ul>
+        </div>
+      </React.Fragment>
     )
   }
 }
