@@ -1370,6 +1370,47 @@ footer #copyright p span a:hover {
   }
 }
 
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #calendarios .table-list .titulos span:nth-of-type(1) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(2) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(3) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(4) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(5) {
+    width: 16%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #calendarios .table-list li h3 {
+    width: 20%;
+  }
+  #calendarios .table-list li p:nth-of-type(1) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(2) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(3) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(4) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(5) {
+    width: 16%;
+  }
+}
+
+/* Fernando */
 form div.form-group div.input-group {
   border: 1px solid rgba(23, 101, 171, 0.3);
   padding: 0px;
