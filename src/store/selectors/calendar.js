@@ -59,6 +59,13 @@ export const makeSelectCalendarById = () => {
         calendar = { ...calendar, calendar: fatherCalendar ? fatherCalendar : null }
       }
 
+      //calc status (need to have brother calendars on reducer)
+      if (calendar && options.withCalendarStatus) {
+        const brotherCalendars = calendars.filter(cld => cld.call_id === calendar.call_id)
+        const status = calcCalendarStatus(calendar, brotherCalendars)
+        calendar = { ...calendar, status: status ? status : null }
+      }
+
       return calendar ? calendar : null
     }
   )
@@ -72,10 +79,16 @@ export const makeSelectCalendarByCallId = () => {
     [selectCalendar, getId, getOptions],
     (calendars, id, options) => {
       let selectedCalendars = calendars.filter(x => x.call_id === id)
-      selectedCalendars = selectedCalendars.map(cld => {
-        cld.status = calcCalendarStatus(cld, calendars)
-        return cld
-      })
+
+      //calc calendarStatus
+      if (options.withCalendarStatus) {
+        selectedCalendars = selectedCalendars.map((cld, key, list) => {
+          const status = calcCalendarStatus(cld, list)
+          cld.status = status
+          return cld
+        })
+      }
+
       return selectedCalendars
     }
   )

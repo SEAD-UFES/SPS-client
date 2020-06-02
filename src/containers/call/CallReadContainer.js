@@ -39,6 +39,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     call: selectCallById(state, call_id, {
       withCalendar: true,
+      withCalendarStatus: true,
       withVacancy: true,
       withAssignment: true,
       withRegion: true,

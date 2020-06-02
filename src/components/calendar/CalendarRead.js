@@ -10,14 +10,14 @@ import DrawFilter from '../profile/DrawFilter'
 
 const CalendarRead = props => {
   const { location } = props
-  //const { process, call } = props
+  const { process, call, calendar } = props
   //const { updateData, calendarOptions, errors, errorStore } = props
   //const { onChange, onCheck, onSubmit } = props
 
   //dummy props
-  const process = null
-  const call = null
-  const calendar = null
+  // const process = null
+  // const call = null
+  // const calendar = null
   const errorStore = {}
 
   const renderBreadcrumb = (process, call) => {
@@ -73,12 +73,9 @@ const CalendarRead = props => {
           {calendar ? calendar.name : null}
         </p>
         <p>
-          <strong>Abertura: </strong>
+          <strong>Data: </strong>
           {calendar ? moment(calendar.start).format('DD/MM/YYYY') : null}
-        </p>
-        <p>
-          <strong>Encerramento: </strong>
-          {calendar ? (calendar.end ? `${moment(calendar.end).format('DD/MM/YYYY')}` : null) : null}
+          {calendar ? (calendar.end ? ` até ${moment(calendar.end).format('DD/MM/YYYY')}` : null) : null}
         </p>
         <p>
           <strong>Pronto: </strong>
@@ -92,8 +89,23 @@ const CalendarRead = props => {
     )
   }
 
+  const renderAddEventType = () => {
+    return (
+      <div style={{ padding: '10px' }}>
+        <section id='eventos' className='quadro'>
+          <h4>Adicionar tipo de evento</h4>
+          <ul>
+            <li className='list-group-item'>
+              <Link to={`${props.match.url}/inscription-event/create`}>Evento de inscrições</Link>
+            </li>
+          </ul>
+        </section>
+      </div>
+    )
+  }
+
   return (
-    <div className='calendar-read'>
+    <div className='view-page'>
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='main'>
@@ -101,7 +113,7 @@ const CalendarRead = props => {
           {renderUpdateButton(process, calendar, location)}
           <AlertError errors={errorStore} />
           {renderInfo(calendar)}
-          <p>Dados de IncriptionEvent associado.</p>
+          {renderAddEventType()}
         </div>
       </div>
     </div>
