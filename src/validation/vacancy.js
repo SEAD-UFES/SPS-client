@@ -27,7 +27,8 @@ export const validateQtd = (value, mode, item) => {
   }
 
   //value is a number
-  if (!Validator.isNumeric(value)) {
+  if (typeof value === 'number') value = value.toString()
+  if (!Validator.isInt(value)) {
     return 'Deve ser um número.'
   }
 }
