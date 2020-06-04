@@ -39,13 +39,13 @@ const CalendarRead = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>{calendar ? `Evento: ${calendar.name}` : 'Evento'}</span>
+        <span>{calendar ? `Calendário (${calendar.name})` : 'Calendário'}</span>
       </div>
     )
   }
 
   const renderTitle = calendar => {
-    return <h1>Evento: {calendar ? calendar.name : null}</h1>
+    return <h1>Calendário ({calendar ? calendar.name : null})</h1>
   }
 
   const renderUpdateButton = (process, calendar, location) => {
