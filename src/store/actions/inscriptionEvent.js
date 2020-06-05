@@ -3,26 +3,26 @@
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import {
-  LOADING_CALENDAR,
-  CREATE_CALENDAR,
-  READ_CALENDAR,
-  UPDATE_CALENDAR,
-  DELETE_CALENDAR,
-  READ_LIST_CALENDAR
+  LOADING_INSCRIPTIONEVENT,
+  CREATE_INSCRIPTIONEVENT,
+  READ_INSCRIPTIONEVENT,
+  UPDATE_INSCRIPTIONEVENT,
+  DELETE_INSCRIPTIONEVENT,
+  READ_LIST_INSCRIPTIONEVENT
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 
-//Calendar loading
-export const setCalendarLoading = () => {
-  return { type: LOADING_CALENDAR }
+//InscriptionEvent loading
+export const setInscriptionEventLoading = () => {
+  return { type: LOADING_INSCRIPTIONEVENT }
 }
 
-//Calendar create
-export const createCalendar = (data, options = {}) => (dispatch, getState) => {
+//InscriptionEvent create
+export const createInscriptionEvent = (data, options = {}) => (dispatch, getState) => {
   spsApi
-    .post('/v1/calendars', data)
+    .post('/v1/inscriptionevents', data)
     .then(res => {
-      dispatch({ type: CREATE_CALENDAR, payload: res.data })
+      dispatch({ type: CREATE_INSCRIPTIONEVENT, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -32,20 +32,13 @@ export const createCalendar = (data, options = {}) => (dispatch, getState) => {
     })
 }
 
-//Calendar read
-export const readCalendar = (id, options = {}) => (dispatch, getState) => {
-  dispatch(setCalendarLoading())
+//InscriptionEvent read
+export const readInscriptionEvent = (id, options = {}) => (dispatch, getState) => {
+  dispatch(setInscriptionEventLoading())
   spsApi
-    .get(`/v1/calendars/${id}`)
+    .get(`/v1/inscriptionevents/${id}`)
     .then(res => {
-      dispatch({ type: READ_CALENDAR, payload: res.data })
-
-      //baixar calendarios associados
-      if (options.withCalendar) {
-        if (res.data.calendar_id !== null) {
-          dispatch(readCalendar(res.data.calendar_id, options))
-        }
-      }
+      dispatch({ type: READ_INSCRIPTIONEVENT, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -53,12 +46,12 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
     .catch(err => handleErrors(err, dispatch))
 }
 
-//Calendar update
-export const updateCalendar = (id, data, options = {}) => (dispatch, getState) => {
+//InscriptionEvent update
+export const updateInscriptionEvent = (id, data, options = {}) => (dispatch, getState) => {
   spsApi
-    .put(`/v1/calendars/${id}`, data)
+    .put(`/v1/inscriptionevents/${id}`, data)
     .then(res => {
-      dispatch({ type: UPDATE_CALENDAR, payload: res.data })
+      dispatch({ type: UPDATE_INSCRIPTIONEVENT, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -68,12 +61,12 @@ export const updateCalendar = (id, data, options = {}) => (dispatch, getState) =
     })
 }
 
-//Calendar delete
-export const deleteCalendar = (id, options = {}) => (dispatch, getState) => {
+//InscriptionEvent delete
+export const deleteInscriptionEvent = (id, options = {}) => (dispatch, getState) => {
   spsApi
-    .delete(`/v1/calendars/${id}`)
+    .delete(`/v1/inscriptionevents/${id}`)
     .then(res => {
-      dispatch({ type: DELETE_CALENDAR, payload: id })
+      dispatch({ type: DELETE_INSCRIPTIONEVENT, payload: id })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -83,17 +76,17 @@ export const deleteCalendar = (id, options = {}) => (dispatch, getState) => {
     })
 }
 
-//Calendar Add List
-export const readListCalendar = (options = {}) => dispatch => {
-  dispatch(setCalendarLoading())
-  let url = `/v1/calendars`
-  const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
-  url = `${url}?${callIdsString}`
+//InscriptionEvent Add List
+export const readListInscriptionEvent = (options = {}) => dispatch => {
+  dispatch(setInscriptionEventLoading())
+  let url = `/v1/inscriptionevents`
+  const calendarIdsString = options.calendar_ids ? convertArrayToQueryString('calendar_ids', options.calendar_ids) : ''
+  url = `${url}?${calendarIdsString}`
 
   spsApi
     .get(url)
     .then(res => {
-      dispatch({ type: READ_LIST_CALENDAR, payload: res.data })
+      dispatch({ type: READ_LIST_INSCRIPTIONEVENT, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
