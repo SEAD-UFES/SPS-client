@@ -8,7 +8,7 @@ import AlertError from '../../components/common/AlertError'
 import { checkNested, isEmpty } from '../../utils/objectHelpers'
 
 const CalendarDelete = props => {
-  const { process, call, vacancy, calendar, history } = props
+  const { process, call, calendar, history } = props
   const { errorStore, errors } = props
   const { onSubmit } = props
 
@@ -31,12 +31,12 @@ const CalendarDelete = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Excluir evento</span>
+        <span>Excluir calendário</span>
       </div>
     )
   }
 
-  const renderInfo = (process, call, vacancy) => {
+  const renderInfo = (process, call, calendar) => {
     return (
       <div>
         <p>
@@ -109,10 +109,10 @@ const CalendarDelete = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Excluir evento</h1>
+          <h1>Excluir calendário</h1>
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
-          {renderInfo(process, call, vacancy)}
+          {renderInfo(process, call, calendar)}
           {renderChoices(onSubmit, history)}
         </div>
       </div>

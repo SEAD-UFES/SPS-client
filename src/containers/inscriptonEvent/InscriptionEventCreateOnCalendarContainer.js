@@ -8,6 +8,7 @@ import InscriptionEventCreateOnCalendar from '../../components/inscriptionEvent/
 import { clearErrors } from '../../store/actions/error'
 import { readCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
+import { createInscriptionEvent } from '../../store/actions/inscriptionEvent'
 import { getProcess } from '../../store/actions/process'
 import { selectCalendarById } from '../../store/selectors/calendar'
 import { selectCallByCalendarId } from '../../store/selectors/call'
@@ -23,10 +24,9 @@ import {
 } from '../../validation/inscriptionEvent'
 
 const InscriptionEventCreateOnCalendarContainer = props => {
-  //const { history } = props
   const id = props.match.params.id
-  const { clearErrors, readCalendar, readCall, getProcess } = props
-  const { errorStore } = props
+  const { clearErrors, readCalendar, readCall, getProcess, createInscriptionEvent } = props
+  const { errorStore, history } = props
 
   const initialCreateData = {
     calendar_id: id,
@@ -100,13 +100,13 @@ const InscriptionEventCreateOnCalendarContainer = props => {
 
     switch (e.target.name) {
       case 'allowMultipleAssignments':
-        errorList[e.target.name] = validateAllowMultipleAssignments(e.target.value, 'create')
+        errorList[e.target.name] = validateAllowMultipleAssignments(!createData[e.target.name], 'create')
         break
       case 'allowMultipleRegions':
-        errorList[e.target.name] = validateAllowMultipleRegions(e.target.value, 'create')
+        errorList[e.target.name] = validateAllowMultipleRegions(!createData[e.target.name], 'create')
         break
       case 'allowMultipleRestrictions':
-        errorList[e.target.name] = validateAllowMultipleRestrictions(e.target.value, 'create')
+        errorList[e.target.name] = validateAllowMultipleRestrictions(!createData[e.target.name], 'create')
         break
       default:
         break
@@ -136,23 +136,23 @@ const InscriptionEventCreateOnCalendarContainer = props => {
       const data = {
         ...createData
       }
-      console.log('toSend:', data)
-      // createInscriptionEvent(data, {
-      //   callbackOk: iE => {
-      //     history.push(`/calendar/read/${iE.calendar_id}`)
-      //   }
-      // })
+      createInscriptionEvent(data, {
+        callbackOk: iE => {
+          history.push(`/calendar/read/${iE.calendar_id}`)
+        }
+      })
     }
   }
 
   //make props bundle to ViewComponent
   const allProps = {
+    ...props,
     createData: createData,
     numberOfInscriptionsAllowedOptions: numberOfInscriptionsAllowedOptions,
+    errors: errors,
     onChange: onChange,
     onCheck: onCheck,
-    onSubmit: onSubmit,
-    ...props
+    onSubmit: onSubmit
   }
 
   return <InscriptionEventCreateOnCalendar {...allProps} />
@@ -172,7 +172,8 @@ const mapActionsToProps = {
   clearErrors,
   readCalendar,
   readCall,
-  getProcess
+  getProcess,
+  createInscriptionEvent
 }
 
 export default connect(

@@ -38,8 +38,8 @@ const CalendarUpdateContainer = props => {
     start: '',
     end: ''
   }
-  const [updateData, setUpdateData] = useState(initialUpdateData)
   const [readyToLoad, setReadyToLoad] = useState(false)
+  const [updateData, setUpdateData] = useState(initialUpdateData)
   const [errors, setErrors] = useState({})
 
   //Gerando as opções possiveis para calendar_id

@@ -36,6 +36,7 @@ export const validateAllowMultipleAssignments = (value, mode, item) => {
     return 'Este campo é requerido.'
   }
 
+  console.log('value-assig:', value)
   //value is boolean
   if (value !== true && value !== false && value !== 1 && value !== 0) {
     return 'Deve ser verdadeiro ou falso.'

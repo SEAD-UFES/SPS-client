@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 
 import { makeSelectVacancyById, makeSelectVacancyByCallId } from './vacancy'
 import { makeSelectCalendarByCallId, makeSelectCalendarById } from './calendar'
+import { makeSelectInscriptionEventById } from './inscriptionEvent'
 
 const selectSingleCallById = (store, call_id, options = {}) => {
   let call = store.callStoreV2.byId[call_id] ? { ...store.callStoreV2.byId[call_id] } : null
@@ -39,6 +40,7 @@ export const makeSelectCallByVacancyId = () => (state, vacancy_id, options = {})
   return call
 }
 
+//make selector call by calendar id
 export const makeSelectCallByCalendarId = () => {
   const selectCalendarById = makeSelectCalendarById()
   const selectCallById = makeSelectCallById()
@@ -55,14 +57,38 @@ export const makeSelectCallByCalendarId = () => {
   )
 }
 
-//single instance of selectCallByVacancyId
-export const selectCallByVacancyId = makeSelectCallByVacancyId()
+//make selector call by InscriptionEvent id
+export const makeSelectCallByInscriptionEventId = () => {
+  const selectInscriptionEventById = makeSelectInscriptionEventById()
+  const selectCallByCalendarId = makeSelectCallByCalendarId()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectInscriptionEventById, getStore, getOptions],
+    (iEvent, store, options) => {
+      const calendar_id = iEvent ? iEvent.calendar_id : null
+      if (!calendar_id) return null
+
+      const call = selectCallByCalendarId(store, calendar_id, options)
+      if (!call) return null
+
+      return call
+    }
+  )
+}
 
 //single instance of selectCallById
 export const selectCallById = makeSelectCallById()
 
+//single instance of selectCallByVacancyId
+export const selectCallByVacancyId = makeSelectCallByVacancyId()
+
 //single instance of selectCallByCalendarId
 export const selectCallByCalendarId = makeSelectCallByCalendarId()
+
+//single instance of selectCallByInscriptionEventId
+export const selectCallByInscriptionEventId = makeSelectCallByInscriptionEventId()
 
 //select processStore
 const selectProcessStore = store => store.processStore

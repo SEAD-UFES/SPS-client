@@ -3,6 +3,8 @@
 import { createSelector } from 'reselect'
 import moment from 'moment'
 
+import { makeSelectInscriptionEventById } from './inscriptionEvent'
+
 const calcCalendarStatus = (cld, calendars) => {
   const status = {
     ag: 'Aguardando',
@@ -94,6 +96,7 @@ export const makeSelectCalendarByCallId = () => {
   )
 }
 
+//makeSelectBrotherCalendarById
 export const makeSelectBrotherCalendarById = () => {
   const selectCalendarById = makeSelectCalendarById()
   const getId = (store, id, options) => id
@@ -110,6 +113,27 @@ export const makeSelectBrotherCalendarById = () => {
   )
 }
 
+//makeSelectCalendarByInscriptionEventId
+export const makeSelectCalendarByInscriptionEventId = () => {
+  const selectInscriptionEventById = makeSelectInscriptionEventById()
+  const selectCalendarById = makeSelectCalendarById()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectInscriptionEventById, getStore, getOptions],
+    (iEvent, store, options) => {
+      const calendar_id = iEvent ? iEvent.calendar_id : null
+      if (!calendar_id) return null
+
+      const calendar = selectCalendarById(store, calendar_id, options)
+      if (!calendar) return null
+
+      return calendar
+    }
+  )
+}
+
 //single instance of selectCalendarById
 export const selectCalendarById = makeSelectCalendarById()
 
@@ -118,3 +142,6 @@ export const selectCalendarByCallId = makeSelectCalendarByCallId()
 
 //single instance of selectBrotherCalendarById
 export const selectBrotherCalendarById = makeSelectBrotherCalendarById()
+
+//single instance of selectCalendarByInscriptionEventId
+export const selectCalendarByInscriptionEventId = makeSelectCalendarByInscriptionEventId()

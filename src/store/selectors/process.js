@@ -1,8 +1,10 @@
 /** @format */
 
+import { createSelector } from 'reselect'
+
 import { makeSelectCallById, makeSelectCallByCalendarId } from './call'
 import { makeSelectVacancyById } from './vacancy'
-import { createSelector } from 'reselect'
+import { makeSelectInscriptionEventById } from './inscriptionEvent'
 
 //make selector process by id
 export const makeSelectProcessById = () => (store, id, options = {}) => {
@@ -53,6 +55,26 @@ export const makeSelectProcessByCalendarId = () => {
   )
 }
 
+export const makeSelectProcessByInscriptionEventId = () => {
+  const selectInscriptionEventById = makeSelectInscriptionEventById()
+  const selectProcessByCalendarId = makeSelectProcessByCalendarId()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectInscriptionEventById, getStore, getOptions],
+    (iEvent, store, options) => {
+      const calendar_id = iEvent ? iEvent.calendar_id : null
+      if (!calendar_id) return null
+
+      const process = selectProcessByCalendarId(store, calendar_id, options)
+      if (!process) return null
+
+      return process
+    }
+  )
+}
+
 //single instance of selectProcessById
 export const selectProcessById = makeSelectProcessById()
 
@@ -64,3 +86,6 @@ export const selectProcessByVacancyId = makeSelectProcessByVacancyId()
 
 //single instance of selectProcessByCalendarId
 export const selectProcessByCalendarId = makeSelectProcessByCalendarId()
+
+//single instance of selectProcessByInscriptionEventId
+export const selectProcessByInscriptionEventId = makeSelectProcessByInscriptionEventId()

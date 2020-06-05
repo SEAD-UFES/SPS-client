@@ -3,24 +3,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import AlertError from '../../components/common/AlertError'
 import SelectListGroup from '../common/SelectListGroup'
+import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
+import { isEmpty } from '../../utils/objectHelpers'
 
 const InscriptionEventCreateOnCalendar = props => {
   const { process, call, calendar } = props
-  const {
-    createData,
-    numberOfInscriptionsAllowedOptions,
-    //errors,
-    errorStore
-  } = props
+  const { createData, numberOfInscriptionsAllowedOptions, errors, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
 
-  //dummy props
-  const errors = {}
+  console.log(errors)
 
-  const renderBreadcrumb = (process, call) => {
+  const renderBreadcrumb = (process, call, calendar) => {
     return (
       <div className='breadcrumb'>
         <span>Você está em:</span>
@@ -49,7 +44,7 @@ const InscriptionEventCreateOnCalendar = props => {
     )
   }
 
-  const renderForm = () => {
+  const renderForm = (createData, errors, onChange, onCheck, onSubmit) => {
     return (
       <form noValidate onSubmit={onSubmit}>
         <SelectListGroup
@@ -97,14 +92,27 @@ const InscriptionEventCreateOnCalendar = props => {
     )
   }
 
+  const renderErrorMessage = errors => {
+    if (!isEmpty(errors)) {
+      return (
+        <>
+          {errors.message ? <p className='text-danger'>{errors.message}</p> : null}
+          {errors.message ? <p className='text-danger'>{errors.id}</p> : null}
+          {errors.message ? <p className='text-danger'>{errors.calendar_id}</p> : null}
+        </>
+      )
+    }
+  }
+
   return (
-    <div className='calendar-read'>
+    <div className='inscriptionEvent-create'>
       <div className='container'>
-        {renderBreadcrumb(process, call)}
+        {renderBreadcrumb(process, call, calendar)}
         <div className='form-container' id='main'>
           <h1>Novo evento de inscrição</h1>
           <AlertError errors={errorStore} />
-          {renderForm(createData, errors)}
+          {renderErrorMessage(errors)}
+          {renderForm(createData, errors, onChange, onCheck, onSubmit)}
         </div>
       </div>
     </div>
