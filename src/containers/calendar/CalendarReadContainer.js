@@ -22,6 +22,7 @@ const CalendarReadContainer = props => {
   useEffect(() => {
     clearErrors()
     readCalendar(id, {
+      withInscriptionEvent: true,
       callbackOk: cld => {
         readListCalendar({ call_ids: [cld.call_id] })
         readCall(cld.call_id, {
@@ -45,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     errorStore: state.errorStore,
     calendars: selectBrotherCalendarById(state, calendar_id, {}),
-    calendar: selectCalendarById(state, calendar_id, { withCalendarStatus: true }),
+    calendar: selectCalendarById(state, calendar_id, { withCalendarStatus: true, withInscriptionEvent: true }),
     calendarLoading: state.calendarStore.loading,
     call: selectCallByCalendarId(state, calendar_id, {}),
     process: selectProcessByCalendarId(state, calendar_id, { withCourse: true })

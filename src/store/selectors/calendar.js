@@ -3,7 +3,7 @@
 import { createSelector } from 'reselect'
 import moment from 'moment'
 
-import { makeSelectInscriptionEventById } from './inscriptionEvent'
+import { makeSelectInscriptionEventById, makeSelectInscriptionEventByCalendarId } from './inscriptionEvent'
 
 const calcCalendarStatus = (cld, calendars) => {
   const status = {
@@ -59,6 +59,13 @@ export const makeSelectCalendarById = () => {
         const selectCalendarById = makeSelectCalendarById()
         const fatherCalendar = selectCalendarById(store, calendar.calendar_id, options)
         calendar = { ...calendar, calendar: fatherCalendar ? fatherCalendar : null }
+      }
+
+      //add inscriptionEvents
+      if (calendar && options.withInscriptionEvent) {
+        const selectInscriptionEventByCalendarId = makeSelectInscriptionEventByCalendarId()
+        const iEvents = selectInscriptionEventByCalendarId(store, calendar.id, options)
+        calendar = { ...calendar, inscriptionEvents: iEvents ? iEvents : [] }
       }
 
       //calc status (need to have brother calendars on reducer)

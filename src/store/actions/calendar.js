@@ -11,6 +11,7 @@ import {
   READ_LIST_CALENDAR
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
+import { readListInscriptionEvent } from './inscriptionEvent'
 
 //Calendar loading
 export const setCalendarLoading = () => {
@@ -45,6 +46,11 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
         if (res.data.calendar_id !== null) {
           dispatch(readCalendar(res.data.calendar_id, options))
         }
+      }
+
+      //baixar inscriptionEvents associados
+      if (options.withInscriptionEvent) {
+        dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id] }))
       }
 
       //run callBack

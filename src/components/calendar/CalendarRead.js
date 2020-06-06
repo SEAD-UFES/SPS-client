@@ -7,18 +7,13 @@ import moment from 'moment'
 import AlertError from '../../components/common/AlertError'
 
 import DrawFilter from '../profile/DrawFilter'
+import InscriptionEventListOnCalendar from '../inscriptionEvent/InscriptionEventListOnCalendar'
+import { checkNested } from '../../utils/objectHelpers'
 
 const CalendarRead = props => {
   const { location } = props
   const { process, call, calendar } = props
-  //const { updateData, calendarOptions, errors, errorStore } = props
-  //const { onChange, onCheck, onSubmit } = props
-
-  //dummy props
-  // const process = null
-  // const call = null
-  // const calendar = null
-  const errorStore = {}
+  const { errorStore } = props
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -89,19 +84,38 @@ const CalendarRead = props => {
     )
   }
 
-  const renderAddEventType = () => {
-    return (
-      <div style={{ padding: '10px' }}>
-        <section id='eventos' className='quadro'>
-          <h4>Adicionar tipo de evento</h4>
-          <ul>
-            <li className='list-group-item'>
-              <Link to={`${props.match.url}/inscription-event/create`}>Evento de inscrições</Link>
-            </li>
-          </ul>
-        </section>
-      </div>
-    )
+  const renderAddEventType = calendar => {
+    const hasInscriptionEvent =
+      checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? true : false
+    const hasEvent = hasInscriptionEvent ? true : false
+
+    if (!hasEvent) {
+      return (
+        <div style={{ padding: '10px' }}>
+          <section id='eventos' className='quadro'>
+            <h4>Adicionar tipo de evento</h4>
+            <ul>
+              <li className='list-group-item'>
+                <Link to={`${props.match.url}/inscription-event/create`}>Evento de inscrições</Link>
+              </li>
+            </ul>
+          </section>
+        </div>
+      )
+    }
+
+    return null
+  }
+
+  const renderIsncriptionEvent = calendar => {
+    const hasInscriptionEvent =
+      checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? true : false
+
+    if (hasInscriptionEvent) {
+      return <InscriptionEventListOnCalendar calendar={calendar} course_id={process ? process.course_id : ''} />
+    }
+
+    return null
   }
 
   return (
@@ -113,7 +127,8 @@ const CalendarRead = props => {
           {renderUpdateButton(process, calendar, location)}
           <AlertError errors={errorStore} />
           {renderInfo(calendar)}
-          {renderAddEventType()}
+          {renderAddEventType(calendar)}
+          {renderIsncriptionEvent(calendar)}
         </div>
       </div>
     </div>

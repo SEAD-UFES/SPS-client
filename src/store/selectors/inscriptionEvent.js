@@ -30,7 +30,7 @@ export const makeSelectInscriptionEventByCalendarId = () => {
   return createSelector(
     [selectInscriptionEvent, getId, getOptions],
     (iEvents, id, options) => {
-      let selectedIEs = iEvents.filter(x => x.call_id === id)
+      let selectedIEs = iEvents.filter(x => x.calendar_id === id)
       return selectedIEs
     }
   )
