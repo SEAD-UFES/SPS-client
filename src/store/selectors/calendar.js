@@ -46,8 +46,8 @@ const selectCalendar = createSelector(
 
 export const makeSelectCalendarById = () => {
   const getStore = store => store
-  const getId = (store, id, options) => id
-  const getOptions = (store, id, options) => options
+  const getId = (store, id, options = {}) => id
+  const getOptions = (store, id, options = {}) => options
 
   return createSelector(
     [selectCalendar, getStore, getId, getOptions],
@@ -81,8 +81,8 @@ export const makeSelectCalendarById = () => {
 }
 
 export const makeSelectCalendarByCallId = () => {
-  const getId = (store, id, options) => id
-  const getOptions = (store, id, options) => options
+  const getId = (store, id, options = {}) => id
+  const getOptions = (store, id, options = {}) => options
 
   return createSelector(
     [selectCalendar, getId, getOptions],

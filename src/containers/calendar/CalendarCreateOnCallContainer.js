@@ -166,7 +166,7 @@ const mapStateToProps = (state, ownProps) => {
   try {
     return {
       errorStore: state.errorStore,
-      calendars: selectCalendarByCallId(state, call_id),
+      calendars: selectCalendarByCallId(state, call_id, {}),
       call: selectCallById(state, call_id, {}),
       callLoading: state.callStoreV2.loading,
       process: selectProcessByCallId(state, call_id, { withCourse: true })
