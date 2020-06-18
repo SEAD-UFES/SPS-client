@@ -73,13 +73,13 @@ const CalendarUpdate = props => {
         </div>
 
         <SelectListGroup
-          name='dependsOn'
+          name='calendar_id'
           label='Depende de...'
           placeholder='Selecione a atribuição (opcional)'
           value={updateData.calendar_id}
           options={calendarOptions}
           onChange={onChange}
-          error={errors.dependsOn}
+          error={errors.calendar_id}
           info='Campo opcional'
         />
 

@@ -2,18 +2,19 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import AlertError from '../../components/common/AlertError'
+import MyInscriptionListOnInscriptionEvent from '../../components/inscription/MyInscriptionListOnInscriptionEvent'
 
 const InscriptionEventRead = props => {
-  //const { process, call } = props
+  const { process, call, calendar, inscriptionEvent } = props
   //const { updateData, calendarOptions, errors, errorStore } = props
+  const { errorStore } = props
+
   //const { onChange, onCheck, onSubmit } = props
 
   //dummy props
-  const process = null
-  const call = null
-  const errorStore = {}
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -39,17 +40,75 @@ const InscriptionEventRead = props => {
     )
   }
 
+  const renderData = (calendar, inscriptionEvent) => {
+    return (
+      <section id='info'>
+        <div>
+          <p>
+            <strong>Início:</strong>
+            {calendar ? ` ${moment(calendar.start).format('DD/MM/YYYY HH:mm:ss')}` : null}
+          </p>
+          <p>
+            <strong>Encerramento:</strong>
+            {calendar
+              ? calendar.end
+                ? ` ${moment(calendar.end).format('DD/MM/YYYY HH:mm:ss')}`
+                : ` ${moment(calendar.start).format('DD/MM/YYYY HH:mm:ss')}`
+              : null}
+          </p>
+          <p>
+            <strong>Status do evento:</strong>
+            {calendar ? (calendar.status ? ` ${calendar.status}` : null) : null}
+          </p>
+        </div>
+        <div>
+          <p>
+            <strong>Número de inscrições:</strong>
+            {inscriptionEvent && inscriptionEvent.numberOfInscriptionsAllowed !== 0
+              ? ` ${inscriptionEvent.numberOfInscriptionsAllowed} inscrições por usuário`
+              : ' Inscrições ilimitadas'}
+          </p>
+          <p>
+            <strong>Cargos:</strong>
+            {inscriptionEvent && inscriptionEvent.allowMultipleAssignments
+              ? ' Permite múltiplos cargos'
+              : ' Permite apenas um cargo'}
+          </p>
+          <p>
+            <strong>Regiões:</strong>
+            {inscriptionEvent && inscriptionEvent.allowMultipleRegions
+              ? ' Permite múltiplas regiões'
+              : ' Permite apenas uma região'}
+          </p>
+          <p>
+            <strong>Restrições:</strong>
+            {inscriptionEvent && inscriptionEvent.allowMultipleRestrictions
+              ? ' Permite múltiplas restrições'
+              : ' Permite apenas uma restrição'}
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  const renderMyInscriptions = () => {
+    return <MyInscriptionListOnInscriptionEvent iEvent={inscriptionEvent} />
+  }
+
+  const renderAllInscriptions = () => {
+    return <p>Lista de inscritos.</p>
+  }
+
   return (
-    <div className='calendar-read'>
+    <div className='view-page'>
       <div className='container'>
         {renderBreadcrumb(process, call)}
-        <div className='form-container' id='main'>
+        <div id='main'>
           <h1>Evento de inscrição</h1>
           <AlertError errors={errorStore} />
-          <p>Dados de Calendar.</p>
-          <p>Dados de IncriptionEvent associado.</p>
-          <p>Minhas inscrições.</p>
-          <p>Lista de inscritos.</p>
+          {renderData(calendar, inscriptionEvent)}
+          {renderMyInscriptions()}
+          {renderAllInscriptions()}
         </div>
       </div>
     </div>

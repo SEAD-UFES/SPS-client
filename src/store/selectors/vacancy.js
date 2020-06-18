@@ -5,6 +5,8 @@ import { createSelector } from 'reselect'
 import { selectAssignment } from './assignment'
 import { selectRegion } from './region'
 import { selectRestriction } from './restriction'
+import { makeSelectCalendarById } from './calendar'
+import { makeSelectInscriptionEventById } from './inscriptionEvent'
 
 const selectVacancyStore = store => store.vacancyStore
 
@@ -49,8 +51,8 @@ export const makeSelectVacancyByCallId = () => {
       selectAssignment,
       selectRegion,
       selectRestriction,
-      (store, id, options) => id,
-      (store, id, options) => options
+      (store, id, options = {}) => id,
+      (store, id, options = {}) => options
     ],
     (vacancies, assignments, regions, restrictions, id, options) => {
       let selectedVacancies = vacancies.filter(x => x.call_id === id)
@@ -81,8 +83,46 @@ export const makeSelectVacancyByCallId = () => {
   )
 }
 
+const makeSelectVacancyByCalendarId = () => {
+  const selectCalendarById = makeSelectCalendarById()
+  const selectVacancyByCallId = makeSelectVacancyByCallId()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectCalendarById, getStore, getOptions],
+    (calendar, store, options) => {
+      if (!calendar) return []
+      const vacancies = selectVacancyByCallId(store, calendar.call_id, options)
+      return vacancies
+    }
+  )
+}
+
+const makeSelectVacancyByInscriptionEventId = () => {
+  const selectInscriptionEventById = makeSelectInscriptionEventById()
+  const selectVacancyByCalendarId = makeSelectVacancyByCalendarId()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectInscriptionEventById, getStore, getOptions],
+    (inscriptionEvent, store, options) => {
+      if (!inscriptionEvent) return []
+      const vacancies = selectVacancyByCalendarId(store, inscriptionEvent.calendar_id, options)
+      return vacancies
+    }
+  )
+}
+
 //single instance of selectVacancyById
 export const selectVacancyById = makeSelectVacancyById()
 
 //single instance of selectVacancyByCallId
 export const selectVacancyByCallId = makeSelectVacancyByCallId()
+
+//single instance of selectVacancyByCalendarId
+export const selectVacancyByCalendarId = makeSelectVacancyByCalendarId()
+
+//single instance of selectVacancyByInscriptionEventId
+export const selectVacancyByInscriptionEventId = makeSelectVacancyByInscriptionEventId()

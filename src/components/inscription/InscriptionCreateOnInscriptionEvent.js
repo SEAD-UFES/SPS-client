@@ -5,13 +5,28 @@ import { Link } from 'react-router-dom'
 
 import AlertError from '../../components/common/AlertError'
 import SelectListGroup from '../common/SelectListGroup'
-import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import { isEmpty } from '../../utils/objectHelpers'
 
-const InscriptionEventCreateOnCalendar = props => {
-  const { process, call, calendar } = props
-  const { createData, numberOfInscriptionsAllowedOptions, errors, errorStore } = props
-  const { onChange, onCheck, onSubmit } = props
+const InscriptionCreateOnInscriptionEvent = props => {
+  //const { process, call, calendar } = props
+
+  //const { createData, numberOfInscriptionsAllowedOptions, errors, errorStore } = props
+  const { createData, vacancyOptions, errors, errorStore } = props
+  //const { onChange, onCheck, onSubmit } = props
+  const { onChange } = props
+
+  console.log('VacancyOptions:', props.vacancyOptions)
+
+  //dummy data
+  const process = null
+  const call = null
+  const calendar = null
+  //const createData = {}
+  //const errors = {}
+  //const errorStore = {}
+
+  const onCheck = () => {}
+  const onSubmit = () => {}
 
   const renderBreadcrumb = (process, call, calendar) => {
     return (
@@ -45,44 +60,18 @@ const InscriptionEventCreateOnCalendar = props => {
   const renderForm = (createData, errors, onChange, onCheck, onSubmit) => {
     return (
       <form noValidate onSubmit={onSubmit}>
+        {/* Usuário (Person) */}
+
+        {/* Evento de inscrição (Edital/Chamada/Evento)*/}
+
         <SelectListGroup
-          name='numberOfInscriptionsAllowed'
-          label='Inscrições permitidas por usuário'
-          placeholder='Selecione o número de inscrições permitidas'
-          value={createData.numberOfInscriptionsAllowed}
-          options={numberOfInscriptionsAllowedOptions}
+          name='vacancy_id'
+          label='Escolha a vaga para qual deseja se inscrever'
+          placeholder='Escolha a vaga para qual deseja se inscrever'
+          value={createData.vacancy_id}
+          options={vacancyOptions}
           onChange={onChange}
-          error={errors.numberOfInscriptionsAllowed}
-        />
-
-        <CheckBoxFieldGroup
-          id='allowMultipleAssignments-checkbox'
-          name='allowMultipleAssignments'
-          text='Múltiplos cargos'
-          value='Permitir múltiplas inscrições com cargos diferentes.'
-          checked={createData.allowMultipleAssignments}
-          error={errors.allowMultipleAssignments}
-          onChange={onCheck}
-        />
-
-        <CheckBoxFieldGroup
-          id='allowMultipleRegions-checkbox'
-          name='allowMultipleRegions'
-          text='Múltiplas regiões'
-          value='Permitir múltiplas inscrições com regiões diferentes.'
-          checked={createData.allowMultipleRegions}
-          error={errors.allowMultipleRegions}
-          onChange={onCheck}
-        />
-
-        <CheckBoxFieldGroup
-          id='allowMultipleRestrictions-checkbox'
-          name='allowMultipleRestrictions'
-          text='Múltiplas restrições'
-          value='Permitir múltiplas inscrições com restrições diferentes.'
-          checked={createData.allowMultipleRestrictions}
-          error={errors.allowMultipleRestrictions}
-          onChange={onCheck}
+          error={errors.vacancy_id}
         />
 
         <input type='submit' className='btn btn-primary' value='Criar' />
@@ -107,7 +96,7 @@ const InscriptionEventCreateOnCalendar = props => {
       <div className='container'>
         {renderBreadcrumb(process, call, calendar)}
         <div className='form-container' id='main'>
-          <h1>Novo evento de inscrição</h1>
+          <h1>Nova inscrição</h1>
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
           {renderForm(createData, errors, onChange, onCheck, onSubmit)}
@@ -117,4 +106,4 @@ const InscriptionEventCreateOnCalendar = props => {
   )
 }
 
-export default InscriptionEventCreateOnCalendar
+export default InscriptionCreateOnInscriptionEvent

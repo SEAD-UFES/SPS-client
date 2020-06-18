@@ -74,7 +74,7 @@ const CalendarRead = props => {
         </p>
         <p>
           <strong>Pronto: </strong>
-          {calendar ? (calendar.ready ? 'Prnto' : 'Pendente') : null}
+          {calendar ? (calendar.ready ? 'Pronto' : 'Pendente') : null}
         </p>
         <p>
           <strong>Status: </strong>
