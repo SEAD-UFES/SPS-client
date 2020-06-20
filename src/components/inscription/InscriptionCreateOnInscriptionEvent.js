@@ -8,27 +8,11 @@ import SelectListGroup from '../common/SelectListGroup'
 import { isEmpty } from '../../utils/objectHelpers'
 
 const InscriptionCreateOnInscriptionEvent = props => {
-  //const { process, call, calendar } = props
-
-  //const { createData, numberOfInscriptionsAllowedOptions, errors, errorStore } = props
+  const { profileLoading, profilePerson, inscriptionEvent, call, process } = props
   const { createData, vacancyOptions, errors, errorStore } = props
-  //const { onChange, onCheck, onSubmit } = props
-  const { onChange } = props
+  const { onChange, onSubmit } = props
 
-  console.log('VacancyOptions:', props.vacancyOptions)
-
-  //dummy data
-  const process = null
-  const call = null
-  const calendar = null
-  //const createData = {}
-  //const errors = {}
-  //const errorStore = {}
-
-  const onCheck = () => {}
-  const onSubmit = () => {}
-
-  const renderBreadcrumb = (process, call, calendar) => {
+  const renderBreadcrumb = (process, call, inscriptionEvent) => {
     return (
       <div className='breadcrumb'>
         <span>Você está em:</span>
@@ -47,22 +31,55 @@ const InscriptionCreateOnInscriptionEvent = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/calendar/read/${calendar ? calendar.id : null}`} className='breadcrumb-link'>
-          {calendar ? `Calendário (${calendar.name})` : 'Calendário'}
+        <Link
+          to={`/inscription-event/read/${inscriptionEvent ? inscriptionEvent.id : null}`}
+          className='breadcrumb-link'>
+          {inscriptionEvent ? `Evento de inscrição` : 'Evento de inscrição'}
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Novo evento de inscrição</span>
+        <span>Nova inscrição</span>
       </div>
     )
   }
 
-  const renderForm = (createData, errors, onChange, onCheck, onSubmit) => {
+  const renderPersonData = () => {
+    if (profileLoading) return <p>carregando...</p>
+
+    if (isEmpty(profilePerson))
+      return (
+        <div className='alert alert-warning' role='alert'>
+          <h4 className='alert-heading'>Ação necessária.</h4>
+          <p>Para efetuar inscrições no sistema, é necessário preencher a sessão de dados pessoais.</p>
+          <hr />
+          <p className='mb-0'>
+            Clique <Link to={`/profile/edit-person`}>aqui</Link> para editar seus dados pessoais.
+          </p>
+        </div>
+      )
+
+    return (
+      <SelectListGroup
+        name='person_id'
+        label='Dados do usuário'
+        placeholder='Usuário'
+        value={createData.person_id}
+        options={[
+          { label: `${profilePerson.name} ${profilePerson.surname} - ${profilePerson.cpf}`, value: profilePerson.id }
+        ]}
+        onChange={onChange}
+        error={errors.person_id}
+        disabled={true}
+      />
+    )
+  }
+
+  const renderForm = (createData, errors, onChange, onSubmit) => {
     return (
       <form noValidate onSubmit={onSubmit}>
-        {/* Usuário (Person) */}
-
         {/* Evento de inscrição (Edital/Chamada/Evento)*/}
+
+        {renderPersonData()}
 
         <SelectListGroup
           name='vacancy_id'
@@ -73,7 +90,6 @@ const InscriptionCreateOnInscriptionEvent = props => {
           onChange={onChange}
           error={errors.vacancy_id}
         />
-
         <input type='submit' className='btn btn-primary' value='Criar' />
       </form>
     )
@@ -85,7 +101,7 @@ const InscriptionCreateOnInscriptionEvent = props => {
         <>
           {errors.message ? <p className='text-danger'>{errors.message}</p> : null}
           {errors.message ? <p className='text-danger'>{errors.id}</p> : null}
-          {errors.message ? <p className='text-danger'>{errors.calendar_id}</p> : null}
+          {errors.message ? <p className='text-danger'>{errors.inscriptionEvent_id}</p> : null}
         </>
       )
     }
@@ -94,12 +110,12 @@ const InscriptionCreateOnInscriptionEvent = props => {
   return (
     <div className='inscriptionEvent-create'>
       <div className='container'>
-        {renderBreadcrumb(process, call, calendar)}
+        {renderBreadcrumb(process, call, inscriptionEvent)}
         <div className='form-container' id='main'>
           <h1>Nova inscrição</h1>
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
-          {renderForm(createData, errors, onChange, onCheck, onSubmit)}
+          {renderForm(createData, errors, onChange, onSubmit)}
         </div>
       </div>
     </div>

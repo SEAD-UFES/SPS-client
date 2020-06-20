@@ -23,6 +23,7 @@ const InscriptionEventReadContainer = props => {
     clearErrors()
     //get InscriptionEvent
     readInscriptionEvent(id, {
+      withInscription: true,
       callbackOk: iEvent => {
         //get Calendar
         readCalendar(iEvent.calendar_id, {
@@ -53,7 +54,7 @@ const mapStateToProps = (state, ownProps) => {
   const iEvent_id = ownProps.match.params.id
 
   return {
-    inscriptionEvent: selectInscriptionEventById(state, iEvent_id, {}),
+    inscriptionEvent: selectInscriptionEventById(state, iEvent_id, { withInscription: true }),
     calendar: selectCalendarByInscriptionEventId(state, iEvent_id, { withCalendarStatus: true }),
     call: selectCallByInscriptionEventId(state, iEvent_id, {}),
     process: selectProcessByInscriptionEventId(state, iEvent_id, {}),
