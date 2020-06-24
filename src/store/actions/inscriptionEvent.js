@@ -1,5 +1,7 @@
 /** @format */
 
+import _ from 'lodash'
+
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import {
@@ -11,6 +13,7 @@ import {
   READ_LIST_INSCRIPTIONEVENT
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
+import { readListInscription } from './inscription'
 
 //InscriptionEvent loading
 export const setInscriptionEventLoading = () => {
@@ -34,11 +37,20 @@ export const createInscriptionEvent = (data, options = {}) => (dispatch, getStat
 
 //InscriptionEvent read
 export const readInscriptionEvent = (id, options = {}) => (dispatch, getState) => {
+  const newOptions = _.omit(options, 'callbackOk')
+
   dispatch(setInscriptionEventLoading())
   spsApi
     .get(`/v1/inscriptionevents/${id}`)
     .then(res => {
       dispatch({ type: READ_INSCRIPTIONEVENT, payload: res.data })
+
+      //get inscriptions if needed
+      if (options.withInscription) {
+        console.log('vou pegar inscription')
+        console.log(newOptions)
+        dispatch(readListInscription({ inscriptionEvent_ids: [res.data.id], ...newOptions }))
+      }
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -78,15 +90,22 @@ export const deleteInscriptionEvent = (id, options = {}) => (dispatch, getState)
 
 //InscriptionEvent Add List
 export const readListInscriptionEvent = (options = {}) => dispatch => {
-  dispatch(setInscriptionEventLoading())
   let url = `/v1/inscriptionevents`
   const calendarIdsString = options.calendar_ids ? convertArrayToQueryString('calendar_ids', options.calendar_ids) : ''
   url = `${url}?${calendarIdsString}`
+  const newOptions = _.omit(options, 'callbackOk')
 
+  dispatch(setInscriptionEventLoading())
   spsApi
     .get(url)
     .then(res => {
       dispatch({ type: READ_LIST_INSCRIPTIONEVENT, payload: res.data })
+
+      //get inscriptions if needed
+      if (options.withInscription) {
+        const iEventIds = res.data.map(ie => ie.id)
+        dispatch(readListInscription({ inscriptionEvent_ids: iEventIds, ...newOptions }))
+      }
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -107,7 +126,7 @@ const handleErrors = (err, dispatch) => {
   } else {
     dispatch({
       type: GET_ERRORS,
-      payload: { anotherError: true }
+      payload: { anotherError: true, message: err.message }
     })
   }
 }

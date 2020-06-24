@@ -13,6 +13,10 @@ import { selectInscriptionEventById } from '../../store/selectors/inscriptionEve
 import { selectCalendarByInscriptionEventId } from '../../store/selectors/calendar'
 import { selectCallByInscriptionEventId } from '../../store/selectors/call'
 import { selectProcessByInscriptionEventId } from '../../store/selectors/process'
+import {
+  selectInscriptionByInscriptionEventId,
+  selectMyInscriptionByInscriptionEventId
+} from '../../store/selectors/inscription'
 
 const InscriptionEventReadContainer = props => {
   const id = props.match.params.id
@@ -24,6 +28,10 @@ const InscriptionEventReadContainer = props => {
     //get InscriptionEvent
     readInscriptionEvent(id, {
       withInscription: true,
+      withVacancy: true,
+      withAssignment: true,
+      withRegion: true,
+      withRestriction: true,
       callbackOk: iEvent => {
         //get Calendar
         readCalendar(iEvent.calendar_id, {
@@ -54,6 +62,13 @@ const mapStateToProps = (state, ownProps) => {
   const iEvent_id = ownProps.match.params.id
 
   return {
+    myInscriptions: selectMyInscriptionByInscriptionEventId(state, iEvent_id, {
+      withVacancy: true,
+      withAssignment: true,
+      withRegion: true,
+      withRestriction: true
+    }),
+    allInscriptions: selectInscriptionByInscriptionEventId(state, iEvent_id, {}),
     inscriptionEvent: selectInscriptionEventById(state, iEvent_id, { withInscription: true }),
     calendar: selectCalendarByInscriptionEventId(state, iEvent_id, { withCalendarStatus: true }),
     call: selectCallByInscriptionEventId(state, iEvent_id, {}),

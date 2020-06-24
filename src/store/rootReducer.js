@@ -29,6 +29,7 @@ import regionReducerV2 from './reducers/region'
 import restrictionReducerV2 from './reducers/restriction'
 import calendarReducer from './reducers/calendar'
 import inscriptionEventReducer from './reducers/inscriptionEvent'
+import inscriptionReducer from './reducers/inscription'
 
 export default combineReducers({
   //Stores V1
@@ -57,5 +58,6 @@ export default combineReducers({
   regionStoreV2: regionReducerV2,
   restrictionStoreV2: restrictionReducerV2,
   calendarStore: calendarReducer,
-  inscriptionEventStore: inscriptionEventReducer
+  inscriptionEventStore: inscriptionEventReducer,
+  inscriptionStore: inscriptionReducer
 })

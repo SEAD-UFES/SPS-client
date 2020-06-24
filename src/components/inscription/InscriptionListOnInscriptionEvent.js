@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { checkNested } from '../../utils/objectHelpers'
 
-const MyInscriptionListOnInscriptionEvent = props => {
+const InscriptionListOnInscriptionEvent = props => {
   const { course_id, iEvent, inscriptions } = props
 
   const renderCreateButton = iEvent => {
@@ -20,7 +20,7 @@ const MyInscriptionListOnInscriptionEvent = props => {
     )
   }
 
-  const renderMyInscriptionList = (inscriptions, course_id) => {
+  const renderInscriptionList = (inscriptions, course_id) => {
     return (
       <div>
         {inscriptions && inscriptions.length > 0 ? (
@@ -61,11 +61,11 @@ const MyInscriptionListOnInscriptionEvent = props => {
 
   return (
     <section id='inscriptionEvents' className='quadro'>
-      <h4>Minhas inscrições</h4>
+      <h4>Lista de inscritos</h4>
       {renderCreateButton(iEvent)}
-      {renderMyInscriptionList(inscriptions, course_id)}
+      {renderInscriptionList(inscriptions, course_id)}
     </section>
   )
 }
 
-export default MyInscriptionListOnInscriptionEvent
+export default InscriptionListOnInscriptionEvent

@@ -1,8 +1,18 @@
 /** @format */
 
+import _ from 'lodash'
+
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
-import { LOADING_INSCRIPTION, CREATE_INSCRIPTION } from '../../store/actionTypes'
+import {
+  LOADING_INSCRIPTION,
+  CREATE_INSCRIPTION,
+  READ_INSCRIPTION,
+  DELETE_INSCRIPTION,
+  READ_LIST_INSCRIPTION
+} from '../../store/actionTypes'
+import { convertArrayToQueryString } from '../../utils/queryHelpers'
+import { readVacancy } from './vacancy'
 
 //Inscription loading
 export const setInscriptionLoading = () => {
@@ -24,6 +34,73 @@ export const createInscription = (data, options = {}) => (dispatch, getState) =>
     })
 }
 
+//Inscription read
+export const readInscription = (id, options = {}) => (dispatch, getState) => {
+  const newOptions = _.omit(options, 'callbackOk')
+
+  dispatch(setInscriptionLoading())
+  spsApi
+    .get(`/v1/inscriptions/${id}`)
+    .then(res => {
+      dispatch({ type: READ_INSCRIPTION, payload: res.data })
+
+      //include vacancy if needed
+      if (options.withVacancy) {
+        const vacancy_id = res.data.vacancy_id
+        dispatch(readVacancy(vacancy_id, newOptions))
+      }
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => handleErrors(err, dispatch))
+}
+
+//Inscription delete
+export const deleteInscription = (id, options = {}) => (dispatch, getState) => {
+  spsApi
+    .delete(`/v1/inscriptions/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_INSCRIPTION, payload: id })
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
+}
+
+//Inscription Add List
+export const readListInscription = (options = {}) => dispatch => {
+  const newOptions = _.omit(options, 'callbackOk')
+  let url = `/v1/inscriptions`
+  const iEventIdsString = options.inscriptionEvent_ids
+    ? convertArrayToQueryString('inscriptionEvent_ids', options.inscriptionEvent_ids)
+    : ''
+  url = `${url}?${iEventIdsString}`
+
+  dispatch(setInscriptionLoading())
+  spsApi
+    .get(url)
+    .then(res => {
+      dispatch({ type: READ_LIST_INSCRIPTION, payload: res.data })
+
+      //include vacancy if needed
+      if (options.withVacancy) {
+        const vacancyIds = [...new Set(res.data.map(ins => ins.vacancy_id))]
+        vacancyIds.map(id => {
+          console.log('options:', options)
+          return dispatch(readVacancy(id, newOptions))
+        })
+      }
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => handleErrors(err, dispatch))
+}
+
 //Function to handle errors
 const handleErrors = (err, dispatch) => {
   if (err.response) {
@@ -37,7 +114,7 @@ const handleErrors = (err, dispatch) => {
   } else {
     dispatch({
       type: GET_ERRORS,
-      payload: { anotherError: true }
+      payload: { anotherError: true, message: err.message }
     })
   }
 }

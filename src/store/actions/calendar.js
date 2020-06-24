@@ -1,5 +1,7 @@
 /** @format */
 
+import _ from 'lodash'
+
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import {
@@ -35,6 +37,8 @@ export const createCalendar = (data, options = {}) => (dispatch, getState) => {
 
 //Calendar read
 export const readCalendar = (id, options = {}) => (dispatch, getState) => {
+  const newOptions = _.omit(options, 'callbackOk')
+
   dispatch(setCalendarLoading())
   spsApi
     .get(`/v1/calendars/${id}`)
@@ -44,13 +48,13 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
       //baixar calendarios associados
       if (options.withCalendar) {
         if (res.data.calendar_id !== null) {
-          dispatch(readCalendar(res.data.calendar_id, options))
+          dispatch(readCalendar(res.data.calendar_id))
         }
       }
 
       //baixar inscriptionEvents associados
       if (options.withInscriptionEvent) {
-        dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id] }))
+        dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id], ...newOptions }))
       }
 
       //run callBack
@@ -120,7 +124,7 @@ const handleErrors = (err, dispatch) => {
   } else {
     dispatch({
       type: GET_ERRORS,
-      payload: { anotherError: true }
+      payload: { anotherError: true, message: err.message }
     })
   }
 }

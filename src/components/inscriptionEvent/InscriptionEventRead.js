@@ -6,9 +6,10 @@ import moment from 'moment'
 
 import AlertError from '../../components/common/AlertError'
 import MyInscriptionListOnInscriptionEvent from '../../components/inscription/MyInscriptionListOnInscriptionEvent'
+import InscriptionListOnInscriptionEvent from '../../components/inscription/InscriptionListOnInscriptionEvent'
 
 const InscriptionEventRead = props => {
-  const { process, call, calendar, inscriptionEvent } = props
+  const { process, call, calendar, inscriptionEvent, myInscriptions, allInscriptions } = props
   //const { updateData, calendarOptions, errors, errorStore } = props
   const { errorStore } = props
 
@@ -92,11 +93,11 @@ const InscriptionEventRead = props => {
   }
 
   const renderMyInscriptions = () => {
-    return <MyInscriptionListOnInscriptionEvent iEvent={inscriptionEvent} />
+    return <MyInscriptionListOnInscriptionEvent iEvent={inscriptionEvent} inscriptions={myInscriptions} />
   }
 
   const renderAllInscriptions = () => {
-    return <p>Lista de inscritos.</p>
+    return <InscriptionListOnInscriptionEvent iEvent={inscriptionEvent} inscriptions={allInscriptions} />
   }
 
   return (

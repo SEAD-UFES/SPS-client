@@ -86,6 +86,7 @@ export const deleteCall = (id, options = {}) => (dispatch, getState) => {
 
 //Function to handle errors
 const handleErrors = (err, dispatch) => {
+  console.log('Erro em call action')
   if (err.response) {
     let errors = {}
     errors.data = err.response.data
