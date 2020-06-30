@@ -1,8 +1,9 @@
 /** @format */
 
 import { createSelector } from 'reselect'
+
 import { checkNested } from '../../utils/objectHelpers'
-import { selectVacancyById } from './vacancy'
+import { makeSelectVacancyById } from './vacancy'
 
 const selectInscriptionStore = store => store.inscriptionStore
 
@@ -28,11 +29,16 @@ export const makeSelectInscriptionById = () => {
 export const makeSelectInscriptionByInscriptionEventId = () => {
   const getId = (store, id, options) => id
   const getOptions = (store, id, options) => options
+  const getStore = store => store
+
+  console.log(makeSelectVacancyById)
+  const selecInscriptionEventBy = makeSelectVacancyById()
 
   return createSelector(
-    [selectInscription, getId, getOptions],
-    (inscriptions, id, options) => {
+    [selectInscription, getStore, getId, getOptions],
+    (inscriptions, store, id, options) => {
       let selectedInscriptions = inscriptions.filter(x => x.inscriptionEvent_id === id)
+
       return selectedInscriptions
     }
   )
@@ -48,6 +54,7 @@ export const makeSelectMyInscriptionByInscriptionEventId = () => {
       : null
     return personId
   }
+  const selectVacancyById = makeSelectVacancyById()
 
   return createSelector(
     [selectInscription, getPersonId, getStore, getId, getOptions],

@@ -2,14 +2,9 @@
 
 import { createSelector } from 'reselect'
 
-import { makeSelectInscriptionByInscriptionEventId } from './inscription'
+import { selectInscriptionEvent } from './inscriptionEvent'
 
-const selectInscriptionEventStore = store => store.inscriptionEventStore
-
-const selectInscriptionEvent = createSelector(
-  [selectInscriptionEventStore],
-  iEs => iEs.allIds.map(id => ({ ...iEs.byId[id] }))
-)
+import { makeSelectInscriptionByInscriptionEventId } from '../inscription'
 
 export const makeSelectInscriptionEventById = () => {
   const getStore = store => store
@@ -32,21 +27,5 @@ export const makeSelectInscriptionEventById = () => {
   )
 }
 
-export const makeSelectInscriptionEventByCalendarId = () => {
-  const getId = (store, id, options) => id
-  const getOptions = (store, id, options) => options
-
-  return createSelector(
-    [selectInscriptionEvent, getId, getOptions],
-    (iEvents, id, options) => {
-      let selectedIEs = iEvents.filter(x => x.calendar_id === id)
-      return selectedIEs
-    }
-  )
-}
-
 //single instance of selectInscriptionEventById
 export const selectInscriptionEventById = makeSelectInscriptionEventById()
-
-//single instance of selectInscriptionEventByCalendarId
-export const selectInscriptionEventByCalendarId = makeSelectInscriptionEventByCalendarId()

@@ -17,7 +17,7 @@ import { selectVacancyByInscriptionEventId } from '../../store/selectors/vacancy
 import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
 import { validateVacancyId, validateBody } from '../../validation/inscription'
 import { checkNested } from '../../utils/objectHelpers'
-import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent'
+import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent/selectInscriptionEventById'
 import { selectCallByInscriptionEventId } from '../../store/selectors/call'
 import { selectProcessByInscriptionEventId } from '../../store/selectors/process'
 

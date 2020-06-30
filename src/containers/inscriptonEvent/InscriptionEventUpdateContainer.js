@@ -10,7 +10,7 @@ import { readInscriptionEvent, updateInscriptionEvent } from '../../store/action
 import { readCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent'
+import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent/selectInscriptionEventById'
 import { selectCalendarByInscriptionEventId } from '../../store/selectors/calendar'
 import { selectCallByInscriptionEventId } from '../../store/selectors/call'
 import { selectProcessByInscriptionEventId } from '../../store/selectors/process'

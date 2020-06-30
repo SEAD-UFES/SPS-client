@@ -6,11 +6,11 @@ import { selectAssignment } from './assignment'
 import { selectRegion } from './region'
 import { selectRestriction } from './restriction'
 import { makeSelectCalendarById } from './calendar'
-import { makeSelectInscriptionEventById } from './inscriptionEvent'
+import { makeSelectInscriptionEventById_single } from './inscriptionEvent/selectInscriptionEventById_single'
 
-const selectVacancyStore = store => store.vacancyStore
+export const selectVacancyStore = store => store.vacancyStore
 
-const selectVacancy = createSelector(
+export const selectVacancy = createSelector(
   [selectVacancyStore],
   vs => vs.allIds.map(id => ({ ...vs.byId[id] }))
 )
@@ -100,7 +100,7 @@ const makeSelectVacancyByCalendarId = () => {
 }
 
 const makeSelectVacancyByInscriptionEventId = () => {
-  const selectInscriptionEventById = makeSelectInscriptionEventById()
+  const selectInscriptionEventById = makeSelectInscriptionEventById_single()
   const selectVacancyByCalendarId = makeSelectVacancyByCalendarId()
   const getStore = store => store
   const getOptions = (store, id, options = {}) => options

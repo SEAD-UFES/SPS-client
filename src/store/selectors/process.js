@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 
 import { makeSelectCallById, makeSelectCallByCalendarId } from './call'
 import { makeSelectVacancyById } from './vacancy'
-import { makeSelectInscriptionEventById } from './inscriptionEvent'
+import { makeSelectInscriptionEventById_single } from './inscriptionEvent/selectInscriptionEventById_single'
 
 //make selector process by id
 export const makeSelectProcessById = () => (store, id, options = {}) => {
@@ -56,7 +56,7 @@ export const makeSelectProcessByCalendarId = () => {
 }
 
 export const makeSelectProcessByInscriptionEventId = () => {
-  const selectInscriptionEventById = makeSelectInscriptionEventById()
+  const selectInscriptionEventById = makeSelectInscriptionEventById_single()
   const selectProcessByCalendarId = makeSelectProcessByCalendarId()
   const getStore = store => store
   const getOptions = (store, id, options = {}) => options

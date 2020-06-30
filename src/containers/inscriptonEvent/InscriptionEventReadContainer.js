@@ -9,7 +9,7 @@ import { readInscriptionEvent } from '../../store/actions/inscriptionEvent'
 import { readCalendar, readListCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent'
+import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent/selectInscriptionEventById'
 import { selectCalendarByInscriptionEventId } from '../../store/selectors/calendar'
 import { selectCallByInscriptionEventId } from '../../store/selectors/call'
 import { selectProcessByInscriptionEventId } from '../../store/selectors/process'
@@ -68,7 +68,12 @@ const mapStateToProps = (state, ownProps) => {
       withRegion: true,
       withRestriction: true
     }),
-    allInscriptions: selectInscriptionByInscriptionEventId(state, iEvent_id, {}),
+    allInscriptions: selectInscriptionByInscriptionEventId(state, iEvent_id, {
+      withVacancy: true,
+      withAssignment: true,
+      withRegion: true,
+      withRestriction: true
+    }),
     inscriptionEvent: selectInscriptionEventById(state, iEvent_id, { withInscription: true }),
     calendar: selectCalendarByInscriptionEventId(state, iEvent_id, { withCalendarStatus: true }),
     call: selectCallByInscriptionEventId(state, iEvent_id, {}),

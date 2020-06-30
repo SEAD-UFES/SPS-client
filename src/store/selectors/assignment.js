@@ -9,10 +9,18 @@ export const selectAssignment = createSelector(
   as => as.allIds.map(id => ({ ...as.byId[id] }))
 )
 
-export const selectAssignmentById = createSelector(
-  [],
-  () => {}
-)
+export const makeSelectAssignmentById = () => {
+  const getId = (store, id) => id
+
+  return createSelector(
+    [selectAssignment, getId],
+    (assignments, id) => {
+      return assignments.find(assig => assig.id === id)
+    }
+  )
+}
+
+export const selectAssignmentById = makeSelectAssignmentById()
 
 export const selectAssignment_old = store => {
   const byId = store.assignmentStoreV2.byId
