@@ -16,7 +16,7 @@ import { selectProcessByInscriptionEventId } from '../../store/selectors/process
 import {
   selectInscriptionByInscriptionEventId,
   selectMyInscriptionByInscriptionEventId
-} from '../../store/selectors/inscription'
+} from '../../store/selectors/inscription/inscription'
 
 const InscriptionEventReadContainer = props => {
   const id = props.match.params.id
@@ -29,6 +29,7 @@ const InscriptionEventReadContainer = props => {
     readInscriptionEvent(id, {
       withInscription: true,
       withVacancy: true,
+      withPerson: true,
       withAssignment: true,
       withRegion: true,
       withRestriction: true,
@@ -70,6 +71,7 @@ const mapStateToProps = (state, ownProps) => {
     }),
     allInscriptions: selectInscriptionByInscriptionEventId(state, iEvent_id, {
       withVacancy: true,
+      withPerson: true,
       withAssignment: true,
       withRegion: true,
       withRestriction: true

@@ -2,12 +2,13 @@
 
 import { createSelector } from 'reselect'
 
-import { checkNested } from '../../utils/objectHelpers'
-import { makeSelectVacancyById } from './vacancy'
+import { checkNested } from '../../../utils/objectHelpers'
+import { makeSelectVacancyById } from '../vacancy'
+import { makeSelectPersonById } from '../person/selectPersonById'
 
 const selectInscriptionStore = store => store.inscriptionStore
 
-const selectInscription = createSelector(
+export const selectInscription = createSelector(
   [selectInscriptionStore],
   is => is.allIds.map(id => ({ ...is.byId[id] }))
 )
@@ -31,13 +32,28 @@ export const makeSelectInscriptionByInscriptionEventId = () => {
   const getOptions = (store, id, options) => options
   const getStore = store => store
 
-  console.log(makeSelectVacancyById)
-  const selecInscriptionEventBy = makeSelectVacancyById()
-
   return createSelector(
     [selectInscription, getStore, getId, getOptions],
     (inscriptions, store, id, options) => {
       let selectedInscriptions = inscriptions.filter(x => x.inscriptionEvent_id === id)
+
+      //insert vacancy if needed
+      if (options.withVacancy) {
+        selectedInscriptions = selectedInscriptions.map(ins => {
+          const selectVacancyById = makeSelectVacancyById()
+          return { ...ins, vacancy: selectVacancyById(store, ins.vacancy_id, options) }
+        })
+      }
+
+      //insert person if needed
+      if (options.withPerson) {
+        selectedInscriptions = selectedInscriptions.map(ins => {
+          const selectPersonById = makeSelectPersonById()
+          console.log('ins.person_id', ins.person_id)
+          console.log('selector', selectPersonById(store, ins.person_id, options))
+          return { ...ins, person: selectPersonById(store, ins.person_id, options) }
+        })
+      }
 
       return selectedInscriptions
     }
@@ -48,13 +64,13 @@ export const makeSelectMyInscriptionByInscriptionEventId = () => {
   const getId = (store, id, options = {}) => id
   const getOptions = (store, id, options = {}) => options
   const getStore = store => store
+  const selectVacancyById = makeSelectVacancyById()
   const getPersonId = store => {
     const personId = checkNested(store, 'profileStore', 'profile', 'Person', 'id')
       ? store.profileStore.profile.Person.id
       : null
     return personId
   }
-  const selectVacancyById = makeSelectVacancyById()
 
   return createSelector(
     [selectInscription, getPersonId, getStore, getId, getOptions],

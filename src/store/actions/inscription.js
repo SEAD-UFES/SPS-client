@@ -13,6 +13,7 @@ import {
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 import { readVacancy } from './vacancy'
+import { readPerson } from './person'
 
 //Inscription loading
 export const setInscriptionLoading = () => {
@@ -48,6 +49,12 @@ export const readInscription = (id, options = {}) => (dispatch, getState) => {
       if (options.withVacancy) {
         const vacancy_id = res.data.vacancy_id
         dispatch(readVacancy(vacancy_id, newOptions))
+      }
+
+      //include person if needed
+      if (options.withPerson) {
+        const person_id = res.data.person_id
+        dispatch(readPerson(person_id, newOptions))
       }
 
       //run callBack
@@ -90,8 +97,15 @@ export const readListInscription = (options = {}) => dispatch => {
       if (options.withVacancy) {
         const vacancyIds = [...new Set(res.data.map(ins => ins.vacancy_id))]
         vacancyIds.map(id => {
-          console.log('options:', options)
           return dispatch(readVacancy(id, newOptions))
+        })
+      }
+
+      //include person if needed
+      if (options.withPerson) {
+        const personIds = [...new Set(res.data.map(ins => ins.person_id))]
+        personIds.map(id => {
+          return dispatch(readPerson(id, newOptions))
         })
       }
 

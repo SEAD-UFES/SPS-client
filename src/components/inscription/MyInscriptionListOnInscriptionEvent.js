@@ -60,7 +60,7 @@ const MyInscriptionListOnInscriptionEvent = props => {
   }
 
   return (
-    <section id='inscriptionEvents' className='quadro'>
+    <section id='myInscriptions' className='quadro'>
       <h4>Minhas inscrições</h4>
       {renderCreateButton(iEvent)}
       {renderMyInscriptionList(inscriptions, course_id)}

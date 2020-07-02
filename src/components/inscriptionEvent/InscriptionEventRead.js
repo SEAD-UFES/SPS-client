@@ -13,6 +13,8 @@ const InscriptionEventRead = props => {
   //const { updateData, calendarOptions, errors, errorStore } = props
   const { errorStore } = props
 
+  console.log(allInscriptions)
+
   //const { onChange, onCheck, onSubmit } = props
 
   //dummy props

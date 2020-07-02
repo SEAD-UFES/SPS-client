@@ -1,7 +1,6 @@
 /** @format */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import { checkNested } from '../../utils/objectHelpers'
 
@@ -16,6 +15,7 @@ const InscriptionListOnInscriptionEvent = props => {
             <div className='titulos'>
               <span>Número</span>
               <span>Data</span>
+              <span>Candidato</span>
               <span>Vaga</span>
               <span />
             </div>
@@ -24,6 +24,7 @@ const InscriptionListOnInscriptionEvent = props => {
                 <li key={ins.id}>
                   <h3>{ins.number}</h3>
                   <p>{ins.createdAt}</p>
+                  <p>{checkNested(ins, 'person') ? `${ins.person.name} ${ins.person.surname}` : 'carregando...'}</p>
                   <p>
                     {checkNested(ins, 'vacancy', 'assignment', 'name') ? `${ins.vacancy.assignment.name}` : ''}
                     {checkNested(ins, 'vacancy', 'region', 'name') ? ` - ${ins.vacancy.region.name}` : ' - sem região'}
@@ -31,11 +32,7 @@ const InscriptionListOnInscriptionEvent = props => {
                       ? ` - ${ins.vacancy.restriction.name}`
                       : '- sem restrição'}
                   </p>
-                  <p className='text-right'>
-                    <Link className='btn-icon' to={`/inscription/delete/${ins.id}`}>
-                      <i className='fas fa-trash' />
-                    </Link>
-                  </p>
+                  <p className='text-right' />
                 </li>
               )
             })}
@@ -48,7 +45,7 @@ const InscriptionListOnInscriptionEvent = props => {
   }
 
   return (
-    <section id='inscriptionEvents' className='quadro'>
+    <section id='inscriptions' className='quadro'>
       <h4>Lista de inscritos</h4>
       {renderInscriptionList(inscriptions, course_id)}
     </section>

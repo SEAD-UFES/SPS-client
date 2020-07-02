@@ -1450,4 +1450,84 @@ footer #copyright p span a:hover {
   }
 }
 
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #myInscriptions .table-list .titulos span:nth-of-type(1) {
+    width: 20%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(2) {
+    width: 35%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(3) {
+    width: 35%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(4) {
+    width: 10%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(5) {
+    width: unset;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #myInscriptions .table-list li h3 {
+    width: 20%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(1) {
+    width: 35%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(2) {
+    width: 35%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(3) {
+    width: 10%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(4) {
+    width: unset;
+  }
+  #myInscriptions .table-list li p:nth-of-type(5) {
+    width: unset;
+  }
+}
+
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #inscriptions .table-list .titulos span:nth-of-type(1) {
+    width: 15%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(2) {
+    width: 25%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(3) {
+    width: 25%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(4) {
+    width: 25%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(5) {
+    width: 10%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #inscriptions .table-list li h3 {
+    width: 15%;
+  }
+  #inscriptions .table-list li p:nth-of-type(1) {
+    width: 25%;
+  }
+  #inscriptions .table-list li p:nth-of-type(2) {
+    width: 25%;
+  }
+  #inscriptions .table-list li p:nth-of-type(3) {
+    width: 25%;
+  }
+  #inscriptions .table-list li p:nth-of-type(4) {
+    width: 10%;
+  }
+  #inscriptions .table-list li p:nth-of-type(5) {
+    width: unset;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

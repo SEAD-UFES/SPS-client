@@ -7,7 +7,7 @@ import PrivateRoute from '../../components/common/PrivateRoute'
 import CalendarReadContainer from './CalendarReadContainer'
 import CalendarUpdateContainer from './CalendarUpdateContainer'
 import CalendarDeleteContainer from './CalendarDeleteContainer'
-import InscriptionEventCreateOnCalendarContainer from '../inscriptonEvent/InscriptionEventCreateOnCalendarContainer'
+import InscriptionEventCreateOnCalendarContainer from '../inscriptionEvent/InscriptionEventCreateOnCalendarContainer'
 import NotFound from '../../components/common/NotFound'
 
 export default class VacancyRoutes extends Component {

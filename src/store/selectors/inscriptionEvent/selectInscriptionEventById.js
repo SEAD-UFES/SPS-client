@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 
 import { selectInscriptionEvent } from './inscriptionEvent'
 
-import { makeSelectInscriptionByInscriptionEventId } from '../inscription'
+import { makeSelectInscriptionByInscriptionEventId } from '../inscription/inscription'
 
 export const makeSelectInscriptionEventById = () => {
   const getStore = store => store

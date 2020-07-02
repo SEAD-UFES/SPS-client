@@ -47,8 +47,6 @@ export const readInscriptionEvent = (id, options = {}) => (dispatch, getState) =
 
       //get inscriptions if needed
       if (options.withInscription) {
-        console.log('vou pegar inscription')
-        console.log(newOptions)
         dispatch(readListInscription({ inscriptionEvent_ids: [res.data.id], ...newOptions }))
       }
 
