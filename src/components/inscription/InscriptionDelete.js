@@ -5,13 +5,17 @@ import { Link } from 'react-router-dom'
 
 import AlertError from '../../components/common/AlertError'
 import { isEmpty, checkNested } from '../../utils/objectHelpers'
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
+import moment from 'moment'
 
 const InscriptionDelete = props => {
   const { process, call, calendar, inscriptionEvent, inscription } = props
-  const { errors, errorStore, history } = props
-  const { onSubmit } = props
+  const { deleteData, errors, errorStore, history } = props
+  const { onSubmit, onChange } = props
 
-  const renderBreadcrumb = (process, call, calendar, inscriptionEvent) => {
+  console.log('inscription', inscription)
+
+  const renderBreadcrumb = (process, call, inscriptionEvent) => {
     return (
       <div className='breadcrumb'>
         <span>Você está em:</span>
@@ -42,7 +46,7 @@ const InscriptionDelete = props => {
     )
   }
 
-  const renderInfo = (process, call, calendar, inscriptionEvent, inscription) => {
+  const renderInfo = (process, call, calendar, inscription) => {
     return (
       <div>
         <p>
@@ -62,23 +66,26 @@ const InscriptionDelete = props => {
         </p>
 
         <p>
-          <strong>Inscrições por usuário: </strong>
-          {inscriptionEvent ? inscriptionEvent.numberOfInscriptionsAllowed : null}
+          <strong>Data de inscrição: </strong>
+          {inscription ? moment(inscription.createdAt, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss') : null}
         </p>
 
         <p>
-          <strong>Permitir múltiplos cargos: </strong>
-          {inscriptionEvent ? (inscriptionEvent.allowMultipleAssignments ? 'Sim' : 'Não') : null}
+          <strong>Candidato: </strong>
+          {checkNested(inscription, 'person', 'name')
+            ? `${inscription.person.name} ${inscription.person.surname}`
+            : null}
         </p>
 
         <p>
-          <strong>Permitir múltiplas regiões: </strong>
-          {inscriptionEvent ? (inscriptionEvent.allowMultipleRegions ? 'Sim' : 'Não') : null}
-        </p>
-
-        <p>
-          <strong>Permitir múltiplas restrições: </strong>
-          {inscriptionEvent ? (inscriptionEvent.allowMultipleRestrictions ? 'Sim' : 'Não') : null}
+          <strong>Vaga: </strong>
+          {checkNested(inscription, 'vacancy', 'assignment', 'name') ? inscription.vacancy.assignment.name : null}
+          {' - '}
+          {checkNested(inscription, 'vacancy', 'region', 'name') ? inscription.vacancy.region.name : 'Sem região'}
+          {' - '}
+          {checkNested(inscription, 'vacancy', 'restriction', 'name')
+            ? inscription.vacancy.restriction.name
+            : 'Sem restrição'}
         </p>
       </div>
     )
@@ -86,21 +93,31 @@ const InscriptionDelete = props => {
 
   const renderChoices = (onSubmit, history) => {
     return (
-      <div className='row'>
-        <div className='col'>
-          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={onSubmit} />
+      <form noValidate onSubmit={onSubmit}>
+        <TextAreaFieldGroup
+          name='description'
+          label='Diga porque está excluindo esta inscrição...'
+          value={deleteData.description}
+          onChange={onChange}
+          error={errors.description}
+        />
+
+        <div className='row'>
+          <div className='col'>
+            <input type='submit' value='Excluir' className='btn btn-primary btn-block mt-4' />
+          </div>
+          <div className='col'>
+            <input
+              type='button'
+              value='Cancelar'
+              className='btn btn-secondary btn-block mt-4'
+              onClick={() => {
+                history.goBack()
+              }}
+            />
+          </div>
         </div>
-        <div className='col'>
-          <input
-            type='button'
-            value='Cancelar'
-            className='btn btn-secondary btn-block mt-4'
-            onClick={() => {
-              history.goBack()
-            }}
-          />
-        </div>
-      </div>
+      </form>
     )
   }
 
@@ -109,7 +126,7 @@ const InscriptionDelete = props => {
       return (
         <>
           {errors.message ? <p className='text-danger'>{errors.message}</p> : null}
-          {errors.message ? <p className='text-danger'>{errors.id}</p> : null}
+          {errors.id ? <p className='text-danger'>{errors.id}</p> : null}
         </>
       )
     }
@@ -118,12 +135,12 @@ const InscriptionDelete = props => {
   return (
     <div className='inscriptionEvent-delete'>
       <div className='container'>
-        {renderBreadcrumb(process, call, calendar, inscriptionEvent)}
+        {renderBreadcrumb(process, call, inscriptionEvent)}
         <div className='form-container' id='main'>
           <h1>Excluir inscrição</h1>
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
-          {renderInfo(process, call, calendar, inscriptionEvent, inscription)}
+          {renderInfo(process, call, calendar, inscription)}
           {renderChoices(onSubmit, history)}
         </div>
       </div>

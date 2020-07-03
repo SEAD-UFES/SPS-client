@@ -66,7 +66,7 @@ export const readInscription = (id, options = {}) => (dispatch, getState) => {
 //Inscription delete
 export const deleteInscription = (id, options = {}) => (dispatch, getState) => {
   spsApi
-    .delete(`/v1/inscriptions/${id}`)
+    .delete(`/v1/inscriptions/${id}`, { data: options.body })
     .then(res => {
       dispatch({ type: DELETE_INSCRIPTION, payload: id })
 

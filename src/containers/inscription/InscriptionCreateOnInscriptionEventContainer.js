@@ -13,13 +13,13 @@ import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { createInscription } from '../../store/actions/inscription'
 import { convertVacanciesToOptions } from '../../utils/vacancyHelpers'
-import { selectVacancyByInscriptionEventId } from '../../store/selectors/vacancy'
+import { selectVacancyByInscriptionEventId } from '../../store/selectors/vacancy/vacancy'
 import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
 import { validateVacancyId, validateBody } from '../../validation/inscription'
 import { checkNested } from '../../utils/objectHelpers'
 import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent/selectInscriptionEventById'
-import { selectCallByInscriptionEventId } from '../../store/selectors/call'
-import { selectProcessByInscriptionEventId } from '../../store/selectors/process'
+import { selectCallByInscriptionEventId } from '../../store/selectors/call/call'
+import { selectProcessByInscriptionEventId } from '../../store/selectors/process/process'
 
 const InscriptionCreateOnInscriptionEventContainer = props => {
   const id = props.match.params.id

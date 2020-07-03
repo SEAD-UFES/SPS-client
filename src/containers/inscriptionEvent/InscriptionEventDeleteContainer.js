@@ -10,9 +10,9 @@ import { readCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { selectInscriptionEventById } from '../../store/selectors/inscriptionEvent/selectInscriptionEventById'
-import { selectCalendarByInscriptionEventId } from '../../store/selectors/calendar'
-import { selectCallByInscriptionEventId } from '../../store/selectors/call'
-import { selectProcessByInscriptionEventId } from '../../store/selectors/process'
+import { selectCalendarByInscriptionEventId } from '../../store/selectors/calendar/calendar'
+import { selectCallByInscriptionEventId } from '../../store/selectors/call/call'
+import { selectProcessByInscriptionEventId } from '../../store/selectors/process/process'
 import { checkNested } from '../../utils/objectHelpers'
 
 const InscriptionEventDeleteContainer = props => {

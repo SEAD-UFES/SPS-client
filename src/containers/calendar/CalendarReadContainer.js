@@ -10,9 +10,9 @@ import { readCalendar, readListCalendar } from '../../store/actions/calendar'
 
 import CalendarRead from '../../components/calendar/CalendarRead'
 
-import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar'
-import { selectCallByCalendarId } from '../../store/selectors/call'
-import { selectProcessByCalendarId } from '../../store/selectors/process'
+import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar/calendar'
+import { selectCallByCalendarId } from '../../store/selectors/call/call'
+import { selectProcessByCalendarId } from '../../store/selectors/process/process'
 
 const CalendarReadContainer = props => {
   const id = props.match.params.id

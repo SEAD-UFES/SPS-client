@@ -2,9 +2,9 @@
 
 import { createSelector } from 'reselect'
 
-import { makeSelectVacancyById, makeSelectVacancyByCallId } from './vacancy'
-import { makeSelectCalendarByCallId, makeSelectCalendarById } from './calendar'
-import { makeSelectInscriptionEventById } from './inscriptionEvent/selectInscriptionEventById'
+import { makeSelectVacancyById, makeSelectVacancyByCallId } from '../vacancy/vacancy'
+import { makeSelectCalendarByCallId, makeSelectCalendarById } from '../calendar/calendar'
+import { makeSelectInscriptionEventById } from '../inscriptionEvent/selectInscriptionEventById'
 
 const selectSingleCallById = (store, call_id, options = {}) => {
   let call = store.callStoreV2.byId[call_id] ? { ...store.callStoreV2.byId[call_id] } : null

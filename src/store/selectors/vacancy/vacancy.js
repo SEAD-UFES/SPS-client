@@ -2,11 +2,12 @@
 
 import { createSelector } from 'reselect'
 
-import { selectAssignment } from './assignment'
-import { selectRegion } from './region'
-import { selectRestriction } from './restriction'
-import { makeSelectCalendarById } from './calendar'
-import { makeSelectInscriptionEventById_single } from './inscriptionEvent/selectInscriptionEventById_single'
+import { selectAssignment } from '../assignment'
+import { selectRegion } from '../region'
+import { selectRestriction } from '../restriction'
+import { makeSelectCalendarById } from '../calendar/calendar'
+import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
+import { isEmpty } from '../../../utils/objectHelpers'
 
 export const selectVacancyStore = store => store.vacancyStore
 
@@ -39,7 +40,7 @@ export const makeSelectVacancyById = () => {
         vacancy = { ...vacancy, restriction: rest ? rest : null }
       }
 
-      return vacancy
+      return !isEmpty(vacancy) ? vacancy : null
     }
   )
 }

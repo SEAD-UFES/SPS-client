@@ -3,8 +3,8 @@
 import { createSelector } from 'reselect'
 import moment from 'moment'
 
-import { makeSelectInscriptionEventById_single } from './inscriptionEvent/selectInscriptionEventById_single'
-import { makeSelectInscriptionEventByCalendarId } from './inscriptionEvent/selectInscriptionEventByCalendarId'
+import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
+import { makeSelectInscriptionEventByCalendarId } from '../inscriptionEvent/selectInscriptionEventByCalendarId'
 
 const calcCalendarStatus = (cld, calendars) => {
   const status = {

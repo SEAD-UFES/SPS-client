@@ -8,9 +8,9 @@ import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { readVacancy, deleteVacancy } from '../../store/actions/vacancy'
 import VacancyDelete from '../../components/vacancy/VacancyDelete'
-import { selectVacancyById } from '../../store/selectors/vacancy'
-import { selectCallByVacancyId } from '../../store/selectors/call'
-import { selectProcessByVacancyId } from '../../store/selectors/process'
+import { selectVacancyById } from '../../store/selectors/vacancy/vacancy'
+import { selectCallByVacancyId } from '../../store/selectors/call/call'
+import { selectProcessByVacancyId } from '../../store/selectors/process/process'
 import { checkNested } from '../../utils/objectHelpers'
 
 const VacancyDeleteContainer = props => {

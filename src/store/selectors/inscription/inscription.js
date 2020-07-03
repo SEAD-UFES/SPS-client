@@ -3,7 +3,7 @@
 import { createSelector } from 'reselect'
 
 import { checkNested } from '../../../utils/objectHelpers'
-import { makeSelectVacancyById } from '../vacancy'
+import { makeSelectVacancyById } from '../vacancy/vacancy'
 import { makeSelectPersonById } from '../person/selectPersonById'
 
 const selectInscriptionStore = store => store.inscriptionStore
@@ -17,11 +17,24 @@ export const makeSelectInscriptionById = () => {
   const getStore = store => store
   const getId = (store, id, options) => id
   const getOptions = (store, id, options) => options
+  const selectVacancyById = makeSelectVacancyById()
+  const selectPersonById = makeSelectPersonById()
 
   return createSelector(
     [selectInscription, getStore, getId, getOptions],
     (inscriptions, store, id, options) => {
       let inscription = inscriptions.find(ins => ins.id === id)
+
+      if (inscription && options.withVacancy) {
+        const vacancy = selectVacancyById(store, inscription.vacancy_id, options)
+        inscription = { ...inscription, vacancy: vacancy }
+      }
+
+      if (inscription && options.withPerson) {
+        const person = selectPersonById(store, inscription.person_id, options)
+        inscription = { ...inscription, person: person }
+      }
+
       return inscription ? inscription : null
     }
   )
@@ -49,8 +62,6 @@ export const makeSelectInscriptionByInscriptionEventId = () => {
       if (options.withPerson) {
         selectedInscriptions = selectedInscriptions.map(ins => {
           const selectPersonById = makeSelectPersonById()
-          console.log('ins.person_id', ins.person_id)
-          console.log('selector', selectPersonById(store, ins.person_id, options))
           return { ...ins, person: selectPersonById(store, ins.person_id, options) }
         })
       }

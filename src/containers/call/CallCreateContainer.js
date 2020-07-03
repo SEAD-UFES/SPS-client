@@ -9,7 +9,7 @@ import { clearErrors } from '../../store/actions/error'
 import { readCall, createCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import CallCreate from '../../components/call/CallCreate'
-import { selectProcessById } from '../../store/selectors/process'
+import { selectProcessById } from '../../store/selectors/process/process'
 import { validateNumber, validateOpeningDate, validateEndingDate, validateBody } from '../../validation/call'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 
