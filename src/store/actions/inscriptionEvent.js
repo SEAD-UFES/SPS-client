@@ -89,8 +89,13 @@ export const deleteInscriptionEvent = (id, options = {}) => (dispatch, getState)
 //InscriptionEvent Add List
 export const readListInscriptionEvent = (options = {}) => dispatch => {
   let url = `/v1/inscriptionevents`
+  const callIdString = options.call_id ? `call_id=${options.call_id}` : ''
   const calendarIdsString = options.calendar_ids ? convertArrayToQueryString('calendar_ids', options.calendar_ids) : ''
-  url = `${url}?${calendarIdsString}`
+
+  url = `${url}?`
+  url = callIdString ? `${url}${callIdString}` : url
+  url = callIdString && calendarIdsString ? `${url}&` : url
+  url = calendarIdsString ? `${url}${calendarIdsString}` : url
   const newOptions = _.omit(options, 'callbackOk')
 
   dispatch(setInscriptionEventLoading())

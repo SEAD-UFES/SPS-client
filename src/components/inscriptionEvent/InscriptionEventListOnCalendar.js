@@ -9,7 +9,7 @@ import { checkNested } from '../../utils/objectHelpers'
 const InscriptionEventListOnCalendar = props => {
   const { calendar, course_id } = props
 
-  const renderCalendarList = (calendar, course_id) => {
+  const renderInscriptionEventList = (calendar, course_id) => {
     return (
       <div>
         {checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? (
@@ -63,7 +63,7 @@ const InscriptionEventListOnCalendar = props => {
   return (
     <section id='inscriptionEvents' className='quadro'>
       <h4>Evento de inscrição</h4>
-      {renderCalendarList(calendar, course_id)}
+      {renderInscriptionEventList(calendar, course_id)}
     </section>
   )
 }

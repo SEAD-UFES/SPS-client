@@ -36,12 +36,10 @@ export default class CallListOnProcess extends Component {
                   <Link className='btn-icon laranja' to={`/call/read/${call.id}`}>
                     <i className='fas fa-eye' />
                   </Link>
-                </DrawFilter>{' '}
-                {/* <DrawFilter permission="call_update" course_id={process.Course.id}>
-                  <Link className="icon-edit" to={`/processes/${call.selectiveProcess_id}/call/${call.id}/edit`}>
-                    <i className="fas fa-pencil-alt"></i>
-                  </Link>
-                </DrawFilter>{' '} */}
+                </DrawFilter>
+                <Link className='btn-icon laranja' to={`/inscription-event/list?call_id=${call.id}`}>
+                  <i className='fas fa-calendar-check' />
+                </Link>
                 <DrawFilter permission='call_delete' course_id={process.Course.id}>
                   <Link className='btn-icon' to={`/call/delete/${call.id}`}>
                     <i className='fas fa-trash' />

@@ -9,11 +9,14 @@ import InscriptionEventUpdateContainer from './InscriptionEventUpdateContainer'
 import InscriptionEventDeleteContainer from './InscriptionEventDeleteContainer'
 import NotFound from '../../components/common/NotFound'
 import InscriptionCreateOnInscriptionEventContainer from '../inscription/InscriptionCreateOnInscriptionEventContainer'
+import InscriptionEventListContainer from './InscriptionEventListContainer'
 
 export default class VacancyRoutes extends Component {
   render() {
     return (
       <Switch>
+        <Route exact path={`${this.props.match.path}/list`} component={InscriptionEventListContainer} />
+
         {/* Create on Calendar */}
 
         <Route
