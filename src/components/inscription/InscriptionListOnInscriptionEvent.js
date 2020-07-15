@@ -3,11 +3,12 @@
 import React from 'react'
 
 import { checkNested } from '../../utils/objectHelpers'
+import DrawFilter from '../profile/DrawFilter'
 
 const InscriptionListOnInscriptionEvent = props => {
   const { course_id, inscriptions } = props
 
-  const renderInscriptionList = (inscriptions, course_id) => {
+  const renderInscriptionList = inscriptions => {
     return (
       <div>
         {inscriptions && inscriptions.length > 0 ? (
@@ -45,10 +46,12 @@ const InscriptionListOnInscriptionEvent = props => {
   }
 
   return (
-    <section id='inscriptions' className='quadro'>
-      <h4>Lista de inscritos</h4>
-      {renderInscriptionList(inscriptions, course_id)}
-    </section>
+    <DrawFilter permission='inscription_read' course_id={course_id ? course_id : null}>
+      <section id='inscriptions' className='quadro'>
+        <h4>Lista de inscritos</h4>
+        {renderInscriptionList(inscriptions)}
+      </section>
+    </DrawFilter>
   )
 }
 

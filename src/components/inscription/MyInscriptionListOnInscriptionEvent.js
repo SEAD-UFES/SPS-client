@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { checkNested } from '../../utils/objectHelpers'
 
 const MyInscriptionListOnInscriptionEvent = props => {
-  const { course_id, iEvent, inscriptions } = props
+  const { course_id, iEvent, inscriptions, authStore } = props
 
   const renderCreateButton = iEvent => {
     return (
@@ -59,12 +59,25 @@ const MyInscriptionListOnInscriptionEvent = props => {
     )
   }
 
+  const renderNoAuthInfo = () => {
+    return <div>NoAuthInfo</div>
+  }
+
   return (
-    <section id='myInscriptions' className='quadro'>
-      <h4>Minhas inscrições</h4>
-      {renderCreateButton(iEvent)}
-      {renderMyInscriptionList(inscriptions, course_id)}
-    </section>
+    <>
+      {authStore.isAuthenticated ? (
+        <section id='myInscriptions' className='quadro'>
+          <h4>Minhas inscrições</h4>
+          {renderCreateButton(iEvent)}
+          {renderMyInscriptionList(inscriptions, course_id)}
+        </section>
+      ) : (
+        <section id='myInscriptions' className='quadro'>
+          <h4>Inscrições</h4>
+          {renderNoAuthInfo()}
+        </section>
+      )}
+    </>
   )
 }
 

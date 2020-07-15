@@ -2,13 +2,12 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import AlertError from 'components/common/AlertError'
 
 const InscriptionEventList = props => {
-  const errorStore = {}
-  const process = null
-  const call = null
+  const { errorStore, calendarsWithInscriptionEvent, call, process } = props
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -21,11 +20,16 @@ const InscriptionEventList = props => {
 
           <i className='fas fa-greater-than' />
           <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
-            {process ? `Edital ${process.number}/${process.year}` : 'Edital 000/0000'}
+            {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
           </Link>
 
           <i className='fas fa-greater-than' />
-          <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
+          <Link to={`/calls/${call ? call.id : null}`} className='breadcrumb-link'>
+            <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
+          </Link>
+
+          <i className='fas fa-greater-than' />
+          <span>Eventos de inscrição</span>
         </div>
       </>
     )
@@ -38,17 +42,34 @@ const InscriptionEventList = props => {
         <div>
           <ul className='table-list'>
             <div className='titulos'>
-              <span>Id</span>
+              <span>Evento do calendário</span>
+              <span>Datas</span>
               <span />
             </div>
-            <li>
-              <h3>Id</h3>
-              <p className='text-right'>
-                <Link className='btn-icon laranja' to={`/calendar/read`}>
-                  <i className='fas fa-eye' />
-                </Link>
-              </p>
-            </li>
+            {calendarsWithInscriptionEvent.length > 0 ? (
+              calendarsWithInscriptionEvent.map(cld => {
+                return cld.inscriptionEvents.map(iE => {
+                  return (
+                    <li key={cld.id}>
+                      <h3>{cld.name}</h3>
+                      <p>
+                        {moment(cld.start, 'YYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss')}
+                        {cld.end ? ` - ${moment(cld.end, 'YYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss')}` : null}
+                      </p>
+                      <p className='text-right'>
+                        <Link className='btn-icon laranja' to={`/inscription-event/read/${iE.id}`}>
+                          <i className='fas fa-eye' />
+                        </Link>
+                      </p>
+                    </li>
+                  )
+                })
+              })
+            ) : (
+              <li>
+                <span>Sem Eventos de inscrição para exibir.</span>
+              </li>
+            )}
           </ul>
         </div>
       </section>

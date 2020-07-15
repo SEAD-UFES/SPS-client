@@ -80,7 +80,8 @@ const mapStateToProps = (state, ownProps) => {
     calendar: selectCalendarByInscriptionEventId(state, iEvent_id, { withCalendarStatus: true }),
     call: selectCallByInscriptionEventId(state, iEvent_id, {}),
     process: selectProcessByInscriptionEventId(state, iEvent_id, {}),
-    errorStore: state.errorStore
+    errorStore: state.errorStore,
+    authStore: state.authStore
   }
 }
 

@@ -10,14 +10,7 @@ import InscriptionListOnInscriptionEvent from '../../components/inscription/Insc
 
 const InscriptionEventRead = props => {
   const { process, call, calendar, inscriptionEvent, myInscriptions, allInscriptions } = props
-  //const { updateData, calendarOptions, errors, errorStore } = props
-  const { errorStore } = props
-
-  console.log(allInscriptions)
-
-  //const { onChange, onCheck, onSubmit } = props
-
-  //dummy props
+  const { errorStore, authStore } = props
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -95,7 +88,13 @@ const InscriptionEventRead = props => {
   }
 
   const renderMyInscriptions = () => {
-    return <MyInscriptionListOnInscriptionEvent iEvent={inscriptionEvent} inscriptions={myInscriptions} />
+    return (
+      <MyInscriptionListOnInscriptionEvent
+        iEvent={inscriptionEvent}
+        inscriptions={myInscriptions}
+        authStore={authStore}
+      />
+    )
   }
 
   const renderAllInscriptions = () => {

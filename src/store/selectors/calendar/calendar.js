@@ -5,6 +5,7 @@ import moment from 'moment'
 
 import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
 import { makeSelectInscriptionEventByCalendarId } from '../inscriptionEvent/selectInscriptionEventByCalendarId'
+import { selectInscriptionEvent } from '../inscriptionEvent/inscriptionEvent'
 
 const calcCalendarStatus = (cld, calendars) => {
   const status = {
@@ -86,8 +87,8 @@ export const makeSelectCalendarByCallId = () => {
   const getOptions = (store, id, options = {}) => options
 
   return createSelector(
-    [selectCalendar, getId, getOptions],
-    (calendars, id, options) => {
+    [selectCalendar, selectInscriptionEvent, getId, getOptions],
+    (calendars, inscriptionEvents, id, options) => {
       let selectedCalendars = calendars.filter(x => x.call_id === id)
 
       //calc calendarStatus
@@ -95,6 +96,14 @@ export const makeSelectCalendarByCallId = () => {
         selectedCalendars = selectedCalendars.map((cld, key, list) => {
           const status = calcCalendarStatus(cld, list)
           cld.status = status
+          return cld
+        })
+      }
+
+      if (options.withInscriptionEvent) {
+        selectedCalendars = selectedCalendars.map(cld => {
+          const cldInscriptionEvents = inscriptionEvents.filter(iE => iE.calendar_id === cld.id)
+          cld.inscriptionEvents = cldInscriptionEvents
           return cld
         })
       }
