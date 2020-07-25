@@ -29,6 +29,7 @@ import Dashboard from './components/profile/Dashboard'
 import ProfileRoutes from './components/profile/ProfileRoutes'
 import UserRoutes from './components/user/UserRoutes'
 import ProcessRoutes from './components/process/ProcessRoutes'
+import ProcessRoutesV2 from './containers/process/ProcessRoutes'
 import ParameterRoutes from './components/parameter/ParameterRoutes'
 import RecoverRoutes from './components/recover/RecoverRoutes'
 import CallRoutes from './containers/call/CallRoutes'
@@ -86,6 +87,7 @@ class App extends Component {
               <PrivateRoute path='/users' component={UserRoutes} />
 
               <Route path='/processes' component={ProcessRoutes} />
+              <Route path='/processes2' component={ProcessRoutesV2} />
 
               <PrivateRoute path='/parameters' component={ParameterRoutes} permission='parameter_list' />
 

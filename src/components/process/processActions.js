@@ -1,3 +1,5 @@
+/** @format */
+
 import spsApi from 'apis/spsServer'
 
 import { GET_ERRORS, CLEAR_ERRORS } from 'actions/types'
@@ -23,18 +25,17 @@ export const createProcess = (processData, history) => dispatch => {
 }
 
 //get Process
-export const getProcess = process_id => dispatch => {
+export const getProcess = (process_id, options = {}) => dispatch => {
   let url = `/v1/selectiveprocesses/${process_id}`
 
   dispatch(setProcessLoading())
   spsApi
     .get(`${url}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROCESS,
-        payload: res.data
-      })
-    )
+    .then(res => {
+      dispatch({ type: GET_PROCESS, payload: res.data })
+
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
     .catch(err =>
       dispatch({
         type: GET_PROCESS,

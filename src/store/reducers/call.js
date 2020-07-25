@@ -2,7 +2,7 @@
 
 import _ from 'lodash'
 
-import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL } from '../actionTypes'
+import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL, READ_LIST_CALL } from '../actionTypes'
 
 const initialState = {
   loading: false,
@@ -29,6 +29,12 @@ const removeItem = (state, id) => {
   return { byId: newById, allIds: newAllIds }
 }
 
+const putList = (state, list) => {
+  const newById = { ...state.byId, ..._.mapKeys(list, 'id') }
+  const newAllIds = Object.keys(newById)
+  return { byId: newById, allIds: newAllIds }
+}
+
 export default function(state = initialState, action) {
   let newState
   switch (action.type) {
@@ -46,6 +52,14 @@ export default function(state = initialState, action) {
       }
     case DELETE_CALL:
       newState = removeItem(state, action.payload)
+      return {
+        ...state,
+        loading: false,
+        byId: newState.byId,
+        allIds: newState.allIds.sort(sortAllIdsByNumber(newState.byId))
+      }
+    case READ_LIST_CALL:
+      newState = putList(state, action.payload)
       return {
         ...state,
         loading: false,

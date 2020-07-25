@@ -16,7 +16,7 @@ export const CREATE_CALL = 'CREATE_CALL'
 export const READ_CALL = 'READ_CALL'
 export const UPDATE_CALL = 'UPDATE_CALL'
 export const DELETE_CALL = 'DELETE_CALL'
-export const LIST_CALLV2 = 'LIST_CALLV2'
+export const READ_LIST_CALL = 'READ_LIST_CALL'
 
 //Vacancy actions
 export const LOADING_VACANCY = 'LOADING_VACANCY'

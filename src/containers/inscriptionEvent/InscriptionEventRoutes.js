@@ -40,7 +40,7 @@ export default class VacancyRoutes extends Component {
           component={InscriptionEventDeleteContainer}
         />
 
-        <Route
+        <PrivateRoute
           exact
           path={`${this.props.match.path}/read/:id/inscription/create`}
           component={InscriptionCreateOnInscriptionEventContainer}

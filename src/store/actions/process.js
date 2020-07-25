@@ -1,9 +1,12 @@
 /** @format */
 
+import _ from 'lodash'
+
 import spsApi from '../../apis/spsServer'
 
 import { GET_ERRORS, CLEAR_ERRORS } from '../actionTypes'
 import { GET_PROCESS, GET_PROCESSES, PROCESS_LOADING, GET_PROCESS_FILTERS } from '../actionTypes'
+import { readListCall } from './call'
 
 //Process loading
 export const setProcessLoading = () => {
@@ -25,18 +28,24 @@ export const createProcess = (processData, history) => dispatch => {
 }
 
 //get Process
-export const getProcess = process_id => dispatch => {
+export const getProcess = (process_id, options = {}) => dispatch => {
   let url = `/v1/selectiveprocesses/${process_id}`
 
   dispatch(setProcessLoading())
   spsApi
     .get(`${url}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROCESS,
-        payload: res.data
-      })
-    )
+    .then(res => {
+      dispatch({ type: GET_PROCESS, payload: res.data })
+
+      const newOptions = _.omit(options, 'callbackOk')
+
+      //get call
+      if (options.withCall) {
+        dispatch(readListCall({ ...newOptions, selectiveProcess_ids: [res.data.id] }))
+      }
+
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
     .catch(err =>
       dispatch({
         type: GET_PROCESS,

@@ -866,6 +866,11 @@ form input[type='submit'] {
   margin-bottom: 2rem;
 }
 
+/* Fernando */
+.view-page .quadro h4.alert-heading {
+  margin-top: 0;
+}
+
 .process-view .quadro#anexos li div:first-of-type,
 .register .quadro#anexos li div:first-of-type,
 .view-page .quadro#anexos li div:first-of-type {

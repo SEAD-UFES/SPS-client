@@ -3,10 +3,11 @@
 import _ from 'lodash'
 
 import { GET_ERRORS } from '../actionTypes'
-import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL } from '../actionTypes'
+import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL, READ_LIST_CALL } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
 import { readListCalendar } from './calendar'
 import { readListVacancy } from './vacancy'
+import { convertArrayToQueryString } from '../../utils/queryHelpers'
 
 //Call loading
 export const setCallLoading = () => {
@@ -51,7 +52,6 @@ export const readCall = (id, options = {}) => (dispatch, getState) => {
       if (options.callbackOk) options.callbackOk(res.data)
     })
     .catch(err => {
-      console.log(err)
       handleErrors(err, dispatch)
     })
 }
@@ -75,6 +75,29 @@ export const deleteCall = (id, options = {}) => (dispatch, getState) => {
     .delete(`/v1/calls/${id}`)
     .then(res => {
       dispatch({ type: DELETE_CALL, payload: id })
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
+}
+
+//Call List
+export const readListCall = (id, options = {}) => (dispatch, getState) => {
+  dispatch(setCallLoading())
+
+  let url = `/v1/calls`
+  const selectiveProcessIdsString = options.selectiveProcess_ids
+    ? convertArrayToQueryString('selectiveProcess_ids', options.selectiveProcess_ids)
+    : ''
+  url = `${url}?${selectiveProcessIdsString}`
+
+  spsApi
+    .get(url)
+    .then(res => {
+      dispatch({ type: READ_LIST_CALL, payload: res.data })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)

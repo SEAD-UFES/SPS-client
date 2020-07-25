@@ -13,7 +13,13 @@ import PublicationCard from 'components/publication/PublicationCard'
 
 class ProcessView extends Component {
   componentDidMount() {
-    this.props.getProcess(this.props.match.params.id)
+    this.props.getProcess(this.props.match.params.id, {
+      callbackOk: process => {
+        console.log('buscar chamadas?')
+        console.log('buscar calendarios?')
+        console.log('buscar buscar inscription-events?')
+      }
+    })
   }
 
   renderProcessName(process, loading) {

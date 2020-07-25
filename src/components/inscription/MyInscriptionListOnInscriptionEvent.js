@@ -60,7 +60,24 @@ const MyInscriptionListOnInscriptionEvent = props => {
   }
 
   const renderNoAuthInfo = () => {
-    return <div>NoAuthInfo</div>
+    return (
+      <>
+        <div className='alert alert-warning' role='alert'>
+          <h4 className='alert-heading'>Ação necessária.</h4>
+          <p>É preciso estar autenticado no sistema para efetuar sua inscrição.</p>
+          <hr />
+          <p>
+            Se você não possui cadastro: <Link to='/register'>Registre-se</Link>
+          </p>
+          <p>
+            Se você possui cadastro:{' '}
+            <Link to={`/inscription-event/read/${iEvent ? iEvent.id : null}/inscription/create`}>
+              Forneça seus dados de acesso
+            </Link>
+          </p>
+        </div>
+      </>
+    )
   }
 
   return (
