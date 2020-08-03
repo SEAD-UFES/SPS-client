@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { checkNested } from '../../utils/objectHelpers'
 
 const MyInscriptionListOnInscriptionEvent = props => {
-  const { course_id, iEvent, inscriptions, authStore } = props
+  const { iEvent, inscriptions, authStore, location } = props
 
   const renderCreateButton = iEvent => {
     return (
@@ -20,7 +20,7 @@ const MyInscriptionListOnInscriptionEvent = props => {
     )
   }
 
-  const renderMyInscriptionList = (inscriptions, course_id) => {
+  const renderMyInscriptionList = inscriptions => {
     return (
       <div>
         {inscriptions && inscriptions.length > 0 ? (
@@ -59,19 +59,23 @@ const MyInscriptionListOnInscriptionEvent = props => {
     )
   }
 
-  const renderNoAuthInfo = () => {
+  const renderNoAuthInfo = location => {
     return (
       <>
         <div className='alert alert-warning' role='alert'>
           <h4 className='alert-heading'>Ação necessária.</h4>
-          <p>É preciso estar autenticado no sistema para efetuar sua inscrição.</p>
+          <p>É preciso estar autenticado no sistema para ver suas inscrições ou inscrever-se.</p>
           <hr />
           <p>
             Se você não possui cadastro: <Link to='/register'>Registre-se</Link>
           </p>
           <p>
             Se você possui cadastro:{' '}
-            <Link to={`/inscription-event/read/${iEvent ? iEvent.id : null}/inscription/create`}>
+            <Link
+              to={{
+                pathname: `/login`,
+                prevLocation: location
+              }}>
               Forneça seus dados de acesso
             </Link>
           </p>
@@ -86,12 +90,12 @@ const MyInscriptionListOnInscriptionEvent = props => {
         <section id='myInscriptions' className='quadro'>
           <h4>Minhas inscrições</h4>
           {renderCreateButton(iEvent)}
-          {renderMyInscriptionList(inscriptions, course_id)}
+          {renderMyInscriptionList(inscriptions)}
         </section>
       ) : (
         <section id='myInscriptions' className='quadro'>
           <h4>Inscrições</h4>
-          {renderNoAuthInfo()}
+          {renderNoAuthInfo(location)}
         </section>
       )}
     </>

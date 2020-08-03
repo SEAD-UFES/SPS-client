@@ -11,12 +11,16 @@ import PublicationCard from 'components/publication/PublicationCard'
 
 const ProcessRead = props => {
   const { location } = props
-  //   const { process, call, errorStore } = props
+  const {
+    process,
+    //call,
+    errorStore
+  } = props
 
   //dummy
-  const process = null
+  //const process = null
   const loading = null
-  const errorStore = {}
+  //const errorStore = {}
 
   const renderBreadcrumb = process => {
     return (

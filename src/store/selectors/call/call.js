@@ -6,6 +6,13 @@ import { makeSelectVacancyById, makeSelectVacancyByCallId } from '../vacancy/vac
 import { makeSelectCalendarByCallId, makeSelectCalendarById } from '../calendar/calendar'
 import { makeSelectInscriptionEventById } from '../inscriptionEvent/selectInscriptionEventById'
 
+export const selectCallStore = store => store.callStoreV2
+
+export const selectCall = createSelector(
+  [selectCallStore],
+  cs => cs.allIds.map(id => ({ ...cs.byId[id] }))
+)
+
 const selectSingleCallById = (store, call_id, options = {}) => {
   let call = store.callStoreV2.byId[call_id] ? { ...store.callStoreV2.byId[call_id] } : null
   return call

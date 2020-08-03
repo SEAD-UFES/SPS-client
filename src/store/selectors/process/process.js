@@ -5,10 +5,18 @@ import { createSelector } from 'reselect'
 import { makeSelectCallById, makeSelectCallByCalendarId } from '../call/call'
 import { makeSelectVacancyById } from '../vacancy/vacancy'
 import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
+import { makeSelectCallByProcessId } from '../call/selectCallByProcessId'
 
 //make selector process by id
 export const makeSelectProcessById = () => (store, id, options = {}) => {
-  const process = store.processStore.process
+  let process = store.processStore.process
+  const selectCallByProcessId = makeSelectCallByProcessId()
+
+  if (process && options.withCall) {
+    const calls = selectCallByProcessId(store, id, options)
+    process = { ...process, calls: calls }
+  }
+
   return process ? process : null
 }
 

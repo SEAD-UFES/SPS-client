@@ -95,15 +95,23 @@ export const deleteCalendar = (id, options = {}) => (dispatch, getState) => {
 
 //Calendar Add List
 export const readListCalendar = (options = {}) => dispatch => {
-  dispatch(setCalendarLoading())
   let url = `/v1/calendars`
   const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
   url = `${url}?${callIdsString}`
 
+  dispatch(setCalendarLoading())
   spsApi
     .get(url)
     .then(res => {
       dispatch({ type: READ_LIST_CALENDAR, payload: res.data })
+
+      const newOptions = _.omit(options, 'callbackOk')
+
+      //baixar inscriptionEvents associados
+      if (res.data.length > 0 && options.withInscriptionEvent) {
+        const calendar_ids = res.data.map(calendar => calendar.id)
+        dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...newOptions }))
+      }
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)

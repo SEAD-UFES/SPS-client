@@ -85,19 +85,32 @@ export const deleteCall = (id, options = {}) => (dispatch, getState) => {
 }
 
 //Call List
-export const readListCall = (id, options = {}) => (dispatch, getState) => {
-  dispatch(setCallLoading())
-
+export const readListCall = (options = {}) => (dispatch, getState) => {
   let url = `/v1/calls`
   const selectiveProcessIdsString = options.selectiveProcess_ids
     ? convertArrayToQueryString('selectiveProcess_ids', options.selectiveProcess_ids)
     : ''
   url = `${url}?${selectiveProcessIdsString}`
 
+  dispatch(setCallLoading())
   spsApi
     .get(url)
     .then(res => {
       dispatch({ type: READ_LIST_CALL, payload: res.data })
+
+      const newOptions = _.omit(options, 'callbackOk')
+
+      //get calendars if need
+      if (res.data.length > 0 && options.withCalendar) {
+        const call_ids = res.data.map(call => call.id)
+        dispatch(readListCalendar({ ...newOptions, call_ids: call_ids }))
+      }
+
+      //get vacancies if need
+      if (res.data.length > 0 && options.withVacancy) {
+        const call_ids = res.data.map(call => call.id)
+        dispatch(readListVacancy({ ...newOptions, call_ids: call_ids }))
+      }
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -109,7 +122,6 @@ export const readListCall = (id, options = {}) => (dispatch, getState) => {
 
 //Function to handle errors
 const handleErrors = (err, dispatch) => {
-  console.log('Erro em call action')
   if (err.response) {
     let errors = {}
     errors.data = err.response.data

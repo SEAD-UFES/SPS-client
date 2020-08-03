@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import ProcessRead from '../../components/process/ProcessRead'
 import { clearErrors } from '../../store/actions/error'
 import { getProcess } from '../../store/actions/process'
+import { selectProcessById } from '../../store/selectors/process/process'
 
 const ProcessReadContainer = props => {
   const id = props.match.params.id
@@ -14,10 +15,9 @@ const ProcessReadContainer = props => {
   //componentDidMount
   useEffect(() => {
     clearErrors()
-    console.log('didmount')
     getProcess(id, {
       withCall: true,
-      wuthCalendar: true,
+      withCalendar: true,
       withInscriptionEvent: true
     })
   }, [])
@@ -34,7 +34,12 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     errorStore: state.errorStore,
-    process: null,
+    process: selectProcessById(state, process_id, {
+      withCall: true,
+      withCalendar: true,
+      withCalendarStatus: true,
+      withInscriptionEvent: true
+    }),
     loading: null
   }
 }

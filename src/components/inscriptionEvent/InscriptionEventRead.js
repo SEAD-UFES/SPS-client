@@ -9,6 +9,7 @@ import MyInscriptionListOnInscriptionEvent from '../../components/inscription/My
 import InscriptionListOnInscriptionEvent from '../../components/inscription/InscriptionListOnInscriptionEvent'
 
 const InscriptionEventRead = props => {
+  const { location } = props
   const { process, call, calendar, inscriptionEvent, myInscriptions, allInscriptions } = props
   const { errorStore, authStore } = props
 
@@ -93,6 +94,7 @@ const InscriptionEventRead = props => {
         iEvent={inscriptionEvent}
         inscriptions={myInscriptions}
         authStore={authStore}
+        location={location}
       />
     )
   }
