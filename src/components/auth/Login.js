@@ -24,11 +24,6 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location) {
-      console.log('recebi location')
-      console.log(this.props.location)
-    }
-
     if (this.props.authStore.isAuthenticated) {
       this.props.clearErrors()
       if (this.props.location.prevLocation) {
