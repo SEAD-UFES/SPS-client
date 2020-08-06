@@ -77,7 +77,8 @@ const mapStateToProps = (state, ownProps) => {
     iELoading: state.inscriptionEventStore.loading,
     calendars: selectCalendarByCallId(state, call_id, { withInscriptionEvent: true }),
     call: selectCallById(state, call_id, {}),
-    process: selectProcessByCallId(state, call_id, {})
+    process: selectProcessByCallId(state, call_id, {}),
+    profileStore: state.profileStore
   }
 }
 

@@ -161,6 +161,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     profileLoading: state.profileStore.loading,
     profilePerson: checkNested(state, 'profileStore', 'profile') ? state.profileStore.profile.Person : {},
+    profileStore: state.profileStore,
     vacancies: selectVacancyByInscriptionEventId(state, iEvent_id, {
       withAssignment: true,
       withRegion: true,

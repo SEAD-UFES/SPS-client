@@ -7,13 +7,29 @@ import moment from 'moment'
 import AlertError from '../../components/common/AlertError'
 import MyInscriptionListOnInscriptionEvent from '../../components/inscription/MyInscriptionListOnInscriptionEvent'
 import InscriptionListOnInscriptionEvent from '../../components/inscription/InscriptionListOnInscriptionEvent'
+import { permissionCheck } from '../profile/permissionCheck'
+import { checkNested } from '../../utils/objectHelpers'
 
 const InscriptionEventRead = props => {
   const { location } = props
   const { process, call, calendar, inscriptionEvent, myInscriptions, allInscriptions } = props
-  const { errorStore, authStore } = props
+  const { profileStore, errorStore, authStore } = props
 
   const renderBreadcrumb = (process, call) => {
+    const canAccessCall = permissionCheck(
+      checkNested(profileStore, 'profile', 'UserRoles') ? profileStore.profile.UserRoles : [],
+      'call_read',
+      { course_id: process ? process.course_id : null }
+    )
+
+    const callLink = canAccessCall ? (
+      <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
+        {call ? `Chamada ${call.number}` : 'Chamada'}
+      </Link>
+    ) : (
+      <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
+    )
+
     return (
       <div className='breadcrumb'>
         <span>Você está em:</span>
@@ -22,14 +38,12 @@ const InscriptionEventRead = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/processes/read/${process ? process.id : null}`} className='breadcrumb-link'>
+        <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
           {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
-          {call ? `Chamada ${call.number}` : 'Chamada'}
-        </Link>
+        {callLink}
 
         <i className='fas fa-greater-than' />
         <span>Evento de inscrição</span>

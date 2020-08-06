@@ -6,13 +6,29 @@ import { Link } from 'react-router-dom'
 import AlertError from '../../components/common/AlertError'
 import SelectListGroup from '../common/SelectListGroup'
 import { isEmpty } from '../../utils/objectHelpers'
+import { permissionCheck } from '../profile/permissionCheck'
+import { checkNested } from '../../utils/objectHelpers'
 
 const InscriptionCreateOnInscriptionEvent = props => {
-  const { profileLoading, profilePerson, inscriptionEvent, call, process } = props
+  const { profileStore, profileLoading, profilePerson, inscriptionEvent, call, process } = props
   const { createData, vacancyOptions, errors, errorStore } = props
   const { onChange, onSubmit } = props
 
   const renderBreadcrumb = (process, call, inscriptionEvent) => {
+    const canAccessCall = permissionCheck(
+      checkNested(profileStore, 'profile', 'UserRoles') ? profileStore.profile.UserRoles : [],
+      'call_read',
+      { course_id: process ? process.course_id : null }
+    )
+
+    const callLink = canAccessCall ? (
+      <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
+        {call ? `Chamada ${call.number}` : 'Chamada'}
+      </Link>
+    ) : (
+      <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
+    )
+
     return (
       <div className='breadcrumb'>
         <span>Você está em:</span>
@@ -26,9 +42,7 @@ const InscriptionCreateOnInscriptionEvent = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
-          {call ? `Chamada ${call.number}` : 'Chamada'}
-        </Link>
+        {callLink}
 
         <i className='fas fa-greater-than' />
         <Link

@@ -81,7 +81,8 @@ const mapStateToProps = (state, ownProps) => {
     call: selectCallByInscriptionEventId(state, iEvent_id, {}),
     process: selectProcessByInscriptionEventId(state, iEvent_id, {}),
     errorStore: state.errorStore,
-    authStore: state.authStore
+    authStore: state.authStore,
+    profileStore: state.profileStore
   }
 }
 

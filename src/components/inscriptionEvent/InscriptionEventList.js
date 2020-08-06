@@ -5,11 +5,27 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import AlertError from 'components/common/AlertError'
+import { permissionCheck } from '../profile/permissionCheck'
+import { checkNested } from '../../utils/objectHelpers'
 
 const InscriptionEventList = props => {
-  const { errorStore, calendarsWithInscriptionEvent, call, process } = props
+  const { profileStore, errorStore, calendarsWithInscriptionEvent, call, process } = props
 
   const renderBreadcrumb = (process, call) => {
+    const canAccessCall = permissionCheck(
+      checkNested(profileStore, 'profile', 'UserRoles') ? profileStore.profile.UserRoles : [],
+      'call_read',
+      { course_id: process ? process.course_id : null }
+    )
+
+    const callLink = canAccessCall ? (
+      <Link to={`/call/read/${call ? call.id : null}`} className='breadcrumb-link'>
+        {call ? `Chamada ${call.number}` : 'Chamada'}
+      </Link>
+    ) : (
+      <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
+    )
+
     return (
       <>
         <div className='breadcrumb'>
@@ -24,9 +40,7 @@ const InscriptionEventList = props => {
           </Link>
 
           <i className='fas fa-greater-than' />
-          <Link to={`/calls/${call ? call.id : null}`} className='breadcrumb-link'>
-            <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
-          </Link>
+          {callLink}
 
           <i className='fas fa-greater-than' />
           <span>Eventos de inscrição</span>

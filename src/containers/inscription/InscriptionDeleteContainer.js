@@ -145,7 +145,8 @@ const mapStateToProps = (state, ownProps) => {
     inscriptionEvent: selectInscriptionEventByInscriptionId(state, inscription_id, {}),
     calendar: selectCalendarByInscriptionId(state, inscription_id, {}),
     call: selectCallByInscriptionId(state, inscription_id, {}),
-    process: selectProcessByInscriptionId(state, inscription_id, {})
+    process: selectProcessByInscriptionId(state, inscription_id, {}),
+    profileStore: state.profileStore
   }
 }
 
