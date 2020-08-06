@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
@@ -44,31 +46,31 @@ export default class PublicationCard extends Component {
             className={publication.valid ? '' : 'isDisabled'}
             onClick={publication.valid ? e => {} : e => e.preventDefault()}
             href={publication.valid ? `${spsServerUrl}/v1/publications/download/${publication.file}` : ''}
-            target="_blank"
-            rel="noopener noreferrer">
-            <i className="fas fa-file-download" />
+            target='_blank'
+            rel='noopener noreferrer'>
+            <i className='fas fa-file-download' />
             {publication.title}
           </a>
         </div>
-        <div className="text-right">
-          <DrawFilter permission="publication_update" course_id={process.Course.id}>
+        <div className='text-right'>
+          <DrawFilter permission='publication_update' course_id={process.Course.id}>
             <Link
-              className="btn-icon"
+              className='btn-icon'
               to={{
                 pathname: `/processes/${process.id}/publications/${publication.id}/update`,
                 state: { publication: publication }
               }}>
-              <i className="fas fa-pencil-alt"></i>
+              <i className='fas fa-pencil-alt' />
             </Link>
           </DrawFilter>{' '}
-          <DrawFilter permission="publication_delete" course_id={process.Course.id}>
+          <DrawFilter permission='publication_delete' course_id={process.Course.id}>
             <Link
-              className="btn-icon"
+              className='btn-icon'
               to={{
                 pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
                 state: { publication: publication }
               }}>
-              <i className="fas fa-trash"></i>
+              <i className='fas fa-trash' />
             </Link>
           </DrawFilter>
         </div>
@@ -88,18 +90,18 @@ export default class PublicationCard extends Component {
 
   render() {
     return (
-      <section id="anexos" className="quadro">
+      <section id='anexos' className='quadro'>
         <h4>Anexos</h4>
 
-        <div className="btn-right">
-          <DrawFilter permission="publication_create" course_id={this.props.process.Course.id}>
+        <div className='btn-right'>
+          <DrawFilter permission='publication_create' course_id={this.props.process.Course.id}>
             <Link
-              className="btn btn-terciary"
+              className='btn btn-terciary'
               to={{
                 pathname: `/processes/${this.props.process.id}/publications/create`,
                 state: { selectiveProcess: this.props.process }
               }}>
-              <i className="fas fa-plus-circle" /> Adicionar
+              <i className='fas fa-plus-circle' /> Adicionar
             </Link>
           </DrawFilter>
         </div>

@@ -20,7 +20,7 @@ export const createProcess = (processData, history) => dispatch => {
   spsApi
     .post('/v1/selectiveprocesses', processData)
     .then(res => {
-      history.push(`/processes/${res.data.id}`)
+      history.push(`/processes/read/${res.data.id}`)
     })
     .catch(err => {
       handleErrors(err, dispatch)
@@ -60,7 +60,7 @@ export const updateProcess = (processId, processData, history) => dispatch => {
     .put(`/v1/selectiveprocesses/${processId}`, processData)
     .then(res => {
       dispatch({ type: CLEAR_ERRORS })
-      history.push(`/processes/${processId}`)
+      history.push(`/processes/read/${processId}`)
     })
     .catch(err => {
       handleErrors(err, dispatch)

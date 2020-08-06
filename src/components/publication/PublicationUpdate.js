@@ -214,7 +214,7 @@ class PublicationUpdate extends Component {
       delete publicationData.file
       publicationData.date = moment(publicationData.date, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 00:00:00'
       this.props.updatePublication(publicationData, () => {
-        this.props.history.push(`/processes/${this.state.selectiveProcess_id}`)
+        this.props.history.push(`/processes/read/${this.state.selectiveProcess_id}`)
       })
     }
   }
@@ -409,7 +409,7 @@ class PublicationUpdate extends Component {
               Processos Seletivos
             </Link>
             <i className='fas fa-greater-than' />
-            <Link to={`/processes/${process_id}`} className='breadcrumb-link'>
+            <Link to={`/processes/read/${process_id}`} className='breadcrumb-link'>
               {this.state.selectiveProcess
                 ? `Edital ${this.state.selectiveProcess.number}/${this.state.selectiveProcess.year}`
                 : 'Edital 000/0000'}

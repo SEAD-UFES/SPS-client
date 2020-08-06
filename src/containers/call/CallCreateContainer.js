@@ -99,7 +99,7 @@ const CallCreateContainer = props => {
 
       createCall(data, {
         callbackOk: call => {
-          props.history.push(`/processes/${call.selectiveProcess_id}`)
+          props.history.push(`/processes/read/${call.selectiveProcess_id}`)
         }
       })
     }

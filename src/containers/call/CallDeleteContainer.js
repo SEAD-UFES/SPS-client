@@ -47,7 +47,7 @@ const CallDeleteContainer = props => {
 
     deleteCall(call.id, {
       callbackOk: () => {
-        props.history.push(`/processes/${process.id}`)
+        props.history.push(`/processes/read/${process.id}`)
       }
     })
   }

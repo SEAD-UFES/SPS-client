@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -183,17 +185,17 @@ class StepEdit extends Component {
     const stepForm = (
       <form noValidate onSubmit={this.onSubmit}>
         <TextFieldGroup
-          placeholder="Número da etapa"
-          type="text"
-          name="number"
+          placeholder='Número da etapa'
+          type='text'
+          name='number'
           value={this.state.number}
           onChange={this.onChange}
           error={errors.number}
         />
 
         <SelectListGroup
-          placeholder="Escolha o tipo de etapa"
-          name="stepType_id"
+          placeholder='Escolha o tipo de etapa'
+          name='stepType_id'
           value={this.state.stepType_id}
           options={steptypeOptions}
           onChange={this.onChange}
@@ -202,9 +204,9 @@ class StepEdit extends Component {
 
         <h6>Previsão de resultado da etapa</h6>
         <TextFieldGroup
-          placeholder="Previsão de resultado da etapa"
-          type="date"
-          name="resultDate"
+          placeholder='Previsão de resultado da etapa'
+          type='date'
+          name='resultDate'
           value={this.state.resultDate}
           onChange={this.onChange}
           error={errors.resultDate}
@@ -212,9 +214,9 @@ class StepEdit extends Component {
 
         <h6>Início do periodo de recursos</h6>
         <TextFieldGroup
-          placeholder="Início do periodo de recursos"
-          type="date"
-          name="openAppealDate"
+          placeholder='Início do periodo de recursos'
+          type='date'
+          name='openAppealDate'
           value={this.state.openAppealDate}
           onChange={this.onChange}
           error={errors.openAppealDate}
@@ -222,9 +224,9 @@ class StepEdit extends Component {
 
         <h6>Fim do periodo de recursos</h6>
         <TextFieldGroup
-          placeholder="Fim do periodo de recursos"
-          type="date"
-          name="limitAppealDate"
+          placeholder='Fim do periodo de recursos'
+          type='date'
+          name='limitAppealDate'
           value={this.state.limitAppealDate}
           onChange={this.onChange}
           error={errors.limitAppealDate}
@@ -232,40 +234,42 @@ class StepEdit extends Component {
 
         <h6>Previsão de resultado pós recursos</h6>
         <TextFieldGroup
-          placeholder="Previsão de resultado pós recursos"
-          type="date"
-          name="resultAfterAppealDate"
+          placeholder='Previsão de resultado pós recursos'
+          type='date'
+          name='resultAfterAppealDate'
           value={this.state.resultAfterAppealDate}
           onChange={this.onChange}
           error={errors.resultAfterAppealDate}
         />
 
-        <input type="submit" className="btn btn-primary btn-block mt-4" />
+        <input type='submit' className='btn btn-primary btn-block mt-4' />
       </form>
     )
 
     const deleteButton = (
-      <div className="text-right mt-2 mb-2">
+      <div className='text-right mt-2 mb-2'>
         <Link
-          className="text-danger"
+          className='text-danger'
           to={{
-            pathname: `/processes/${this.props.match.params.process_id}/call/${this.props.match.params.call_id}/steps/${this.props.match.params.step_id}/delete`
+            pathname: `/processes/read/${this.props.match.params.process_id}/call/${
+              this.props.match.params.call_id
+            }/steps/${this.props.match.params.step_id}/delete`
           }}>
-          <i className="fas fa-times-circle" /> Excluir esta etapa
+          <i className='fas fa-times-circle' /> Excluir esta etapa
         </Link>
       </div>
     )
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
+      <div className='register'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-8 m-auto'>
+              <Link to={`/processes/read/${this.props.match.params.process_id}`} className='btn btn-light'>
                 Voltar para o processo
               </Link>
-              <h1 className="display-4 text-center">Editar etapa</h1>
-              <p className="lead text-center">Altere os dados básicos</p>
+              <h1 className='display-4 text-center'>Editar etapa</h1>
+              <p className='lead text-center'>Altere os dados básicos</p>
               {stepForm}
               {deleteButton}
             </div>
@@ -293,9 +297,12 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, {
-  getStepTypes,
-  clearErrors,
-  getStep,
-  updateStep
-})(withRouter(StepEdit))
+export default connect(
+  mapStateToProps,
+  {
+    getStepTypes,
+    clearErrors,
+    getStep,
+    updateStep
+  }
+)(withRouter(StepEdit))

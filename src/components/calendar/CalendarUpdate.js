@@ -23,7 +23,7 @@ const CalendarUpdate = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
+        <Link to={`/processes/read/${process ? process.id : null}`} className='breadcrumb-link'>
           {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
         </Link>
 

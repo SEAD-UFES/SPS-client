@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -36,21 +38,21 @@ class PublicationDelete extends Component {
     e.preventDefault()
     const { publication } = this.props.publicationStore
     this.props.deletePublication(publication.id, () => {
-      this.props.history.push(`/processes/${this.props.match.params.process_id}`)
+      this.props.history.push(`/processes/read/${this.props.match.params.process_id}`)
     })
   }
 
   renderChoices() {
     return (
-      <div className="row">
-        <div className="col">
-          <input type="button" value="Excluir" className="btn btn-primary btn-block mt-4" onClick={this.onSubmit} />
+      <div className='row'>
+        <div className='col'>
+          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={this.onSubmit} />
         </div>
-        <div className="col">
+        <div className='col'>
           <input
-            type="button"
-            value="Cancelar"
-            className="btn btn-secondary btn-block mt-4"
+            type='button'
+            value='Cancelar'
+            className='btn btn-secondary btn-block mt-4'
             onClick={() => {
               this.props.history.goBack()
             }}
@@ -99,23 +101,23 @@ class PublicationDelete extends Component {
     const { publication, loading } = this.props.publicationStore
 
     return (
-      <div className="publication-delete">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='publication-delete'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
+            <Link to='/processes' className='breadcrumb-link'>
               Processos Seletivos
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/processes/${this.props.match.params.process_id}`} className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to={`/processes/read/${this.props.match.params.process_id}`} className='breadcrumb-link'>
               {this.props.process
                 ? `Edital ${this.props.process.number}/${this.props.process.year}`
                 : 'Edital 000/0000'}
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Excluir publicação</span>
           </div>
-          <div className="form-container" id="main">
+          <div className='form-container' id='main'>
             <h1>Publicação</h1>
             <AlertError errors={errorStore} />
             {this.renderInfo(publication, loading)}
@@ -140,9 +142,12 @@ const mapStateToProps = state => ({
   process: state.processStore.process
 })
 
-export default connect(mapStateToProps, {
-  clearErrors,
-  getPublication,
-  deletePublication,
-  getProcess
-})(PublicationDelete)
+export default connect(
+  mapStateToProps,
+  {
+    clearErrors,
+    getPublication,
+    deletePublication,
+    getProcess
+  }
+)(PublicationDelete)
