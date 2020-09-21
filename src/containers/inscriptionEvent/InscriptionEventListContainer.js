@@ -54,7 +54,7 @@ const InscriptionEventListContainer = props => {
       const iEs = arraysOfIE.reduce((acc, cur) => [...acc, ...cur], [])
 
       if (iELoading === false && iEs.length === 1) {
-        history.push(`/inscription-event/read/${iEs[0].id}`)
+        history.replace(`/inscription-event/read/${iEs[0].id}`)
       }
     },
     [calendarsWithInscriptionEvent, iELoading]
