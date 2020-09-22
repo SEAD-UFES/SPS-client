@@ -12,7 +12,7 @@ import { checkNested } from '../../utils/objectHelpers'
 
 const CalendarRead = props => {
   const { location } = props
-  const { process, call, calendar } = props
+  const { process, call, calendar, calendarGroupLoading } = props
   const { errorStore } = props
 
   const renderBreadcrumb = (process, call) => {
@@ -84,12 +84,12 @@ const CalendarRead = props => {
     )
   }
 
-  const renderAddEventType = calendar => {
+  const renderAddEventType = (calendar, calendarGroupLoading) => {
     const hasInscriptionEvent =
       checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? true : false
     const hasEvent = hasInscriptionEvent ? true : false
 
-    if (!hasEvent) {
+    if (!calendarGroupLoading && !hasEvent) {
       return (
         <div style={{ padding: '10px' }}>
           <section id='eventos' className='quadro'>
@@ -103,7 +103,6 @@ const CalendarRead = props => {
         </div>
       )
     }
-
     return null
   }
 
@@ -127,7 +126,7 @@ const CalendarRead = props => {
           {renderUpdateButton(process, calendar, location)}
           <AlertError errors={errorStore} />
           {renderInfo(calendar)}
-          {renderAddEventType(calendar)}
+          {renderAddEventType(calendar, calendarGroupLoading)}
           {renderIsncriptionEvent(calendar)}
         </div>
       </div>

@@ -13,6 +13,7 @@ import CalendarRead from '../../components/calendar/CalendarRead'
 import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar/calendar'
 import { selectCallByCalendarId } from '../../store/selectors/call/call'
 import { selectProcessByCalendarId } from '../../store/selectors/process/process'
+import { selectGroupLoading } from '../../store/selectors/loading/groupLoading'
 
 const CalendarReadContainer = props => {
   const id = props.match.params.id
@@ -49,7 +50,8 @@ const mapStateToProps = (state, ownProps) => {
     calendar: selectCalendarById(state, calendar_id, { withCalendarStatus: true, withInscriptionEvent: true }),
     calendarLoading: state.calendarStore.loading,
     call: selectCallByCalendarId(state, calendar_id, {}),
-    process: selectProcessByCalendarId(state, calendar_id, { withCourse: true })
+    process: selectProcessByCalendarId(state, calendar_id, { withCourse: true }),
+    calendarGroupLoading: selectGroupLoading(state, { withCalendar: true, withInscriptionEvent: true })
   }
 }
 
