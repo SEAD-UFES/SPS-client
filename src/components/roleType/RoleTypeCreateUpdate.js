@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -97,12 +99,14 @@ class RoleTypeCreateUpdate extends Component {
   onSubmit(e) {
     e.preventDefault()
 
-    const roleTypeData = {
-      id: this.state.id,
+    let roleTypeData = {
       name: this.state.name,
       global: this.state.global,
       description: this.state.description
     }
+
+    //Só incluo o id se ele não for nulo.
+    if (this.state.id) roleTypeData.id = this.state.id
 
     const valRoleType = validateRoleTypeForm(roleTypeData)
     if (!valRoleType.isValid) {
@@ -126,14 +130,14 @@ class RoleTypeCreateUpdate extends Component {
     const alertsList = (
       <div>
         {errors.serverError ? (
-          <div className="alert alert-danger" role="alert">
+          <div className='alert alert-danger' role='alert'>
             <strong>Erro!</strong> Erro do servidor
           </div>
         ) : (
           ''
         )}
         {errors.anotherError ? (
-          <div className="alert alert-danger" role="alert">
+          <div className='alert alert-danger' role='alert'>
             <strong>Erro!</strong> Erro desconhecido
           </div>
         ) : (
@@ -144,57 +148,54 @@ class RoleTypeCreateUpdate extends Component {
 
     const roletypeForm = (
       <form noValidate onSubmit={this.onSubmit}>
-          <TextFieldGroup
-            type="text"
-            name="name"
-            label="Nome"
-            value={this.state.name}
-            onChange={this.onChange}
-            error={errors.name}
-          />
+        <TextFieldGroup
+          type='text'
+          name='name'
+          label='Nome'
+          value={this.state.name}
+          onChange={this.onChange}
+          error={errors.name}
+        />
 
-          <TextAreaFieldGroup
-            type="text"
-            name="description"
-            label="Descrição"
-            value={this.state.description}
-            onChange={this.onChange}
-            error={errors.description}
-          />
+        <TextAreaFieldGroup
+          type='text'
+          name='description'
+          label='Descrição'
+          value={this.state.description}
+          onChange={this.onChange}
+          error={errors.description}
+        />
 
-          <CheckBoxFieldGroup
-            id="global"
-            name="global"
-            value="Papel global"
-            checked={this.state.global}
-            onChange={this.onCheck}
-          />
+        <CheckBoxFieldGroup
+          id='global'
+          name='global'
+          value='Papel global'
+          checked={this.state.global}
+          onChange={this.onCheck}
+        />
 
-          <input type="submit" className="btn btn-primary" value="Salvar" />
+        <input type='submit' className='btn btn-primary' value='Salvar' />
       </form>
     )
 
     return (
-      <div className="roletypes-create">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='roletypes-create'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to="/parameters/roletypes" className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to='/parameters/roletypes' className='breadcrumb-link'>
               Tipos de papel
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</span>
           </div>
 
-          <div className="form-container" id="main">
-            
-            <h1>
-              {this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}
-            </h1>
+          <div className='form-container' id='main'>
+            <h1>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</h1>
             {/* <p className="lead text-center">
               {this.state.mode === 'create' ? 'Dê entrada nos dados básicos' : 'Altere os dados básicos'}
             </p> */}
@@ -218,8 +219,11 @@ const mapStateToProps = state => ({
   roleTypeStore: state.roleTypeStore
 })
 
-export default connect(mapStateToProps, {
-  createRoleType,
-  getRoleType,
-  updateRoleType
-})(RoleTypeCreateUpdate)
+export default connect(
+  mapStateToProps,
+  {
+    createRoleType,
+    getRoleType,
+    updateRoleType
+  }
+)(RoleTypeCreateUpdate)
