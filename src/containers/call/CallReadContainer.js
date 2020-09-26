@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { clearErrors } from '../../store/actions/error'
-import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
+import { selectCallById, selectProcessByCallId } from '../../store/selectors/call/call'
 import CallRead from '../../components/call/CallRead'
 
 const CallReadContainer = props => {
@@ -39,6 +39,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     call: selectCallById(state, call_id, {
       withCalendar: true,
+      withCalendarStatus: true,
       withVacancy: true,
       withAssignment: true,
       withRegion: true,

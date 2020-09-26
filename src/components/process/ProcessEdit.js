@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -135,20 +137,20 @@ class ProcessEdit extends Component {
   renderForm(state, errors, courseOptions) {
     return (
       <form noValidate onSubmit={this.onSubmit}>
-        <div className="form-lateral">
+        <div className='form-lateral'>
           <TextFieldGroup
-            type="text"
-            name="number"
-            label="Número"
+            type='text'
+            name='number'
+            label='Número'
             value={this.state.number}
             onChange={this.onChange}
             error={errors.number}
           />
 
           <TextFieldGroup
-            type="text"
-            name="year"
-            label="Ano"
+            type='text'
+            name='year'
+            label='Ano'
             value={this.state.year}
             onChange={this.onChange}
             error={errors.year}
@@ -156,9 +158,9 @@ class ProcessEdit extends Component {
         </div>
 
         <SelectListGroup
-          placeholder=""
-          name="course_id"
-          label="Curso"
+          placeholder=''
+          name='course_id'
+          label='Curso'
           value={this.state.course_id}
           options={courseOptions}
           onChange={this.onChange}
@@ -166,26 +168,26 @@ class ProcessEdit extends Component {
         />
 
         <TextAreaFieldGroup
-          placeholder="* Descrição"
-          name="description"
-          label="Descrição"
+          placeholder='* Descrição'
+          name='description'
+          label='Descrição'
           value={this.state.description}
           onChange={this.onChange}
           error={errors.description}
-          info="Apresentação básica do processo seletivo"
+          info='Apresentação básica do processo seletivo'
         />
 
         <CheckBoxFieldGroup
-          id="visible-checkbox"
-          name="visible"
-          text="Visibilidade"
-          value="Tornar processo visível"
+          id='visible-checkbox'
+          name='visible'
+          text='Visibilidade'
+          value='Tornar processo visível'
           checked={this.state.visible}
           error={errors.visible}
           onChange={this.onCheck}
         />
 
-        <input type="submit" className="btn btn-primary" value="Editar" />
+        <input type='submit' className='btn btn-primary' value='Editar' />
       </form>
     )
   }
@@ -206,24 +208,24 @@ class ProcessEdit extends Component {
     )
 
     return (
-      <div className="process-edit">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='process-edit'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/processes" className="breadcrumb-link">
+            <Link to='/processes' className='breadcrumb-link'>
               Processos Seletivos
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/processes/${this.props.match.params.id}`} className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to={`/processes/read/${this.props.match.params.id}`} className='breadcrumb-link'>
               {this.props.processStore.process
                 ? `Edital ${this.props.processStore.process.number}/${this.props.processStore.process.year}`
                 : 'Edital 000/0000'}
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Editar</span>
           </div>
 
-          <div className="form-container" id="main">
+          <div className='form-container' id='main'>
             <h1>Editar processo</h1>
             <AlertError errors={this.props.errorStore} />
             {this.renderForm(this.state, errors, courseOptions)}
@@ -251,4 +253,7 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { clearErrors, getProcess, updateProcess, getCourses })(withRouter(ProcessEdit))
+export default connect(
+  mapStateToProps,
+  { clearErrors, getProcess, updateProcess, getCourses }
+)(withRouter(ProcessEdit))

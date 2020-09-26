@@ -45,6 +45,11 @@ const CalendarListOnCall = props => {
                   <p>{calendar.ready ? 'Pronto' : 'Pendente'}</p>
                   <p>{calendar.status}</p>
                   <p className='text-right'>
+                    <DrawFilter permission='calendar_read' course_id={course_id}>
+                      <Link className='btn-icon laranja' to={`/calendar/read/${calendar.id}`}>
+                        <i className='fas fa-eye' />
+                      </Link>
+                    </DrawFilter>{' '}
                     <DrawFilter permission='calendar_update' course_id={course_id}>
                       <Link className='btn-icon' to={`/calendar/update/${calendar.id}`}>
                         <i className='fas fa-pencil-alt' />
@@ -68,7 +73,7 @@ const CalendarListOnCall = props => {
   }
 
   return (
-    <section id='ofertas' className='quadro'>
+    <section id='calendarios' className='quadro'>
       <h4>Calendário de eventos</h4>
       {renderCreateButton(call, course_id)}
       {renderCalendarList(call, course_id)}

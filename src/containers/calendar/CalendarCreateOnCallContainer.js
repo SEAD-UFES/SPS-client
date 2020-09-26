@@ -10,8 +10,8 @@ import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { createCalendar, readListCalendar } from '../../store/actions/calendar'
 import CalendarCreateOnCall from '../../components/calendar/CalendarCreateOnCall'
-import { selectCallById, selectProcessByCallId } from '../../store/selectors/call'
-import { selectCalendarByCallId } from '../../store/selectors/calendar'
+import { selectCallById, selectProcessByCallId } from '../../store/selectors/call/call'
+import { selectCalendarByCallId } from '../../store/selectors/calendar/calendar'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 import {
@@ -166,7 +166,7 @@ const mapStateToProps = (state, ownProps) => {
   try {
     return {
       errorStore: state.errorStore,
-      calendars: selectCalendarByCallId(state, call_id),
+      calendars: selectCalendarByCallId(state, call_id, {}),
       call: selectCallById(state, call_id, {}),
       callLoading: state.callStoreV2.loading,
       process: selectProcessByCallId(state, call_id, { withCourse: true })

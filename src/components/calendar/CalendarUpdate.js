@@ -23,7 +23,7 @@ const CalendarUpdate = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
+        <Link to={`/processes/read/${process ? process.id : null}`} className='breadcrumb-link'>
           {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
         </Link>
 
@@ -73,13 +73,13 @@ const CalendarUpdate = props => {
         </div>
 
         <SelectListGroup
-          name='dependsOn'
+          name='calendar_id'
           label='Depende de...'
           placeholder='Selecione a atribuição (opcional)'
           value={updateData.calendar_id}
           options={calendarOptions}
           onChange={onChange}
-          error={errors.dependsOn}
+          error={errors.calendar_id}
           info='Campo opcional'
         />
 

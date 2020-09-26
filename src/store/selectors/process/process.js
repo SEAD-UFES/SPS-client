@@ -1,12 +1,22 @@
 /** @format */
 
-import { makeSelectCallById, makeSelectCallByCalendarId } from './call'
-import { makeSelectVacancyById } from './vacancy'
 import { createSelector } from 'reselect'
+
+import { makeSelectCallById, makeSelectCallByCalendarId } from '../call/call'
+import { makeSelectVacancyById } from '../vacancy/vacancy'
+import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
+import { makeSelectCallByProcessId } from '../call/selectCallByProcessId'
 
 //make selector process by id
 export const makeSelectProcessById = () => (store, id, options = {}) => {
-  const process = store.processStore.process
+  let process = store.processStore.process
+  const selectCallByProcessId = makeSelectCallByProcessId()
+
+  if (process && options.withCall) {
+    const calls = selectCallByProcessId(store, id, options)
+    process = { ...process, calls: calls }
+  }
+
   return process ? process : null
 }
 
@@ -53,6 +63,26 @@ export const makeSelectProcessByCalendarId = () => {
   )
 }
 
+export const makeSelectProcessByInscriptionEventId = () => {
+  const selectInscriptionEventById = makeSelectInscriptionEventById_single()
+  const selectProcessByCalendarId = makeSelectProcessByCalendarId()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectInscriptionEventById, getStore, getOptions],
+    (iEvent, store, options) => {
+      const calendar_id = iEvent ? iEvent.calendar_id : null
+      if (!calendar_id) return null
+
+      const process = selectProcessByCalendarId(store, calendar_id, options)
+      if (!process) return null
+
+      return process
+    }
+  )
+}
+
 //single instance of selectProcessById
 export const selectProcessById = makeSelectProcessById()
 
@@ -64,3 +94,6 @@ export const selectProcessByVacancyId = makeSelectProcessByVacancyId()
 
 //single instance of selectProcessByCalendarId
 export const selectProcessByCalendarId = makeSelectProcessByCalendarId()
+
+//single instance of selectProcessByInscriptionEventId
+export const selectProcessByInscriptionEventId = makeSelectProcessByInscriptionEventId()

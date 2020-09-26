@@ -866,6 +866,11 @@ form input[type='submit'] {
   margin-bottom: 2rem;
 }
 
+/* Fernando */
+.view-page .quadro h4.alert-heading {
+  margin-top: 0;
+}
+
 .process-view .quadro#anexos li div:first-of-type,
 .register .quadro#anexos li div:first-of-type,
 .view-page .quadro#anexos li div:first-of-type {
@@ -1370,32 +1375,164 @@ footer #copyright p span a:hover {
   }
 }
 
-form div.form-group div.input-group {
-  border: 1px solid rgba(23, 101, 171, 0.3);
-  padding: 0px;
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #calendarios .table-list .titulos span:nth-of-type(1) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(2) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(3) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(4) {
+    width: 21%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(5) {
+    width: 16%;
+  }
+  #calendarios .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #calendarios .table-list li h3 {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(1) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(2) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(3) {
+    width: 21%;
+  }
+  #calendarios .table-list li p:nth-of-type(4) {
+    width: 16%;
+  }
+  #calendarios .table-list li p:nth-of-type(5) {
+    width: unset;
+  }
 }
 
-form div.form-group div.input-group div.input-group-prepend {
-  /* border: 1px solid green; */
-  display: block;
-  margin: 0px;
-  height: 36px;
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #inscriptionEvents .table-list .titulos span:nth-of-type(1) {
+    width: 24%;
+  }
+  #inscriptionEvents .table-list .titulos span:nth-of-type(2) {
+    width: 22%;
+  }
+  #inscriptionEvents .table-list .titulos span:nth-of-type(3) {
+    width: 22%;
+  }
+  #inscriptionEvents .table-list .titulos span:nth-of-type(4) {
+    width: 22%;
+  }
+  #inscriptionEvents .table-list .titulos span:nth-of-type(5) {
+    width: 10%;
+  }
+  #inscriptionEvents .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #inscriptionEvents .table-list li h3 {
+    width: 24%;
+  }
+  #inscriptionEvents .table-list li p:nth-of-type(1) {
+    width: 22%;
+  }
+  #inscriptionEvents .table-list li p:nth-of-type(2) {
+    width: 22%;
+  }
+  #inscriptionEvents .table-list li p:nth-of-type(3) {
+    width: 22%;
+  }
+  #inscriptionEvents .table-list li p:nth-of-type(4) {
+    width: 10%;
+  }
+  #inscriptionEvents .table-list li p:nth-of-type(5) {
+    width: unset;
+  }
 }
 
-form div.form-group div.input-group div.input-group-prepend div.input-group-text {
-  /* border: 1px solid purple; */
-  border-radius: 0px;
-  margin: 0px;
-  margin-top: 7px;
-  padding: 0.25rem 0.5rem;
-  border: none;
-  background-color: transparent;
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #myInscriptions .table-list .titulos span:nth-of-type(1) {
+    width: 20%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(2) {
+    width: 35%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(3) {
+    width: 35%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(4) {
+    width: 10%;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(5) {
+    width: unset;
+  }
+  #myInscriptions .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #myInscriptions .table-list li h3 {
+    width: 20%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(1) {
+    width: 35%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(2) {
+    width: 35%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(3) {
+    width: 10%;
+  }
+  #myInscriptions .table-list li p:nth-of-type(4) {
+    width: unset;
+  }
+  #myInscriptions .table-list li p:nth-of-type(5) {
+    width: unset;
+  }
 }
 
-form div.form-group div.input-group input {
-  border: none;
-  /* border: 1px solid blue; */
-  margin: 0px;
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #inscriptions .table-list .titulos span:nth-of-type(1) {
+    width: 15%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(2) {
+    width: 25%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(3) {
+    width: 25%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(4) {
+    width: 25%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(5) {
+    width: 10%;
+  }
+  #inscriptions .table-list .titulos span:nth-of-type(6) {
+    width: unset;
+  }
+  #inscriptions .table-list li h3 {
+    width: 15%;
+  }
+  #inscriptions .table-list li p:nth-of-type(1) {
+    width: 25%;
+  }
+  #inscriptions .table-list li p:nth-of-type(2) {
+    width: 25%;
+  }
+  #inscriptions .table-list li p:nth-of-type(3) {
+    width: 25%;
+  }
+  #inscriptions .table-list li p:nth-of-type(4) {
+    width: 10%;
+  }
+  #inscriptions .table-list li p:nth-of-type(5) {
+    width: unset;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

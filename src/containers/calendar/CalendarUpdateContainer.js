@@ -20,9 +20,9 @@ import {
   validateReady,
   validateBody
 } from '../../validation/calendar'
-import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar'
-import { selectCallByCalendarId } from '../../store/selectors/call'
-import { selectProcessByCalendarId } from '../../store/selectors/process'
+import { selectCalendarById, selectBrotherCalendarById } from '../../store/selectors/calendar/calendar'
+import { selectCallByCalendarId } from '../../store/selectors/call/call'
+import { selectProcessByCalendarId } from '../../store/selectors/process/process'
 import { removePotentialCircRef } from '../../utils/calendarHelpers'
 
 const CalendarUpdateContainer = props => {
@@ -38,8 +38,8 @@ const CalendarUpdateContainer = props => {
     start: '',
     end: ''
   }
-  const [updateData, setUpdateData] = useState(initialUpdateData)
   const [readyToLoad, setReadyToLoad] = useState(false)
+  const [updateData, setUpdateData] = useState(initialUpdateData)
   const [errors, setErrors] = useState({})
 
   //Gerando as opções possiveis para calendar_id

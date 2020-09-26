@@ -20,9 +20,9 @@ import { validateAssignmentId, validateQtd, validateReserve, validateBody } from
 import { selectAssignment } from '../../store/selectors/assignment'
 import { selectRestriction } from '../../store/selectors/restriction'
 import { selectRegion } from '../../store/selectors/region'
-import { selectVacancyById } from '../../store/selectors/vacancy'
-import { selectCallByVacancyId } from '../../store/selectors/call'
-import { selectProcessByVacancyId } from '../../store/selectors/process'
+import { selectVacancyById } from '../../store/selectors/vacancy/vacancy'
+import { selectCallByVacancyId } from '../../store/selectors/call/call'
+import { selectProcessByVacancyId } from '../../store/selectors/process/process'
 
 const VacancyUpdateContainer = props => {
   const id = props.match.params.id

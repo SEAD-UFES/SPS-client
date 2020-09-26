@@ -3,6 +3,10 @@
 import { createSelector } from 'reselect'
 import moment from 'moment'
 
+import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
+import { makeSelectInscriptionEventByCalendarId } from '../inscriptionEvent/selectInscriptionEventByCalendarId'
+import { selectInscriptionEvent } from '../inscriptionEvent/inscriptionEvent'
+
 const calcCalendarStatus = (cld, calendars) => {
   const status = {
     ag: 'Aguardando',
@@ -44,8 +48,8 @@ const selectCalendar = createSelector(
 
 export const makeSelectCalendarById = () => {
   const getStore = store => store
-  const getId = (store, id, options) => id
-  const getOptions = (store, id, options) => options
+  const getId = (store, id, options = {}) => id
+  const getOptions = (store, id, options = {}) => options
 
   return createSelector(
     [selectCalendar, getStore, getId, getOptions],
@@ -59,28 +63,57 @@ export const makeSelectCalendarById = () => {
         calendar = { ...calendar, calendar: fatherCalendar ? fatherCalendar : null }
       }
 
+      //add inscriptionEvents
+      if (calendar && options.withInscriptionEvent) {
+        const selectInscriptionEventByCalendarId = makeSelectInscriptionEventByCalendarId()
+        const iEvents = selectInscriptionEventByCalendarId(store, calendar.id, options)
+        calendar = { ...calendar, inscriptionEvents: iEvents ? iEvents : [] }
+      }
+
+      //calc status (need to have brother calendars on reducer)
+      if (calendar && options.withCalendarStatus) {
+        const brotherCalendars = calendars.filter(cld => cld.call_id === calendar.call_id)
+        const status = calcCalendarStatus(calendar, brotherCalendars)
+        calendar = { ...calendar, status: status ? status : null }
+      }
+
       return calendar ? calendar : null
     }
   )
 }
 
 export const makeSelectCalendarByCallId = () => {
-  const getId = (store, id, options) => id
-  const getOptions = (store, id, options) => options
+  const getId = (store, id, options = {}) => id
+  const getOptions = (store, id, options = {}) => options
 
   return createSelector(
-    [selectCalendar, getId, getOptions],
-    (calendars, id, options) => {
+    [selectCalendar, selectInscriptionEvent, getId, getOptions],
+    (calendars, inscriptionEvents, id, options) => {
       let selectedCalendars = calendars.filter(x => x.call_id === id)
-      selectedCalendars = selectedCalendars.map(cld => {
-        cld.status = calcCalendarStatus(cld, calendars)
-        return cld
-      })
+
+      //calc calendarStatus
+      if (options.withCalendarStatus) {
+        selectedCalendars = selectedCalendars.map((cld, key, list) => {
+          const status = calcCalendarStatus(cld, list)
+          cld.status = status
+          return cld
+        })
+      }
+
+      if (options.withInscriptionEvent) {
+        selectedCalendars = selectedCalendars.map(cld => {
+          const cldInscriptionEvents = inscriptionEvents.filter(iE => iE.calendar_id === cld.id)
+          cld.inscriptionEvents = cldInscriptionEvents
+          return cld
+        })
+      }
+
       return selectedCalendars
     }
   )
 }
 
+//makeSelectBrotherCalendarById
 export const makeSelectBrotherCalendarById = () => {
   const selectCalendarById = makeSelectCalendarById()
   const getId = (store, id, options) => id
@@ -97,6 +130,27 @@ export const makeSelectBrotherCalendarById = () => {
   )
 }
 
+//makeSelectCalendarByInscriptionEventId
+export const makeSelectCalendarByInscriptionEventId = () => {
+  const selectInscriptionEventById = makeSelectInscriptionEventById_single()
+  const selectCalendarById = makeSelectCalendarById()
+  const getStore = store => store
+  const getOptions = (store, id, options = {}) => options
+
+  return createSelector(
+    [selectInscriptionEventById, getStore, getOptions],
+    (iEvent, store, options) => {
+      const calendar_id = iEvent ? iEvent.calendar_id : null
+      if (!calendar_id) return null
+
+      const calendar = selectCalendarById(store, calendar_id, options)
+      if (!calendar) return null
+
+      return calendar
+    }
+  )
+}
+
 //single instance of selectCalendarById
 export const selectCalendarById = makeSelectCalendarById()
 
@@ -105,3 +159,6 @@ export const selectCalendarByCallId = makeSelectCalendarByCallId()
 
 //single instance of selectBrotherCalendarById
 export const selectBrotherCalendarById = makeSelectBrotherCalendarById()
+
+//single instance of selectCalendarByInscriptionEventId
+export const selectCalendarByInscriptionEventId = makeSelectCalendarByInscriptionEventId()

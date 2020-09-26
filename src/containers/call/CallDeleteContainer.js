@@ -7,8 +7,8 @@ import { clearErrors } from '../../store/actions/error'
 import { readCall, deleteCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import CallDelete from '../../components/call/CallDelete'
-import { selectCallById } from '../../store/selectors/call'
-import { selectProcessByCallId } from '../../store/selectors/process'
+import { selectCallById } from '../../store/selectors/call/call'
+import { selectProcessByCallId } from '../../store/selectors/process/process'
 import { checkNested } from '../../utils/objectHelpers'
 
 const CallDeleteContainer = props => {
@@ -47,7 +47,7 @@ const CallDeleteContainer = props => {
 
     deleteCall(call.id, {
       callbackOk: () => {
-        props.history.push(`/processes/${process.id}`)
+        props.history.push(`/processes/read/${process.id}`)
       }
     })
   }

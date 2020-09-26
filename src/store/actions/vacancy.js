@@ -42,6 +42,20 @@ export const readVacancy = (id, options = {}) => (dispatch, getState) => {
     .get(`/v1/vacancies/${id}`)
     .then(res => {
       dispatch({ type: READ_VACANCY, payload: res.data })
+      const newOptions = _.omit(options, 'callbackOk')
+
+      if (options.withAssignment) {
+        dispatch(readAssignmentV2(res.data.assignment_id, newOptions))
+      }
+
+      if (options.withRegion && res.data.region_id) {
+        dispatch(readRegionV2(res.data.region_id, newOptions))
+      }
+
+      if (options.withRestriction && res.data.restriction_id) {
+        dispatch(readRestrictionV2(res.data.restriction_id, newOptions))
+      }
+
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
     })
@@ -129,7 +143,7 @@ const handleErrors = (err, dispatch) => {
   } else {
     dispatch({
       type: GET_ERRORS,
-      payload: { anotherError: true }
+      payload: { anotherError: true, message: err.message }
     })
   }
 }

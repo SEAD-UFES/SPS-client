@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -32,27 +34,27 @@ class PublicationView extends Component {
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">{publication.title}</h4>
+      <div className='card mb-4'>
+        <div className='card-header'>
+          <h4 className='mb-0'>{publication.title}</h4>
         </div>
 
-        <div className="card-body">
+        <div className='card-body'>
           <div>
             <span dangerouslySetInnerHTML={{ __html: publication.description ? publication.description : '' }} />
           </div>
           <div>
-            <div className="form-group row pt-2 pb-2">
-              <label className="col-lg-2 col-form-label form-control-label font-weight-bold">
-                <span className="mt-6">Arquivo:</span>
+            <div className='form-group row pt-2 pb-2'>
+              <label className='col-lg-2 col-form-label form-control-label font-weight-bold'>
+                <span className='mt-6'>Arquivo:</span>
               </label>
-              <div className="col-lg-10">
-                <div className="form form-control">
+              <div className='col-lg-10'>
+                <div className='form form-control'>
                   <a
                     href={`${spsServerUrl}/v1/publications/download/${publication.file}`}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <i className="fas fa-file" /> {publication.file}
+                    target='_blank'
+                    rel='noopener noreferrer'>
+                    <i className='fas fa-file' /> {publication.file}
                   </a>
                 </div>
               </div>
@@ -79,14 +81,14 @@ class PublicationView extends Component {
     const publication = publicationValue()
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to={`/processes/${this.props.match.params.process_id}`} className="btn btn-light">
+      <div className='register'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <Link to={`/processes/read/${this.props.match.params.process_id}`} className='btn btn-light'>
                 Voltar para o processo
               </Link>
-              <h1 className="display-4">Publicação</h1>
+              <h1 className='display-4'>Publicação</h1>
               <AlertError errors={errors} />
               {this.renderInfo(publication, this.props.loading)}
             </div>

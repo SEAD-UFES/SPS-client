@@ -1,5 +1,7 @@
 /** @format */
 
+import _ from 'lodash'
+
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import {
@@ -11,6 +13,7 @@ import {
   READ_LIST_CALENDAR
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
+import { readListInscriptionEvent } from './inscriptionEvent'
 
 //Calendar loading
 export const setCalendarLoading = () => {
@@ -34,6 +37,8 @@ export const createCalendar = (data, options = {}) => (dispatch, getState) => {
 
 //Calendar read
 export const readCalendar = (id, options = {}) => (dispatch, getState) => {
+  const newOptions = _.omit(options, 'callbackOk')
+
   dispatch(setCalendarLoading())
   spsApi
     .get(`/v1/calendars/${id}`)
@@ -43,8 +48,13 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
       //baixar calendarios associados
       if (options.withCalendar) {
         if (res.data.calendar_id !== null) {
-          dispatch(readCalendar(res.data.calendar_id, options))
+          dispatch(readCalendar(res.data.calendar_id))
         }
+      }
+
+      //baixar inscriptionEvents associados
+      if (options.withInscriptionEvent) {
+        dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id], ...newOptions }))
       }
 
       //run callBack
@@ -85,15 +95,23 @@ export const deleteCalendar = (id, options = {}) => (dispatch, getState) => {
 
 //Calendar Add List
 export const readListCalendar = (options = {}) => dispatch => {
-  dispatch(setCalendarLoading())
   let url = `/v1/calendars`
   const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
   url = `${url}?${callIdsString}`
 
+  dispatch(setCalendarLoading())
   spsApi
     .get(url)
     .then(res => {
       dispatch({ type: READ_LIST_CALENDAR, payload: res.data })
+
+      const newOptions = _.omit(options, 'callbackOk')
+
+      //baixar inscriptionEvents associados
+      if (res.data.length > 0 && options.withInscriptionEvent) {
+        const calendar_ids = res.data.map(calendar => calendar.id)
+        dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...newOptions }))
+      }
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
@@ -114,7 +132,7 @@ const handleErrors = (err, dispatch) => {
   } else {
     dispatch({
       type: GET_ERRORS,
-      payload: { anotherError: true }
+      payload: { anotherError: true, message: err.message }
     })
   }
 }

@@ -8,9 +8,9 @@ import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { readCalendar, deleteCalendar } from '../../store/actions/calendar'
 import CalendarDelete from '../../components/calendar/CalendarDelete'
-import { selectCalendarById } from '../../store/selectors/calendar'
-import { selectCallByCalendarId } from '../../store/selectors/call'
-import { selectProcessByCalendarId } from '../../store/selectors/process'
+import { selectCalendarById } from '../../store/selectors/calendar/calendar'
+import { selectCallByCalendarId } from '../../store/selectors/call/call'
+import { selectProcessByCalendarId } from '../../store/selectors/process/process'
 import { checkNested } from '../../utils/objectHelpers'
 
 const CalendarDeleteContainer = props => {

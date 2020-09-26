@@ -14,13 +14,6 @@ const CalendarCreateOnCall = props => {
   const { process, call, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
 
-  //dummy data
-  //const createData = {}
-  //const errors = {}
-  //const onChange = () => {}
-  // const onCheck = () => {}
-  //const onSubmit = () => {}
-
   const renderBreadcrumb = (process, call) => {
     return (
       <div className='breadcrumb'>
@@ -30,7 +23,7 @@ const CalendarCreateOnCall = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <Link to={`/processes/${process ? process.id : null}`} className='breadcrumb-link'>
+        <Link to={`/processes/read/${process ? process.id : null}`} className='breadcrumb-link'>
           {process ? `Edital ${process.number}/${process.year}` : 'Edital'}
         </Link>
 
@@ -110,7 +103,7 @@ const CalendarCreateOnCall = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Novo evento</h1>
+          <h1>Novo calendário</h1>
           <AlertError errors={errorStore} />
           {renderForm(createData, errors)}
         </div>
