@@ -1,6 +1,9 @@
-import axios from 'axios'
+/** @format */
 
-export const spsServerUrl = 'http://localhost:3000'
+import axios from 'axios'
+import { backendConfig } from '../config/backend'
+
+export const spsServerUrl = backendConfig.spsServerUrl
 
 export default axios.create({
   baseURL: spsServerUrl
