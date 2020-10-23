@@ -51,7 +51,7 @@ const ProcessRead = props => {
           <Link
             className='btn btn-primary'
             to={{
-              pathname: `/process/update/${process ? process.id : null}`,
+              pathname: `/processes/${process ? process.id : null}/edit`,
               prevLocation: location
             }}>
             <i className='fas fa-cog' /> Editar
