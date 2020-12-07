@@ -36,6 +36,7 @@ import VacancyRoutes from './containers/vacancy/VacancyRoutes'
 import CalendarRoutes from './containers/calendar/CalendarRoutes'
 import InscriptionEventRoutes from './containers/inscriptionEvent/InscriptionEventRoutes'
 import InscriptionRoutes from './containers/inscription/InscriptionRoutes'
+import PetitionEventRoutes from './containers/petitionEvent/PetitionEventRoutes'
 
 import NotFound from './components/common/NotFound'
 
@@ -96,6 +97,7 @@ class App extends Component {
               <Route path='/calendar' component={CalendarRoutes} />
               <Route path='/inscription-event' component={InscriptionEventRoutes} />
               <Route path='/inscription' component={InscriptionRoutes} />
+              <Route path='/petition-event' component={PetitionEventRoutes} />
 
               <Route component={NotFound} />
             </Switch>

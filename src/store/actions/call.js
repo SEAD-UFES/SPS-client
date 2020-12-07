@@ -97,6 +97,7 @@ export const readListCall = (options = {}) => (dispatch, getState) => {
     .get(url)
     .then(res => {
       dispatch({ type: READ_LIST_CALL, payload: res.data })
+      console.log(res.data)
 
       const newOptions = _.omit(options, 'callbackOk')
 

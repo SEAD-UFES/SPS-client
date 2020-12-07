@@ -30,7 +30,6 @@ export const createProcess = (processData, history) => dispatch => {
 //get Process
 export const getProcess = (process_id, options = {}) => dispatch => {
   let url = `/v1/selectiveprocesses/${process_id}`
-
   dispatch(setProcessLoading())
   spsApi
     .get(`${url}`)

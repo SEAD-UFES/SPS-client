@@ -87,6 +87,7 @@ const CalendarRead = props => {
   const renderAddEventType = (calendar, calendarGroupLoading) => {
     const hasInscriptionEvent =
       checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? true : false
+    const hasPetitionEvent = true
     const hasEvent = hasInscriptionEvent ? true : false
 
     if (!calendarGroupLoading && !hasEvent) {
@@ -97,6 +98,11 @@ const CalendarRead = props => {
             <ul>
               <li className='list-group-item'>
                 <Link to={`${props.match.url}/inscription-event/create`}>Evento de inscrições</Link>
+              </li>
+              <li className='list-group-item'>
+                <Link to={`/petition-event/create?calendar_id=${calendar ? calendar.id : null}`}>
+                  Evento de recursos
+                </Link>
               </li>
             </ul>
           </section>

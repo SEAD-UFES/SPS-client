@@ -97,6 +97,15 @@ const CallCreateContainer = props => {
         endingDate: moment(createData.endingDate, 'YYYY-MM-DD').format('YYYY-MM-DD') + ' 23:59:59'
       }
 
+      const oD = moment(data.openingDate, 'YYYY-MM-DD HH:mm:ss')
+      const eD = moment(data.endingDate, 'YYYY-MM-DD HH:mm:ss')
+
+      console.log('moment data')
+      console.log('oD:', oD)
+      console.log('\n')
+      console.log('eD:', eD)
+      console.log('\n')
+
       createCall(data, {
         callbackOk: call => {
           props.history.push(`/processes/read/${call.selectiveProcess_id}`)
