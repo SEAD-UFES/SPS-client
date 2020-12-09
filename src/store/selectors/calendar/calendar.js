@@ -6,6 +6,7 @@ import moment from 'moment'
 import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
 import { makeSelectInscriptionEventByCalendarId } from '../inscriptionEvent/selectInscriptionEventByCalendarId'
 import { selectInscriptionEvent } from '../inscriptionEvent/inscriptionEvent'
+import { makeSelectPetitionEventByCalendarId } from '../petitionEvent/selectPetitionEventByCalendarId'
 
 const calcCalendarStatus = (cld, calendars) => {
   const status = {
@@ -68,6 +69,13 @@ export const makeSelectCalendarById = () => {
         const selectInscriptionEventByCalendarId = makeSelectInscriptionEventByCalendarId()
         const iEvents = selectInscriptionEventByCalendarId(store, calendar.id, options)
         calendar = { ...calendar, inscriptionEvents: iEvents ? iEvents : [] }
+      }
+
+      //add petitionEvents
+      if (calendar && options.withPetitionEvent) {
+        const selectPetitionEventByCalendarId = makeSelectPetitionEventByCalendarId()
+        const pEvents = selectPetitionEventByCalendarId(store, calendar.id, options)
+        calendar = { ...calendar, petitionEvents: pEvents ? pEvents : [] }
       }
 
       //calc status (need to have brother calendars on reducer)

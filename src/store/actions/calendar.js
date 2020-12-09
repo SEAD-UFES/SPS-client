@@ -14,6 +14,7 @@ import {
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 import { readListInscriptionEvent } from './inscriptionEvent'
+import { readListPetitionEvent } from './petitionEvent'
 
 //Calendar loading
 export const setCalendarLoading = () => {
@@ -55,6 +56,11 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
       //baixar inscriptionEvents associados
       if (options.withInscriptionEvent) {
         dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id], ...newOptions }))
+      }
+
+      //baixar petitionEvents associados
+      if (options.withPetitionEvent) {
+        dispatch(readListPetitionEvent({ calendar_ids: [res.data.id], ...newOptions }))
       }
 
       //run callBack
@@ -111,6 +117,12 @@ export const readListCalendar = (options = {}) => dispatch => {
       if (res.data.length > 0 && options.withInscriptionEvent) {
         const calendar_ids = res.data.map(calendar => calendar.id)
         dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...newOptions }))
+      }
+
+      //baixar petitionEvents associados
+      if (res.data.length > 0 && options.withPetitionEvent) {
+        const calendar_ids = res.data.map(calendar => calendar.id)
+        dispatch(readListPetitionEvent({ calendar_ids: calendar_ids, ...newOptions }))
       }
 
       //run callBack
