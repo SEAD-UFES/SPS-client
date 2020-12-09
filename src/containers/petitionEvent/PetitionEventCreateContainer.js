@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import qs from 'query-string'
+import _ from 'lodash'
 
 import PetitionEventCreate from '../../components/petitionEvent/PetitionEventCreate'
 import { clearErrors } from '../../store/actions/error'
@@ -12,12 +13,15 @@ import { getProcess } from '../../store/actions/process'
 import { selectCalendarById } from '../../store/selectors/calendar/calendar'
 import { selectCallByCalendarId } from '../../store/selectors/call/call'
 import { selectProcessByCalendarId } from '../../store/selectors/process/process'
-import { checkNested } from '../../utils/objectHelpers'
+import { checkNested, isEmpty, getEmptyKeys, removeEmptyKeys } from '../../utils/objectHelpers'
+import { calendarWithInscriptionEventOptions } from '../../utils/inscriptionEventHelpers'
+import { validateInscriptionEventId, validateBody } from '../../validation/petitionEvent'
+import { createPetitionEvent } from '../../store/actions/petitionEvent'
 
 const PetitionEventCreateContainer = props => {
   const query = qs.parse(props.location.search)
   const calendar_id = query.calendar_id || null
-  const { clearErrors, readCalendar, readCall, getProcess } = props
+  const { clearErrors, readCalendar, readCall, getProcess, createPetitionEvent } = props
   const { call, errorStore, history } = props
 
   //set states and consts
@@ -29,14 +33,8 @@ const PetitionEventCreateContainer = props => {
   const [errors, setErrors] = useState({})
 
   const calendars = call ? call.calendars : []
-  const reduceCalendars = (acc, cur) => {
-    if (cur.inscriptionEvents.length > 0) acc.push(cur)
-    return acc
-  }
-  const calendarsWithInscriptionEvent = calendars.reduce(reduceCalendars, [])
-  console.log(calendarsWithInscriptionEvent)
-
-  const inscriptionEventOptions = [{ id: '', label: 'Escolha o evento de inscrição associado' }]
+  const inscriptionEventOptions = calendarWithInscriptionEventOptions(calendars)
+  inscriptionEventOptions.unshift({ label: 'Escolha o evento de inscrição associado', value: '' })
 
   //ComponentDidMount
   useEffect(() => {
@@ -69,10 +67,52 @@ const PetitionEventCreateContainer = props => {
   )
 
   //onChange
-  const onChange = e => {}
+  const onChange = e => {
+    e.preventDefault()
+
+    let errorList = {}
+    let newErrors = { ...errors }
+
+    switch (e.target.name) {
+      case 'inscriptionEvent_id':
+        errorList[e.target.name] = validateInscriptionEventId(e.target.value)
+        break
+      default:
+        break
+    }
+
+    //remove empty errors if needed
+    const keysToRemove = getEmptyKeys(errorList)
+    if (!isEmpty(keysToRemove)) newErrors = _.omit(newErrors, keysToRemove)
+
+    //add errors if needed
+    const toAdd = removeEmptyKeys(errorList)
+    if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
+
+    setCreateData({ ...createData, [e.target.name]: e.target.value })
+    setErrors(newErrors)
+  }
 
   //onSubmit
-  const onSubmit = e => {}
+  const onSubmit = e => {
+    e.preventDefault()
+
+    const submitErrors = validateBody(createData, 'create')
+
+    if (submitErrors) {
+      setErrors(submitErrors)
+    } else {
+      const data = {
+        ...createData
+      }
+
+      createPetitionEvent(data, {
+        callbackOk: pE => {
+          history.push(`/calendar/read/${pE.calendar_id}`)
+        }
+      })
+    }
+  }
 
   //make props bundle to ViewComponent
   const allProps = {
@@ -103,7 +143,8 @@ const mapActionsToProps = {
   clearErrors,
   readCalendar,
   readCall,
-  getProcess
+  getProcess,
+  createPetitionEvent
 }
 
 export default connect(

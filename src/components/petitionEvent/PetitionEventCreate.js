@@ -63,7 +63,7 @@ const PetitionEventCreate = props => {
           value={createData.inscriptionEvent_id}
           options={inscriptionEventOptions}
           onChange={onChange}
-          error={errors.inscriptionEvent}
+          error={errors.inscriptionEvent_id}
         />
 
         <input type='submit' className='btn btn-primary' value='Criar' />

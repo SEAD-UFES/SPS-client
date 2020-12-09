@@ -31,6 +31,7 @@ import calendarReducer from './reducers/calendar'
 import inscriptionEventReducer from './reducers/inscriptionEvent'
 import inscriptionReducer from './reducers/inscription'
 import personReducer from './reducers/person'
+import petitionEventReducer from './reducers/petitionEvent'
 
 export default combineReducers({
   //Stores V1
@@ -61,5 +62,6 @@ export default combineReducers({
   calendarStore: calendarReducer,
   inscriptionEventStore: inscriptionEventReducer,
   inscriptionStore: inscriptionReducer,
-  personStore: personReducer
+  personStore: personReducer,
+  petitionEventStore: petitionEventReducer
 })
