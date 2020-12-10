@@ -51,8 +51,7 @@ const mapStateToProps = (state, ownProps) => {
     calendar: selectCalendarById(state, calendar_id, {
       withCalendarStatus: true,
       withInscriptionEvent: true,
-      withPetitionEvent: true,
-      withCalendar: true
+      withPetitionEvent: { withInscriptionEvent: { withCalendar: true } }
     }),
     calendarLoading: state.calendarStore.loading,
     call: selectCallByCalendarId(state, calendar_id, {}),

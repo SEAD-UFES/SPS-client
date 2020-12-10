@@ -7,8 +7,6 @@ import { checkNested } from '../../utils/objectHelpers'
 const PetitionEventListOnCalendar = props => {
   const { calendar, course_id } = props
 
-  console.log('calendar', calendar)
-
   const renderPetitionEventList = (calendar, course_id) => {
     return (
       <div>

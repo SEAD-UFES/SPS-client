@@ -15,14 +15,17 @@ export const makeSelectPetitionEventByCalendarId = () => {
     [selectPetitionEvent, getStore, getId, getOptions],
     (pEvents, store, id, options) => {
       let selectedPEs = pEvents.filter(x => x.calendar_id === id)
+      const opt_PetitionEvent = options.withPetitionEvent || {}
 
-      if (options.withInscriptionEvent) {
+      if (opt_PetitionEvent.withInscriptionEvent) {
+        const opt_InscriptionEvent = opt_PetitionEvent.withInscriptionEvent
         selectedPEs = selectedPEs.map(PE => {
-          return { ...PE, inscriptionEvent: selectInscriptionEventById_noMemo(store, PE.inscriptionEvent_id, options) }
+          return {
+            ...PE,
+            inscriptionEvent: selectInscriptionEventById_noMemo(store, PE.inscriptionEvent_id, opt_InscriptionEvent)
+          }
         })
       }
-
-      console.log(selectedPEs)
 
       return selectedPEs
     }
