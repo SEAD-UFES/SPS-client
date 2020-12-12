@@ -1,38 +1,43 @@
 /** @format */
 
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { checkNested } from '../../utils/objectHelpers'
+import DrawFilter from '../../components/profile/DrawFilter'
 
 const PetitionEventListOnCalendar = props => {
   const { calendar, course_id } = props
 
   const renderPetitionEventList = (calendar, course_id) => {
+    const hasPetitionEvent =
+      checkNested(calendar, 'petitionEvents') && calendar.petitionEvents.length > 0 ? true : false
+
     return (
       <div>
-        {checkNested(calendar, 'petitionEvents') && calendar.petitionEvents.length > 0 ? (
-          <ul className='table-list'>
-            <div className='titulos'>
-              <span>id</span>
-              <span>calendar_id</span>
-              <span>inscriptionEvent_id</span>
-              <span>-</span>
-              <span />
-            </div>
-            {calendar.petitionEvents.map(PE => {
-              return (
-                <li key={PE.id}>
-                  <h3>{PE.id}</h3>
-                  <p>{PE.calendar_id}</p>
-                  <p>{PE.inscriptionEvent_id}</p>
-                  <p>-</p>
-                  <p className='text-right'>-</p>
-                </li>
-              )
-            })}
-          </ul>
+        {hasPetitionEvent ? (
+          <section>
+            <p>
+              <strong>Evento de inscrição associado: </strong>
+              {checkNested(calendar.petitionEvents[0], 'inscriptionEvent', 'calendar', 'name')
+                ? calendar.petitionEvents[0].inscriptionEvent.calendar.name
+                : 'none'}
+            </p>
+            <p>
+              <DrawFilter permission='petitionevent_read' course_id={course_id}>
+                <Link className='btn-icon laranja' to={`/petition-event/read/${calendar.petitionEvents[0].id}`}>
+                  <i className='fas fa-eye' />
+                </Link>
+              </DrawFilter>{' '}
+              <DrawFilter permission='petitionevent_delete' course_id={course_id}>
+                <Link className='btn-icon' to={`/petition-event/delete/${calendar.petitionEvents[0].id}`}>
+                  <i className='fas fa-trash' />
+                </Link>
+              </DrawFilter>
+            </p>
+          </section>
         ) : (
-          <p className='mb-0'>Sem evento de recurso cadastrado.</p>
+          <p className='mb-0'>Carregando...</p>
         )}
       </div>
     )

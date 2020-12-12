@@ -4,8 +4,15 @@ import _ from 'lodash'
 
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
-import { LOADING_PETITIONEVENT, CREATE_PETITIONEVENT, READ_LIST_PETITIONEVENT } from '../../store/actionTypes'
+import {
+  LOADING_PETITIONEVENT,
+  CREATE_PETITIONEVENT,
+  READ_PETITIONEVENT,
+  DELETE_PETITIONEVENT,
+  READ_LIST_PETITIONEVENT
+} from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
+import { readInscriptionEvent } from './inscriptionEvent'
 
 //PetitionEvent loading
 export const setPetitionEventLoading = () => {
@@ -18,6 +25,43 @@ export const createPetitionEvent = (data, options = {}) => (dispatch, getState) 
     .post('/v1/petitionevents', data)
     .then(res => {
       dispatch({ type: CREATE_PETITIONEVENT, payload: res.data })
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => {
+      handleErrors(err, dispatch)
+    })
+}
+
+//PetitionEvent read
+export const readPetitionEvent = (id, options = {}) => (dispatch, getState) => {
+  const newOptions = _.omit(options, 'callbackOk')
+
+  dispatch(setPetitionEventLoading())
+  spsApi
+    .get(`/v1/petitionevents/${id}`)
+    .then(res => {
+      dispatch({ type: READ_PETITIONEVENT, payload: res.data })
+
+      //load inscriptionEvent associado.
+      if (options.withInscriptionEvent) {
+        dispatch(readInscriptionEvent(res.data.inscriptionEvent_id, { ...newOptions }))
+      }
+
+      //run callBack
+      if (options.callbackOk) options.callbackOk(res.data)
+    })
+    .catch(err => handleErrors(err, dispatch))
+}
+
+//PetitionEvent delete
+export const deletePetitionEvent = (id, options = {}) => (dispatch, getState) => {
+  console.log('action de delete')
+  spsApi
+    .delete(`/v1/petitionevents/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_PETITIONEVENT, payload: id })
 
       //run callBack
       if (options.callbackOk) options.callbackOk(res.data)
