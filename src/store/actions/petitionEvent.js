@@ -46,7 +46,9 @@ export const readPetitionEvent = (id, options = {}) => (dispatch, getState) => {
 
       //load inscriptionEvent associado.
       if (options.withInscriptionEvent) {
-        dispatch(readInscriptionEvent(res.data.inscriptionEvent_id, { ...newOptions }))
+        const opt_InscriptionEvent =
+          typeof options.withInscriptionEvent === 'object' ? options.withInscriptionEvent : {}
+        dispatch(readInscriptionEvent(res.data.inscriptionEvent_id, { ...opt_InscriptionEvent }))
       }
 
       //run callBack

@@ -6,6 +6,8 @@ import moment from 'moment'
 import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
 import { makeSelectInscriptionEventByCalendarId } from '../inscriptionEvent/selectInscriptionEventByCalendarId'
 import { selectInscriptionEvent } from '../inscriptionEvent/inscriptionEvent'
+import { selectPetitionEvent } from '../petitionEvent/petitionEvent'
+
 import { makeSelectPetitionEventByCalendarId } from '../petitionEvent/selectPetitionEventByCalendarId'
 
 const calcCalendarStatus = (cld, calendars) => {
@@ -35,6 +37,9 @@ const calcCalendarStatus = (cld, calendars) => {
 
   //Em andamento
   if (ready === true && startDate < now && now < endDate) return status['ad']
+
+  //Verficar se ele está atrasado por eventos pendentes.
+  //verificar se ainda existem recursos para responder nesse evento.
 
   //Concluído
   return status['cc']
@@ -95,8 +100,8 @@ export const makeSelectCalendarByCallId = () => {
   const getOptions = (store, id, options = {}) => options
 
   return createSelector(
-    [selectCalendar, selectInscriptionEvent, getId, getOptions],
-    (calendars, inscriptionEvents, id, options) => {
+    [selectCalendar, selectInscriptionEvent, selectPetitionEvent, getId, getOptions],
+    (calendars, inscriptionEvents, petitionEvents, id, options) => {
       let selectedCalendars = calendars.filter(x => x.call_id === id)
 
       //calc calendarStatus
@@ -112,6 +117,14 @@ export const makeSelectCalendarByCallId = () => {
         selectedCalendars = selectedCalendars.map(cld => {
           const cldInscriptionEvents = inscriptionEvents.filter(iE => iE.calendar_id === cld.id)
           cld.inscriptionEvents = cldInscriptionEvents
+          return cld
+        })
+      }
+
+      if (options.withPetitionEvent) {
+        selectedCalendars = selectedCalendars.map(cld => {
+          const cldPetitionEvents = petitionEvents.filter(pE => pE.calendar_id === cld.id)
+          cld.petitionEvents = cldPetitionEvents
           return cld
         })
       }

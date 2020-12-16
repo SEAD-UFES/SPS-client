@@ -1,10 +1,10 @@
 /** @format */
 
-import { selectCalendarByPetitionEventId_noMeno } from '../calendar/selectCalendarByPetitionEventId_noMemo'
+import { selectCalendarByPetitionEventId_noMemo } from '../calendar/selectCalendarByPetitionEventId_noMemo'
 
-export const selectCallByPetitionEventId_noMeno = (store, petitionEvent_id, options = {}) => {
+export const selectCallByPetitionEventId_noMemo = (store, petitionEvent_id, options = {}) => {
   //get calendar
-  const calendar = selectCalendarByPetitionEventId_noMeno(store, petitionEvent_id, options)
+  const calendar = selectCalendarByPetitionEventId_noMemo(store, petitionEvent_id, options)
   const call_id = calendar ? calendar.call_id : null
 
   //find call

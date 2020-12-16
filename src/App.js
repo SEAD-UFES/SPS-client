@@ -37,8 +37,10 @@ import CalendarRoutes from './containers/calendar/CalendarRoutes'
 import InscriptionEventRoutes from './containers/inscriptionEvent/InscriptionEventRoutes'
 import InscriptionRoutes from './containers/inscription/InscriptionRoutes'
 import PetitionEventRoutes from './containers/petitionEvent/PetitionEventRoutes'
+import PetitionRoutes from './containers/petition/PetitionRoutes'
 
 import NotFound from './components/common/NotFound'
+import TesteSelectors from './store/selectors/teste/TesteSelectors'
 
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
@@ -98,6 +100,9 @@ class App extends Component {
               <Route path='/inscription-event' component={InscriptionEventRoutes} />
               <Route path='/inscription' component={InscriptionRoutes} />
               <Route path='/petition-event' component={PetitionEventRoutes} />
+              <Route path='/petition' component={PetitionRoutes} />
+
+              <Route path='/teste_selectors' component={TesteSelectors} />
 
               <Route component={NotFound} />
             </Switch>

@@ -12,10 +12,10 @@ import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { readInscriptionEvent } from '../../store/actions/inscriptionEvent'
 import { checkNested } from '../../utils/objectHelpers'
-import { selectPetitionEventById_noMeno } from '../../store/selectors/petitionEvent/selectPetitionEventById_noMeno'
-import { selectCalendarByPetitionEventId_noMeno } from '../../store/selectors/calendar/selectCalendarByPetitionEventId_noMemo'
-import { selectCallByPetitionEventId_noMeno } from '../../store/selectors/call/selectCallByPetitionEventId_noMemo'
-import { selectProcessByPetitionEventId_noMeno } from '../../store/selectors/process/selectProcessByPetitionEventId_noMemo'
+import { selectPetitionEventById_noMemo } from '../../store/selectors/petitionEvent/selectPetitionEventById_noMemo'
+import { selectCalendarByPetitionEventId_noMemo } from '../../store/selectors/calendar/selectCalendarByPetitionEventId_noMemo'
+import { selectCallByPetitionEventId_noMemo } from '../../store/selectors/call/selectCallByPetitionEventId_noMemo'
+import { selectProcessByPetitionEventId_noMemo } from '../../store/selectors/process/selectProcessByPetitionEventId_noMemo'
 
 const PetitionEventCreateContainer = props => {
   const id = props.match.params.id
@@ -99,11 +99,11 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     errorStore: state.errorStore,
-    petitionEvent: selectPetitionEventById_noMeno(state, pEvent_id, { withInscriptionEvent: { withCalendar: true } }),
+    petitionEvent: selectPetitionEventById_noMemo(state, pEvent_id, { withInscriptionEvent: { withCalendar: true } }),
     petitionEventLoading: state.petitionEventStore.loading,
-    calendar: selectCalendarByPetitionEventId_noMeno(state, pEvent_id, {}),
-    call: selectCallByPetitionEventId_noMeno(state, pEvent_id, {}),
-    process: selectProcessByPetitionEventId_noMeno(state, pEvent_id, {})
+    calendar: selectCalendarByPetitionEventId_noMemo(state, pEvent_id, {}),
+    call: selectCallByPetitionEventId_noMemo(state, pEvent_id, {}),
+    process: selectProcessByPetitionEventId_noMemo(state, pEvent_id, {})
   }
 }
 
