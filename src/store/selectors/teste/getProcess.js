@@ -3,7 +3,6 @@
 import { getManyCallByProcessId } from './getManyCallByProcessId'
 
 export const getProcessById = (store, id, options = {}) => {
-  console.log('pegando process')
   //find process
   const ProcessStore = store.processStore
   const process = ProcessStore.process ? ProcessStore.process : null //porque o formato do store é antigo

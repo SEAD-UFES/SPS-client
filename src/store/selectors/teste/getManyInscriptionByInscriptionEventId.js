@@ -3,7 +3,6 @@
 import { getInscriptionById } from './getInscription'
 
 export const getManyInscriptionByInscriptionEventId = (store, ie_id, options = {}) => {
-  console.log('pegando many inscription  de IE')
   //find inscription Events
   const InscriptionStore = store.inscriptionStore
   const inscriptions = InscriptionStore.allIds.map(id => ({ ...InscriptionStore.byId[id] }))

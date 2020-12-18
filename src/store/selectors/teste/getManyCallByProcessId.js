@@ -3,7 +3,6 @@
 import { getCallById } from './getCall'
 
 export const getManyCallByProcessId = (store, process_id, options = {}) => {
-  console.log('pegando calls de process')
   //find call
   const CallStoreV2 = store.callStoreV2
   const calls = CallStoreV2.allIds.map(id => ({ ...CallStoreV2.byId[id] }))

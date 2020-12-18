@@ -3,7 +3,6 @@
 import { getCalendarById } from './getCalendar'
 
 export const getManyCalendarByCallId = (store, call_id, options = {}) => {
-  console.log('pegando many calendars de call')
   //find call
   const CalendarStore = store.calendarStore
   const calendars = CalendarStore.allIds.map(id => ({ ...CalendarStore.byId[id] }))

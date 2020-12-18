@@ -3,7 +3,6 @@
 import { getInscriptionById } from './getInscription'
 
 export const getManyInscriptionByVacancyId = (store, vac_id, options = {}) => {
-  console.log('pegando many inscription de vacancy')
   //find inscription Events
   const InscriptionStore = store.inscriptionStore
   const inscriptions = InscriptionStore.allIds.map(id => ({ ...InscriptionStore.byId[id] }))

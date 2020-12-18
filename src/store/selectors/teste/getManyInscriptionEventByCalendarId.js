@@ -3,7 +3,6 @@
 import { getInscriptionEventById } from './getInscriptionEvent'
 
 export const getManyInscriptionEventByCalendarId = (store, calendar_id, options = {}) => {
-  console.log('pegando many ie de calendar')
   //find inscription Events
   const InscriptionEventStore = store.inscriptionEventStore
   const inscriptionEvents = InscriptionEventStore.allIds.map(id => ({ ...InscriptionEventStore.byId[id] }))

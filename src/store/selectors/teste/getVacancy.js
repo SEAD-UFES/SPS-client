@@ -4,7 +4,6 @@ import { getCallById } from './getCall'
 import { getManyInscriptionByVacancyId } from './getManyInscriptionByVacancyId'
 
 export const getVacancyById = (store, id, options = {}) => {
-  console.log('pegando vacancy')
   //find vacancy
   const VacancyStore = store.vacancyStore
   const vacancies = VacancyStore.allIds.map(id => ({ ...VacancyStore.byId[id] }))

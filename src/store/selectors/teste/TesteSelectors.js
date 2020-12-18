@@ -24,7 +24,8 @@ const TesteSelectors = props => {
       withInscriptionEvent: true,
       withInscription: true,
       withPerson: true,
-      withPetitionEvent: true
+      withPetitionEvent: true,
+      withPetition: true
     })
   }, [])
 
@@ -45,15 +46,12 @@ const TesteSelectors = props => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    process: getProcessById(state, '3717788b-37b7-4119-8e6d-1cdd9110d5b9', {
-      withCall: { withCalendar: true }
-    }),
     call: getCallById(state, '4a473158-595b-4072-80e6-b7891f85d2a1', {
       withCalendar: {
         withInscriptionEvent: {
           withInscription: { withVacancy: true, withPerson: true }
         },
-        withPetitionEvent: { withCalendar: { withCall: { withProcess: true } } }
+        withPetitionEvent: { withPetition: true }
       },
       withVacancy: true
     }),

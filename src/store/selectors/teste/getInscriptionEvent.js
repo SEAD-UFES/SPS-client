@@ -4,7 +4,6 @@ import { getCalendarById } from './getCalendar'
 import { getManyInscriptionByInscriptionEventId } from './getManyInscriptionByInscriptionEventId'
 
 export const getInscriptionEventById = (store, id, options = {}) => {
-  console.log('pegando ie')
   //find call
   const InscriptionEventStore = store.inscriptionEventStore
   const inscriptionEvents = InscriptionEventStore.allIds.map(id => ({ ...InscriptionEventStore.byId[id] }))

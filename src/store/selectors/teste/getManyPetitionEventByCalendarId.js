@@ -3,7 +3,6 @@
 import { getPetitionEventById } from './getPetitionEvent'
 
 export const getManyPetitionEventByCalendarId = (store, calendar_id, options = {}) => {
-  console.log('pegando many pe de calendar')
   //find inscription Events
   const PetitionEventStore = store.petitionEventStore
   const petitionEvents = PetitionEventStore.allIds.map(id => ({ ...PetitionEventStore.byId[id] }))

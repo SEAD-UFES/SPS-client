@@ -5,7 +5,6 @@ import { getPersonById } from './getPerson'
 import { getVacancyById } from './getVacancy'
 
 export const getInscriptionById = (store, id, options = {}) => {
-  console.log('pegando inscription')
   //find call
   const InscriptionStore = store.inscriptionStore
   const inscriptions = InscriptionStore.allIds.map(id => ({ ...InscriptionStore.byId[id] }))

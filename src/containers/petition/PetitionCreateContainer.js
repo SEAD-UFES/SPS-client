@@ -160,8 +160,6 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
     onSubmit: onSubmit
   }
 
-  console.log(props.testeCall)
-
   return <PetitionCreate {...allProps} />
 }
 
@@ -182,12 +180,8 @@ const mapStateToProps = (state, ownProps) => {
     calendar: {},
     call: selectCallByPetitionEventId_noMemo(state, petitionEvent_id, {}),
     process: selectProcessByPetitionEventId_noMemo(state, petitionEvent_id, {}),
-    errorStore: state.errorStore,
+    errorStore: state.errorStore
     //myInscriptions: selectMyInscriptionByPetitionEventId_noMemo(state, petitionEvent_id, {})
-    //testeProcess: getProcessById(state, '3717788b-37b7-4119-8e6d-1cdd9110d5b9', { withCall: true }),
-    testeCall: getCallById(state, '4a473158-595b-4072-80e6-b7891f85d2a1', {
-      withProcess: { withCall: { withProcess: { withCall: true } } }
-    })
   }
 }
 

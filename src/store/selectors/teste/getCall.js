@@ -8,7 +8,6 @@ import { getManyCalendarByCallId } from './getManyCalendarByCallId'
 import { getManyVacancyByCallId } from './getManyVacancyByCallId'
 
 export const getCallById = (store, id, options = {}) => {
-  console.log('pegando call')
   //find call
   const CallStoreV2 = store.callStoreV2
   const calls = CallStoreV2.allIds.map(id => ({ ...CallStoreV2.byId[id] }))

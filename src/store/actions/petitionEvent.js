@@ -13,6 +13,7 @@ import {
 } from '../../store/actionTypes'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 import { readInscriptionEvent } from './inscriptionEvent'
+import { readListPetition } from './petition'
 
 //PetitionEvent loading
 export const setPetitionEventLoading = () => {
@@ -49,6 +50,12 @@ export const readPetitionEvent = (id, options = {}) => (dispatch, getState) => {
         const opt_InscriptionEvent =
           typeof options.withInscriptionEvent === 'object' ? options.withInscriptionEvent : {}
         dispatch(readInscriptionEvent(res.data.inscriptionEvent_id, { ...opt_InscriptionEvent }))
+      }
+
+      //load petitions associadas.
+      if (options.withPetition) {
+        const opt_petition = typeof options.withPetition === 'object' ? options.withPetition : {}
+        dispatch(readListPetition({ petitionEvent_ids: [res.data.id], ...opt_petition }))
       }
 
       //run callBack
@@ -93,8 +100,10 @@ export const readListPetitionEvent = (options = {}) => dispatch => {
 
       //get petitions if needed
       if (options.withPetition) {
-        const pEventIds = res.data.map(pe => pe.id)
-        //dispatch(readListInscription({ petitionEvent_ids: pEventIds, ...newOptions }))
+        console.log('vou pegar petitions (readListPetition)')
+        const opt_petition = typeof options.withPetition === 'object' ? options.withPetition : {}
+        const petitionEventIds = res.data.map(pe => pe.id)
+        dispatch(readListPetition({ petitionEvent_ids: [petitionEventIds], ...opt_petition }))
       }
 
       //run callBack

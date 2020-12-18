@@ -5,7 +5,6 @@ import { getManyInscriptionEventByCalendarId } from './getManyInscriptionEventBy
 import { getManyPetitionEventByCalendarId } from './getManyPetitionEventByCalendarId'
 
 export const getCalendarById = (store, id, options = {}) => {
-  console.log('pegando calendar')
   //find call
   const CalendarStore = store.calendarStore
   const calendars = CalendarStore.allIds.map(id => ({ ...CalendarStore.byId[id] }))
