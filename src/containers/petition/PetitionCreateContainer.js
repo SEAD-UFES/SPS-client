@@ -25,11 +25,13 @@ import { readPetitionEvent } from '../../store/actions/petitionEvent'
 
 import { getProcessById } from '../../store/selectors/teste/getProcess'
 import { getCallById } from '../../store/selectors/teste/getCall'
+import { getPetitionEventById } from '../../store/selectors/teste/getPetitionEvent'
+import { convertInscriptionsToOptions } from '../../utils/inscriptionHelpers'
 
 const InscriptionCreateOnInscriptionEventContainer = props => {
   const query = qs.parse(props.location.search)
   const petitionEvent_id = query.petitionEvent_id || null
-  const { vacancies, profilePerson, errorStore } = props
+  const { vacancies, profilePerson, errorStore, petitionEventV2 } = props
   const {
     clearErrors,
     readInscriptionEvent,
@@ -51,7 +53,12 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
   const [createData, setCreateData] = useState(initialCreateData)
   const [errors, setErrors] = useState({})
 
-  const userInscriptionOptions = [{ label: 'Selecione inscrição', value: '' }]
+  //criar userInscription options
+  const userInscriptions = checkNested(petitionEventV2, 'inscriptionEvent', 'myInscriptions')
+    ? petitionEventV2.inscriptionEvent.myInscriptions
+    : []
+  const userInscriptionOptions = convertInscriptionsToOptions(userInscriptions)
+  userInscriptionOptions.unshift({ label: 'Selecione a inscrição', value: '' })
 
   const vacancyOptions = convertVacanciesToOptions(vacancies)
   vacancyOptions.unshift({ label: 'Sem vaga selecionada', value: '' })
@@ -74,7 +81,15 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
         })
 
         //get inscriptionEvent and inscription
-        readInscriptionEvent(ptE.inscriptionEvent_id, { withInscription: true })
+        readInscriptionEvent(ptE.inscriptionEvent_id, {
+          withInscription: {
+            ownerOnly: true,
+            withVacancy: true,
+            withAssignment: true,
+            withRegion: true,
+            withRestriction: true
+          }
+        })
       }
     })
   }, [])
@@ -155,10 +170,14 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
     ...props,
     createData: createData,
     vacancyOptions: vacancyOptions,
+    userInscriptionOptions: userInscriptionOptions,
     errors: errors,
     onChange: onChange,
     onSubmit: onSubmit
   }
+
+  console.log(petitionEventV2)
+  console.log(userInscriptionOptions)
 
   return <PetitionCreate {...allProps} />
 }
@@ -168,6 +187,19 @@ const mapStateToProps = (state, ownProps) => {
   const petitionEvent_id = query.petitionEvent_id || null
 
   return {
+    petitionEventV2: getPetitionEventById(state, petitionEvent_id, {
+      withCalendar: {
+        withCall: {
+          withProcess: true
+        }
+      },
+      withInscriptionEvent: {
+        withMyInscription: { withVacancy: { withAssignment: true, withRegion: true, withRestriction: true } }
+      }
+    }),
+
+    petitionEvent: selectPetitionEventById_noMemo(state, petitionEvent_id, {}),
+
     profileLoading: state.profileStore.loading,
     profilePerson: checkNested(state, 'profileStore', 'profile') ? state.profileStore.profile.Person : {},
     profileStore: state.profileStore,
@@ -176,12 +208,10 @@ const mapStateToProps = (state, ownProps) => {
       withRegion: true,
       withRestriction: true
     }),
-    petitionEvent: selectPetitionEventById_noMemo(state, petitionEvent_id, {}),
     calendar: {},
     call: selectCallByPetitionEventId_noMemo(state, petitionEvent_id, {}),
     process: selectProcessByPetitionEventId_noMemo(state, petitionEvent_id, {}),
     errorStore: state.errorStore
-    //myInscriptions: selectMyInscriptionByPetitionEventId_noMemo(state, petitionEvent_id, {})
   }
 }
 

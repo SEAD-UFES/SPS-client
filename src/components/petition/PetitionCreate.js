@@ -13,7 +13,7 @@ import { checkNested } from '../../utils/objectHelpers'
 
 const InscriptionCreateOnInscriptionEvent = props => {
   const { profileStore, profileLoading, profilePerson, inscriptionEvent, petitionEvent, call, process } = props
-  const { createData, vacancyOptions, errors, errorStore } = props
+  const { createData, vacancyOptions, userInscriptionOptions, errors, errorStore } = props
   const { onChange, onSubmit } = props
   const { testeProcess, testeCall } = props
 
@@ -66,7 +66,7 @@ const InscriptionCreateOnInscriptionEvent = props => {
           label='Inscrição'
           placeholder='Escolha a inscrição para a qual abrirá recurso'
           value={createData.vacancy_id}
-          options={vacancyOptions}
+          options={userInscriptionOptions}
           onChange={onChange}
           error={errors.vacancy_id}
         />
@@ -112,9 +112,6 @@ const InscriptionCreateOnInscriptionEvent = props => {
         {renderBreadcrumb(process, call, petitionEvent)}
         <div className='form-container' id='main'>
           <h1>Novo recurso</h1>
-          <p>{`testeProcess: ${testeProcess ? JSON.stringify(testeProcess) : null} `}</p>
-          <p>{`testeCall: ${testeCall ? JSON.stringify(testeCall) : null} `}</p>
-
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
           {renderForm(createData, errors, onChange, onSubmit)}

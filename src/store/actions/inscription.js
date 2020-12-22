@@ -81,11 +81,14 @@ export const deleteInscription = (id, options = {}) => (dispatch, getState) => {
 //Inscription Add List
 export const readListInscription = (options = {}) => dispatch => {
   const newOptions = _.omit(options, 'callbackOk')
+  const ownerOnly = options.ownerOnly ? options.ownerOnly : false
+
   let url = `/v1/inscriptions`
   const iEventIdsString = options.inscriptionEvent_ids
     ? convertArrayToQueryString('inscriptionEvent_ids', options.inscriptionEvent_ids)
     : ''
-  url = `${url}?${iEventIdsString}`
+  const ownerOnlyString = ownerOnly ? 'ownerOnly=true' : ''
+  url = `${url}?${iEventIdsString}${ownerOnlyString ? '&' : ''}${ownerOnlyString}`
 
   dispatch(setInscriptionLoading())
   spsApi

@@ -2,6 +2,7 @@
 
 import { getCalendarById } from './getCalendar'
 import { getManyInscriptionByInscriptionEventId } from './getManyInscriptionByInscriptionEventId'
+import { getManyMyInscriptionByInscriptionEventId } from './getManyMyInscriptionByInscriptionEventId'
 
 export const getInscriptionEventById = (store, id, options = {}) => {
   //find call
@@ -20,6 +21,16 @@ export const getInscriptionEventById = (store, id, options = {}) => {
   if (newInscriptionEvent && options.withInscription) {
     const opt_ins = typeof options.withInscription === 'object' ? options.withInscription : {}
     newInscriptionEvent.inscriptions = getManyInscriptionByInscriptionEventId(store, newInscriptionEvent.id, opt_ins)
+  }
+
+  //get child myInscription
+  if (newInscriptionEvent && options.withMyInscription) {
+    const opt_myIns = typeof options.withMyInscription === 'object' ? options.withMyInscription : {}
+    newInscriptionEvent.myInscriptions = getManyMyInscriptionByInscriptionEventId(
+      store,
+      newInscriptionEvent.id,
+      opt_myIns
+    )
   }
 
   return newInscriptionEvent

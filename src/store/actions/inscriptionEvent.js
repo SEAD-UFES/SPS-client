@@ -47,7 +47,9 @@ export const readInscriptionEvent = (id, options = {}) => (dispatch, getState) =
 
       //get inscriptions if needed
       if (options.withInscription) {
-        dispatch(readListInscription({ inscriptionEvent_ids: [res.data.id], ...newOptions }))
+        const opt_inscription =
+          typeof options.withInscription === 'object' ? { ...options.withInscription, ...newOptions } : {}
+        dispatch(readListInscription({ inscriptionEvent_ids: [res.data.id], ...opt_inscription }))
       }
 
       //run callBack
