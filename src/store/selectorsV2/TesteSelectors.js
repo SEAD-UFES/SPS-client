@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import qs from 'query-string'
 import _ from 'lodash'
 
-import { clearErrors } from '../../../actions/errorActions'
-import { getProcess } from '../../actions/process'
+import { clearErrors } from '../../actions/errorActions'
+import { getProcess } from '../actions/process'
 import { getProcessById } from './getProcess'
 import { getCallById } from './getCall'
 

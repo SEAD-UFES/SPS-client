@@ -1,6 +1,6 @@
 /** @format */
 
-import { checkNested } from '../../../utils/objectHelpers'
+import { checkNested } from '../../utils/objectHelpers'
 import { getInscriptionById } from './getInscription'
 
 export const getManyMyInscriptionByInscriptionEventId = (store, ie_id, options = {}) => {

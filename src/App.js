@@ -40,7 +40,7 @@ import PetitionEventRoutes from './containers/petitionEvent/PetitionEventRoutes'
 import PetitionRoutes from './containers/petition/PetitionRoutes'
 
 import NotFound from './components/common/NotFound'
-import TesteSelectors from './store/selectors/teste/TesteSelectors'
+import TesteSelectors from './store/selectorsV2/TesteSelectors'
 
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {

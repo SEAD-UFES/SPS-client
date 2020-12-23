@@ -21,8 +21,6 @@ const PetitionEventListContainer = props => {
   const { readListPetitionEvent, readCalendar, readCall, getProcess } = props
   const { history, calendars, pELoading } = props
 
-  console.log('calendars', calendars)
-
   const calendarsWithPetitionEvent = calendars.filter(cld => {
     if (cld.petitionEvents && cld.petitionEvents.length > 0) return true
     return false

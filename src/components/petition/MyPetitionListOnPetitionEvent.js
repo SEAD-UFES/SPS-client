@@ -7,6 +7,7 @@ import { checkNested } from '../../utils/objectHelpers'
 
 const MyPetitionListOnPetitionEvent = props => {
   const { pEvent, inscriptions, authStore, location } = props
+  const { petitions } = props
 
   const renderCreateButton = pEvent => {
     return (

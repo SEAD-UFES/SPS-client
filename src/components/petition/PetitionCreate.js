@@ -11,7 +11,7 @@ import { isEmpty } from '../../utils/objectHelpers'
 import { permissionCheck } from '../profile/permissionCheck'
 import { checkNested } from '../../utils/objectHelpers'
 
-const InscriptionCreateOnInscriptionEvent = props => {
+const PetitionCreate = props => {
   const { profileStore, profileLoading, profilePerson, inscriptionEvent, petitionEvent, call, process } = props
   const { createData, vacancyOptions, userInscriptionOptions, errors, errorStore } = props
   const { onChange, onSubmit } = props
@@ -62,28 +62,28 @@ const InscriptionCreateOnInscriptionEvent = props => {
     return (
       <form noValidate onSubmit={onSubmit}>
         <SelectListGroup
-          name='vacancy_id'
+          name='inscription_id'
           label='Inscrição'
           placeholder='Escolha a inscrição para a qual abrirá recurso'
-          value={createData.vacancy_id}
+          value={createData.inscription_id}
           options={userInscriptionOptions}
           onChange={onChange}
-          error={errors.vacancy_id}
+          error={errors.inscription_id}
         />
 
         <TextFieldGroup
           type='text'
-          name='number'
+          name='title'
           label='Título'
-          value={createData.number}
+          value={createData.title}
           onChange={onChange}
-          error={errors.number}
+          error={errors.title}
         />
 
         <TextAreaFieldGroup
           name='description'
           label='Descrição'
-          value={''}
+          value={createData.description}
           onChange={onChange}
           error={errors.description}
           info='Inserir motivo do recurso e argumentação'
@@ -100,7 +100,7 @@ const InscriptionCreateOnInscriptionEvent = props => {
         <>
           {errors.message ? <p className='text-danger'>{errors.message}</p> : null}
           {errors.message ? <p className='text-danger'>{errors.id}</p> : null}
-          {errors.message ? <p className='text-danger'>{errors.inscriptionEvent_id}</p> : null}
+          {errors.message ? <p className='text-danger'>{errors.petitionEvent_id}</p> : null}
         </>
       )
     }
@@ -121,4 +121,4 @@ const InscriptionCreateOnInscriptionEvent = props => {
   )
 }
 
-export default InscriptionCreateOnInscriptionEvent
+export default PetitionCreate

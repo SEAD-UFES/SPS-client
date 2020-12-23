@@ -42,9 +42,5 @@ export const getVacancyById = (store, id, options = {}) => {
     newVacancy.inscriptions = getManyInscriptionByVacancyId(store, newVacancy.id, opt_ins)
   }
 
-  //get father restriction
-  //get father region
-  //get father restriction
-
   return newVacancy
 }

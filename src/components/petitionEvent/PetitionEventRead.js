@@ -12,7 +12,7 @@ import { checkNested } from '../../utils/objectHelpers'
 
 const PetitionEventRead = props => {
   const { location } = props
-  const { process, call, calendar, inscriptionEvent, petitionEvent, myInscriptions, allInscriptions } = props
+  const { process, call, calendar, inscriptionEvent, petitionEvent, myPetitions, allInscriptions } = props
   const { profileStore, errorStore, authStore } = props
 
   const renderBreadcrumb = (process, call) => {
@@ -88,7 +88,7 @@ const PetitionEventRead = props => {
     return (
       <MyPetitionListOnPetitionEvent
         pEvent={petitionEvent}
-        inscriptions={myInscriptions}
+        petitions={myPetitions}
         authStore={authStore}
         location={location}
       />

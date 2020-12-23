@@ -9,7 +9,7 @@ import { readPetitionEvent } from '../../store/actions/petitionEvent'
 import { readCalendar, readListCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
-import { selectPetitionEventById_noMemo } from '../../store/selectors/petitionEvent/selectPetitionEventById_noMemo'
+import { getPetitionEventById } from '../../store/selectorsV2/getPetitionEvent'
 import { selectCalendarByPetitionEventId_noMemo } from '../../store/selectors/calendar/selectCalendarByPetitionEventId_noMemo'
 import { selectCallByPetitionEventId_noMemo } from '../../store/selectors/call/selectCallByPetitionEventId_noMemo'
 import { selectProcessByPetitionEventId_noMemo } from '../../store/selectors/process/selectProcessByPetitionEventId_noMemo'
@@ -26,13 +26,14 @@ const PetitionEventReadContainer = props => {
     getProcess,
     readInscriptionEvent
   } = props
+  const { petitionEvent } = props
 
   useEffect(() => {
     //clear errors
     clearErrors()
     //get PetitionEvent
     readPetitionEvent(id, {
-      withPetition: true,
+      withPetition: { withInscription: { withVacancy: true } },
       callbackOk: pEvent => {
         //get Calendar
         readCalendar(pEvent.calendar_id, {
@@ -63,6 +64,8 @@ const PetitionEventReadContainer = props => {
     ...props
   }
 
+  console.log('petitionEvent:\n', petitionEvent)
+
   return <PetitionEventRead {...allProps} />
 }
 
@@ -70,7 +73,7 @@ const mapStateToProps = (state, ownProps) => {
   const pEvent_id = ownProps.match.params.id
 
   return {
-    petitionEvent: selectPetitionEventById_noMemo(state, pEvent_id, { withInscriptionEvent: { withCalendar: true } }),
+    petitionEvent: getPetitionEventById(state, pEvent_id, { withPetition: { withInscription: true } }),
     calendar: selectCalendarByPetitionEventId_noMemo(state, pEvent_id, {}),
     call: selectCallByPetitionEventId_noMemo(state, pEvent_id, {}),
     process: selectProcessByPetitionEventId_noMemo(state, pEvent_id, {}),

@@ -16,32 +16,21 @@ import { createInscription } from '../../store/actions/inscription'
 import { convertVacanciesToOptions } from '../../utils/vacancyHelpers'
 import { selectVacancyByInscriptionEventId } from '../../store/selectors/vacancy/vacancy'
 import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
-import { validateVacancyId, validateBody } from '../../validation/inscription'
+import { validateInscriptionId, validateBody, validateTitle, validateDescription } from '../../validation/petition'
 import { checkNested } from '../../utils/objectHelpers'
 import { selectPetitionEventById_noMemo } from '../../store/selectors/petitionEvent/selectPetitionEventById_noMemo'
 import { selectCallByPetitionEventId_noMemo } from '../../store/selectors/call/selectCallByPetitionEventId_noMemo'
 import { selectProcessByPetitionEventId_noMemo } from '../../store/selectors/process/selectProcessByPetitionEventId_noMemo'
 import { readPetitionEvent } from '../../store/actions/petitionEvent'
-
-import { getProcessById } from '../../store/selectors/teste/getProcess'
-import { getCallById } from '../../store/selectors/teste/getCall'
-import { getPetitionEventById } from '../../store/selectors/teste/getPetitionEvent'
+import { createPetition } from '../../store/actions/petition'
+import { getPetitionEventById } from '../../store/selectorsV2/getPetitionEvent'
 import { convertInscriptionsToOptions } from '../../utils/inscriptionHelpers'
 
 const InscriptionCreateOnInscriptionEventContainer = props => {
   const query = qs.parse(props.location.search)
   const petitionEvent_id = query.petitionEvent_id || null
-  const { vacancies, profilePerson, errorStore, petitionEventV2 } = props
-  const {
-    clearErrors,
-    readInscriptionEvent,
-    readCalendar,
-    readListVacancy,
-    readCall,
-    getProcess,
-    createInscription,
-    readPetitionEvent
-  } = props
+  const { vacancies, errorStore, petitionEventV2, createPetition } = props
+  const { clearErrors, readInscriptionEvent, readCalendar, readCall, getProcess, readPetitionEvent } = props
   const { history } = props
 
   const initialCreateData = {
@@ -94,16 +83,6 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
     })
   }, [])
 
-  //Load person_id when have profileData
-  useEffect(
-    () => {
-      if (!isEmpty(profilePerson)) {
-        setCreateData({ ...createData, person_id: profilePerson.id })
-      }
-    },
-    [profilePerson]
-  )
-
   //get errors from store (onPropsUpdate)
   useEffect(
     () => {
@@ -125,8 +104,14 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
     let newErrors = { ...errors }
 
     switch (e.target.name) {
-      case 'vacancy_id':
-        errorList[e.target.name] = validateVacancyId(e.target.value, 'create')
+      case 'inscription_id':
+        errorList[e.target.name] = validateInscriptionId(e.target.value, 'create')
+        break
+      case 'title':
+        errorList[e.target.name] = validateTitle(e.target.value, 'create')
+        break
+      case 'description':
+        errorList[e.target.name] = validateDescription(e.target.value, 'create')
         break
       default:
         break
@@ -157,9 +142,11 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
         ...createData
       }
 
-      createInscription(data, {
-        callbackOk: inscription => {
-          history.push(`/inscription-event/read/${inscription.inscriptionEvent_id}`)
+      console.log('data to send:', data)
+
+      createPetition(data, {
+        callbackOk: petition => {
+          history.push(`/petition-event/read/${petition.petitionEvent_id}`)
         }
       })
     }
@@ -175,9 +162,6 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
     onChange: onChange,
     onSubmit: onSubmit
   }
-
-  console.log(petitionEventV2)
-  console.log(userInscriptionOptions)
 
   return <PetitionCreate {...allProps} />
 }
@@ -223,7 +207,8 @@ const mapActionsToProps = {
   readCall,
   getProcess,
   createInscription,
-  readPetitionEvent
+  readPetitionEvent,
+  createPetition
 }
 
 export default connect(
