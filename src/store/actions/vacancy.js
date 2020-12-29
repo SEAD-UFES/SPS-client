@@ -96,7 +96,7 @@ export const readListVacancy = (options = {}) => dispatch => {
 
   //add call_ids option
   if (options.call_ids) {
-    const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.inscription_ids) : ''
+    const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
     url = url + '&' + callIdsString
   }
 
