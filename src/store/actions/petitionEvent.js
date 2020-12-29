@@ -66,7 +66,6 @@ export const readPetitionEvent = (id, options = {}) => (dispatch, getState) => {
 
 //PetitionEvent delete
 export const deletePetitionEvent = (id, options = {}) => (dispatch, getState) => {
-  console.log('action de delete')
   spsApi
     .delete(`/v1/petitionevents/${id}`)
     .then(res => {

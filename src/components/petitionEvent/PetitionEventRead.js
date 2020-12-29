@@ -6,13 +6,13 @@ import moment from 'moment'
 
 import AlertError from '../../components/common/AlertError'
 import MyPetitionListOnPetitionEvent from '../../components/petition/MyPetitionListOnPetitionEvent'
-import InscriptionListOnInscriptionEvent from '../../components/inscription/InscriptionListOnInscriptionEvent'
+import PetitionListOnPetitionEvent from '../../components/petition/PetitionListOnPetitionEvent'
 import { permissionCheck } from '../profile/permissionCheck'
 import { checkNested } from '../../utils/objectHelpers'
 
 const PetitionEventRead = props => {
   const { location } = props
-  const { process, call, calendar, inscriptionEvent, petitionEvent, myPetitions, allInscriptions } = props
+  const { process, call, calendar, petitionEvent, myPetitions } = props
   const { profileStore, errorStore, authStore } = props
 
   const renderBreadcrumb = (process, call) => {
@@ -74,7 +74,7 @@ const PetitionEventRead = props => {
         </div>
         <div>
           <p>
-            <strong>Evento de inscrição associado:</strong>{' '}
+            <strong>Evento de inscrição associado:</strong> {console.log('petitionEvent', petitionEvent)}
             {checkNested(petitionEvent, 'inscriptionEvent', 'calendar')
               ? petitionEvent.inscriptionEvent.calendar.name
               : null}
@@ -96,7 +96,9 @@ const PetitionEventRead = props => {
   }
 
   const renderAllInscriptions = () => {
-    return <InscriptionListOnInscriptionEvent iEvent={inscriptionEvent} inscriptions={allInscriptions} />
+    return (
+      <PetitionListOnPetitionEvent petitions={checkNested(petitionEvent, 'petitions') ? petitionEvent.petitions : []} />
+    )
   }
 
   return (

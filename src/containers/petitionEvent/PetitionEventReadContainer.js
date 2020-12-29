@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import PetitionEventRead from '../../components/petitionEvent/PetitionEventRead'
@@ -14,6 +14,7 @@ import { selectCalendarByPetitionEventId_noMemo } from '../../store/selectors/ca
 import { selectCallByPetitionEventId_noMemo } from '../../store/selectors/call/selectCallByPetitionEventId_noMemo'
 import { selectProcessByPetitionEventId_noMemo } from '../../store/selectors/process/selectProcessByPetitionEventId_noMemo'
 import { readInscriptionEvent } from '../../store/actions/inscriptionEvent'
+import { checkNested } from '../../utils/objectHelpers'
 
 const PetitionEventReadContainer = props => {
   const id = props.match.params.id
@@ -26,14 +27,38 @@ const PetitionEventReadContainer = props => {
     getProcess,
     readInscriptionEvent
   } = props
-  const { petitionEvent } = props
+  const { profileStore, petitionEvent } = props
 
+  //calcular MyPetitions
+  const [myPetitions, setMyPetitions] = useState([])
+  useEffect(
+    () => {
+      const person_id = checkNested(profileStore, 'profile', 'Person', 'id') ? profileStore.profile.Person.id : null
+      const petitions = checkNested(petitionEvent, 'petitions') ? petitionEvent.petitions : []
+
+      const myPetitions = petitions.reduce((acc, curr) => {
+        const petitionPersonId = checkNested(curr, 'inscription', 'person_id') ? curr.inscription.person_id : null
+        if (petitionPersonId === person_id) acc = [...acc, curr]
+        return acc
+      }, [])
+
+      setMyPetitions(myPetitions)
+    },
+    [profileStore, petitionEvent]
+  )
+
+  //componentDidMount
   useEffect(() => {
     //clear errors
     clearErrors()
     //get PetitionEvent
     readPetitionEvent(id, {
-      withPetition: { withInscription: { withVacancy: true } },
+      withPetition: {
+        withInscription: {
+          withPerson: true,
+          withVacancy: { withAssignment: true, withRegion: true, withRestriction: true }
+        }
+      },
       callbackOk: pEvent => {
         //get Calendar
         readCalendar(pEvent.calendar_id, {
@@ -61,10 +86,11 @@ const PetitionEventReadContainer = props => {
   }, [])
 
   const allProps = {
-    ...props
+    ...props,
+    myPetitions: myPetitions
   }
 
-  console.log('petitionEvent:\n', petitionEvent)
+  // console.log('petitionEvent:\n', petitionEvent)
 
   return <PetitionEventRead {...allProps} />
 }
@@ -73,7 +99,21 @@ const mapStateToProps = (state, ownProps) => {
   const pEvent_id = ownProps.match.params.id
 
   return {
-    petitionEvent: getPetitionEventById(state, pEvent_id, { withPetition: { withInscription: true } }),
+    petitionEvent: getPetitionEventById(state, pEvent_id, {
+      withInscriptionEvent: {
+        withCalendar: true
+      },
+      withPetition: {
+        withInscription: {
+          withPerson: true,
+          withVacancy: {
+            withAssignment: true,
+            withRegion: true,
+            withRestriction: true
+          }
+        }
+      }
+    }),
     calendar: selectCalendarByPetitionEventId_noMemo(state, pEvent_id, {}),
     call: selectCallByPetitionEventId_noMemo(state, pEvent_id, {}),
     process: selectProcessByPetitionEventId_noMemo(state, pEvent_id, {}),

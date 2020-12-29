@@ -48,7 +48,9 @@ export const readInscriptionEvent = (id, options = {}) => (dispatch, getState) =
       //get inscriptions if needed
       if (options.withInscription) {
         const opt_inscription =
-          typeof options.withInscription === 'object' ? { ...options.withInscription, ...newOptions } : {}
+          typeof options.withInscription === 'object'
+            ? { ...options.withInscription, ...newOptions }
+            : { ...newOptions }
         dispatch(readListInscription({ inscriptionEvent_ids: [res.data.id], ...opt_inscription }))
       }
 

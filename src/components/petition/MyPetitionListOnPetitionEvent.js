@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { checkNested } from '../../utils/objectHelpers'
 
 const MyPetitionListOnPetitionEvent = props => {
-  const { pEvent, inscriptions, authStore, location } = props
+  const { pEvent, authStore, location } = props
   const { petitions } = props
 
   const renderCreateButton = pEvent => {
@@ -19,31 +19,37 @@ const MyPetitionListOnPetitionEvent = props => {
     )
   }
 
-  const renderMyInscriptionList = inscriptions => {
+  const renderMyPetitionList = petitions => {
     return (
       <div>
-        {inscriptions && inscriptions.length > 0 ? (
+        {petitions && petitions.length > 0 ? (
           <ul className='table-list'>
             <div className='titulos'>
-              <span>Número</span>
               <span>Data</span>
-              <span>Vaga</span>
+              <span>Inscrição</span>
+              <span>Oferta</span>
+              <span>Título</span>
               <span />
             </div>
-            {inscriptions.map(ins => {
+            {petitions.map(pet => {
               return (
-                <li key={ins.id}>
-                  <h3>{ins.number}</h3>
-                  <p>{ins.createdAt}</p>
+                <li key={pet.id}>
+                  <h3>{pet.createdAt}</h3>
+                  <p>{checkNested(pet, 'inscription', 'number') ? pet.inscription.number : ''}</p>
                   <p>
-                    {checkNested(ins, 'vacancy', 'assignment', 'name') ? `${ins.vacancy.assignment.name}` : ''}
-                    {checkNested(ins, 'vacancy', 'region', 'name') ? ` - ${ins.vacancy.region.name}` : ' - sem região'}
-                    {checkNested(ins, 'vacancy', 'restriction', 'name')
-                      ? ` - ${ins.vacancy.restriction.name}`
+                    {checkNested(pet, 'inscription', 'vacancy', 'assignment', 'name')
+                      ? `${pet.inscription.vacancy.assignment.name}`
+                      : ''}
+                    {checkNested(pet, 'inscription', 'vacancy', 'region', 'name')
+                      ? ` - ${pet.inscription.vacancy.region.name}`
+                      : ' - sem região'}
+                    {checkNested(pet, 'inscription', 'vacancy', 'restriction', 'name')
+                      ? ` - ${pet.inscription.vacancy.restriction.name}`
                       : '- sem restrição'}
                   </p>
+                  <p>{pet ? pet.title : ''}</p>
                   <p className='text-right'>
-                    <Link className='btn-icon' to={`/inscription/delete/${ins.id}`}>
+                    <Link className='btn-icon' to={`/petition/delete/${pet.id}`}>
                       <i className='fas fa-trash' />
                     </Link>
                   </p>
@@ -89,7 +95,7 @@ const MyPetitionListOnPetitionEvent = props => {
         <section id='myInscriptions' className='quadro'>
           <h4>Meus recursos</h4>
           {renderCreateButton(pEvent)}
-          {renderMyInscriptionList(inscriptions)}
+          {renderMyPetitionList(petitions)}
         </section>
       ) : (
         <section id='myInscriptions' className='quadro'>

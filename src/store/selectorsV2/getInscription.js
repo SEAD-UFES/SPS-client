@@ -25,6 +25,7 @@ export const getInscriptionById = (store, id, options = {}) => {
 
   //get father Person
   if (newInscription && options.withPerson) {
+    console.log('vou criar person')
     const opt_person = typeof options.withPerson === 'object' ? options.withPerson : {}
     newInscription.person = getPersonById(store, newInscription.person_id, opt_person)
   }
