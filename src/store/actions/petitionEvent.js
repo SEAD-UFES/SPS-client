@@ -14,6 +14,7 @@ import {
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 import { readInscriptionEvent } from './inscriptionEvent'
 import { readListPetition } from './petition'
+import { readCalendar } from './calendar'
 
 //PetitionEvent loading
 export const setPetitionEventLoading = () => {

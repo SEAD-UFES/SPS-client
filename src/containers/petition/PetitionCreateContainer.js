@@ -142,8 +142,6 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
         ...createData
       }
 
-      console.log('data to send:', data)
-
       createPetition(data, {
         callbackOk: petition => {
           history.push(`/petition-event/read/${petition.petitionEvent_id}`)

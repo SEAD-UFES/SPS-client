@@ -90,8 +90,6 @@ const PetitionEventReadContainer = props => {
     myPetitions: myPetitions
   }
 
-  // console.log('petitionEvent:\n', petitionEvent)
-
   return <PetitionEventRead {...allProps} />
 }
 

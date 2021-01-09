@@ -89,7 +89,7 @@ export const readListInscription = (options = {}) => dispatch => {
     const iEventIdsString = options.inscriptionEvent_ids
       ? convertArrayToQueryString('inscriptionEvent_ids', options.inscriptionEvent_ids)
       : ''
-    url = url + '&' + iEventIdsString
+    url = `${url}&${iEventIdsString}`
   }
 
   //add inscription_ids option
@@ -97,14 +97,16 @@ export const readListInscription = (options = {}) => dispatch => {
     const inscriptionIdsString = options.inscription_ids
       ? convertArrayToQueryString('inscription_ids', options.inscription_ids)
       : ''
-    url = url + '&' + inscriptionIdsString
+
+    if (!inscriptionIdsString) url = `${url}&inscription_ids[]=null`
+    else url = `${url}&${inscriptionIdsString}`
   }
 
   //add ownerOnly option
   if (options.ownerOnly) {
     const ownerOnly = options.ownerOnly ? options.ownerOnly : false
     const ownerOnlyString = ownerOnly ? 'ownerOnly=true' : ''
-    url = url + '&' + ownerOnlyString
+    url = `${url}&${ownerOnlyString}`
   }
 
   dispatch(setInscriptionLoading())

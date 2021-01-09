@@ -74,7 +74,7 @@ const PetitionEventRead = props => {
         </div>
         <div>
           <p>
-            <strong>Evento de inscrição associado:</strong> {console.log('petitionEvent', petitionEvent)}
+            <strong>Evento de inscrição associado:</strong>
             {checkNested(petitionEvent, 'inscriptionEvent', 'calendar')
               ? petitionEvent.inscriptionEvent.calendar.name
               : null}

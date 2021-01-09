@@ -4,53 +4,43 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import InscriptionDelete from '../../components/inscription/InscriptionDelete'
+import PetitionDelete from '../../components/petition/PetitionDelete'
 import { clearErrors } from '../../store/actions/error'
-import { readInscriptionEvent } from '../../store/actions/inscriptionEvent'
-import { deleteInscription } from '../../store/actions/inscription'
 import { readCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { checkNested } from '../../utils/objectHelpers'
 import { readInscription } from '../../store/actions/inscription'
-import { selectInscriptionById } from '../../store/selectors/inscription/inscription'
-import { selectInscriptionEventByInscriptionId } from '../../store/selectors/inscriptionEvent/selectInscriptionEventByInscriptionId'
-import { selectCalendarByInscriptionId } from '../../store/selectors/calendar/selectCalendarByInscriptionId'
-import { selectCallByInscriptionId } from '../../store/selectors/call/selectCallByInscriptionId'
-import { selectProcessByInscriptionId } from '../../store/selectors/process/selectProcessByInscriptionId'
-import { getEmptyKeys, removeEmptyKeys, isEmpty } from '../../utils/objectHelpers'
-import { validateDescription } from '../../validation/inscription'
+import { getPetitionById } from '../../store/selectorsV2/getPetition'
+import { readPetition, deletePetition } from '../../store/actions/petition'
+import { readPetitionEvent } from '../../store/actions/petitionEvent'
+import { readPerson } from '../../store/actions/person'
 
 const PetitionDeleteContainer = props => {
   const id = props.match.params.id
   const { history } = props
   const {
     clearErrors,
-    readInscriptionEvent,
+    readPetition,
+    readPetitionEvent,
     readCalendar,
     readCall,
     getProcess,
-    deleteInscription,
-    readInscription
+    readInscription,
+    readPerson,
+    deletePetition
   } = props
-  const initialData = { description: '' }
-  const [deleteData, setDeleteData] = useState(initialData)
-  const { errorStore, inscription } = props
+  const { errorStore, petition } = props
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readInscription(id, {
-      withVacancy: true,
-      withPerson: true,
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true,
-      callbackOk: ins => {
-        readInscriptionEvent(ins.inscriptionEvent_id, {
-          callbackOk: iE => {
-            readCalendar(iE.calendar_id, {
+    readPetition(id, {
+      callbackOk: pet => {
+        readPetitionEvent(pet.petitionEvent_id, {
+          callbackOk: pE => {
+            readCalendar(pE.calendar_id, {
               callbackOk: cld => {
                 readCall(cld.call_id, {
                   callbackOk: call => {
@@ -59,6 +49,15 @@ const PetitionDeleteContainer = props => {
                 })
               }
             })
+          }
+        })
+        readInscription(pet.inscription_id, {
+          withVacancy: true,
+          withAssignment: true,
+          withRegion: true,
+          withRestriction: true,
+          callbackOk: ins => {
+            readPerson(ins.person_id, {})
           }
         })
       }
@@ -79,40 +78,13 @@ const PetitionDeleteContainer = props => {
     [errorStore]
   )
 
-  //onChange
-  const onChange = e => {
-    e.preventDefault()
-    let errorList = {}
-    let newErrors = { ...errors }
-
-    switch (e.target.name) {
-      case 'description':
-        errorList[e.target.name] = validateDescription(e.target.value, 'delete')
-        break
-      default:
-        break
-    }
-
-    //remove empty errors if needed
-    const keysToRemove = getEmptyKeys(errorList)
-    if (!isEmpty(keysToRemove)) newErrors = _.omit(newErrors, keysToRemove)
-
-    //add errors if needed
-    const toAdd = removeEmptyKeys(errorList)
-    if (!isEmpty(toAdd)) newErrors = { ...newErrors, ...toAdd }
-
-    setDeleteData({ ...deleteData, [e.target.name]: e.target.value })
-    setErrors(newErrors)
-  }
-
   //onSubmit
   const onSubmit = e => {
     e.preventDefault()
 
-    deleteInscription(inscription.id, {
-      body: deleteData,
+    deletePetition(petition.id, {
       callbackOk: () => {
-        history.push(`/inscription-event/read/${inscription.inscriptionEvent_id}`)
+        history.push(`/petition-event/read/${petition.petitionEvent_id}`)
       }
     })
   }
@@ -120,44 +92,49 @@ const PetitionDeleteContainer = props => {
   //make props bundle to ViewComponent
   const allProps = {
     ...props,
-    deleteData: deleteData,
     errors: errors,
-    onChange: onChange,
     onSubmit: onSubmit
   }
 
-  return <InscriptionDelete {...allProps} />
+  return <PetitionDelete {...allProps} />
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const inscription_id = ownProps.match.params.id
+  const petition_id = ownProps.match.params.id
 
   return {
-    errorStore: state.errorStore,
-    inscription: selectInscriptionById(state, inscription_id, {
-      withPerson: true,
-      withVacancy: true,
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true
+    petition: getPetitionById(state, petition_id, {
+      withPetitionEvent: {
+        withCalendar: {
+          withCall: {
+            withProcess: true
+          }
+        }
+      },
+      withInscription: {
+        withPerson: true,
+        withVacancy: {
+          withAssignment: true,
+          withRegion: true,
+          withRestriction: true
+        }
+      }
     }),
-    inscriptionLoading: state.inscriptionStore.loading,
-    inscriptionEvent: selectInscriptionEventByInscriptionId(state, inscription_id, {}),
-    calendar: selectCalendarByInscriptionId(state, inscription_id, {}),
-    call: selectCallByInscriptionId(state, inscription_id, {}),
-    process: selectProcessByInscriptionId(state, inscription_id, {}),
+    errorStore: state.errorStore,
     profileStore: state.profileStore
   }
 }
 
 const mapActionsToProps = {
   clearErrors,
-  readInscription,
-  readInscriptionEvent,
+  readPetition,
+  readPetitionEvent,
   readCalendar,
   readCall,
   getProcess,
-  deleteInscription
+  readInscription,
+  readPerson,
+  deletePetition
 }
 
 export default connect(
