@@ -1,7 +1,5 @@
 /** @format */
 
-import _ from 'lodash'
-
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import {
@@ -14,7 +12,6 @@ import {
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 import { readInscriptionEvent } from './inscriptionEvent'
 import { readListPetition } from './petition'
-import { readCalendar } from './calendar'
 
 //PetitionEvent loading
 export const setPetitionEventLoading = () => {
@@ -38,8 +35,6 @@ export const createPetitionEvent = (data, options = {}) => (dispatch, getState) 
 
 //PetitionEvent read
 export const readPetitionEvent = (id, options = {}) => (dispatch, getState) => {
-  const newOptions = _.omit(options, 'callbackOk')
-
   dispatch(setPetitionEventLoading())
   spsApi
     .get(`/v1/petitionevents/${id}`)
@@ -90,7 +85,6 @@ export const readListPetitionEvent = (options = {}) => dispatch => {
   url = callIdString ? `${url}${callIdString}` : url
   url = callIdString && calendarIdsString ? `${url}&` : url
   url = calendarIdsString ? `${url}${calendarIdsString}` : url
-  const newOptions = _.omit(options, 'callbackOk')
 
   dispatch(setPetitionEventLoading())
   spsApi

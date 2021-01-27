@@ -4,6 +4,7 @@ import React from 'react'
 
 import { checkNested } from '../../utils/objectHelpers'
 import DrawFilter from '../profile/DrawFilter'
+import { Link } from 'react-router-dom'
 
 const PetitionListOnPetitionEvent = props => {
   const { course_id, petitions } = props
@@ -43,7 +44,14 @@ const PetitionListOnPetitionEvent = props => {
                       : ''}
                   </p>
                   <p>{pet.title}</p>
-                  <p className='text-right' />
+                  <p className='text-right'>
+                    <Link className='btn-icon' to={`/petition/read/${pet ? pet.id : ''}`}>
+                      <i className='fas fa-eye' />
+                    </Link>
+                    <Link className='btn-icon' to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
+                      <i className='fas fa-reply' />
+                    </Link>
+                  </p>
                 </li>
               )
             })}

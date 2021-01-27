@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 
 import PetitionEventDelete from '../../components/petitionEvent/PetitionEventDelete'
 import { clearErrors } from '../../store/actions/error'

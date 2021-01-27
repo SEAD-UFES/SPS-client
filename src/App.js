@@ -38,6 +38,7 @@ import InscriptionEventRoutes from './containers/inscriptionEvent/InscriptionEve
 import InscriptionRoutes from './containers/inscription/InscriptionRoutes'
 import PetitionEventRoutes from './containers/petitionEvent/PetitionEventRoutes'
 import PetitionRoutes from './containers/petition/PetitionRoutes'
+import PetitionReplyRoutes from './containers/petitionReply/PetitionReplyRoutes'
 
 import NotFound from './components/common/NotFound'
 import TesteSelectors from './store/selectorsV2/TesteSelectors'
@@ -101,6 +102,7 @@ class App extends Component {
               <Route path='/inscription' component={InscriptionRoutes} />
               <Route path='/petition-event' component={PetitionEventRoutes} />
               <Route path='/petition' component={PetitionRoutes} />
+              <Route path='/petition-reply' component={PetitionReplyRoutes} />
 
               <Route path='/teste_selectors' component={TesteSelectors} />
 

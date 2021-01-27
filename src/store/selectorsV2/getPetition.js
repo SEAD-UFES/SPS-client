@@ -2,6 +2,7 @@
 
 import { getInscriptionById } from './getInscription'
 import { getPetitionEventById } from './getPetitionEvent'
+import { getOnePetitionReplyByPetitionId } from './getOnePetitionReplyByPetitionId'
 
 export const getPetitionById = (store, id, options = {}) => {
   //find call
@@ -20,6 +21,12 @@ export const getPetitionById = (store, id, options = {}) => {
   if (newPetition && options.withInscription) {
     const opt_inscription = typeof options.withInscription === 'object' ? options.withInscription : {}
     newPetition.inscription = getInscriptionById(store, newPetition.inscription_id, opt_inscription)
+  }
+
+  //get child petitionReply
+  if (newPetition && options.withPetitionReply) {
+    const opt_petitionReply = typeof options.withPetitionReply === 'object' ? options.withPetitionReply : {}
+    newPetition.petitionReply = getOnePetitionReplyByPetitionId(store, newPetition.id, opt_petitionReply)
   }
 
   return newPetition

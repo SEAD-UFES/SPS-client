@@ -1,7 +1,5 @@
 /** @format */
 
-import _ from 'lodash'
-
 import {
   GET_ERRORS,
   LOADING_PETITION,
@@ -36,8 +34,6 @@ export const createPetition = (data, options = {}) => (dispatch, getState) => {
 
 //Petition read
 export const readPetition = (id, options = {}) => (dispatch, getState) => {
-  const newOptions = _.omit(options, 'callbackOk')
-
   dispatch(setPetitionLoading())
   spsApi
     .get(`/v1/petitions/${id}`)
@@ -69,8 +65,6 @@ export const deletePetition = (id, options = {}) => (dispatch, getState) => {
 
 //Petition Add List
 export const readListPetition = (options = {}) => dispatch => {
-  const newOptions = _.omit(options, 'callbackOk')
-
   let url = `/v1/petitions?`
 
   //add petitionEvent id options

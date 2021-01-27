@@ -1,18 +1,15 @@
 /** @format */
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import qs from 'query-string'
-import _ from 'lodash'
 
 import { clearErrors } from '../../actions/errorActions'
 import { getProcess } from '../actions/process'
-import { getProcessById } from './getProcess'
 import { getCallById } from './getCall'
 
 const TesteSelectors = props => {
   const { clearErrors, getProcess } = props
-  const { process, call } = props
+  const { call } = props
 
   //ComponentDidMount
   useEffect(() => {

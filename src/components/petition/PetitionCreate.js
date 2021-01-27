@@ -12,10 +12,9 @@ import { permissionCheck } from '../profile/permissionCheck'
 import { checkNested } from '../../utils/objectHelpers'
 
 const PetitionCreate = props => {
-  const { profileStore, profileLoading, profilePerson, inscriptionEvent, petitionEvent, call, process } = props
-  const { createData, vacancyOptions, userInscriptionOptions, errors, errorStore } = props
+  const { profileStore, petitionEvent, call, process } = props
+  const { createData, userInscriptionOptions, errors, errorStore } = props
   const { onChange, onSubmit } = props
-  const { testeProcess, testeCall } = props
 
   const renderBreadcrumb = (process, call, petitionEvent) => {
     const canAccessCall = permissionCheck(
@@ -107,7 +106,7 @@ const PetitionCreate = props => {
   }
 
   return (
-    <div className='inscriptionEvent-create'>
+    <div className='petition-create'>
       <div className='container'>
         {renderBreadcrumb(process, call, petitionEvent)}
         <div className='form-container' id='main'>

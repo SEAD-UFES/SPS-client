@@ -11,7 +11,7 @@ import PetitionEventListContainer from './PetitionEventListContainer'
 import PrivateRoute from '../../components/common/PrivateRoute'
 import NotFound from '../../components/common/NotFound'
 
-export default class VacancyRoutes extends Component {
+export default class PetitionEventRoutes extends Component {
   render() {
     return (
       <Switch>

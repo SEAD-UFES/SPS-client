@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
-import PetitionDelete from '../../components/petition/PetitionDelete'
+import PetitionRead from '../../components/petition/PetitionRead'
 import { clearErrors } from '../../store/actions/error'
 import { readCalendar } from '../../store/actions/calendar'
 import { readCall } from '../../store/actions/call'
@@ -14,8 +14,9 @@ import { getPetitionById } from '../../store/selectorsV2/getPetition'
 import { readPetition, deletePetition } from '../../store/actions/petition'
 import { readPetitionEvent } from '../../store/actions/petitionEvent'
 import { readPerson } from '../../store/actions/person'
+import { readListPetitionReply } from '../../store/actions/petitionReply'
 
-const PetitionDeleteContainer = props => {
+const PetitionReadContainer = props => {
   const id = props.match.params.id
   const { history } = props
   const {
@@ -27,7 +28,8 @@ const PetitionDeleteContainer = props => {
     getProcess,
     readInscription,
     readPerson,
-    deletePetition
+    deletePetition,
+    readListPetitionReply
   } = props
   const { errorStore, petition } = props
   const [errors, setErrors] = useState({})
@@ -37,6 +39,7 @@ const PetitionDeleteContainer = props => {
     clearErrors()
     readPetition(id, {
       callbackOk: pet => {
+        readListPetitionReply({ petition_ids: [pet.id] })
         readPetitionEvent(pet.petitionEvent_id, {
           callbackOk: pE => {
             readCalendar(pE.calendar_id, {
@@ -95,7 +98,7 @@ const PetitionDeleteContainer = props => {
     onSubmit: onSubmit
   }
 
-  return <PetitionDelete {...allProps} />
+  return <PetitionRead {...allProps} />
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -117,7 +120,8 @@ const mapStateToProps = (state, ownProps) => {
           withRegion: true,
           withRestriction: true
         }
-      }
+      },
+      withPetitionReply: true
     }),
     errorStore: state.errorStore,
     profileStore: state.profileStore
@@ -133,10 +137,11 @@ const mapActionsToProps = {
   getProcess,
   readInscription,
   readPerson,
-  deletePetition
+  deletePetition,
+  readListPetitionReply
 }
 
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(PetitionDeleteContainer)
+)(PetitionReadContainer)
