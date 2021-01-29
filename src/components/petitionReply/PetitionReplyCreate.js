@@ -67,7 +67,7 @@ const PetitionReplyCreate = props => {
     return (
       <div>
         <h4>Dados do recurso</h4>
-        <dl className='row' style={{ border: '1px solid' }}>
+        <dl className='row dl-data'>
           <dt className='col-sm-4'>Usuário:</dt>
           <dd className='col-sm-8'>{person ? `${person.name} ${person.surname}` : null}</dd>
 
@@ -82,7 +82,7 @@ const PetitionReplyCreate = props => {
           </dd>
         </dl>
 
-        <dl className='row' style={{ border: '1px solid' }}>
+        <dl className='row dl-data'>
           <dt className='col-sm-4'>Data do recurso:</dt>
           <dd className='col-sm-8'>
             {petition ? moment(petition.createdAt, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss') : null}

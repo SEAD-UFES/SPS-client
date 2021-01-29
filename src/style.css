@@ -1535,4 +1535,14 @@ footer #copyright p span a:hover {
   }
 }
 
+/*Fernando*/
+.dl-data {
+  padding-top: 10px;
+  background-color: #fafafa;
+}
+
+.dl-data dt {
+  color: #c75000;
+}
+
 /*# sourceMappingURL=style.css.map */

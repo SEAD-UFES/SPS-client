@@ -11,8 +11,6 @@ const PetitionRead = props => {
   const { errors, errorStore } = props
   const { petition } = props
 
-  console.log(petition)
-
   const renderBreadcrumb = petition => {
     const petitionEvent = checkNested(petition, 'petitionEvent') ? petition.petitionEvent : null
 
@@ -58,35 +56,35 @@ const PetitionRead = props => {
     const person = checkNested(petition, 'inscription', 'person') ? petition.inscription.person : null
 
     return (
-      <div>
-        <dl className='row' style={{ border: '1px solid' }}>
-          <dt className='col-sm-4'>Usuário:</dt>
-          <dd className='col-sm-8'>{person ? `${person.name} ${person.surname}` : null}</dd>
+      <>
+        <dl className='row dl-data'>
+          <dt className='col-sm-3'>Usuário:</dt>
+          <dd className='col-sm-9'>{person ? `${person.name} ${person.surname}` : null}</dd>
 
-          <dt className='col-sm-4'>Inscrição:</dt>
-          <dd className='col-sm-8'>{inscription ? inscription.number : null}</dd>
+          <dt className='col-sm-3'>Inscrição:</dt>
+          <dd className='col-sm-9'>{inscription ? inscription.number : null}</dd>
 
-          <dt className='col-sm-4'>Oferta:</dt>
-          <dd className='col-sm-8'>
+          <dt className='col-sm-3'>Oferta:</dt>
+          <dd className='col-sm-9'>
             {checkNested(inscription, 'vacancy', 'assignment') ? `${inscription.vacancy.assignment.name}` : ''}
             {checkNested(inscription, 'vacancy', 'region') ? ` - ${inscription.vacancy.region.name}` : ''}
             {checkNested(inscription, 'vacancy', 'restriction') ? ` - ${inscription.vacancy.restriction.name}` : ''}
           </dd>
         </dl>
 
-        <dl className='row' style={{ border: '1px solid' }}>
-          <dt className='col-sm-4'>Data do recurso:</dt>
-          <dd className='col-sm-8'>
+        <dl className='row dl-data'>
+          <dt className='col-sm-3'>Data do recurso:</dt>
+          <dd className='col-sm-9'>
             {petition ? moment(petition.createdAt, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss') : null}
           </dd>
 
-          <dt className='col-sm-4'>Título:</dt>
-          <dd className='col-sm-8'>{petition ? petition.title : null}</dd>
+          <dt className='col-sm-3'>Título:</dt>
+          <dd className='col-sm-9'>{petition ? petition.title : null}</dd>
 
-          <dt className='col-sm-4'>Descrição:</dt>
-          <dd className='col-sm-8'>{petition ? petition.description : null}</dd>
+          <dt className='col-sm-3'>Descrição:</dt>
+          <dd className='col-sm-9'>{petition ? petition.description : null}</dd>
         </dl>
-      </div>
+      </>
     )
   }
 
@@ -95,25 +93,24 @@ const PetitionRead = props => {
 
     if (!reply) {
       return (
-        <div>
+        <>
           <h4>Resposta</h4>
           <p>Este recurso ainda não foi respondido.</p>
           <Link to={`/petition-reply/create/?petition_id=${petition ? petition.id : null}`}>Responder</Link>
-        </div>
+        </>
       )
     }
 
     return (
-      <div style={{ border: '1px solid' }}>
+      <>
         <h4>Resposta</h4>
-        <dl className='row'>
-          <dt className='col-sm-4'>Status:</dt>
-          <dd className='col-sm-8'>{reply ? (reply.status ? 'Deferido' : 'Indeferido') : ''}</dd>
-
-          <dt className='col-sm-4'>Justificativa:</dt>
-          <dd className='col-sm-8'>{reply ? reply.justification : ''}</dd>
+        <dl className='row dl-data'>
+          <dt className='col-sm-3'>Status:</dt>
+          <dd className='col-sm-9'>{reply ? (reply.status ? 'Deferido' : 'Indeferido') : ''}</dd>
+          <dt className='col-sm-3'>Justificativa:</dt>
+          <dd className='col-sm-9'>{reply ? reply.justification : ''}</dd>
         </dl>
-      </div>
+      </>
     )
   }
 

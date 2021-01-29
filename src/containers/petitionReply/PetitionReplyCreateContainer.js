@@ -146,11 +146,7 @@ const PetitionReplyCreateContainer = props => {
   const onSubmit = e => {
     e.preventDefault()
 
-    console.log('entrei')
-
     const submitErrors = validateBody(createData, 'create')
-
-    console.log(submitErrors)
 
     if (submitErrors) {
       setErrors(submitErrors)
