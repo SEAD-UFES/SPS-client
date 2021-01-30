@@ -7,6 +7,7 @@ import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { clearErrors } from '../../store/actions/error'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call/call'
+import { getCallById } from '../../store/selectorsV2/getCall'
 import CallRead from '../../components/call/CallRead'
 
 const CallReadContainer = props => {
@@ -18,11 +19,8 @@ const CallReadContainer = props => {
     clearErrors()
     //get call
     readCall(id, {
-      withCalendar: true,
-      withVacancy: true,
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true,
+      withCalendar: { withInscriptionEvent: true, withPetitionEvent: true },
+      withVacancy: { withAssignment: true, withRegion: true, withRestriction: true },
       callbackOk: call => {
         //get process
         getProcess(call.selectiveProcess_id)
@@ -37,13 +35,9 @@ const mapStateToProps = (state, ownProps) => {
   const call_id = ownProps.match.params.id
 
   return {
-    call: selectCallById(state, call_id, {
-      withCalendar: true,
-      withCalendarStatus: true,
-      withVacancy: true,
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true
+    call: getCallById(state, call_id, {
+      withCalendar: { withInscriptionEvent: true, withPetitionEvent: true },
+      withVacancy: { withAssignment: true, withRegion: true, withRestriction: true }
     }),
     process: selectProcessByCallId(state, call_id, { withCourse: true, withGraduationType: true }),
     errorStore: state.errorStore

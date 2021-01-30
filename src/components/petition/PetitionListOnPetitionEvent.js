@@ -15,17 +15,18 @@ const PetitionListOnPetitionEvent = props => {
         {petitions && petitions.length > 0 ? (
           <ul className='table-list'>
             <div className='titulos'>
+              <span>Título</span>
               <span>Data</span>
               <span>Usuário</span>
               <span>Inscrição</span>
               <span>Oferta</span>
-              <span>Título</span>
               <span />
             </div>
             {petitions.map(pet => {
               return (
-                <li key={pet.id}>
-                  <h3>{pet.createdAt}</h3>
+                <li className='' key={pet.id}>
+                  <h3>{pet.title}</h3>
+                  <p>{pet.createdAt}</p>
                   <p>
                     {checkNested(pet, 'inscription', 'person')
                       ? `${pet.inscription.person.name} ${pet.inscription.person.surname}`
@@ -43,7 +44,6 @@ const PetitionListOnPetitionEvent = props => {
                       ? ` - ${pet.inscription.vacancy.restriction.name}`
                       : ''}
                   </p>
-                  <p>{pet.title}</p>
                   <p className='text-right'>
                     <Link className='btn-icon' to={`/petition/read/${pet ? pet.id : ''}`}>
                       <i className='fas fa-eye' />

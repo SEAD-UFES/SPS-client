@@ -101,6 +101,8 @@ export const deleteCalendar = (id, options = {}) => (dispatch, getState) => {
 
 //Calendar Add List
 export const readListCalendar = (options = {}) => dispatch => {
+  console.log('vou baixar os calendars')
+  console.log('options', options)
   let url = `/v1/calendars`
   const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
   url = `${url}?${callIdsString}`
@@ -115,14 +117,24 @@ export const readListCalendar = (options = {}) => dispatch => {
 
       //baixar inscriptionEvents associados
       if (res.data.length > 0 && options.withInscriptionEvent) {
+        console.log('vou tentar baixar inscriptionEvent')
         const calendar_ids = res.data.map(calendar => calendar.id)
-        dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...newOptions }))
+        const opt_inscriptionEvent =
+          typeof options.withInscriptionEvent === 'object'
+            ? { ...options.withInscriptionEvent, ...newOptions }
+            : { ...newOptions }
+        dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...opt_inscriptionEvent }))
       }
 
       //baixar petitionEvents associados
       if (res.data.length > 0 && options.withPetitionEvent) {
+        console.log('vou tentar baixar petitionEvent')
         const calendar_ids = res.data.map(calendar => calendar.id)
-        dispatch(readListPetitionEvent({ calendar_ids: calendar_ids, ...newOptions }))
+        const opt_petitionEvent =
+          typeof options.withPetitionEvent === 'object'
+            ? { ...options.withPetitionEvent, ...newOptions }
+            : { ...newOptions }
+        dispatch(readListPetitionEvent({ calendar_ids: calendar_ids, ...opt_petitionEvent }))
       }
 
       //run callBack

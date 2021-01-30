@@ -76,7 +76,7 @@ const PetitionEventRead = props => {
           <p>
             <strong>Evento de inscrição associado:</strong>
             {checkNested(petitionEvent, 'inscriptionEvent', 'calendar')
-              ? petitionEvent.inscriptionEvent.calendar.name
+              ? ` ${petitionEvent.inscriptionEvent.calendar.name}`
               : null}
           </p>
         </div>
@@ -95,7 +95,7 @@ const PetitionEventRead = props => {
     )
   }
 
-  const renderAllInscriptions = () => {
+  const renderAllPetitions = () => {
     return (
       <PetitionListOnPetitionEvent petitions={checkNested(petitionEvent, 'petitions') ? petitionEvent.petitions : []} />
     )
@@ -110,7 +110,7 @@ const PetitionEventRead = props => {
           <AlertError errors={errorStore} />
           {renderData(calendar, petitionEvent)}
           {renderMyPetitions()}
-          {renderAllInscriptions()}
+          {renderAllPetitions()}
         </div>
       </div>
     </div>

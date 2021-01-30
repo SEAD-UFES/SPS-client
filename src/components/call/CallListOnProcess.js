@@ -46,11 +46,9 @@ export default class CallListOnProcess extends Component {
               </p>
               <p>{storeCall ? getCallStatus(storeCall) : getCallStatus(call)}</p>
               <p className='text-right'>
-                <DrawFilter permission='call_read' course_id={process.Course.id}>
-                  <Link className='btn-icon laranja' to={`/call/read/${call.id}`}>
-                    <i className='fas fa-eye' />
-                  </Link>
-                </DrawFilter>
+                <Link className='btn-icon laranja' to={`/call/read/${call.id}`}>
+                  <i className='fas fa-eye' />
+                </Link>
                 <Link className='btn-icon laranja' to={`/inscription-event/list?call_id=${call.id}`}>
                   <i className='fas fa-calendar-check' />
                 </Link>

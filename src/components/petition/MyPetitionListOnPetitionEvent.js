@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import { checkNested } from '../../utils/objectHelpers'
 
@@ -25,16 +26,19 @@ const MyPetitionListOnPetitionEvent = props => {
         {petitions && petitions.length > 0 ? (
           <ul className='table-list'>
             <div className='titulos'>
+              <span>Título</span>
               <span>Data</span>
               <span>Inscrição</span>
               <span>Oferta</span>
-              <span>Título</span>
               <span />
             </div>
             {petitions.map(pet => {
               return (
                 <li key={pet.id}>
-                  <h3>{pet.createdAt}</h3>
+                  <h3>{pet ? pet.title : ''}</h3>
+
+                  <p>{moment(pet.createdAt).format('DD/MM/YYYY HH:mm:ss')}</p>
+
                   <p>{checkNested(pet, 'inscription', 'number') ? pet.inscription.number : ''}</p>
                   <p>
                     {checkNested(pet, 'inscription', 'vacancy', 'assignment', 'name')
@@ -47,7 +51,6 @@ const MyPetitionListOnPetitionEvent = props => {
                       ? ` - ${pet.inscription.vacancy.restriction.name}`
                       : '- sem restrição'}
                   </p>
-                  <p>{pet ? pet.title : ''}</p>
                   <p className='text-right'>
                     <Link className='btn-icon' to={`/petition/delete/${pet.id}`}>
                       <i className='fas fa-trash' />
@@ -64,45 +67,13 @@ const MyPetitionListOnPetitionEvent = props => {
     )
   }
 
-  const renderNoAuthInfo = location => {
-    return (
-      <>
-        <div className='alert alert-warning' role='alert'>
-          <h4 className='alert-heading'>Ação necessária.</h4>
-          <p>É preciso estar autenticado no sistema para ver suas inscrições ou inscrever-se.</p>
-          <hr />
-          <p>
-            Se você não possui cadastro: <Link to='/register'>Registre-se</Link>
-          </p>
-          <p>
-            Se você possui cadastro:{' '}
-            <Link
-              to={{
-                pathname: `/login`,
-                prevLocation: location
-              }}>
-              Forneça seus dados de acesso
-            </Link>
-          </p>
-        </div>
-      </>
-    )
-  }
-
   return (
     <>
-      {authStore.isAuthenticated ? (
-        <section id='myInscriptions' className='quadro'>
-          <h4>Meus recursos</h4>
-          {renderCreateButton(pEvent)}
-          {renderMyPetitionList(petitions)}
-        </section>
-      ) : (
-        <section id='myInscriptions' className='quadro'>
-          <h4>Inscrições</h4>
-          {renderNoAuthInfo(location)}
-        </section>
-      )}
+      <section id='myPetitions' className='quadro'>
+        <h4>Meus recursos</h4>
+        {renderCreateButton(pEvent)}
+        {renderMyPetitionList(petitions)}
+      </section>
     </>
   )
 }

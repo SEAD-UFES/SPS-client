@@ -39,7 +39,12 @@ export const calcCalendarStatus = (cld, calendars) => {
   //Atrasado por dependencia
   const fatherCalendar = cld.calendar_id ? calendars.find(calendar => calendar.id === cld.calendar_id) : null
   const fatherStatus = fatherCalendar ? calcCalendarStatus(fatherCalendar, calendars) : null
-  if (fatherStatus === status['atd'] || fatherStatus === status['at'] || fatherStatus === status['atPE'])
+  if (
+    fatherStatus === status['atd'] ||
+    fatherStatus === status['at'] ||
+    fatherStatus === status['atPE'] ||
+    fatherStatus === status['ad']
+  )
     return status['atd']
 
   //Atrasado
