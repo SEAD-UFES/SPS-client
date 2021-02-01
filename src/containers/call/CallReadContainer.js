@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { clearErrors } from '../../store/actions/error'
-import { selectCallById, selectProcessByCallId } from '../../store/selectors/call/call'
+import { selectProcessByCallId } from '../../store/selectors/call/call'
 import { getCallById } from '../../store/selectorsV2/getCall'
 import CallRead from '../../components/call/CallRead'
 

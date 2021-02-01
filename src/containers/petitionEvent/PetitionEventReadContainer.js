@@ -36,13 +36,18 @@ const PetitionEventReadContainer = props => {
       const person_id = checkNested(profileStore, 'profile', 'Person', 'id') ? profileStore.profile.Person.id : null
       const petitions = checkNested(petitionEvent, 'petitions') ? petitionEvent.petitions : []
 
-      const myPetitions = petitions.reduce((acc, curr) => {
+      console.log('person_id', person_id)
+      console.log('petitions', petitions)
+
+      const myP = petitions.reduce((acc, curr) => {
         const petitionPersonId = checkNested(curr, 'inscription', 'person_id') ? curr.inscription.person_id : null
         if (petitionPersonId === person_id) acc = [...acc, curr]
         return acc
       }, [])
 
-      setMyPetitions(myPetitions)
+      console.log('myP', myP)
+
+      setMyPetitions(myP)
     },
     [profileStore, petitionEvent]
   )
