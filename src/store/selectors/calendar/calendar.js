@@ -1,7 +1,6 @@
 /** @format */
 
 import { createSelector } from 'reselect'
-import moment from 'moment'
 
 import { makeSelectInscriptionEventById_single } from '../inscriptionEvent/selectInscriptionEventById_single'
 import { makeSelectInscriptionEventByCalendarId } from '../inscriptionEvent/selectInscriptionEventByCalendarId'

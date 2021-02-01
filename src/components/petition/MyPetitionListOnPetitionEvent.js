@@ -7,7 +7,7 @@ import moment from 'moment'
 import { checkNested } from '../../utils/objectHelpers'
 
 const MyPetitionListOnPetitionEvent = props => {
-  const { pEvent, authStore, location } = props
+  const { pEvent } = props
   const { petitions } = props
 
   const renderCreateButton = pEvent => {
