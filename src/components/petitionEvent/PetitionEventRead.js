@@ -87,6 +87,7 @@ const PetitionEventRead = props => {
   const renderMyPetitions = () => {
     return (
       <MyPetitionListOnPetitionEvent
+        calendar={calendar}
         pEvent={petitionEvent}
         petitions={myPetitions}
         authStore={authStore}

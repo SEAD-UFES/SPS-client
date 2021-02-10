@@ -7,17 +7,21 @@ import moment from 'moment'
 import { checkNested } from '../../utils/objectHelpers'
 
 const MyPetitionListOnPetitionEvent = props => {
-  const { pEvent } = props
-  const { petitions } = props
+  const { pEvent, petitions, calendar } = props
+  const eventInProgress = calendar && calendar.status === 'Em andamento' ? true : false
 
   const renderCreateButton = pEvent => {
-    return (
-      <div className='btn-right'>
-        <Link className='btn btn-terciary' to={`/petition/create?petitionEvent_id=${pEvent ? pEvent.id : null}`}>
-          <i className='fas fa-plus-circle' /> Novo recurso
-        </Link>
-      </div>
-    )
+    if (eventInProgress) {
+      return (
+        <div className='btn-right'>
+          <Link className='btn btn-terciary' to={`/petition/create?petitionEvent_id=${pEvent ? pEvent.id : null}`}>
+            <i className='fas fa-plus-circle' /> Novo recurso
+          </Link>
+        </div>
+      )
+    } else {
+      return ''
+    }
   }
 
   const renderMyPetitionList = petitions => {
@@ -52,9 +56,16 @@ const MyPetitionListOnPetitionEvent = props => {
                       : '- sem restrição'}
                   </p>
                   <p className='text-right'>
-                    <Link className='btn-icon' to={`/petition/delete/${pet.id}`}>
-                      <i className='fas fa-trash' />
+                    <Link className='btn-icon' to={`/petition/read/${pet.id}`}>
+                      <i className='fas fa-eye' />
                     </Link>
+                    {eventInProgress ? (
+                      <Link className='btn-icon' to={`/petition/delete/${pet.id}`}>
+                        <i className='fas fa-trash' />
+                      </Link>
+                    ) : (
+                      ''
+                    )}
                   </p>
                 </li>
               )

@@ -48,9 +48,11 @@ const PetitionListOnPetitionEvent = props => {
                     <Link className='btn-icon' to={`/petition/read/${pet ? pet.id : ''}`}>
                       <i className='fas fa-eye' />
                     </Link>
-                    <Link className='btn-icon' to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
-                      <i className='fas fa-reply' />
-                    </Link>
+                    <DrawFilter permission='petitionreply_create' course_id={course_id}>
+                      <Link className='btn-icon' to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
+                        <i className='fas fa-reply' />
+                      </Link>
+                    </DrawFilter>
                   </p>
                 </li>
               )

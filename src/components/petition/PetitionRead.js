@@ -6,10 +6,13 @@ import moment from 'moment'
 
 import AlertError from '../../components/common/AlertError'
 import { isEmpty, checkNested } from '../../utils/objectHelpers'
+import DrawFilter from '../profile/DrawFilter'
+import Spinner from '../common/Spinner'
 
 const PetitionRead = props => {
   const { errors, errorStore } = props
   const { petition } = props
+  const { petitionReplyLoading } = props
 
   const renderBreadcrumb = petition => {
     const petitionEvent = checkNested(petition, 'petitionEvent') ? petition.petitionEvent : null
@@ -52,7 +55,6 @@ const PetitionRead = props => {
 
   const renderInfo = petition => {
     const inscription = checkNested(petition, 'inscription') ? petition.inscription : null
-
     const person = checkNested(petition, 'inscription', 'person') ? petition.inscription.person : null
 
     return (
@@ -90,13 +92,20 @@ const PetitionRead = props => {
 
   const renderReply = petition => {
     const reply = checkNested(petition, 'petitionReply') ? petition.petitionReply : null
+    const course_id = checkNested(petition, 'petitionEvent', 'calendar', 'call', 'process')
+      ? petition.petitionEvent.calendar.call.process.course_id
+      : null
+
+    if (petitionReplyLoading) return <Spinner />
 
     if (!reply) {
       return (
         <>
           <h4>Resposta</h4>
           <p>Este recurso ainda não foi respondido.</p>
-          <Link to={`/petition-reply/create/?petition_id=${petition ? petition.id : null}`}>Responder</Link>
+          <DrawFilter permission='petitionreply_create' course_id={course_id}>
+            <Link to={`/petition-reply/create/?petition_id=${petition ? petition.id : null}`}>Responder</Link>
+          </DrawFilter>
         </>
       )
     }

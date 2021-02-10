@@ -124,7 +124,8 @@ const mapStateToProps = (state, ownProps) => {
       withPetitionReply: true
     }),
     errorStore: state.errorStore,
-    profileStore: state.profileStore
+    profileStore: state.profileStore,
+    petitionReplyLoading: state.petitionReplyStore.loading
   }
 }
 
