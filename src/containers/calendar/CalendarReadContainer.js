@@ -24,8 +24,9 @@ const CalendarReadContainer = props => {
     clearErrors()
     readCalendar(id, {
       withInscriptionEvent: true,
+      withPetitionEvent: true,
       callbackOk: cld => {
-        readListCalendar({ call_ids: [cld.call_id] })
+        readListCalendar({ call_ids: [cld.call_id], withInscriptionEvent: true })
         readCall(cld.call_id, {
           callbackOk: call => {
             getProcess(call.selectiveProcess_id)
@@ -47,7 +48,11 @@ const mapStateToProps = (state, ownProps) => {
   return {
     errorStore: state.errorStore,
     calendars: selectBrotherCalendarById(state, calendar_id, {}),
-    calendar: selectCalendarById(state, calendar_id, { withCalendarStatus: true, withInscriptionEvent: true }),
+    calendar: selectCalendarById(state, calendar_id, {
+      withCalendarStatus: true,
+      withInscriptionEvent: true,
+      withPetitionEvent: { withInscriptionEvent: { withCalendar: true } }
+    }),
     calendarLoading: state.calendarStore.loading,
     call: selectCallByCalendarId(state, calendar_id, {}),
     process: selectProcessByCalendarId(state, calendar_id, { withCourse: true }),

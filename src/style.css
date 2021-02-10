@@ -1381,37 +1381,32 @@ footer #copyright p span a:hover {
     width: 21%;
   }
   #calendarios .table-list .titulos span:nth-of-type(2) {
-    width: 21%;
+    width: 24%;
   }
   #calendarios .table-list .titulos span:nth-of-type(3) {
-    width: 21%;
+    width: 15%;
   }
   #calendarios .table-list .titulos span:nth-of-type(4) {
-    width: 21%;
+    width: 24%;
   }
   #calendarios .table-list .titulos span:nth-of-type(5) {
     width: 16%;
   }
-  #calendarios .table-list .titulos span:nth-of-type(6) {
-    width: unset;
-  }
+
   #calendarios .table-list li h3 {
     width: 21%;
   }
   #calendarios .table-list li p:nth-of-type(1) {
-    width: 21%;
+    width: 24%;
   }
   #calendarios .table-list li p:nth-of-type(2) {
-    width: 21%;
+    width: 15%;
   }
   #calendarios .table-list li p:nth-of-type(3) {
-    width: 21%;
+    width: 24%;
   }
   #calendarios .table-list li p:nth-of-type(4) {
     width: 16%;
-  }
-  #calendarios .table-list li p:nth-of-type(5) {
-    width: unset;
   }
 }
 
@@ -1532,6 +1527,92 @@ footer #copyright p span a:hover {
   }
   #inscriptions .table-list li p:nth-of-type(5) {
     width: unset;
+  }
+}
+
+/*Fernando*/
+.dl-data {
+  padding-top: 10px;
+  background-color: #fafafa;
+}
+
+.dl-data dt {
+  color: #c75000;
+}
+
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #myPetitions .table-list .titulos span:nth-of-type(1) {
+    width: 25%;
+  }
+  #myPetitions .table-list .titulos span:nth-of-type(2) {
+    width: 20%;
+  }
+  #myPetitions .table-list .titulos span:nth-of-type(3) {
+    width: 15%;
+  }
+  #myPetitions .table-list .titulos span:nth-of-type(4) {
+    width: 25%;
+  }
+  #myPetitions .table-list .titulos span:nth-of-type(5) {
+    width: 15%;
+  }
+
+  #myPetitions .table-list li h3 {
+    width: 25%;
+  }
+  #myPetitions .table-list li p:nth-of-type(1) {
+    width: 20%;
+  }
+  #myPetitions .table-list li p:nth-of-type(2) {
+    width: 15%;
+  }
+  #myPetitions .table-list li p:nth-of-type(3) {
+    width: 25%;
+  }
+  #myPetitions .table-list li p:nth-of-type(4) {
+    width: 15%;
+  }
+}
+
+/* Fernando */
+@media screen and (min-width: 800px) {
+  #petitions .table-list .titulos span:nth-of-type(1) {
+    width: 20%;
+  }
+  #petitions .table-list .titulos span:nth-of-type(2) {
+    width: 15%;
+  }
+  #petitions .table-list .titulos span:nth-of-type(3) {
+    width: 20%;
+  }
+  #petitions .table-list .titulos span:nth-of-type(4) {
+    width: 15%;
+  }
+  #petitions .table-list .titulos span:nth-of-type(5) {
+    width: 15%;
+  }
+  #petitions .table-list .titulos span:nth-of-type(6) {
+    width: 15%;
+  }
+
+  #petitions .table-list li h3 {
+    width: 20%;
+  }
+  #petitions .table-list li p:nth-of-type(1) {
+    width: 15%;
+  }
+  #petitions .table-list li p:nth-of-type(2) {
+    width: 20%;
+  }
+  #petitions .table-list li p:nth-of-type(3) {
+    width: 15%;
+  }
+  #petitions .table-list li p:nth-of-type(4) {
+    width: 20%;
+  }
+  #petitions .table-list li p:nth-of-type(5) {
+    width: 10%;
   }
 }
 

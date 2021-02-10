@@ -35,6 +35,9 @@ const CalendarListOnCall = props => {
             </div>
 
             {call.calendars.map(calendar => {
+              const inscriptionEvent = calendar.inscriptionEvent ? calendar.inscriptionEvent : null
+              const petitionEvent = calendar.petitionEvent ? calendar.petitionEvent : null
+
               return (
                 <li key={calendar.id}>
                   <h3>{calendar.name}</h3>
@@ -45,6 +48,22 @@ const CalendarListOnCall = props => {
                   <p>{calendar.ready ? 'Pronto' : 'Pendente'}</p>
                   <p>{calendar.status}</p>
                   <p className='text-right'>
+                    {/* obs */}
+                    {inscriptionEvent ? (
+                      <Link className='btn-icon laranja' to={`/inscription-event/read/${inscriptionEvent.id}`}>
+                        Inscrições
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                    {petitionEvent ? (
+                      <Link className='btn-icon laranja' to={`/petition-event/read/${petitionEvent.id}`}>
+                        Recursos
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                    {/* obs */}
                     <DrawFilter permission='calendar_read' course_id={course_id}>
                       <Link className='btn-icon laranja' to={`/calendar/read/${calendar.id}`}>
                         <i className='fas fa-eye' />

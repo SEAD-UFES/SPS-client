@@ -81,11 +81,33 @@ export const deleteInscription = (id, options = {}) => (dispatch, getState) => {
 //Inscription Add List
 export const readListInscription = (options = {}) => dispatch => {
   const newOptions = _.omit(options, 'callbackOk')
-  let url = `/v1/inscriptions`
-  const iEventIdsString = options.inscriptionEvent_ids
-    ? convertArrayToQueryString('inscriptionEvent_ids', options.inscriptionEvent_ids)
-    : ''
-  url = `${url}?${iEventIdsString}`
+
+  let url = `/v1/inscriptions?`
+
+  //add inscriptionEvent_ids option
+  if (options.inscriptionEvent_ids) {
+    const iEventIdsString = options.inscriptionEvent_ids
+      ? convertArrayToQueryString('inscriptionEvent_ids', options.inscriptionEvent_ids)
+      : ''
+    url = `${url}&${iEventIdsString}`
+  }
+
+  //add inscription_ids option
+  if (options.inscription_ids) {
+    const inscriptionIdsString = options.inscription_ids
+      ? convertArrayToQueryString('inscription_ids', options.inscription_ids)
+      : ''
+
+    if (!inscriptionIdsString) url = `${url}&inscription_ids[]=null`
+    else url = `${url}&${inscriptionIdsString}`
+  }
+
+  //add ownerOnly option
+  if (options.ownerOnly) {
+    const ownerOnly = options.ownerOnly ? options.ownerOnly : false
+    const ownerOnlyString = ownerOnly ? 'ownerOnly=true' : ''
+    url = `${url}&${ownerOnlyString}`
+  }
 
   dispatch(setInscriptionLoading())
   spsApi
@@ -95,9 +117,11 @@ export const readListInscription = (options = {}) => dispatch => {
 
       //include vacancy if needed
       if (options.withVacancy) {
+        const opt_vac =
+          typeof options.withVacancy === 'object' ? { ...newOptions, ...options.withVacancy } : { ...newOptions }
         const vacancyIds = [...new Set(res.data.map(ins => ins.vacancy_id))]
         vacancyIds.map(id => {
-          return dispatch(readVacancy(id, newOptions))
+          return dispatch(readVacancy(id, opt_vac))
         })
       }
 

@@ -18,12 +18,7 @@ export default class VacancyRoutes extends Component {
       <Switch>
         {/* Create on process */}
 
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/read/:id`}
-          permission='call_read'
-          component={CallReadContainer}
-        />
+        <Route exact path={`${this.props.match.path}/read/:id`} permission='call_read' component={CallReadContainer} />
 
         <PrivateRoute
           exact

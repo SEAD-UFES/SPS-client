@@ -9,6 +9,7 @@ import AlertError from '../../components/common/AlertError'
 import DrawFilter from '../profile/DrawFilter'
 import InscriptionEventListOnCalendar from '../inscriptionEvent/InscriptionEventListOnCalendar'
 import { checkNested } from '../../utils/objectHelpers'
+import PetitionEventListOnCalendar from '../petitionEvent/PetitionEventListOnCalendar'
 
 const CalendarRead = props => {
   const { location } = props
@@ -87,7 +88,10 @@ const CalendarRead = props => {
   const renderAddEventType = (calendar, calendarGroupLoading) => {
     const hasInscriptionEvent =
       checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? true : false
-    const hasEvent = hasInscriptionEvent ? true : false
+    const hasPetitionEvent =
+      checkNested(calendar, 'petitionEvents') && calendar.petitionEvents.length > 0 ? true : false
+
+    const hasEvent = hasInscriptionEvent || hasPetitionEvent ? true : false
 
     if (!calendarGroupLoading && !hasEvent) {
       return (
@@ -98,6 +102,11 @@ const CalendarRead = props => {
               <li className='list-group-item'>
                 <Link to={`${props.match.url}/inscription-event/create`}>Evento de inscrições</Link>
               </li>
+              <li className='list-group-item'>
+                <Link to={`/petition-event/create?calendar_id=${calendar ? calendar.id : null}`}>
+                  Evento de recursos
+                </Link>
+              </li>
             </ul>
           </section>
         </div>
@@ -106,12 +115,23 @@ const CalendarRead = props => {
     return null
   }
 
-  const renderIsncriptionEvent = calendar => {
+  const renderInscriptionEvent = calendar => {
     const hasInscriptionEvent =
       checkNested(calendar, 'inscriptionEvents') && calendar.inscriptionEvents.length > 0 ? true : false
 
     if (hasInscriptionEvent) {
       return <InscriptionEventListOnCalendar calendar={calendar} course_id={process ? process.course_id : ''} />
+    }
+
+    return null
+  }
+
+  const renderPetitionEvent = calendar => {
+    const hasPetitionEvent =
+      checkNested(calendar, 'petitionEvents') && calendar.petitionEvents.length > 0 ? true : false
+
+    if (hasPetitionEvent) {
+      return <PetitionEventListOnCalendar calendar={calendar} course_id={process ? process.course_id : ''} />
     }
 
     return null
@@ -127,7 +147,8 @@ const CalendarRead = props => {
           <AlertError errors={errorStore} />
           {renderInfo(calendar)}
           {renderAddEventType(calendar, calendarGroupLoading)}
-          {renderIsncriptionEvent(calendar)}
+          {renderInscriptionEvent(calendar)}
+          {renderPetitionEvent(calendar)}
         </div>
       </div>
     </div>

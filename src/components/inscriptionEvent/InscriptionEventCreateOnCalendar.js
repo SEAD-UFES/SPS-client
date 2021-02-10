@@ -95,8 +95,8 @@ const InscriptionEventCreateOnCalendar = props => {
       return (
         <>
           {errors.message ? <p className='text-danger'>{errors.message}</p> : null}
-          {errors.message ? <p className='text-danger'>{errors.id}</p> : null}
-          {errors.message ? <p className='text-danger'>{errors.calendar_id}</p> : null}
+          {errors.id ? <p className='text-danger'>{errors.id}</p> : null}
+          {errors.calendar_id ? <p className='text-danger'>{errors.calendar_id}</p> : null}
         </>
       )
     }

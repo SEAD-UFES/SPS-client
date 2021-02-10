@@ -92,9 +92,15 @@ export const deleteVacancy = (id, options = {}) => (dispatch, getState) => {
 
 //Vacancy Add List
 export const readListVacancy = (options = {}) => dispatch => {
-  let url = `/v1/vacancies`
-  const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
-  url = `${url}?${callIdsString}`
+  let url = `/v1/vacancies?`
+
+  //add call_ids option
+  if (options.call_ids) {
+    const callIdsString = options.call_ids ? convertArrayToQueryString('call_ids', options.call_ids) : ''
+    url = url + '&' + callIdsString
+  }
+
+  //add vacancy_ids option?
 
   dispatch(setVacancyLoading())
   spsApi
