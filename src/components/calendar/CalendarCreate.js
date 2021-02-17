@@ -9,7 +9,7 @@ import SelectListGroup from '../../components/common/SelectListGroup'
 import CheckBoxFieldGroup from '../../components/common/CheckBoxFieldGroup'
 import AlertError from '../../components/common/AlertError'
 
-const CalendarCreateOnCall = props => {
+const CalendarCreate = props => {
   const { createData, calendarOptions, errors } = props
   const { process, call, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
@@ -112,4 +112,4 @@ const CalendarCreateOnCall = props => {
   )
 }
 
-export default CalendarCreateOnCall
+export default CalendarCreate
