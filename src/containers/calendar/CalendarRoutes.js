@@ -7,7 +7,6 @@ import PrivateRoute from '../../components/common/PrivateRoute'
 import CalendarReadContainer from './CalendarReadContainer'
 import CalendarUpdateContainer from './CalendarUpdateContainer'
 import CalendarDeleteContainer from './CalendarDeleteContainer'
-import InscriptionEventCreateOnCalendarContainer from '../inscriptionEvent/InscriptionEventCreateOnCalendarContainer'
 import NotFound from '../../components/common/NotFound'
 
 export default class VacancyRoutes extends Component {
@@ -35,13 +34,6 @@ export default class VacancyRoutes extends Component {
           path={`${this.props.match.path}/delete/:id`}
           permission='calendar_delete'
           component={CalendarDeleteContainer}
-        />
-
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/read/:id/inscription-event/create`}
-          permission='inscriptionEvent_create'
-          component={InscriptionEventCreateOnCalendarContainer}
         />
 
         <Route component={NotFound} />

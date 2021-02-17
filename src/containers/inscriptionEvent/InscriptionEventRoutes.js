@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import PrivateRoute from '../../components/common/PrivateRoute'
+import InscriptionEventCreateContainer from './InscriptionEventCreateContainer'
 import InscriptionEventReadContainer from './InscriptionEventReadContainer'
 import InscriptionEventUpdateContainer from './InscriptionEventUpdateContainer'
 import InscriptionEventDeleteContainer from './InscriptionEventDeleteContainer'
@@ -16,7 +17,12 @@ export default class VacancyRoutes extends Component {
       <Switch>
         <Route exact path={`${this.props.match.path}/list`} component={InscriptionEventListContainer} />
 
-        {/* Create on Calendar */}
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/create`}
+          permission='inscriptionEvent_create'
+          component={InscriptionEventCreateContainer}
+        />
 
         <Route
           exact
