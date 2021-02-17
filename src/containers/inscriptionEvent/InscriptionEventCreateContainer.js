@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import qs from 'query-string'
 
 import InscriptionEventCreateOnCalendar from '../../components/inscriptionEvent/InscriptionEventCreateOnCalendar'
 import { clearErrors } from '../../store/actions/error'
@@ -23,13 +24,14 @@ import {
   validateBody
 } from '../../validation/inscriptionEvent'
 
-const InscriptionEventCreateOnCalendarContainer = props => {
-  const id = props.match.params.id
+const InscriptionEventCreateContainer = props => {
+  const query = qs.parse(props.location.search)
+  const calendar_id = query.calendar_id || null
   const { clearErrors, readCalendar, readCall, getProcess, createInscriptionEvent } = props
   const { errorStore, history } = props
 
   const initialCreateData = {
-    calendar_id: id,
+    calendar_id: calendar_id,
     numberOfInscriptionsAllowed: '0',
     allowMultipleAssignments: true,
     allowMultipleRegions: true,
@@ -42,7 +44,7 @@ const InscriptionEventCreateOnCalendarContainer = props => {
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readCalendar(id, {
+    readCalendar(calendar_id, {
       callbackOk: cld => {
         readCall(cld.call_id, {
           callbackOk: call => {
@@ -159,7 +161,8 @@ const InscriptionEventCreateOnCalendarContainer = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const calendar_id = ownProps.match.params.id
+  const query = qs.parse(ownProps.location.search)
+  const calendar_id = query.calendar_id || null
   return {
     errorStore: state.errorStore,
     calendar: selectCalendarById(state, calendar_id, {}),
@@ -179,4 +182,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(InscriptionEventCreateOnCalendarContainer)
+)(InscriptionEventCreateContainer)

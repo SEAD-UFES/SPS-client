@@ -100,7 +100,9 @@ const CalendarRead = props => {
             <h4>Adicionar tipo de evento</h4>
             <ul>
               <li className='list-group-item'>
-                <Link to={`${props.match.url}/inscription-event/create`}>Evento de inscrições</Link>
+                <Link to={`/inscription-event/create?calendar_id=${calendar ? calendar.id : null}`}>
+                  Evento de inscrições
+                </Link>
               </li>
               <li className='list-group-item'>
                 <Link to={`/petition-event/create?calendar_id=${calendar ? calendar.id : null}`}>
