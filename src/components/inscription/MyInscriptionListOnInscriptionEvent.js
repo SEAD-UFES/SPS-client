@@ -6,18 +6,23 @@ import { Link } from 'react-router-dom'
 import { checkNested } from '../../utils/objectHelpers'
 
 const MyInscriptionListOnInscriptionEvent = props => {
-  const { iEvent, inscriptions, authStore, location } = props
+  const { iEvent, inscriptions, calendar, authStore, location } = props
+  const eventInProgress = calendar && calendar.status === 'Em andamento' ? true : false
 
   const renderCreateButton = iEvent => {
-    return (
-      <div className='btn-right'>
-        <Link
-          className='btn btn-terciary'
-          to={`/inscription-event/read/${iEvent ? iEvent.id : null}/inscription/create`}>
-          <i className='fas fa-plus-circle' /> Inscrever-se
-        </Link>
-      </div>
-    )
+    if (eventInProgress) {
+      return (
+        <div className='btn-right'>
+          <Link
+            className='btn btn-terciary'
+            to={`/inscription-event/read/${iEvent ? iEvent.id : null}/inscription/create`}>
+            <i className='fas fa-plus-circle' /> Inscrever-se
+          </Link>
+        </div>
+      )
+    } else {
+      return ''
+    }
   }
 
   const renderMyInscriptionList = inscriptions => {
@@ -44,9 +49,13 @@ const MyInscriptionListOnInscriptionEvent = props => {
                       : '- sem restrição'}
                   </p>
                   <p className='text-right'>
-                    <Link className='btn-icon' to={`/inscription/delete/${ins.id}`}>
-                      <i className='fas fa-trash' />
-                    </Link>
+                    {eventInProgress ? (
+                      <Link className='btn-icon' to={`/inscription/delete/${ins.id}`}>
+                        <i className='fas fa-trash' />
+                      </Link>
+                    ) : (
+                      ''
+                    )}
                   </p>
                 </li>
               )

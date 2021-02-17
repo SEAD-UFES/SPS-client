@@ -105,6 +105,7 @@ const InscriptionEventRead = props => {
   const renderMyInscriptions = () => {
     return (
       <MyInscriptionListOnInscriptionEvent
+        calendar={calendar}
         iEvent={inscriptionEvent}
         inscriptions={myInscriptions}
         authStore={authStore}
