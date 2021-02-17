@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import qs from 'query-string'
 
 import InscriptionCreateOnInscriptionEvent from '../../components/inscription/InscriptionCreateOnInscriptionEvent'
 import { clearErrors } from '../../store/actions/error'
@@ -21,8 +22,9 @@ import { selectInscriptionEventById } from '../../store/selectors/inscriptionEve
 import { selectCallByInscriptionEventId } from '../../store/selectors/call/call'
 import { selectProcessByInscriptionEventId } from '../../store/selectors/process/process'
 
-const InscriptionCreateOnInscriptionEventContainer = props => {
-  const id = props.match.params.id
+const InscriptionCreateContainer = props => {
+  const query = qs.parse(props.location.search)
+  const inscriptionEvent_id = query.inscriptionEvent_id || null
   const { vacancies, profilePerson, errorStore } = props
   const {
     clearErrors,
@@ -36,7 +38,7 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
   const { history } = props
 
   const initialCreateData = {
-    inscriptionEvent_id: id,
+    inscriptionEvent_id: inscriptionEvent_id,
     person_id: '',
     vacancy_id: ''
   }
@@ -50,7 +52,7 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
   useEffect(() => {
     clearErrors()
     //get InscriptionEvent
-    readInscriptionEvent(id, {
+    readInscriptionEvent(inscriptionEvent_id, {
       callbackOk: iEvent => {
         //get Calendar
         readCalendar(iEvent.calendar_id, {
@@ -127,7 +129,6 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
     const submitErrors = validateBody(createData, 'create')
 
     if (submitErrors) {
-      console.log(submitErrors)
       setErrors(submitErrors)
     } else {
       const data = {
@@ -156,7 +157,8 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const iEvent_id = ownProps.match.params.id
+  const query = qs.parse(ownProps.location.search)
+  const iEvent_id = query.inscriptionEvent_id || null
 
   return {
     profileLoading: state.profileStore.loading,
@@ -187,4 +189,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(InscriptionCreateOnInscriptionEventContainer)
+)(InscriptionCreateContainer)
