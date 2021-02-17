@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import PrivateRoute from '../../components/common/PrivateRoute'
+import CalendarCreateContainer from './CalendarCreateContainer'
 import CalendarReadContainer from './CalendarReadContainer'
 import CalendarUpdateContainer from './CalendarUpdateContainer'
 import CalendarDeleteContainer from './CalendarDeleteContainer'
@@ -13,7 +14,12 @@ export default class VacancyRoutes extends Component {
   render() {
     return (
       <Switch>
-        {/* Create on call */}
+        <PrivateRoute
+          exact
+          path={`${this.props.match.path}/create`}
+          permission='calendar_create'
+          component={CalendarCreateContainer}
+        />
 
         <PrivateRoute
           exact

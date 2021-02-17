@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import moment from 'moment'
+import qs from 'query-string'
 
 import { clearErrors } from '../../store/actions/error'
 import { readCall } from '../../store/actions/call'
 import { getProcess } from '../../store/actions/process'
 import { createCalendar, readListCalendar } from '../../store/actions/calendar'
-import CalendarCreateOnCall from '../../components/calendar/CalendarCreateOnCall'
+import CalendarCreate from '../../components/calendar/CalendarCreate'
 import { selectCallById, selectProcessByCallId } from '../../store/selectors/call/call'
 import { selectCalendarByCallId } from '../../store/selectors/calendar/calendar'
 import { convertObjetsToOptions } from '../../utils/selectorHelpers'
@@ -23,13 +24,14 @@ import {
   validateBody
 } from '../../validation/calendar'
 
-const CalendarCreateContainerOnCall = props => {
-  const id = props.match.params.id
+const CalendarCreateContainer = props => {
+  const query = qs.parse(props.location.search)
+  const call_id = query.call_id || null
   const { clearErrors, readCall, getProcess, createCalendar, readListCalendar } = props
   const { calendars, errorStore } = props
 
   const initialCreateData = {
-    call_id: id,
+    call_id: call_id,
     calendar_id: '',
     name: '',
     ready: false,
@@ -45,8 +47,8 @@ const CalendarCreateContainerOnCall = props => {
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    readListCalendar({ call_ids: [id] })
-    readCall(id, {
+    readListCalendar({ call_ids: [call_id] })
+    readCall(call_id, {
       callbackOk: call => {
         getProcess(call.selectiveProcess_id)
       }
@@ -158,11 +160,12 @@ const CalendarCreateContainerOnCall = props => {
     onSubmit: onSubmit
   }
 
-  return <CalendarCreateOnCall {...allProps} />
+  return <CalendarCreate {...allProps} />
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const call_id = ownProps.match.params.id
+  const query = qs.parse(ownProps.location.search)
+  const call_id = query.call_id || null
   try {
     return {
       errorStore: state.errorStore,
@@ -187,4 +190,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(CalendarCreateContainerOnCall)
+)(CalendarCreateContainer)

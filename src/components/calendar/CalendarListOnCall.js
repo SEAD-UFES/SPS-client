@@ -13,7 +13,7 @@ const CalendarListOnCall = props => {
     return (
       <div className='btn-right'>
         <DrawFilter permission='calendar_create' course_id={course_id}>
-          <Link className='btn btn-terciary' to={`/call/read/${call ? call.id : null}/calendar/create`}>
+          <Link className='btn btn-terciary' to={`/calendar/create?call_id=${call ? call.id : null}`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
