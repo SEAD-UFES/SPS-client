@@ -8,7 +8,6 @@ import InscriptionEventReadContainer from './InscriptionEventReadContainer'
 import InscriptionEventUpdateContainer from './InscriptionEventUpdateContainer'
 import InscriptionEventDeleteContainer from './InscriptionEventDeleteContainer'
 import NotFound from '../../components/common/NotFound'
-import InscriptionCreateOnInscriptionEventContainer from '../inscription/InscriptionCreateOnInscriptionEventContainer'
 import InscriptionEventListContainer from './InscriptionEventListContainer'
 
 export default class VacancyRoutes extends Component {
@@ -38,12 +37,6 @@ export default class VacancyRoutes extends Component {
           path={`${this.props.match.path}/delete/:id`}
           permission='inscriptionEvent_delete'
           component={InscriptionEventDeleteContainer}
-        />
-
-        <PrivateRoute
-          exact
-          path={`${this.props.match.path}/read/:id/inscription/create`}
-          component={InscriptionCreateOnInscriptionEventContainer}
         />
 
         <Route component={NotFound} />

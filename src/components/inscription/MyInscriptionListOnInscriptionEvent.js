@@ -15,7 +15,7 @@ const MyInscriptionListOnInscriptionEvent = props => {
         <div className='btn-right'>
           <Link
             className='btn btn-terciary'
-            to={`/inscription-event/read/${iEvent ? iEvent.id : null}/inscription/create`}>
+            to={`/inscription/create?inscriptionEvent_id=${iEvent ? iEvent.id : null}`}>
             <i className='fas fa-plus-circle' /> Inscrever-se
           </Link>
         </div>
