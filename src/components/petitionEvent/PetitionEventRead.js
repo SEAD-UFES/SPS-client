@@ -15,6 +15,9 @@ const PetitionEventRead = props => {
   const { process, call, calendar, petitionEvent, myPetitions } = props
   const { profileStore, errorStore, authStore } = props
 
+  if (checkNested(petitionEvent, 'petitions')) console.log(petitionEvent.petitions)
+  else console.log('nope')
+
   const renderBreadcrumb = (process, call) => {
     const canAccessCall = permissionCheck(
       checkNested(profileStore, 'profile', 'UserRoles') ? profileStore.profile.UserRoles : [],

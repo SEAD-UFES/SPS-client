@@ -11,6 +11,7 @@ import {
 import spsApi from '../../apis/spsServer'
 import { convertArrayToQueryString } from '../../utils/queryHelpers'
 import { readListInscription } from './inscription'
+import { readListPetitionReply } from './petitionReply'
 
 //Petition loading
 export const setPetitionLoading = () => {
@@ -81,12 +82,19 @@ export const readListPetition = (options = {}) => dispatch => {
     .then(res => {
       dispatch({ type: READ_LIST_PETITION, payload: res.data })
 
-      //get inscription
+      //get father inscription
       if (options.withInscription) {
         const opt_inscription = typeof options.withInscription === 'object' ? options.withInscription : {}
         const inscriptionIds = res.data.map(pet => pet.inscription_id)
 
         dispatch(readListInscription({ inscription_ids: inscriptionIds, ...opt_inscription }))
+      }
+
+      // get child Reply
+      if (options.withPetitionReply) {
+        const opt_petReply = typeof options.withPetitionReply === 'object' ? options.withPetitionReply : {}
+        const petitionIds = res.data.map(pet => pet.id)
+        dispatch(readListPetitionReply({ petition_ids: petitionIds, ...opt_petReply }))
       }
 
       //run callBack

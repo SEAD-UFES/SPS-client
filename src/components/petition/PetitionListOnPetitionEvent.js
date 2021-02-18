@@ -18,8 +18,9 @@ const PetitionListOnPetitionEvent = props => {
               <span>Título</span>
               <span>Data</span>
               <span>Usuário</span>
-              <span>Inscrição</span>
+              <span>Insc.</span>
               <span>Oferta</span>
+              <span>Status</span>
               <span />
             </div>
             {petitions.map(pet => {
@@ -44,15 +45,26 @@ const PetitionListOnPetitionEvent = props => {
                       ? ` - ${pet.inscription.vacancy.restriction.name}`
                       : ''}
                   </p>
+                  <p>
+                    {checkNested(pet, 'petitionReply')
+                      ? pet.petitionReply.accepted
+                        ? 'Deferido'
+                        : 'Indeferido'
+                      : 'Pedente'}
+                  </p>
                   <p className='text-right'>
                     <Link className='btn-icon' to={`/petition/read/${pet ? pet.id : ''}`}>
                       <i className='fas fa-eye' />
                     </Link>
-                    <DrawFilter permission='petitionreply_create' course_id={course_id}>
-                      <Link className='btn-icon' to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
-                        <i className='fas fa-reply' />
-                      </Link>
-                    </DrawFilter>
+                    {!checkNested(pet, 'petitionReply') ? (
+                      <DrawFilter permission='petitionreply_create' course_id={course_id}>
+                        <Link className='btn-icon' to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
+                          <i className='fas fa-reply' />
+                        </Link>
+                      </DrawFilter>
+                    ) : (
+                      ''
+                    )}
                   </p>
                 </li>
               )

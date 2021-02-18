@@ -1587,13 +1587,16 @@ footer #copyright p span a:hover {
     width: 20%;
   }
   #petitions .table-list .titulos span:nth-of-type(4) {
-    width: 15%;
+    width: 10%;
   }
   #petitions .table-list .titulos span:nth-of-type(5) {
     width: 15%;
   }
   #petitions .table-list .titulos span:nth-of-type(6) {
     width: 15%;
+  }
+  #petitions .table-list .titulos span:nth-of-type(7) {
+    width: 5%;
   }
 
   #petitions .table-list li h3 {
@@ -1606,13 +1609,16 @@ footer #copyright p span a:hover {
     width: 20%;
   }
   #petitions .table-list li p:nth-of-type(3) {
-    width: 15%;
+    width: 10%;
   }
   #petitions .table-list li p:nth-of-type(4) {
-    width: 20%;
+    width: 15%;
   }
   #petitions .table-list li p:nth-of-type(5) {
-    width: 10%;
+    width: 15%;
+  }
+  #petitions .table-list li p:nth-of-type(6) {
+    width: 5%;
   }
 }
 
