@@ -8,6 +8,7 @@ import moment from 'moment'
 
 import { getCurrentProfile } from './profileActions'
 import Spinner from '../common/Spinner'
+import { checkNested } from '../../utils/objectHelpers'
 
 class Profile extends Component {
   componentDidMount() {
@@ -157,8 +158,8 @@ class Profile extends Component {
                   <strong>RG (Número / Expeditor):</strong>
                 </td>
                 <td>
-                  {profile.Person.rgNumber ? (
-                    profile.Person.rgNumber - profile.Person.rgDispatcher
+                  {checkNested(profile, 'Person') ? (
+                    `${profile.Person.rgNumber} - ${profile.Person.rgDispatcher}`
                   ) : (
                     <span className='text-muted'>...</span>
                   )}
