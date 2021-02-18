@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import moment from 'moment'
+import qs from 'query-string'
 
 import { clearErrors } from '../../store/actions/error'
 import { readCall, createCall } from '../../store/actions/call'
@@ -14,18 +15,24 @@ import { validateNumber, validateOpeningDate, validateEndingDate, validateBody }
 import { getEmptyKeys, removeEmptyKeys, isEmpty, checkNested } from '../../utils/objectHelpers'
 
 const CallCreateContainer = props => {
-  const id = props.match.params.id
+  const query = qs.parse(props.location.search)
+  const process_id = query.process_id || null
   const { clearErrors, getProcess, createCall } = props
   const { errorStore } = props
 
-  const initialCreateData = { selectiveProcess_id: id, number: '', openingDate: '', endingDate: '' }
+  const initialCreateData = {
+    selectiveProcess_id: process_id,
+    number: '',
+    openingDate: '',
+    endingDate: ''
+  }
   const [createData, setCreateData] = useState(initialCreateData)
   const [errors, setErrors] = useState({})
 
   //ComponentDidMount
   useEffect(() => {
     clearErrors()
-    getProcess(id)
+    getProcess(process_id)
   }, [])
 
   //get errors from store (onPropsUpdate)
@@ -126,8 +133,8 @@ const CallCreateContainer = props => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const process_id = ownProps.match.params.id
-
+  const query = qs.parse(ownProps.location.search)
+  const process_id = query.process_id || null
   return {
     process: selectProcessById(state, process_id, { withCourse: true }),
     processLoading: state.processStore.loading,

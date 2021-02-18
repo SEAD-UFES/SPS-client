@@ -40,16 +40,6 @@ export default class ProcessRoutes extends Component {
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/edit`} component={ProcessEdit} />
 
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/create/old`} component={CallCreate} /> */}
-
-        <PrivateRoute exact path={`${this.props.match.path}/:id/call/create`} component={CallCreateContainer} />
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id`} component={CallView} /> */}
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id/update`} component={CallUpdate} /> */}
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id/delete`} component={CallDelete} /> */}
-
         <PrivateRoute
           exact
           path={`${this.props.match.path}/:process_id/call/:call_id/steps/create`}
