@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -18,28 +20,28 @@ class Profile extends Component {
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Dados de usuário</h4>
+      <div className='card mb-4'>
+        <div className='card-header'>
+          <div className='row'>
+            <div className='col'>
+              <h4 className='mb-0'>Dados de usuário</h4>
             </div>
-            <div className="col">
-              <div className="text-right">
+            <div className='col'>
+              <div className='text-right'>
                 <Link
-                  className="text-primary"
+                  className='text-primary'
                   to={{
                     pathname: '/profile/edit-user',
                     prevLocation: this.props.location
                   }}>
-                  <i className="fas fa-cog" /> Editar
+                  <i className='fas fa-cog' /> Editar
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="card-body">
-          <table className="table table-hover mt-0 mb-0">
+        <div className='card-body'>
+          <table className='table table-hover mt-0 mb-0'>
             <tbody>
               <tr>
                 <td>
@@ -61,27 +63,27 @@ class Profile extends Component {
 
     if (!profile.Person) {
       return (
-        <div className="card mb-4">
-          <div className="card-header">
-            <div className="row">
-              <div className="col">
-                <h4 className="mb-0">Dados pessoais</h4>
+        <div className='card mb-4'>
+          <div className='card-header'>
+            <div className='row'>
+              <div className='col'>
+                <h4 className='mb-0'>Dados pessoais</h4>
               </div>
-              <div className="col">
-                <div className="text-right">
+              <div className='col'>
+                <div className='text-right'>
                   <Link
-                    className="text-primary"
+                    className='text-primary'
                     to={{
                       pathname: '/profile/edit-person',
                       prevLocation: this.props.location
                     }}>
-                    <i className="fas fa-cog" /> Editar
+                    <i className='fas fa-cog' /> Editar
                   </Link>
                 </div>
               </div>
             </div>
           </div>
-          <div className="card-body">
+          <div className='card-body'>
             <p>Usuário ainda não possui dados pessoais.</p>
           </div>
         </div>
@@ -89,28 +91,28 @@ class Profile extends Component {
     }
 
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <div className="row">
-            <div className="col">
-              <h4 className="mb-0">Dados pessoais</h4>
+      <div className='card mb-4'>
+        <div className='card-header'>
+          <div className='row'>
+            <div className='col'>
+              <h4 className='mb-0'>Dados pessoais</h4>
             </div>
-            <div className="col">
-              <div className="text-right">
+            <div className='col'>
+              <div className='text-right'>
                 <Link
-                  className="text-primary"
+                  className='text-primary'
                   to={{
                     pathname: '/profile/edit-person',
                     prevLocation: this.props.location
                   }}>
-                  <i className="fas fa-cog" /> Editar
+                  <i className='fas fa-cog' /> Editar
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="card-body">
-          <table className="table table-hover mt-0 mb-0">
+        <div className='card-body'>
+          <table className='table table-hover mt-0 mb-0'>
             <tbody>
               <tr>
                 <td>
@@ -129,7 +131,7 @@ class Profile extends Component {
                   {profile.Person.birthdate ? (
                     moment(profile.Person.birthdate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')
                   ) : (
-                    <span className="text-muted">...</span>
+                    <span className='text-muted'>...</span>
                   )}
                 </td>
               </tr>
@@ -146,7 +148,7 @@ class Profile extends Component {
                   <strong>Nacionalidade:</strong>
                 </td>
                 <td>
-                  {profile.Person.nationality ? profile.Person.nationality : <span className="text-muted">...</span>}
+                  {profile.Person.nationality ? profile.Person.nationality : <span className='text-muted'>...</span>}
                 </td>
               </tr>
 
@@ -158,7 +160,7 @@ class Profile extends Component {
                   {profile.Person.rgNumber ? (
                     profile.Person.rgNumber - profile.Person.rgDispatcher
                   ) : (
-                    <span className="text-muted">...</span>
+                    <span className='text-muted'>...</span>
                   )}
                 </td>
               </tr>
@@ -167,14 +169,14 @@ class Profile extends Component {
                 <td>
                   <strong>Cor:</strong>
                 </td>
-                <td>{profile.Person.ethnicity ? profile.Person.ethnicity : <span className="text-muted">...</span>}</td>
+                <td>{profile.Person.ethnicity ? profile.Person.ethnicity : <span className='text-muted'>...</span>}</td>
               </tr>
 
               <tr>
                 <td>
                   <strong>Sexo:</strong>
                 </td>
-                <td>{profile.Person.gender ? profile.Person.gender : <span className="text-muted">...</span>}</td>
+                <td>{profile.Person.gender ? profile.Person.gender : <span className='text-muted'>...</span>}</td>
               </tr>
 
               <tr>
@@ -182,7 +184,7 @@ class Profile extends Component {
                   <strong>Estado Civil:</strong>
                 </td>
                 <td>
-                  {profile.Person.civilStatus ? profile.Person.civilStatus : <span className="text-muted">...</span>}
+                  {profile.Person.civilStatus ? profile.Person.civilStatus : <span className='text-muted'>...</span>}
                 </td>
               </tr>
             </tbody>
@@ -212,18 +214,18 @@ class Profile extends Component {
         //User login in but dont have a profile
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Bem-vindo{user.Person.name}</p>
+            <p className='lead text-muted'>Bem-vindo{user.Person.name}</p>
             <p>Dados de perfil não localizados</p>
           </div>
         )
       }
     }
     return (
-      <div className="profile">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="display-4">Perfil</h1>
+      <div className='profile'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <h1 className='display-4'>Perfil</h1>
               {dashboardContent}
             </div>
           </div>
@@ -237,7 +239,7 @@ Profile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   //deleteAccount: PropTypes.func.isRequired,
   authStore: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profileStore: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -245,6 +247,9 @@ const mapStateToProps = state => ({
   authStore: state.authStore
 })
 
-export default connect(mapStateToProps, {
-  getCurrentProfile
-})(Profile)
+export default connect(
+  mapStateToProps,
+  {
+    getCurrentProfile
+  }
+)(Profile)

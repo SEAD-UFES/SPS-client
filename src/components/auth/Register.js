@@ -1,9 +1,13 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import TextFieldGroup from '../common/TextFieldGroup'
+import { cpfEventMask } from './masks'
+
 import {
   isEmpty,
   validateName,
@@ -41,7 +45,7 @@ class Register extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
+    if (!isEmpty(nextProps.errors)) {
       let errors = nextProps.errors.devMessage
       errors.email = nextProps.errors.devMessage.login
       delete errors.login
@@ -62,6 +66,7 @@ class Register extends Component {
         valResult = validateSurname(e.target.value)
         break
       case 'cpf':
+        cpfEventMask(e)
         valResult = validateCpfRequired(e.target.value)
         break
       case 'email':
@@ -131,63 +136,63 @@ class Register extends Component {
   renderRegister(errors) {
     return (
       <form noValidate onSubmit={this.onSubmit}>
-        <div className="form-lateral">
+        <div className='form-lateral'>
           <TextFieldGroup
-            type="text"
-            name="name"
-            label="Nome"
+            type='text'
+            name='name'
+            label='Nome'
             value={this.state.name}
             onChange={this.onChange}
             error={errors.name}
           />
           <TextFieldGroup
-            type="text"
-            name="surname"
-            label="Sobrenome"
+            type='text'
+            name='surname'
+            label='Sobrenome'
             value={this.state.surname}
             onChange={this.onChange}
             error={errors.surname}
           />
         </div>
         <TextFieldGroup
-          type="text"
-          name="cpf"
-          label="CPF"
-          placeholder="___.___.___-__"
+          type='text'
+          name='cpf'
+          label='CPF'
+          placeholder='___.___.___-__'
           value={this.state.cpf}
           onChange={this.onChange}
           error={errors.cpf}
         />
         <TextFieldGroup
-          type="text"
-          name="email"
-          label="Email"
+          type='text'
+          name='email'
+          label='Email'
           value={this.state.email}
           onChange={this.onChange}
           error={errors.email}
         />
 
-        <div className="form-spacing">
+        <div className='form-spacing'>
           <TextFieldGroup
-            type="password"
-            name="password"
-            label="Senha"
-            info="Mínimo de 6 caractéres"
+            type='password'
+            name='password'
+            label='Senha'
+            info='Mínimo de 6 caractéres'
             value={this.state.password}
             onChange={this.onChange}
             error={errors.password}
           />
           <TextFieldGroup
-            type="password"
-            name="password2"
-            label="Confirmar senha"
+            type='password'
+            name='password2'
+            label='Confirmar senha'
             value={this.state.password2}
             onChange={this.onChange}
             error={errors.password2}
           />
         </div>
 
-        <input type="submit" className="btn btn-primary" value="Cadastrar" />
+        <input type='submit' className='btn btn-primary' value='Cadastrar' />
       </form>
     )
   }
@@ -196,9 +201,9 @@ class Register extends Component {
     const { errors } = this.state
 
     return (
-      <div className="register" id="main">
-        <div className="container">
-          <div className="form-container">
+      <div className='register' id='main'>
+        <div className='container'>
+          <div className='form-container'>
             <h1>Cadastro</h1>
             {this.renderRegister(errors)}
           </div>
@@ -222,4 +227,7 @@ const mapStateToProps = state => ({
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
-export default connect(mapStateToProps, { registerUser })(withRouter(Register))
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register))
