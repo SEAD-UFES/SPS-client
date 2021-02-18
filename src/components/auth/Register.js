@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import TextFieldGroup from '../common/TextFieldGroup'
-import { cpfEventMask } from './masks'
+import { cpfEventMask } from '../../utils/eventMasks'
 
 import {
   isEmpty,
