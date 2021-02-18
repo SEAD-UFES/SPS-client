@@ -19,8 +19,6 @@ import PublicationUpdate from '../../components/publication/PublicationUpdate'
 import PublicationDelete from '../../components/publication/PublicationDelete'
 import PublicationRoutes from '../../components/publication/PublicationRoutes'
 
-import CallCreateContainer from '../../containers/call/CallCreateContainer'
-
 import NotFound from '../../components/common/NotFound'
 
 export default class ProcessRoutes extends Component {
@@ -34,16 +32,6 @@ export default class ProcessRoutes extends Component {
         <Route exact path={`${this.props.match.path}/read/:id`} component={ProcessReadContainer} />
 
         <PrivateRoute exact path={`${this.props.match.path}/:id/edit`} component={ProcessEdit} />
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/create/old`} component={CallCreate} /> */}
-
-        <PrivateRoute exact path={`${this.props.match.path}/:id/call/create`} component={CallCreateContainer} />
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id`} component={CallView} /> */}
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id/update`} component={CallUpdate} /> */}
-
-        {/* <PrivateRoute exact path={`${this.props.match.path}/:process_id/call/:call_id/delete`} component={CallDelete} /> */}
 
         <PrivateRoute
           exact

@@ -12,7 +12,7 @@ export default class CallListOnProcess extends Component {
     return (
       <div className='btn-right'>
         <DrawFilter permission='call_create' course_id={this.props.process.Course.id}>
-          <Link className='btn btn-terciary' to={`/processes/${this.props.process.id}/call/create`}>
+          <Link className='btn btn-terciary' to={`/call/create?process_id=${this.props.process.id}`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
