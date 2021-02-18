@@ -12,6 +12,7 @@ import { validateName, validateSurname, validateDate, validateCpfRequired, isEmp
 import { validateProfileEditPersonForm } from './validateProfileEditPersonForm'
 import { getCurrentProfile, getPeopleOptions, updateProfilePerson } from './profileActions'
 import { clearErrors } from '../../actions/errorActions'
+import { cpfEventMask } from '../../utils/eventMasks'
 
 class ProfileEditPerson extends Component {
   constructor(props) {
@@ -105,6 +106,7 @@ class ProfileEditPerson extends Component {
         valResult = validateDate(e.target.value)
         break
       case 'cpf':
+        cpfEventMask(e)
         valResult = validateCpfRequired(e.target.value)
         break
       default:
@@ -146,8 +148,6 @@ class ProfileEditPerson extends Component {
     const valProfileEditPerson = validateProfileEditPersonForm(personData)
 
     if (!valProfileEditPerson.isValid) {
-      console.log(personData)
-      console.log(valProfileEditPerson.errors)
       this.setState({ errors: valProfileEditPerson.errors })
     } else {
       let updatepersonData = {
