@@ -1,3 +1,5 @@
+/** @format */
+
 import spsApi from 'apis/spsServer'
 
 import { GET_ERRORS, CLEAR_ERRORS } from '../../actions/types'

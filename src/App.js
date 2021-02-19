@@ -12,10 +12,10 @@ import jwt_decode from 'jwt-decode'
 
 //Local imports
 import store from './store/store' //Importa o store criado nesse arquivo.
-import setAuthToken from './utils/setAuthToken'
 import { setCurrentUser, logoutUser } from './components/auth/authActions'
 import { clearCurrentProfile } from './components/profile/profileActions'
 import PrivateRoute from './components/common/PrivateRoute'
+import spsApi, { setAuthTokenV2 } from 'apis/spsServer'
 
 //Components
 import Navbar from './components/layout/Navbar'
@@ -46,7 +46,7 @@ import TesteSelectors from './store/selectorsV2/TesteSelectors'
 //Check for token
 if (localStorage.jwtToken && typeof localStorage.jwtToken !== 'undefined') {
   //Set auth token header auth
-  setAuthToken(localStorage.jwtToken)
+  setAuthTokenV2(spsApi, localStorage.jwtToken)
 
   //decode token
   const decoded = jwt_decode(localStorage.jwtToken)

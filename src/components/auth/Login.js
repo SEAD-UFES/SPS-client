@@ -27,7 +27,6 @@ class Login extends Component {
     if (this.props.authStore.isAuthenticated) {
       this.props.clearErrors()
       if (this.props.location.prevLocation) {
-        console.log('didMount: Estou autenticado e tenho prevLocation', this.props.location.prevLocation)
         this.props.history.push(this.props.location.prevLocation.pathname)
       } else {
         this.props.history.push('/dashboard')
@@ -39,7 +38,6 @@ class Login extends Component {
     if (nextProps.authStore.isAuthenticated) {
       this.props.clearErrors()
       if (this.props.location.prevLocation) {
-        console.log('updateProps: Estou autenticado e tenho prevLocation', this.props.location.prevLocation)
         this.props.history.push(this.props.location.prevLocation.pathname)
       } else {
         this.props.history.push('/dashboard')
