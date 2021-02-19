@@ -32,8 +32,9 @@ const MyPetitionListOnPetitionEvent = props => {
             <div className='titulos'>
               <span>Título</span>
               <span>Data</span>
-              <span>Inscrição</span>
+              <span>Insc.</span>
               <span>Oferta</span>
+              <span>Status</span>
               <span />
             </div>
             {petitions.map(pet => {
@@ -54,6 +55,13 @@ const MyPetitionListOnPetitionEvent = props => {
                     {checkNested(pet, 'inscription', 'vacancy', 'restriction', 'name')
                       ? ` - ${pet.inscription.vacancy.restriction.name}`
                       : '- sem restrição'}
+                  </p>
+                  <p>
+                    {checkNested(pet, 'petitionReply')
+                      ? pet.petitionReply.accepted
+                        ? 'Deferido'
+                        : 'Indeferido'
+                      : 'Pedente'}
                   </p>
                   <p className='text-right'>
                     <Link className='btn-icon' to={`/petition/read/${pet.id}`}>

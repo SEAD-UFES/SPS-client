@@ -5,6 +5,7 @@ import React from 'react'
 import { checkNested } from '../../utils/objectHelpers'
 import DrawFilter from '../profile/DrawFilter'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 const PetitionListOnPetitionEvent = props => {
   const { course_id, petitions } = props
@@ -27,7 +28,7 @@ const PetitionListOnPetitionEvent = props => {
               return (
                 <li className='' key={pet.id}>
                   <h3>{pet.title}</h3>
-                  <p>{pet.createdAt}</p>
+                  <p>{moment(pet.createdAt).format('DD/MM/YYYY HH:mm:ss')}</p>
                   <p>
                     {checkNested(pet, 'inscription', 'person')
                       ? `${pet.inscription.person.name} ${pet.inscription.person.surname}`
