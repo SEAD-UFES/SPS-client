@@ -1,7 +1,10 @@
+/** @format */
+
 import spsApi from 'apis/spsServer'
 
-import setAuthToken from '../../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
+
+import spsApi, { setAuthTokenV2 } from 'apis/spsServer'
 
 import { GET_ERRORS } from '../../actions/types'
 import { SET_CURRENT_USER } from './authActionTypes'
@@ -32,7 +35,7 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem('jwtToken', access_token)
 
       //set token for axios to send requests with (Autorization = token) header
-      setAuthToken(access_token)
+      setAuthTokenV2(spsApi, access_token)
 
       //decode token to get user data && dispatch action to set user
       const decoded = jwt_decode(access_token)
@@ -61,7 +64,7 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem('jwtToken')
 
   //Remove auth header from axios future requets
-  setAuthToken(false)
+  setAuthTokenV2(spsApi, false)
 
   //set current user to {}
   dispatch(setCurrentUser({}))

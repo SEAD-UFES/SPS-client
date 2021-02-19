@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -126,22 +128,22 @@ class Login extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <TextFieldGroup
-          type="text"
-          name="login"
-          label="E-mail"
+          type='text'
+          name='login'
+          label='E-mail'
           value={this.state.login}
           onChange={this.onChange}
           error={errors.login}
         />
         <TextFieldGroup
-          type="password"
-          name="password"
-          label="Senha"
+          type='password'
+          name='password'
+          label='Senha'
           value={this.state.password}
           onChange={this.onChange}
           error={errors.password}
         />
-        <input type="submit" className="btn btn-primary" />
+        <input type='submit' className='btn btn-primary' />
         <Link to={'/recover/request'}>Esqueci minha senha.</Link>
       </form>
     )
@@ -151,9 +153,9 @@ class Login extends Component {
     const { errors } = this.state
 
     return (
-      <div className="login" id="main">
-        <div className="container">
-          <div className="form-container">
+      <div className='login' id='main'>
+        <div className='container'>
+          <div className='form-container'>
             <h1>Entrar</h1>
             {this.renderLogin(errors)}
           </div>
@@ -177,4 +179,7 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(mapStateToProps, { loginUser, getCurrentProfile, clearErrors })(Login)
+export default connect(
+  mapStateToProps,
+  { loginUser, getCurrentProfile, clearErrors }
+)(Login)
