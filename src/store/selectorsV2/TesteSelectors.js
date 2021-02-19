@@ -15,14 +15,15 @@ const TesteSelectors = props => {
   useEffect(() => {
     clearErrors()
     getProcess('3717788b-37b7-4119-8e6d-1cdd9110d5b9', {
-      withCall: true,
-      withCalendar: true,
-      withVacancy: true,
-      withInscriptionEvent: true,
-      withInscription: true,
-      withPerson: true,
-      withPetitionEvent: true,
-      withPetition: true
+      withCall: {
+        withCalendar: true,
+        withVacancy: true,
+        withInscriptionEvent: true,
+        withInscription: true,
+        withPerson: true,
+        withPetitionEvent: true,
+        withPetition: true
+      }
     })
   }, [])
 

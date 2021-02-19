@@ -1,7 +1,5 @@
 /** @format */
 
-import _ from 'lodash'
-
 import spsApi from '../../apis/spsServer'
 
 import { GET_ERRORS, CLEAR_ERRORS } from '../actionTypes'
@@ -36,11 +34,10 @@ export const getProcess = (process_id, options = {}) => dispatch => {
     .then(res => {
       dispatch({ type: GET_PROCESS, payload: res.data })
 
-      const newOptions = _.omit(options, 'callbackOk')
-
       //get call
       if (options.withCall) {
-        dispatch(readListCall({ ...newOptions, selectiveProcess_ids: [res.data.id] }))
+        const opt_call = typeof options.withCall === 'object' ? options.withCall : {}
+        dispatch(readListCall({ ...opt_call, selectiveProcess_ids: [res.data.id] }))
       }
 
       if (options.callbackOk) options.callbackOk(res.data)
