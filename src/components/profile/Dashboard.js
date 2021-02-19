@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -14,12 +16,6 @@ class Dashboard extends Component {
   render() {
     const { profile, loading } = this.props.profileStore
 
-    //const { user } = { user: { name: "Fernando" } };
-    // const { profile, loading } = {
-    //   profile: { handle: "fernando" },
-    //   loading: false
-    // };
-
     let dashboardContent
     if (profile === null || loading) {
       dashboardContent = <Spinner />
@@ -28,7 +24,7 @@ class Dashboard extends Component {
       if (Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
-            <p className="lead text-muted">
+            <p className='lead text-muted'>
               Bem-vindo <Link to={'/profile'}>{profile.Person ? profile.Person.name : profile.login}</Link>
             </p>
           </div>
@@ -37,9 +33,9 @@ class Dashboard extends Component {
         //User login in but dont have a profile
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Bem-vindo</p>
+            <p className='lead text-muted'>Bem-vindo</p>
             <p>Erro estranho...</p>
-            <Link to="/create-profile" className="btn btn-lg btn-primary">
+            <Link to='/create-profile' className='btn btn-lg btn-primary'>
               Create Profile
             </Link>
           </div>
@@ -47,10 +43,10 @@ class Dashboard extends Component {
       }
     }
     return (
-      <div className="dashboard">
-        <div className="container" id="main">
-              <h1>Dashboard</h1>
-              {dashboardContent}
+      <div className='dashboard'>
+        <div className='container' id='main'>
+          <h1>Dashboard</h1>
+          {dashboardContent}
         </div>
       </div>
     )
@@ -68,6 +64,9 @@ const mapStateToProps = state => ({
   profileStore: state.profileStore
 })
 
-export default connect(mapStateToProps, {
-  getCurrentProfile
-})(Dashboard)
+export default connect(
+  mapStateToProps,
+  {
+    getCurrentProfile
+  }
+)(Dashboard)
