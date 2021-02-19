@@ -40,16 +40,14 @@ export const readCall = (id, options = {}) => (dispatch, getState) => {
 
       //get calendars if need
       if (options.withCalendar) {
-        const opt_calendar =
-          typeof options.withCalendar === 'object' ? { ...options.withCalendar, ...newOptions } : { ...newOptions }
+        const opt_calendar = typeof options.withCalendar === 'object' ? options.withCalendar : {}
         dispatch(readListCalendar({ call_ids: [res.data.id], ...opt_calendar }))
       }
 
       //get vacancies if need
       if (options.withVacancy) {
-        const opt_calendar =
-          typeof options.withVacancy === 'object' ? { ...options.withVacancy, ...newOptions } : { ...newOptions }
-        dispatch(readListVacancy({ call_ids: [res.data.id], ...opt_calendar }))
+        const opt_vacancy = typeof options.withVacancy === 'object' ? options.withVacancy : {}
+        dispatch(readListVacancy({ call_ids: [res.data.id], ...opt_vacancy }))
       }
 
       //run callBack
