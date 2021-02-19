@@ -115,7 +115,7 @@ const PetitionRead = props => {
         <h4>Resposta</h4>
         <dl className='row dl-data'>
           <dt className='col-sm-3'>Status:</dt>
-          <dd className='col-sm-9'>{reply ? (reply.status ? 'Deferido' : 'Indeferido') : ''}</dd>
+          <dd className='col-sm-9'>{reply ? (reply.accepted ? 'Deferido' : 'Indeferido') : ''}</dd>
           <dt className='col-sm-3'>Justificativa:</dt>
           <dd className='col-sm-9'>{reply ? reply.justification : ''}</dd>
         </dl>

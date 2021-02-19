@@ -57,7 +57,8 @@ const PetitionEventReadContainer = props => {
         withInscription: {
           withPerson: true,
           withVacancy: { withAssignment: true, withRegion: true, withRestriction: true }
-        }
+        },
+        withPetitionReply: true
       },
       callbackOk: pEvent => {
         //get Calendar
@@ -109,7 +110,8 @@ const mapStateToProps = (state, ownProps) => {
             withRegion: true,
             withRestriction: true
           }
-        }
+        },
+        withPetitionReply: true
       }
     }),
     calendar: selectCalendarByPetitionEventId_noMemo(state, pEvent_id, {}),
