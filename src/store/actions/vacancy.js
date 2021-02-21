@@ -1,5 +1,4 @@
 /** @format */
-import _ from 'lodash'
 
 import { GET_ERRORS } from '../../store/actionTypes'
 import {
@@ -42,18 +41,20 @@ export const readVacancy = (id, options = {}) => (dispatch, getState) => {
     .get(`/v1/vacancies/${id}`)
     .then(res => {
       dispatch({ type: READ_VACANCY, payload: res.data })
-      const newOptions = _.omit(options, 'callbackOk')
 
       if (options.withAssignment) {
-        dispatch(readAssignmentV2(res.data.assignment_id, newOptions))
+        const opt_assig = typeof options.withAssignment === 'object' ? options.withAssignment : {}
+        dispatch(readAssignmentV2(res.data.assignment_id, opt_assig))
       }
 
       if (options.withRegion && res.data.region_id) {
-        dispatch(readRegionV2(res.data.region_id, newOptions))
+        const opt_region = typeof options.withRegion === 'object' ? options.withRegion : {}
+        dispatch(readRegionV2(res.data.region_id, opt_region))
       }
 
       if (options.withRestriction && res.data.restriction_id) {
-        dispatch(readRestrictionV2(res.data.restriction_id, newOptions))
+        const opt_res = typeof options.withRestriction === 'object' ? options.withRestriction : {}
+        dispatch(readRestrictionV2(res.data.restriction_id, opt_res))
       }
 
       //run callBack
@@ -107,26 +108,28 @@ export const readListVacancy = (options = {}) => dispatch => {
     .get(url)
     .then(res => {
       dispatch({ type: READ_LIST_VACANCY, payload: res.data })
-      const newOptions = _.omit(options, 'callbackOk')
 
       if (options.withAssignment) {
+        const opt_assig = typeof options.withAssignment === 'object' ? options.withAssignment : {}
         const assigIds = [...new Set(res.data.map(vac => vac.assignment_id))]
         assigIds.map(id => {
-          return dispatch(readAssignmentV2(id, newOptions))
+          return dispatch(readAssignmentV2(id, opt_assig))
         })
       }
 
       if (options.withRegion) {
+        const opt_region = typeof options.withRegion === 'object' ? options.withRegion : {}
         const regionIds = [...new Set(res.data.map(vac => vac.region_id))].filter(id => id !== null)
         regionIds.map(id => {
-          return dispatch(readRegionV2(id, newOptions))
+          return dispatch(readRegionV2(id, opt_region))
         })
       }
 
       if (options.withRestriction) {
+        const opt_res = typeof options.withRestriction === 'object' ? options.withRestriction : {}
         const restrictionIds = [...new Set(res.data.map(vac => vac.restriction_id))].filter(id => id !== null)
         restrictionIds.map(id => {
-          return dispatch(readRestrictionV2(id, newOptions))
+          return dispatch(readRestrictionV2(id, opt_res))
         })
       }
 

@@ -73,10 +73,7 @@ const InscriptionCreateOnInscriptionEventContainer = props => {
         readInscriptionEvent(ptE.inscriptionEvent_id, {
           withInscription: {
             ownerOnly: true,
-            withVacancy: true,
-            withAssignment: true,
-            withRegion: true,
-            withRestriction: true
+            withVacancy: { withAssignment: true, withRegion: true, withRestriction: true }
           }
         })
       }

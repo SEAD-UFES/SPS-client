@@ -42,11 +42,8 @@ const InscriptionDeleteContainer = props => {
   useEffect(() => {
     clearErrors()
     readInscription(id, {
-      withVacancy: true,
+      withVacancy: { withAssignment: true, withRegion: true, withRestriction: true },
       withPerson: true,
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true,
       callbackOk: ins => {
         readInscriptionEvent(ins.inscriptionEvent_id, {
           callbackOk: iE => {
