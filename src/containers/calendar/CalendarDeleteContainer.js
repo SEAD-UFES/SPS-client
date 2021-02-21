@@ -23,7 +23,7 @@ const CalendarDeleteContainer = props => {
   useEffect(() => {
     clearErrors()
     readCalendar(id, {
-      withCalendar: true,
+      withFatherCalendar: { recursive: true },
       callbackOk: cld => {
         readCall(cld.call_id, {
           callbackOk: call => {

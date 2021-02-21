@@ -38,8 +38,6 @@ export const createCalendar = (data, options = {}) => (dispatch, getState) => {
 
 //Calendar read
 export const readCalendar = (id, options = {}) => (dispatch, getState) => {
-  const newOptions = _.omit(options, 'callbackOk')
-
   dispatch(setCalendarLoading())
   spsApi
     .get(`/v1/calendars/${id}`)
@@ -47,20 +45,22 @@ export const readCalendar = (id, options = {}) => (dispatch, getState) => {
       dispatch({ type: READ_CALENDAR, payload: res.data })
 
       //baixar calendarios associados
-      if (options.withCalendar) {
-        if (res.data.calendar_id !== null) {
-          dispatch(readCalendar(res.data.calendar_id))
-        }
+      if (options.withFatherCalendar) {
+        const opt_father_calendar = typeof options.withFatherCalendar === 'object' ? options.withFatherCalendar : {}
+        if (opt_father_calendar.recursive) opt_father_calendar.withParentCalendar = { ...opt_father_calendar }
+        dispatch(readCalendar(res.data.calendar_id, opt_father_calendar))
       }
 
       //baixar inscriptionEvents associados
       if (options.withInscriptionEvent) {
-        dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id], ...newOptions }))
+        const opt_ie = typeof options.withInscriptionEvent === 'object' ? options.withInscriptionEvent : {}
+        dispatch(readListInscriptionEvent({ calendar_ids: [res.data.id], ...opt_ie }))
       }
 
       //baixar petitionEvents associados
       if (options.withPetitionEvent) {
-        dispatch(readListPetitionEvent({ calendar_ids: [res.data.id], ...newOptions }))
+        const opt_pe = typeof options.withPetitionEvent === 'object' ? options.withPetitionEvent : {}
+        dispatch(readListPetitionEvent({ calendar_ids: [res.data.id], ...opt_pe }))
       }
 
       //run callBack
