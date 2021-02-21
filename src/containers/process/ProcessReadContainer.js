@@ -16,7 +16,7 @@ const ProcessReadContainer = props => {
   useEffect(() => {
     clearErrors()
     getProcess(id, {
-      withCall: { withCalendar: true, withInscriptionEvent: true }
+      withCall: { withCalendar: { withFatherCalendar: { recursive: true }, withInscriptionEvent: true } }
     })
   }, [])
 

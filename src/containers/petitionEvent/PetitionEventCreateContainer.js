@@ -42,8 +42,7 @@ const PetitionEventCreateContainer = props => {
     readCalendar(calendar_id, {
       callbackOk: cld => {
         readCall(cld.call_id, {
-          withCalendar: true,
-          withInscriptionEvent: true,
+          withCalendar: { withFatherCalendar: { recursive: true }, withInscriptionEvent: true },
           callbackOk: call => {
             getProcess(call.selectiveProcess_id)
           }

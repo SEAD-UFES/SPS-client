@@ -54,7 +54,7 @@ const MyPetitionListOnPetitionEvent = props => {
                       : ' - sem região'}
                     {checkNested(pet, 'inscription', 'vacancy', 'restriction', 'name')
                       ? ` - ${pet.inscription.vacancy.restriction.name}`
-                      : '- sem restrição'}
+                      : ''}
                   </p>
                   <p>
                     {checkNested(pet, 'petitionReply')

@@ -19,7 +19,7 @@ const CallReadContainer = props => {
     clearErrors()
     //get call
     readCall(id, {
-      withCalendar: { withInscriptionEvent: true, withPetitionEvent: true },
+      withCalendar: { withFatherCalendar: { recursive: true }, withInscriptionEvent: true, withPetitionEvent: true },
       withVacancy: { withAssignment: true, withRegion: true, withRestriction: true },
       callbackOk: call => {
         //get process
@@ -36,7 +36,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     call: getCallById(state, call_id, {
-      withCalendar: { withInscriptionEvent: true, withPetitionEvent: true },
+      withCalendar: { withFatherCalendar: { recursive: true }, withInscriptionEvent: true, withPetitionEvent: true },
       withVacancy: { withAssignment: true, withRegion: true, withRestriction: true }
     }),
     process: selectProcessByCallId(state, call_id, { withCourse: true, withGraduationType: true }),
