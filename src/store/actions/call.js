@@ -1,7 +1,5 @@
 /** @format */
 
-import _ from 'lodash'
-
 import { GET_ERRORS } from '../actionTypes'
 import { LOADING_CALL, CREATE_CALL, READ_CALL, UPDATE_CALL, DELETE_CALL, READ_LIST_CALL } from '../actionTypes'
 import spsApi from '../../apis/spsServer'
@@ -36,7 +34,6 @@ export const readCall = (id, options = {}) => (dispatch, getState) => {
     .get(`/v1/calls/${id}`)
     .then(res => {
       dispatch({ type: READ_CALL, payload: res.data })
-      const newOptions = _.omit(options, 'callbackOk')
 
       //get calendars if need
       if (options.withCalendar) {
@@ -100,18 +97,18 @@ export const readListCall = (options = {}) => (dispatch, getState) => {
     .then(res => {
       dispatch({ type: READ_LIST_CALL, payload: res.data })
 
-      const newOptions = _.omit(options, 'callbackOk')
-
       //get calendars if need
       if (res.data.length > 0 && options.withCalendar) {
+        const opt_calendar = typeof options.withCalendar === 'object' ? options.withCalendar : {}
         const call_ids = res.data.map(call => call.id)
-        dispatch(readListCalendar({ ...newOptions, call_ids: call_ids }))
+        dispatch(readListCalendar({ ...opt_calendar, call_ids: call_ids }))
       }
 
       //get vacancies if need
       if (res.data.length > 0 && options.withVacancy) {
+        const opt_vacancy = typeof options.withVacancy === 'object' ? options.withVacancy : {}
         const call_ids = res.data.map(call => call.id)
-        dispatch(readListVacancy({ ...newOptions, call_ids: call_ids }))
+        dispatch(readListVacancy({ ...opt_vacancy, call_ids: call_ids }))
       }
 
       //run callBack
