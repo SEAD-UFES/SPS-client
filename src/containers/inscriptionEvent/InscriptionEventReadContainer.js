@@ -28,11 +28,8 @@ const InscriptionEventReadContainer = props => {
     //get InscriptionEvent
     readInscriptionEvent(id, {
       withInscription: true,
-      withVacancy: true,
+      withVacancy: { withAssignment: true, withRegion: true, withRestriction: true },
       withPerson: true,
-      withAssignment: true,
-      withRegion: true,
-      withRestriction: true,
       callbackOk: iEvent => {
         //get Calendar
         readCalendar(iEvent.calendar_id, {

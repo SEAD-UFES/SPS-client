@@ -76,10 +76,7 @@ const PetitionReplyCreateContainer = props => {
           }
         })
         readInscription(pet.inscription_id, {
-          withVacancy: true,
-          withAssignment: true,
-          withRegion: true,
-          withRestriction: true,
+          withVacancy: { withAssignment: true, withRegion: true, withRestriction: true },
           callbackOk: ins => {
             readPerson(ins.person_id, {})
           }
