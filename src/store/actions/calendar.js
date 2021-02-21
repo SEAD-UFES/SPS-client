@@ -1,7 +1,5 @@
 /** @format */
 
-import _ from 'lodash'
-
 import { GET_ERRORS } from '../../store/actionTypes'
 import spsApi from '../../apis/spsServer'
 import {
@@ -111,26 +109,28 @@ export const readListCalendar = (options = {}) => dispatch => {
     .then(res => {
       dispatch({ type: READ_LIST_CALENDAR, payload: res.data })
 
-      const newOptions = _.omit(options, 'callbackOk')
+      //baixar calendarios associados
+      if (options.withFatherCalendar) {
+        const opt_father_calendar = typeof options.withFatherCalendar === 'object' ? options.withFatherCalendar : {}
+        if (opt_father_calendar.recursive) opt_father_calendar.withParentCalendar = { ...opt_father_calendar }
+        const calendar_ids = res.data.map(calendar => calendar.id)
+        calendar_ids.map(id => {
+          return dispatch(readCalendar(id, opt_father_calendar))
+        })
+      }
 
       //baixar inscriptionEvents associados
       if (res.data.length > 0 && options.withInscriptionEvent) {
+        const opt_ie = typeof options.withInscriptionEvent === 'object' ? options.withInscriptionEvent : {}
         const calendar_ids = res.data.map(calendar => calendar.id)
-        const opt_inscriptionEvent =
-          typeof options.withInscriptionEvent === 'object'
-            ? { ...options.withInscriptionEvent, ...newOptions }
-            : { ...newOptions }
-        dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...opt_inscriptionEvent }))
+        dispatch(readListInscriptionEvent({ calendar_ids: calendar_ids, ...opt_ie }))
       }
 
       //baixar petitionEvents associados
       if (res.data.length > 0 && options.withPetitionEvent) {
+        const opt_pe = typeof options.withPetitionEvent === 'object' ? options.withPetitionEvent : {}
         const calendar_ids = res.data.map(calendar => calendar.id)
-        const opt_petitionEvent =
-          typeof options.withPetitionEvent === 'object'
-            ? { ...options.withPetitionEvent, ...newOptions }
-            : { ...newOptions }
-        dispatch(readListPetitionEvent({ calendar_ids: calendar_ids, ...opt_petitionEvent }))
+        dispatch(readListPetitionEvent({ calendar_ids: calendar_ids, ...opt_pe }))
       }
 
       //run callBack
