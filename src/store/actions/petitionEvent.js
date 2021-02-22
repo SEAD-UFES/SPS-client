@@ -43,9 +43,8 @@ export const readPetitionEvent = (id, options = {}) => (dispatch, getState) => {
 
       //load inscriptionEvent associado.
       if (options.withInscriptionEvent) {
-        const opt_InscriptionEvent =
-          typeof options.withInscriptionEvent === 'object' ? options.withInscriptionEvent : {}
-        dispatch(readInscriptionEvent(res.data.inscriptionEvent_id, { ...opt_InscriptionEvent }))
+        const opt_IE = typeof options.withInscriptionEvent === 'object' ? options.withInscriptionEvent : {}
+        dispatch(readInscriptionEvent(res.data.inscriptionEvent_id, { ...opt_IE }))
       }
 
       //load petitions associadas.
@@ -94,7 +93,6 @@ export const readListPetitionEvent = (options = {}) => dispatch => {
 
       //get petitions if needed
       if (options.withPetition) {
-        console.log('vou pegar petitions (readListPetition)')
         const opt_petition = typeof options.withPetition === 'object' ? options.withPetition : {}
         const petitionEventIds = res.data.map(pe => pe.id)
         dispatch(readListPetition({ petitionEvent_ids: [petitionEventIds], ...opt_petition }))
