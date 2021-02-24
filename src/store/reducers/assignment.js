@@ -1,7 +1,13 @@
 /** @format */
 
 import _ from 'lodash'
-import { LOADING_ASSIGNMENTV2, READ_ASSIGNMENTV2, READ_LIST_ASSIGNMENTV2 } from '../actionTypes'
+import {
+  LOADING_ASSIGNMENTV2,
+  CREATE_ASSIGNMENTV2,
+  READ_ASSIGNMENTV2,
+  UPDATE_ASSIGNMENTV2,
+  READ_LIST_ASSIGNMENTV2
+} from '../actionTypes'
 
 const initialState = {
   loading: false,
@@ -35,6 +41,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case LOADING_ASSIGNMENTV2:
       return { ...state, loading: true }
+    case CREATE_ASSIGNMENTV2:
+    case UPDATE_ASSIGNMENTV2:
     case READ_ASSIGNMENTV2:
       newState = putItem(state, action.payload)
       return {
