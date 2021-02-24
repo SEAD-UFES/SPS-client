@@ -94,7 +94,7 @@ export const readListPetition = (options = {}) => dispatch => {
       if (options.withPetitionReply) {
         const opt_petReply = typeof options.withPetitionReply === 'object' ? options.withPetitionReply : {}
         const petitionIds = res.data.map(pet => pet.id)
-        dispatch(readListPetitionReply({ petition_ids: petitionIds, ...opt_petReply }))
+        if (petitionIds.length > 0) dispatch(readListPetitionReply({ petition_ids: petitionIds, ...opt_petReply }))
       }
 
       //run callBack

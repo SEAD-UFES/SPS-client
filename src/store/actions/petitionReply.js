@@ -49,7 +49,7 @@ export const readListPetitionReply = (options = {}) => dispatch => {
   let url = `/v1/petitionreplies?`
 
   //add petitionEvent id options
-  if (options.petition_ids) {
+  if (options.petition_ids && options.petition_ids.length > 0) {
     const petitionIdsString = options.petition_ids
       ? convertArrayToQueryString('petition_ids', options.petition_ids)
       : ''
