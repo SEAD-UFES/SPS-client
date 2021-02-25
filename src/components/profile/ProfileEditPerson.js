@@ -13,6 +13,7 @@ import { validateProfileEditPersonForm } from './validateProfileEditPersonForm'
 import { getCurrentProfile, getPeopleOptions, updateProfilePerson } from './profileActions'
 import { clearErrors } from '../../actions/errorActions'
 import { cpfEventMask } from '../../utils/eventMasks'
+import { validateMotherName } from '../../validation/profile'
 
 class ProfileEditPerson extends Component {
   constructor(props) {
@@ -28,6 +29,8 @@ class ProfileEditPerson extends Component {
       ethnicity: '',
       gender: '',
       civilStatus: '',
+      fatherName: '',
+      motherName: '',
       errors: {}
     }
 
@@ -73,6 +76,8 @@ class ProfileEditPerson extends Component {
         profile.Person.ethnicity = !isEmpty(profile.Person.ethnicity) ? profile.Person.ethnicity : ''
         profile.Person.gender = !isEmpty(profile.Person.gender) ? profile.Person.gender : ''
         profile.Person.civilStatus = !isEmpty(profile.Person.civilStatus) ? profile.Person.civilStatus : ''
+        profile.Person.fatherName = !isEmpty(profile.Person.fatherName) ? profile.Person.fatherName : ''
+        profile.Person.motherName = !isEmpty(profile.Person.motherName) ? profile.Person.motherName : ''
 
         //Atualizando estado do componente
         this.setState({
@@ -85,7 +90,9 @@ class ProfileEditPerson extends Component {
           rgDispatcher: profile.Person.rgDispatcher,
           ethnicity: profile.Person.ethnicity,
           gender: profile.Person.gender,
-          civilStatus: profile.Person.civilStatus
+          civilStatus: profile.Person.civilStatus,
+          fatherName: profile.Person.fatherName,
+          motherName: profile.Person.motherName
         })
       }
     }
@@ -108,6 +115,10 @@ class ProfileEditPerson extends Component {
       case 'cpf':
         cpfEventMask(e)
         valResult = validateCpfRequired(e.target.value)
+        break
+      case 'motherName':
+        const motherNameError = validateMotherName(e.target.value)
+        valResult = { isValid: motherNameError ? false : true, error: motherNameError }
         break
       default:
         break
@@ -142,7 +153,9 @@ class ProfileEditPerson extends Component {
       rgDispatcher: this.state.rgDispatcher,
       ethnicity: this.state.ethnicity ? this.state.ethnicity : null,
       gender: this.state.gender ? this.state.gender : null,
-      civilStatus: this.state.civilStatus ? this.state.civilStatus : null
+      civilStatus: this.state.civilStatus ? this.state.civilStatus : null,
+      fatherName: this.state.fatherName ? this.state.fatherName : null,
+      motherName: this.state.motherName ? this.state.motherName : null
     }
 
     const valProfileEditPerson = validateProfileEditPersonForm(personData)
@@ -150,7 +163,7 @@ class ProfileEditPerson extends Component {
     if (!valProfileEditPerson.isValid) {
       this.setState({ errors: valProfileEditPerson.errors })
     } else {
-      let updatepersonData = {
+      let updatePersonData = {
         Person: {
           name: this.state.name,
           surname: this.state.surname,
@@ -161,13 +174,13 @@ class ProfileEditPerson extends Component {
           rgDispatcher: this.state.rgDispatcher,
           ethnicity: this.state.ethnicity ? this.state.ethnicity : null,
           gender: this.state.gender ? this.state.gender : null,
-          civilStatus: this.state.civilStatus ? this.state.civilStatus : null
+          civilStatus: this.state.civilStatus ? this.state.civilStatus : null,
+          fatherName: this.state.fatherName ? this.state.fatherName : null,
+          motherName: this.state.motherName ? this.state.motherName : null
         }
       }
 
-      console.log(updatepersonData)
-
-      this.props.updateProfilePerson(profile.id, updatepersonData, this.props.history)
+      this.props.updateProfilePerson(profile.id, updatePersonData, this.props.history)
     }
   }
 
@@ -277,6 +290,26 @@ class ProfileEditPerson extends Component {
               options={civilStateOptions}
               onChange={this.onChange}
               error={errors.civilStatus}
+            />
+
+            <TextFieldGroup
+              label='Nome do pai:'
+              placeholder='Nome do pai'
+              type='text'
+              name='fatherName'
+              value={this.state.fatherName}
+              onChange={this.onChange}
+              error={errors.fatherName}
+            />
+
+            <TextFieldGroup
+              label='Nome da mãe:'
+              placeholder='Nome do mãe'
+              type='text'
+              name='motherName'
+              value={this.state.motherName}
+              onChange={this.onChange}
+              error={errors.motherName}
             />
 
             <input value='Enviar' type='submit' className='btn btn-primary btn-block mt-4' />

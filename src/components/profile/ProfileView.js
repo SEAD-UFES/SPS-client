@@ -188,6 +188,24 @@ class Profile extends Component {
                   {profile.Person.civilStatus ? profile.Person.civilStatus : <span className='text-muted'>...</span>}
                 </td>
               </tr>
+
+              <tr>
+                <td>
+                  <strong>Nome do Pai:</strong>
+                </td>
+                <td>
+                  {profile.Person.fatherName ? profile.Person.fatherName : <span className='text-muted'>...</span>}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Nome do Mãe:</strong>
+                </td>
+                <td>
+                  {profile.Person.motherName ? profile.Person.motherName : <span className='text-muted'>...</span>}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
