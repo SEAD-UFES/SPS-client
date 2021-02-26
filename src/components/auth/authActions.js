@@ -14,12 +14,7 @@ export const registerUser = (userData, history) => dispatch => {
   spsApi
     .post('/v1/register', userData)
     .then(res => history.push('/login'))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    )
+    .catch(err => handleErrors(err, dispatch))
 }
 
 //Login
@@ -69,4 +64,22 @@ export const logoutUser = () => dispatch => {
 
   //clear profile data
   clearCurrentProfile()
+}
+
+//Function to handle errors
+const handleErrors = (err, dispatch) => {
+  if (err.response) {
+    let errors = {}
+    errors.data = err.response.data
+    errors.serverError = true
+    dispatch({
+      type: GET_ERRORS,
+      payload: errors
+    })
+  } else {
+    dispatch({
+      type: GET_ERRORS,
+      payload: { anotherError: true, message: err.message }
+    })
+  }
 }
