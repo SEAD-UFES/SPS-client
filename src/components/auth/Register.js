@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 
 import TextFieldGroup from '../common/TextFieldGroup'
 import { cpfEventMask } from '../../utils/eventMasks'
+import { checkNested } from '../../utils/objectHelpers'
 
 import {
   isEmpty,
@@ -48,7 +49,10 @@ class Register extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (!isEmpty(nextProps.errorStore)) {
-      let errors = { ...nextProps.errorStore.devMessage.errors }
+      const serverErrors = checkNested(nextProps, 'errorStore', 'data', 'devMessage', 'errors')
+        ? nextProps.errorStore.data.devMessage.errors
+        : {}
+      let errors = { ...serverErrors }
       if (errors.login) {
         errors.email = errors.login
         delete errors.login
