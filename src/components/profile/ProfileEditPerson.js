@@ -13,7 +13,7 @@ import { validateProfileEditPersonForm } from './validateProfileEditPersonForm'
 import { getCurrentProfile, getPeopleOptions, updateProfilePerson } from './profileActions'
 import { clearErrors } from '../../actions/errorActions'
 import { cpfEventMask } from '../../utils/eventMasks'
-import { validateMotherName } from '../../validation/profile'
+import { validateMotherName } from '../../validation/person'
 
 class ProfileEditPerson extends Component {
   constructor(props) {

@@ -18,6 +18,7 @@ import {
   validatePasswordCheck
 } from '../../validation'
 import { validateRegisterForm } from './validateRegisterForm'
+import { validateMotherName } from '../../validation/person'
 
 import { registerUser } from './authActions'
 
@@ -28,6 +29,7 @@ class Register extends Component {
       name: '',
       surname: '',
       cpf: '',
+      motherName: '',
       email: '',
       password: '',
       password2: '',
@@ -45,11 +47,12 @@ class Register extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!isEmpty(nextProps.errors)) {
-      let errors = nextProps.errors.devMessage
-      errors.email = nextProps.errors.devMessage.login
-      delete errors.login
-
+    if (!isEmpty(nextProps.errorStore)) {
+      let errors = { ...nextProps.errorStore.devMessage.errors }
+      if (errors.login) {
+        errors.email = errors.login
+        delete errors.login
+      }
       this.setState({ errors: errors })
     }
   }
@@ -68,6 +71,10 @@ class Register extends Component {
       case 'cpf':
         cpfEventMask(e)
         valResult = validateCpfRequired(e.target.value)
+        break
+      case 'motherName':
+        const motherNameError = validateMotherName(e.target.value)
+        valResult = { isValid: motherNameError ? false : true, error: motherNameError }
         break
       case 'email':
         valResult = validateEmailRequired(e.target.value)
@@ -105,9 +112,10 @@ class Register extends Component {
 
     //Validação final do campos
     const registerData = {
-      cpf: this.state.cpf,
       name: this.state.name,
       surname: this.state.surname,
+      cpf: this.state.cpf,
+      motherName: this.state.motherName,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2
@@ -119,13 +127,16 @@ class Register extends Component {
       //Tentativa de criar o usário no servidor
       if (isEmpty(this.state.errors)) {
         const newUserData = {
-          cpf: this.state.cpf,
-          name: this.state.name,
-          surname: this.state.surname,
           User: {
             login: this.state.email,
             password: this.state.password,
             userType: 'sead'
+          },
+          Person: {
+            cpf: this.state.cpf,
+            name: this.state.name,
+            surname: this.state.surname,
+            motherName: this.state.motherName
           }
         }
         this.props.registerUser(newUserData, this.props.history)
@@ -154,6 +165,7 @@ class Register extends Component {
             error={errors.surname}
           />
         </div>
+
         <TextFieldGroup
           type='text'
           name='cpf'
@@ -163,6 +175,17 @@ class Register extends Component {
           onChange={this.onChange}
           error={errors.cpf}
         />
+
+        <TextFieldGroup
+          type='text'
+          name='motherName'
+          label='Nome da mãe'
+          placeholder=''
+          value={this.state.motherName}
+          onChange={this.onChange}
+          error={errors.motherName}
+        />
+
         <TextFieldGroup
           type='text'
           name='email'
@@ -223,7 +246,7 @@ Register.proptypes = {
 //Put redux store data on props
 const mapStateToProps = state => ({
   authStore: state.authStore, //last auth because the auth on root reducer?
-  errors: state.errorStore
+  errorStore: state.errorStore
 })
 
 //Connect actions to redux with connect -> actions -> Reducer -> Store
