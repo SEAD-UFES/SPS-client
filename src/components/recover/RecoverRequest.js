@@ -1,22 +1,34 @@
+/** @format */
+
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import TextFieldGroup from '../common/TextFieldGroup'
 import { validateEmailRequired } from 'validation/validateEmail'
 import { requireRecover } from './recoverActions'
+import { clearErrors } from '../../store/actions/error'
 
 function RecoverRequest(props) {
+  const { requireRecover, clearErrors } = props
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState({})
   const [requested, setRequested] = useState({ sended: false, message: '' })
 
-  //get errors from reducer
+  //clear errors on mount
   useEffect(() => {
-    if (props.errorStore && props.errorStore.data) {
-      const newErrors = props.errorStore.data.devMessage
-      setErrors(newErrors)
-    }
-  }, [props.errorStore])
+    clearErrors()
+  }, [])
+
+  //get errors from reducer
+  useEffect(
+    () => {
+      if (props.errorStore && props.errorStore.data) {
+        const newErrors = props.errorStore.data.devMessage
+        setErrors(newErrors)
+      }
+    },
+    [props.errorStore]
+  )
 
   //onChange function
   const onChange = event => {
@@ -45,7 +57,7 @@ function RecoverRequest(props) {
     if (!valEmail.isValid) {
       setErrors({ email: valEmail.error })
     } else {
-      props.requireRecover(emailData, response => {
+      requireRecover(emailData, response => {
         setRequested(response)
       })
     }
@@ -55,17 +67,17 @@ function RecoverRequest(props) {
     return (
       <React.Fragment>
         <h1>Recuperação de senha</h1>
-        <div className="form-container">
+        <div className='form-container'>
           <form onSubmit={onSubmit}>
             <TextFieldGroup
-              type="text"
-              name="email"
-              label="E-mail"
+              type='text'
+              name='email'
+              label='E-mail'
               value={email}
               onChange={onChange}
               error={errors.email || errors.login || errors.message}
             />
-            <input type="submit" className="btn btn-primary" />
+            <input type='submit' className='btn btn-primary' />
           </form>
         </div>
       </React.Fragment>
@@ -83,9 +95,9 @@ function RecoverRequest(props) {
   }
 
   return (
-    <div className="recover-request">
-      <div className="container">
-        <div id="main">{requested.sended ? renderSuccess(requested.message) : renderRequest()}</div>
+    <div className='recover-request'>
+      <div className='container'>
+        <div id='main'>{requested.sended ? renderSuccess(requested.message) : renderRequest()}</div>
       </div>
     </div>
   )
@@ -97,6 +109,9 @@ const mapStateToProps = state => ({
   errorStore: state.errorStore
 })
 
-const mapFunctionsToProps = { requireRecover }
+const mapFunctionsToProps = { clearErrors, requireRecover }
 
-export default connect(mapStateToProps, mapFunctionsToProps)(RecoverRequest)
+export default connect(
+  mapStateToProps,
+  mapFunctionsToProps
+)(RecoverRequest)
