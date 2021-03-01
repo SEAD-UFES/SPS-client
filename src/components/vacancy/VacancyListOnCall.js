@@ -21,7 +21,10 @@ const VacancyListOnCall = props => {
     return (
       <div className='btn-right'>
         <DrawFilter permission='vacancy_create' course_id={course_id}>
-          <Link className='btn btn-terciary' to={`/call/read/${call ? call.id : null}/vacancy/create`}>
+          <Link
+            className='btn btn-terciary'
+            title='Nova oferta de vaga'
+            to={`/call/read/${call ? call.id : null}/vacancy/create`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
@@ -53,12 +56,12 @@ const VacancyListOnCall = props => {
                   <p>{vacancy.reserve ? 'C.R.' : 'Não'}</p>
                   <p className='text-right'>
                     <DrawFilter permission='vacancy_update' course_id={course_id}>
-                      <Link className='btn-icon' to={`/vacancy/update/${vacancy.id}`}>
+                      <Link className='btn-icon' title='Atualizar oferta de vaga' to={`/vacancy/update/${vacancy.id}`}>
                         <i className='fas fa-pencil-alt' />
                       </Link>
                     </DrawFilter>{' '}
                     <DrawFilter permission='vacancy_delete' course_id={course_id}>
-                      <Link className='btn-icon' to={`/vacancy/delete/${vacancy.id}`}>
+                      <Link className='btn-icon' title='Excluir oferta de vaga' to={`/vacancy/delete/${vacancy.id}`}>
                         <i className='fas fa-trash' />
                       </Link>
                     </DrawFilter>

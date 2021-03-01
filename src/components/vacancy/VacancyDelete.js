@@ -81,7 +81,13 @@ const VacancyDelete = props => {
     return (
       <div className='row'>
         <div className='col'>
-          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={onSubmit} />
+          <input
+            type='button'
+            value='Excluir'
+            className='btn btn-primary btn-block mt-4'
+            title='Excluir oferta de vaga'
+            onClick={onSubmit}
+          />
         </div>
         <div className='col'>
           <input

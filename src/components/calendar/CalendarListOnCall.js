@@ -13,7 +13,10 @@ const CalendarListOnCall = props => {
     return (
       <div className='btn-right'>
         <DrawFilter permission='calendar_create' course_id={course_id}>
-          <Link className='btn btn-terciary' to={`/calendar/create?call_id=${call ? call.id : null}`}>
+          <Link
+            className='btn btn-terciary'
+            title='Novo evento'
+            to={`/calendar/create?call_id=${call ? call.id : null}`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
@@ -50,32 +53,38 @@ const CalendarListOnCall = props => {
                   <p className='text-right'>
                     {/* obs */}
                     {inscriptionEvent ? (
-                      <Link className='btn-icon laranja' to={`/inscription-event/read/${inscriptionEvent.id}`}>
-                        Inscrições
+                      <Link
+                        className='btn-icon laranja'
+                        title='Acessar inscrições'
+                        to={`/inscription-event/read/${inscriptionEvent.id}`}>
+                        <i className='fas fa-info-circle' />
                       </Link>
                     ) : (
                       ''
                     )}
                     {petitionEvent ? (
-                      <Link className='btn-icon laranja' to={`/petition-event/read/${petitionEvent.id}`}>
-                        Recursos
+                      <Link
+                        className='btn-icon laranja'
+                        title='Acessar recursos'
+                        to={`/petition-event/read/${petitionEvent.id}`}>
+                        <i className='fas fa-info-circle' />
                       </Link>
                     ) : (
                       ''
                     )}
                     {/* obs */}
                     <DrawFilter permission='calendar_read' course_id={course_id}>
-                      <Link className='btn-icon laranja' to={`/calendar/read/${calendar.id}`}>
+                      <Link className='btn-icon laranja' title='Acessar evento' to={`/calendar/read/${calendar.id}`}>
                         <i className='fas fa-eye' />
                       </Link>
                     </DrawFilter>{' '}
                     <DrawFilter permission='calendar_update' course_id={course_id}>
-                      <Link className='btn-icon' to={`/calendar/update/${calendar.id}`}>
+                      <Link className='btn-icon' title='Atualizar evento' to={`/calendar/update/${calendar.id}`}>
                         <i className='fas fa-pencil-alt' />
                       </Link>
                     </DrawFilter>{' '}
                     <DrawFilter permission='calendar_delete' course_id={course_id}>
-                      <Link className='btn-icon' to={`/calendar/delete/${calendar.id}`}>
+                      <Link className='btn-icon' title='Excluir evento' to={`/calendar/delete/${calendar.id}`}>
                         <i className='fas fa-trash' />
                       </Link>
                     </DrawFilter>
