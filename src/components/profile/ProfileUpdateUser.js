@@ -168,77 +168,87 @@ class ProfileEditUser extends Component {
     }
   }
 
-  renderEditUser(errors) {
+  renderUpdateUserForm(errors) {
     return (
-      <div className='card mb-4'>
-        <div className='card-header'>
-          <h4 className='mb-0'>Atualizar dados de usuário</h4>
-        </div>
-        <div className='card-body'>
-          <form onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              label='Email: *'
-              placeholder='* Endereço de email'
-              type='email'
-              name='email'
-              value={this.state.email}
-              onChange={this.onChange}
-              error={errors.email}
-              info='Email principal para comunicação e acesso a plataforma'
-            />
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          label='Email: *'
+          placeholder='* Endereço de email'
+          type='email'
+          name='email'
+          value={this.state.email}
+          onChange={this.onChange}
+          error={errors.email}
+          info='Email principal para comunicação e acesso a plataforma'
+        />
 
-            <CheckBoxFieldGroup
-              id='changePassword'
-              name='changePassword'
-              text='Atualizar senha:'
-              value='Altere a senha do usuário'
-              checked={this.state.changePassword}
-              error={errors.changePassword}
-              onChange={this.onCheck}
-            />
+        <CheckBoxFieldGroup
+          id='changePassword'
+          name='changePassword'
+          text='Atualizar senha:'
+          value='Altere a senha do usuário'
+          checked={this.state.changePassword}
+          error={errors.changePassword}
+          onChange={this.onCheck}
+        />
 
-            <TextFieldGroup
-              label='Senha: *'
-              placeholder='* Senha'
-              type='password'
-              name='password'
-              value={this.state.password}
-              onChange={this.onChange}
-              error={errors.password}
-              disabled={!this.state.changePassword}
-            />
+        <TextFieldGroup
+          label='Senha: *'
+          placeholder='* Senha'
+          type='password'
+          name='password'
+          value={this.state.password}
+          onChange={this.onChange}
+          error={errors.password}
+          disabled={!this.state.changePassword}
+        />
 
-            <TextFieldGroup
-              label='Repita a senha: *'
-              placeholder='* Repita a senha'
-              type='password'
-              name='password2'
-              value={this.state.password2}
-              onChange={this.onChange}
-              error={errors.password2}
-              disabled={!this.state.changePassword}
-            />
+        <TextFieldGroup
+          label='Repita a senha: *'
+          placeholder='* Repita a senha'
+          type='password'
+          name='password2'
+          value={this.state.password2}
+          onChange={this.onChange}
+          error={errors.password2}
+          disabled={!this.state.changePassword}
+        />
 
-            <input value='Atualizar' type='submit' className='btn btn-primary btn-block mt-4' />
-          </form>
-        </div>
-      </div>
+        <input value='Atualizar' title='Atualizar dados do usuário' type='submit' className='btn btn-primary' />
+      </form>
     )
   }
 
   render() {
+    const renderBreadcrumb = () => {
+      return (
+        <>
+          <div className='breadcrumb'>
+            <span>Você está em:</span>
+            <Link to='/dashboard' className='breadcrumb-link'>
+              Área pessoal
+            </Link>
+
+            <i className='fas fa-greater-than' />
+            <Link to={`/profile`} className='breadcrumb-link'>
+              Perfil
+            </Link>
+
+            <i className='fas fa-greater-than' />
+            <span>Atualizar dados de usuário</span>
+          </div>
+        </>
+      )
+    }
+
     const { errors } = this.state
     return (
       <div className='profile-update-user'>
         <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-              <Link to='/profile' className='btn btn-light'>
-                Voltar
-              </Link>
-              <h1 className='display-4'>Perfil</h1>
-              {this.renderEditUser(errors)}
-            </div>
+          {renderBreadcrumb()}
+          <div className='form-container' id='main'>
+            <h1>Atualizar dados de usuário</h1>
+            {this.renderUpdateUserForm(errors)}
           </div>
         </div>
       </div>
