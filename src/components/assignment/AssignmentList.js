@@ -114,7 +114,12 @@ class AssignmentList extends Component {
     const addItemTool = (
       <div>
         <div className='btn-right'>
-          <button type='button' className='btn btn-primary' data-toggle='modal' data-target='#addModal'>
+          <button
+            type='button'
+            title='Novo cargo'
+            className='btn btn-primary'
+            data-toggle='modal'
+            data-target='#addModal'>
             <i className='fas fa-plus-circle' /> Adicionar
           </button>
         </div>
@@ -154,6 +159,7 @@ class AssignmentList extends Component {
                     <p className='text-right'>
                       <button
                         type='button'
+                        title='Atualizar cargo'
                         className='btn btn-icon'
                         data-toggle='modal'
                         data-target={`#editModal-${assignment.id}`}>
@@ -161,6 +167,7 @@ class AssignmentList extends Component {
                       </button>
                       <button
                         type='button'
+                        title='Excluir cargo'
                         className='btn btn-icon'
                         data-toggle='modal'
                         data-target={`#deleteModal-${assignment.id}`}>

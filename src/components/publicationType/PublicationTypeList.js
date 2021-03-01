@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -101,9 +103,9 @@ class ProcessPublicationTypesList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -115,15 +117,20 @@ class ProcessPublicationTypesList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="btn-right">
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            <i className="fas fa-plus-circle" /> Adicionar
+        <div className='btn-right'>
+          <button
+            type='button'
+            title='Novo tipo de publicação'
+            className='btn btn-primary'
+            data-toggle='modal'
+            data-target='#addModal'>
+            <i className='fas fa-plus-circle' /> Adicionar
           </button>
         </div>
 
         <PublicationTypeModalForm
-          mode="add"
-          targetName="addModal"
+          mode='add'
+          targetName='addModal'
           addFunction={this.props.createPublicationType}
           reloadFunction={this.props.getPublicationTypes}
         />
@@ -134,75 +141,77 @@ class ProcessPublicationTypesList extends Component {
     const publicationTypesTable = (
       <div>
         {publicationTypeList ? (
-          <ul className="table-list">
-            <div className="titulos">
-                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
-                <span></span>
+          <ul className='table-list'>
+            <div className='titulos'>
+              <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+              <span />
             </div>
-              {publicationTypeList.length > 0 ? (
-                publicationTypeList.map(publicationType => {
-                  return (
-                    <li key={publicationType.id}>
-                      <p>{publicationType.name}</p>
-                      <p className="text-right">
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#editModal-${publicationType.id}`}>
-                          <i className="fas fa-pencil-alt" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${publicationType.id}`}>
-                          <i className="fas fa-trash" />
-                        </button>
-                      </p>
-                      <PublicationTypeModalForm
-                          targetName={`editModal-${publicationType.id}`}
-                          mode="edit"
-                          item={publicationType}
-                          editFunction={this.props.updatePublicationType}
-                          reloadFunction={this.props.getPublicationTypes}
-                        />{' '}
-                        <PublicationTypeModalDelete
-                          targetName={`deleteModal-${publicationType.id}`}
-                          item={publicationType}
-                          deleteFunction={this.props.deletePublicationType}
-                          reloadFunction={this.props.getPublicationTypes}
-                        />
-                    </li>
-                  )
-                })
-              ) : (
-                <li>Sem itens para exibir</li>
-              )}
+            {publicationTypeList.length > 0 ? (
+              publicationTypeList.map(publicationType => {
+                return (
+                  <li key={publicationType.id}>
+                    <p>{publicationType.name}</p>
+                    <p className='text-right'>
+                      <button
+                        type='button'
+                        title='Atualizar tipo de publicação'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#editModal-${publicationType.id}`}>
+                        <i className='fas fa-pencil-alt' />
+                      </button>
+                      <button
+                        type='button'
+                        title='Excluir tipo de publicação'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#deleteModal-${publicationType.id}`}>
+                        <i className='fas fa-trash' />
+                      </button>
+                    </p>
+                    <PublicationTypeModalForm
+                      targetName={`editModal-${publicationType.id}`}
+                      mode='edit'
+                      item={publicationType}
+                      editFunction={this.props.updatePublicationType}
+                      reloadFunction={this.props.getPublicationTypes}
+                    />{' '}
+                    <PublicationTypeModalDelete
+                      targetName={`deleteModal-${publicationType.id}`}
+                      item={publicationType}
+                      deleteFunction={this.props.deletePublicationType}
+                      reloadFunction={this.props.getPublicationTypes}
+                    />
+                  </li>
+                )
+              })
+            ) : (
+              <li>Sem itens para exibir</li>
+            )}
           </ul>
         ) : (
-            <p>Sem itens para exibir</p>
+          <p>Sem itens para exibir</p>
         )}
       </div>
     )
 
     return (
-      <div className="publicationTypes">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='publicationTypes'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Tipos de publicação</span>
           </div>
 
-          <div id="main">
-              <h1>Tipos de publicação</h1>
-              {addItemTool}
-              {/* <p className="lead text-muted">Tipos de publicação efetuadas dentro do sistema</p> */}
-              {publicationTypesTable}
+          <div id='main'>
+            <h1>Tipos de publicação</h1>
+            {addItemTool}
+            {/* <p className="lead text-muted">Tipos de publicação efetuadas dentro do sistema</p> */}
+            {publicationTypesTable}
           </div>
         </div>
       </div>
@@ -221,10 +230,13 @@ const mapStateToProps = state => ({
   publicationTypeStore: state.publicationTypeStore
 })
 
-export default connect(mapStateToProps, {
-  getPublicationTypes,
-  clearErrors,
-  createPublicationType,
-  deletePublicationType,
-  updatePublicationType
-})(ProcessPublicationTypesList)
+export default connect(
+  mapStateToProps,
+  {
+    getPublicationTypes,
+    clearErrors,
+    createPublicationType,
+    deletePublicationType,
+    updatePublicationType
+  }
+)(ProcessPublicationTypesList)

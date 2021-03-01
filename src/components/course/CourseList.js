@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -98,9 +100,9 @@ class CourseList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -114,15 +116,20 @@ class CourseList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="btn-right">
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            <i className="fas fa-plus-circle" /> Adicionar
+        <div className='btn-right'>
+          <button
+            type='button'
+            tile='Novo curso'
+            className='btn btn-primary'
+            data-toggle='modal'
+            data-target='#addModal'>
+            <i className='fas fa-plus-circle' /> Adicionar
           </button>
         </div>
 
         <CourseModalForm
-          mode="add"
-          targetName="addModal"
+          mode='add'
+          targetName='addModal'
           addFunction={this.props.createCourse}
           reloadFunction={this.props.getCourses}
           graduationTypes={graduationTypes}
@@ -134,86 +141,83 @@ class CourseList extends Component {
     const coursesTable = (
       <div>
         {coursesList ? (
-          <ul className="table-list">
-            <div className="titulos">
+          <ul className='table-list'>
+            <div className='titulos'>
               <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
               {/* <span onClick={() => this.sortBy('level')}>Nível {this.orderIcon('level')}</span> */}
               <span>Nível</span>
               {/* <span onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</span> */}
               <span>Descrição</span>
-              <span></span>
+              <span />
             </div>
 
-              {coursesList.length > 0 ? (
-                coursesList.map(course => {
-                  return (
-                    <li key={course.id}>
-                      <h3>{course.name}</h3>
-                      <p>{course.GraduationType.name}</p>
-                      <p>
-                        {course.description ? course.description : <span className="text-muted">Sem descrição.</span>}
-                      </p>
-                      <p className="text-right">
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#editModal-${course.id}`}>
-                          <i className="fas fa-pencil-alt" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${course.id}`}>
-                          <i className="fas fa-trash" />
-                        </button>
-                      </p>
-                      <CourseModalForm
-                        targetName={`editModal-${course.id}`}
-                        mode="edit"
-                        item={course}
-                        editFunction={this.props.updateCourse}
-                        reloadFunction={this.props.getCourses}
-                        graduationTypes={graduationTypes}
-                      />
-                      <CourseModalDelete
-                        targetName={`deleteModal-${course.id}`}
-                        item={course}
-                        deleteFunction={this.props.deleteCourse}
-                        reloadFunction={this.props.getCourses}
-                      />
-                    </li>
-                    
-                  )
-                })
-              ) : (
-                <li>
-                  Sem itens para exibir
-                </li>
-              )}
+            {coursesList.length > 0 ? (
+              coursesList.map(course => {
+                return (
+                  <li key={course.id}>
+                    <h3>{course.name}</h3>
+                    <p>{course.GraduationType.name}</p>
+                    <p>
+                      {course.description ? course.description : <span className='text-muted'>Sem descrição.</span>}
+                    </p>
+                    <p className='text-right'>
+                      <button
+                        type='button'
+                        title='Atualizar curso'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#editModal-${course.id}`}>
+                        <i className='fas fa-pencil-alt' />
+                      </button>
+                      <button
+                        type='button'
+                        title='Excluir curso'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#deleteModal-${course.id}`}>
+                        <i className='fas fa-trash' />
+                      </button>
+                    </p>
+                    <CourseModalForm
+                      targetName={`editModal-${course.id}`}
+                      mode='edit'
+                      item={course}
+                      editFunction={this.props.updateCourse}
+                      reloadFunction={this.props.getCourses}
+                      graduationTypes={graduationTypes}
+                    />
+                    <CourseModalDelete
+                      targetName={`deleteModal-${course.id}`}
+                      item={course}
+                      deleteFunction={this.props.deleteCourse}
+                      reloadFunction={this.props.getCourses}
+                    />
+                  </li>
+                )
+              })
+            ) : (
+              <li>Sem itens para exibir</li>
+            )}
           </ul>
         ) : (
-          <p>
-            Sem itens para exibir
-          </p>
+          <p>Sem itens para exibir</p>
         )}
       </div>
     )
 
     return (
-      <div className="assignments">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='assignments'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Cursos</span>
           </div>
 
-          <div id="main">
+          <div id='main'>
             <h1>Cursos</h1>
             {addItemTool}
             {/* <p className="lead text-muted">Cursos que fazem uso do sistema de processo seletivo</p> */}
@@ -238,11 +242,14 @@ const mapStateToProps = state => ({
   courseStore: state.courseStore
 })
 
-export default connect(mapStateToProps, {
-  clearErrors,
-  getCourses,
-  createCourse,
-  updateCourse,
-  deleteCourse,
-  getGraduationTypes
-})(CourseList)
+export default connect(
+  mapStateToProps,
+  {
+    clearErrors,
+    getCourses,
+    createCourse,
+    updateCourse,
+    deleteCourse,
+    getGraduationTypes
+  }
+)(CourseList)

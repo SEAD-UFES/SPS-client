@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -96,9 +98,9 @@ class RegionList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -110,15 +112,20 @@ class RegionList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="btn-right">
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            <i className="fas fa-plus-circle" /> Adicionar
+        <div className='btn-right'>
+          <button
+            type='button'
+            title='Nova região'
+            className='btn btn-primary'
+            data-toggle='modal'
+            data-target='#addModal'>
+            <i className='fas fa-plus-circle' /> Adicionar
           </button>
         </div>
 
         <RegionModalForm
-          mode="add"
-          targetName="addModal"
+          mode='add'
+          targetName='addModal'
           addFunction={this.props.createRegion}
           reloadFunction={this.props.getRegions}
         />
@@ -129,82 +136,84 @@ class RegionList extends Component {
     const regionsTable = (
       <div>
         {RegionList ? (
-          <ul className="table-list">
-              <div className="titulos">
-                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
-                {/* <span onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</span> */}
-                <span>Descrição</span>
-                <span></span>
-              </div>
-              {regionsList.length > 0 ? (
-                regionsList.map(region => {
-                  return (
-                    <li key={region.id}>
-                      <h3>{region.name}</h3>
-                      <p>
-                        {region.description ? region.description : <span className="text-muted">Sem descrição.</span>}
-                      </p>
-                      <p className="text-right">
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#editModal-${region.id}`}>
-                          <i className="fas fa-pencil-alt" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${region.id}`}>
-                          <i className="fas fa-trash" />
-                        </button>
-                      </p>
-                      <RegionModalForm
-                          targetName={`editModal-${region.id}`}
-                          mode="edit"
-                          item={region}
-                          editFunction={this.props.updateRegion}
-                          reloadFunction={this.props.getRegions}
-                        />{' '}
-                        <RegionsModalDelete
-                          targetName={`deleteModal-${region.id}`}
-                          item={region}
-                          deleteFunction={this.props.deleteRegion}
-                          reloadFunction={this.props.getRegions}
-                        />
-                    </li>
-                  )
-                })
-              ) : (
-                <tr>
-                  <td colSpan="3">Sem itens para exibir</td>
-                </tr>
-              )}
+          <ul className='table-list'>
+            <div className='titulos'>
+              <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+              {/* <span onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</span> */}
+              <span>Descrição</span>
+              <span />
+            </div>
+            {regionsList.length > 0 ? (
+              regionsList.map(region => {
+                return (
+                  <li key={region.id}>
+                    <h3>{region.name}</h3>
+                    <p>
+                      {region.description ? region.description : <span className='text-muted'>Sem descrição.</span>}
+                    </p>
+                    <p className='text-right'>
+                      <button
+                        type='button'
+                        title='Atualizar região'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#editModal-${region.id}`}>
+                        <i className='fas fa-pencil-alt' />
+                      </button>
+                      <button
+                        type='button'
+                        title='Excluir região'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#deleteModal-${region.id}`}>
+                        <i className='fas fa-trash' />
+                      </button>
+                    </p>
+                    <RegionModalForm
+                      targetName={`editModal-${region.id}`}
+                      mode='edit'
+                      item={region}
+                      editFunction={this.props.updateRegion}
+                      reloadFunction={this.props.getRegions}
+                    />{' '}
+                    <RegionsModalDelete
+                      targetName={`deleteModal-${region.id}`}
+                      item={region}
+                      deleteFunction={this.props.deleteRegion}
+                      reloadFunction={this.props.getRegions}
+                    />
+                  </li>
+                )
+              })
+            ) : (
+              <tr>
+                <td colSpan='3'>Sem itens para exibir</td>
+              </tr>
+            )}
           </ul>
         ) : (
           <tr>
-            <td colSpan="3">Sem itens para exibir</td>
+            <td colSpan='3'>Sem itens para exibir</td>
           </tr>
         )}
       </div>
     )
 
     return (
-      <div className="regions">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='regions'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Polos</span>
           </div>
-          <div id="main">
+          <div id='main'>
             <h1>Polos</h1>
             {addItemTool}
-              {/* <p className="lead text-muted">Regiões que serão ofertadas pelo sistema</p> */}
+            {/* <p className="lead text-muted">Regiões que serão ofertadas pelo sistema</p> */}
             {regionsTable}
           </div>
         </div>
@@ -225,10 +234,13 @@ const mapStateToProps = state => ({
   regionStore: state.regionStore
 })
 
-export default connect(mapStateToProps, {
-  clearErrors,
-  getRegions,
-  createRegion,
-  updateRegion,
-  deleteRegion
-})(RegionList)
+export default connect(
+  mapStateToProps,
+  {
+    clearErrors,
+    getRegions,
+    createRegion,
+    updateRegion,
+    deleteRegion
+  }
+)(RegionList)
