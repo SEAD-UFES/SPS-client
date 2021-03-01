@@ -7,7 +7,7 @@ import DrawFilter from '../profile/DrawFilter'
 import AlertError from 'components/common/AlertError'
 import Spinner from '../common/Spinner'
 import CallListOnProcess from '../call/CallListOnProcess'
-import PublicationCard from 'components/publication/PublicationCard'
+import PublicationCard from '../publication/PublicationCard'
 
 const ProcessRead = props => {
   const { location } = props
@@ -49,6 +49,7 @@ const ProcessRead = props => {
       <div className='btn-right'>
         <DrawFilter permission='selectiveprocess_update' course_id={process ? process.course_id : null}>
           <Link
+            title='Atualizar processo seletivo'
             className='btn btn-primary'
             to={{
               pathname: `/processes/${process ? process.id : null}/edit`,
