@@ -20,213 +20,145 @@ class Profile extends Component {
       return <Spinner />
     }
 
-    return (
-      <div className='card mb-4'>
-        <div className='card-header'>
-          <div className='row'>
-            <div className='col'>
-              <h4 className='mb-0'>Dados de usuário</h4>
-            </div>
-            <div className='col'>
-              <div className='text-right'>
-                <Link
-                  className='text-primary'
-                  title='Atualizar dados de usuário'
-                  to={{
-                    pathname: '/profile/edit-user',
-                    prevLocation: this.props.location
-                  }}>
-                  <i className='fas fa-cog' /> Atualizar
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='card-body'>
-          <table className='table table-hover mt-0 mb-0'>
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Login/Email:</strong>
-                </td>
-                <td>{profile.login}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    )
-  }
-
-  renderPerson(profile, loading) {
-    if (profile === null || loading) {
-      return <Spinner />
-    }
-
-    if (!profile.Person) {
+    const renderUpdateUserButton = () => {
       return (
-        <div className='card mb-4'>
-          <div className='card-header'>
-            <div className='row'>
-              <div className='col'>
-                <h4 className='mb-0'>Dados pessoais</h4>
-              </div>
-              <div className='col'>
-                <div className='text-right'>
-                  <Link
-                    className='text-primary'
-                    title='Atualizar dados pessoais'
-                    to={{
-                      pathname: '/profile/edit-person',
-                      prevLocation: this.props.location
-                    }}>
-                    <i className='fas fa-cog' /> Atualizar
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='card-body'>
-            <p>Usuário ainda não possui dados pessoais.</p>
-          </div>
+        <div className='btn-right'>
+          <Link
+            className='btn btn-terciary'
+            title='Atualizar dados de usuário'
+            to={{ pathname: `/profile/edit-user`, prevLocation: this.props.location }}>
+            <i className='fas fa-plus-circle' /> Atualizar
+          </Link>
         </div>
       )
     }
 
+    const renderUserData = () => {
+      return (
+        <>
+          <dl className='row dl-data'>
+            <dt className='col-sm-3'>Login / Email:</dt>
+            <dd className='col-sm-9'>{profile.login}</dd>
+          </dl>
+        </>
+      )
+    }
+
     return (
-      <div className='card mb-4'>
-        <div className='card-header'>
-          <div className='row'>
-            <div className='col'>
-              <h4 className='mb-0'>Dados pessoais</h4>
-            </div>
-            <div className='col'>
-              <div className='text-right'>
-                <Link
-                  className='text-primary'
-                  title='Atualizar dados pessoais'
-                  to={{
-                    pathname: '/profile/edit-person',
-                    prevLocation: this.props.location
-                  }}>
-                  <i className='fas fa-cog' /> Atualizar
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='card-body'>
-          <table className='table table-hover mt-0 mb-0'>
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Nome / Sobrenome:</strong>
-                </td>
-                <td>
-                  {profile.Person.name} {profile.Person.surname}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Data de Nascimento:</strong>
-                </td>
-                <td>
-                  {profile.Person.birthdate ? (
-                    moment(profile.Person.birthdate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')
-                  ) : (
-                    <span className='text-muted'>...</span>
-                  )}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>CPF:</strong>
-                </td>
-                <td>{profile.Person.cpf}</td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Nacionalidade:</strong>
-                </td>
-                <td>
-                  {profile.Person.nationality ? profile.Person.nationality : <span className='text-muted'>...</span>}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>RG (Número / Expeditor):</strong>
-                </td>
-                <td>
-                  {checkNested(profile, 'Person') ? (
-                    `${profile.Person.rgNumber} - ${profile.Person.rgDispatcher}`
-                  ) : (
-                    <span className='text-muted'>...</span>
-                  )}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Cor:</strong>
-                </td>
-                <td>{profile.Person.ethnicity ? profile.Person.ethnicity : <span className='text-muted'>...</span>}</td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Sexo:</strong>
-                </td>
-                <td>{profile.Person.gender ? profile.Person.gender : <span className='text-muted'>...</span>}</td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Estado Civil:</strong>
-                </td>
-                <td>
-                  {profile.Person.civilStatus ? profile.Person.civilStatus : <span className='text-muted'>...</span>}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Nome do Pai:</strong>
-                </td>
-                <td>
-                  {profile.Person.fatherName ? profile.Person.fatherName : <span className='text-muted'>...</span>}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Nome do Mãe:</strong>
-                </td>
-                <td>
-                  {profile.Person.motherName ? profile.Person.motherName : <span className='text-muted'>...</span>}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <>
+        <section className='quadro'>
+          <h4>Dados de usuário</h4>
+          {renderUpdateUserButton()}
+          {renderUserData()}
+        </section>
+      </>
     )
   }
 
-  render() {
+  renderPerson(profile, loading) {
+    //if loading return spinner
+    if (profile === null || loading) return <Spinner />
+
+    const renderUpdatePersonButton = () => {
+      return (
+        <div className='btn-right'>
+          <Link
+            className='btn btn-terciary'
+            title='Atualizar dados pessoais'
+            to={{ pathname: `/profile/edit-person`, prevLocation: this.props.location }}>
+            <i className='fas fa-plus-circle' /> Atualizar
+          </Link>
+        </div>
+      )
+    }
+
+    const renderPersonData = () => {
+      return (
+        <>
+          <dl className='row dl-data'>
+            <dt className='col-sm-3'>Nome / Sobrenome:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.name} {profile.Person.surname}
+            </dd>
+
+            <dt className='col-sm-3'>Data de Nascimento:</dt>
+            <dd className='col-sm-9'>
+              {' '}
+              {profile.Person.birthdate ? (
+                moment(profile.Person.birthdate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')
+              ) : (
+                <span className='text-muted'>...</span>
+              )}
+            </dd>
+
+            <dt className='col-sm-3'>CPF:</dt>
+            <dd className='col-sm-9'>{profile.Person.cpf}</dd>
+
+            <dt className='col-sm-3'>Nascionalidade:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.nationality ? profile.Person.nationality : <span className='text-muted'>...</span>}
+            </dd>
+
+            <dt className='col-sm-3'>RG (Número / Expeditor):</dt>
+            <dd className='col-sm-9'>
+              {checkNested(profile, 'Person') ? (
+                `${profile.Person.rgNumber} - ${profile.Person.rgDispatcher}`
+              ) : (
+                <span className='text-muted'>...</span>
+              )}
+            </dd>
+
+            <dt className='col-sm-3'>Cor:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.ethnicity ? profile.Person.ethnicity : <span className='text-muted'>...</span>}
+            </dd>
+
+            <dt className='col-sm-3'>Sexo:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.gender ? profile.Person.gender : <span className='text-muted'>...</span>}
+            </dd>
+
+            <dt className='col-sm-3'>Estado civil:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.civilStatus ? profile.Person.civilStatus : <span className='text-muted'>...</span>}
+            </dd>
+
+            <dt className='col-sm-3'>Nome do pai:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.fatherName ? profile.Person.fatherName : <span className='text-muted'>...</span>}
+            </dd>
+
+            <dt className='col-sm-3'>Nome da mãe:</dt>
+            <dd className='col-sm-9'>
+              {profile.Person.motherName ? profile.Person.motherName : <span className='text-muted'>...</span>}
+            </dd>
+          </dl>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <section className='quadro'>
+          <h4>Dados de pessoais</h4>
+          {renderUpdatePersonButton()}
+          {profile.Person ? <>{renderPersonData()}</> : <p>Usuário ainda não possui dados pessoais.</p>}
+        </section>
+      </>
+    )
+  }
+
+  renderProfile = () => {
     const { user } = this.props.authStore
     const { profile, loading } = this.props.profileStore
 
-    let dashboardContent
+    let profileContent = <></>
     if (profile === null || loading) {
-      dashboardContent = <Spinner />
+      profileContent = <Spinner />
     } else {
       //Check if logged in user has profile data
       if (Object.keys(profile).length > 0) {
-        dashboardContent = (
+        profileContent = (
           <div>
             {this.renderUser(profile, loading)}
             {this.renderPerson(profile, loading)}
@@ -234,7 +166,7 @@ class Profile extends Component {
         )
       } else {
         //User login in but dont have a profile
-        dashboardContent = (
+        profileContent = (
           <div>
             <p className='lead text-muted'>Bem-vindo{user.Person.name}</p>
             <p>Dados de perfil não localizados</p>
@@ -242,14 +174,36 @@ class Profile extends Component {
         )
       }
     }
+
+    return profileContent
+  }
+
+  render() {
+    const renderBreadcrumb = () => {
+      return (
+        <>
+          <div className='breadcrumb'>
+            <span>Você está em:</span>
+            <Link to='/dashboard' className='breadcrumb-link'>
+              Área pessoal
+            </Link>
+
+            <i className='fas fa-greater-than' />
+            <Link to={`/profile`} className='breadcrumb-link'>
+              Perfil
+            </Link>
+          </div>
+        </>
+      )
+    }
+
     return (
-      <div className='profile'>
+      <div className='view-page'>
         <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-              <h1 className='display-4'>Perfil</h1>
-              {dashboardContent}
-            </div>
+          <div className='main'>
+            {renderBreadcrumb()}
+            <h1 className='display-4'>Perfil</h1>
+            {this.renderProfile()}
           </div>
         </div>
       </div>
@@ -259,7 +213,6 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
-  //deleteAccount: PropTypes.func.isRequired,
   authStore: PropTypes.object.isRequired,
   profileStore: PropTypes.object.isRequired
 }
