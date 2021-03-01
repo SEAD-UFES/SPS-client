@@ -7,7 +7,7 @@ import PrivateRoute from '../common/PrivateRoute'
 
 import Profile from './ProfileView'
 import ProfileUpdateUser from './ProfileUpdateUser'
-import ProfileEditPerson from './ProfileEditPerson'
+import ProfileUpdatePerson from './ProfileUpdatePerson'
 import NotFound from '../common/NotFound'
 
 export default class ProfileRoutes extends Component {
@@ -18,7 +18,7 @@ export default class ProfileRoutes extends Component {
 
         <PrivateRoute exact path={`${this.props.match.path}/update-user`} component={ProfileUpdateUser} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/edit-person`} component={ProfileEditPerson} />
+        <PrivateRoute exact path={`${this.props.match.path}/edit-person`} component={ProfileUpdatePerson} />
 
         <Route component={NotFound} />
       </Switch>
