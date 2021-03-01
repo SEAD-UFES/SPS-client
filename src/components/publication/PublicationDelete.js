@@ -46,7 +46,13 @@ class PublicationDelete extends Component {
     return (
       <div className='row'>
         <div className='col'>
-          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={this.onSubmit} />
+          <input
+            type='button'
+            className='btn btn-primary btn-block mt-4'
+            title='Excluir publicação'
+            value='Excluir'
+            onClick={this.onSubmit}
+          />
         </div>
         <div className='col'>
           <input

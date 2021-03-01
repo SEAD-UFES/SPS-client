@@ -317,7 +317,7 @@ class PublicationCreate extends Component {
           />
         </div>
 
-        <input type='submit' className='btn btn-primary' value='Cadastrar' />
+        <input type='submit' className='btn btn-primary' title='Criar publicação' value='Cadastrar' />
       </form>
     )
   }

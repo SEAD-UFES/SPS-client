@@ -326,7 +326,7 @@ class PublicationUpdate extends Component {
           />
         </div>
 
-        <input type='submit' className='btn btn-primary' value='Salvar' />
+        <input type='submit' className='btn btn-primary' title='Atualizar publicação' value='Salvar' />
       </form>
     )
   }
