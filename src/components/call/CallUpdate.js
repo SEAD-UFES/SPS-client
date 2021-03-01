@@ -28,7 +28,7 @@ const CallUpdate = props => {
           <span>{call ? `Chamada ${call.number}` : 'Chamada'}</span>
 
           <i className='fas fa-greater-than' />
-          <span>Editar chamada</span>
+          <span>Atualizar chamada</span>
         </div>
       </>
     )
@@ -68,13 +68,7 @@ const CallUpdate = props => {
           />
         </div>
 
-        <input
-          type='submit'
-          title='Atualizar chamada'
-          className='btn btn-primary'
-          title='Atualizar chamada'
-          value='Salvar'
-        />
+        <input type='submit' title='Atualizar chamada' className='btn btn-primary' value='Salvar' />
       </form>
     )
   }
@@ -84,7 +78,7 @@ const CallUpdate = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Editar chamada</h1>
+          <h1>Atualizar chamada</h1>
           <AlertError errors={errorStore} />
           {renderForm(errors)}
         </div>

@@ -33,7 +33,7 @@ const CalendarUpdate = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Editar evento</span>
+        <span>Atualizar evento</span>
       </div>
     )
   }
@@ -103,7 +103,7 @@ const CalendarUpdate = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Editar evento</h1>
+          <h1>Atualizar evento</h1>
           <AlertError errors={errorStore} />
           {renderForm(calendarOptions, errors)}
         </div>

@@ -44,7 +44,7 @@ const InscriptionEventUpdate = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Editar</span>
+        <span>Atualizar</span>
       </div>
     )
   }
@@ -114,7 +114,7 @@ const InscriptionEventUpdate = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Editar evento de inscrição</h1>
+          <h1>Atualizar evento de inscrição</h1>
           <AlertError errors={errorStore} />
           {renderErrorMessage(errors)}
           {renderForm(updateData, errors, onChange, onCheck, onSubmit)}

@@ -32,7 +32,7 @@ const VacancyUpdate = props => {
         </Link>
 
         <i className='fas fa-greater-than' />
-        <span>Editar oferta de vaga</span>
+        <span>Atualizar oferta de vaga</span>
       </div>
     )
   }
@@ -101,7 +101,7 @@ const VacancyUpdate = props => {
       <div className='container'>
         {renderBreadcrumb(process, call)}
         <div className='form-container' id='main'>
-          <h1>Editar oferta de vaga</h1>
+          <h1>Atualizar oferta de vaga</h1>
           <AlertError errors={errorStore} />
           {renderForm(assignmentOptions, regionOptions, restrictionOptions, errors)}
         </div>

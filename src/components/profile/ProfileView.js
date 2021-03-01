@@ -36,7 +36,7 @@ class Profile extends Component {
                     pathname: '/profile/edit-user',
                     prevLocation: this.props.location
                   }}>
-                  <i className='fas fa-cog' /> Editar
+                  <i className='fas fa-cog' /> Atualizar
                 </Link>
               </div>
             </div>
@@ -80,7 +80,7 @@ class Profile extends Component {
                       pathname: '/profile/edit-person',
                       prevLocation: this.props.location
                     }}>
-                    <i className='fas fa-cog' /> Editar
+                    <i className='fas fa-cog' /> Atualizar
                   </Link>
                 </div>
               </div>
@@ -109,7 +109,7 @@ class Profile extends Component {
                     pathname: '/profile/edit-person',
                     prevLocation: this.props.location
                   }}>
-                  <i className='fas fa-cog' /> Editar
+                  <i className='fas fa-cog' /> Atualizar
                 </Link>
               </div>
             </div>

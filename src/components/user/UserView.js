@@ -32,7 +32,7 @@ class UserView extends Component {
               pathname: `/users/${user.id}/edit-user`,
               prevLocation: this.props.location
             }}>
-            <i className='fas fa-pencil-alt' /> Editar
+            <i className='fas fa-pencil-alt' /> Atualizar
           </Link>
         </div>
         <div>
@@ -62,7 +62,7 @@ class UserView extends Component {
                 pathname: `/users/${user.id}/edit-person`,
                 prevLocation: this.props.location
               }}>
-              <i className='fas fa-pencil-alt' /> Editar
+              <i className='fas fa-pencil-alt' /> Atualizar
             </Link>
           </div>
 
@@ -84,7 +84,7 @@ class UserView extends Component {
               pathname: `/users/${user.id}/edit-person`,
               prevLocation: this.props.location
             }}>
-            <i className='fas fa-pencil-alt' /> Editar
+            <i className='fas fa-pencil-alt' /> Atualizar
           </Link>
         </div>
 

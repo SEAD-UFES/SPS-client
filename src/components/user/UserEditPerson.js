@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -151,63 +153,63 @@ class UserEditPerson extends Component {
   renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions) {
     return (
       <form noValidate onSubmit={this.onSubmit}>
-        <div className="form-lateral">
+        <div className='form-lateral'>
           <TextFieldGroup
-            label="Nome"
-            type="text"
-            name="name"
+            label='Nome'
+            type='text'
+            name='name'
             value={this.state.name}
             onChange={this.onChange}
             error={errors.name}
           />
 
           <TextFieldGroup
-            label="Sobrenome"
-            type="text"
-            name="surname"
+            label='Sobrenome'
+            type='text'
+            name='surname'
             value={this.state.surname}
             onChange={this.onChange}
             error={errors.surname}
           />
         </div>
 
-        <div className="form-lateral">
+        <div className='form-lateral'>
           <TextFieldGroup
-            label="Data de nascimento"
-            placeholder="__/__/__"
-            type="date"
-            name="birthdate"
+            label='Data de nascimento'
+            placeholder='__/__/__'
+            type='date'
+            name='birthdate'
             value={this.state.birthdate}
             onChange={this.onChange}
             error={errors.birthdate}
           />
 
           <TextFieldGroup
-            label="CPF"
-            placeholder="___.___.___-__"
-            type="text"
-            name="cpf"
+            label='CPF'
+            placeholder='___.___.___-__'
+            type='text'
+            name='cpf'
             value={this.state.cpf}
             onChange={this.onChange}
             error={errors.cpf}
           />
         </div>
 
-        <div className="form-lateral">
+        <div className='form-lateral'>
           <TextFieldGroup
-            label="Número do RG"
-            placeholder="_______"
-            type="text"
-            name="rgNumber"
+            label='Número do RG'
+            placeholder='_______'
+            type='text'
+            name='rgNumber'
             value={this.state.rgNumber}
             onChange={this.onChange}
             error={errors.rgNumber}
           />
 
           <TextFieldGroup
-            label="Órgão expeditor"
-            type="text"
-            name="rgDispatcher"
+            label='Órgão expeditor'
+            type='text'
+            name='rgDispatcher'
             value={this.state.rgDispatcher}
             onChange={this.onChange}
             error={errors.rgDispatcher}
@@ -215,18 +217,18 @@ class UserEditPerson extends Component {
         </div>
 
         <TextFieldGroup
-          label="Nacionalidade"
-          type="text"
-          name="nationality"
+          label='Nacionalidade'
+          type='text'
+          name='nationality'
           value={this.state.nationality}
           onChange={this.onChange}
           error={errors.nationality}
         />
 
         <SelectListGroup
-          label="Etnia"
-          placeholder="Escolha cor/etnia"
-          name="ethnicity"
+          label='Etnia'
+          placeholder='Escolha cor/etnia'
+          name='ethnicity'
           value={this.state.ethnicity}
           options={colorOptions}
           onChange={this.onChange}
@@ -234,9 +236,9 @@ class UserEditPerson extends Component {
         />
 
         <SelectListGroup
-          label="Gênero"
-          placeholder="Escolha gênero"
-          name="gender"
+          label='Gênero'
+          placeholder='Escolha gênero'
+          name='gender'
           value={this.state.gender}
           options={genderOptions}
           onChange={this.onChange}
@@ -244,16 +246,16 @@ class UserEditPerson extends Component {
         />
 
         <SelectListGroup
-          label="Estado civil"
-          placeholder="Escolha estado civil"
-          name="civilStatus"
+          label='Estado civil'
+          placeholder='Escolha estado civil'
+          name='civilStatus'
           value={this.state.civilStatus}
           options={civilStateOptions}
           onChange={this.onChange}
           error={errors.civilStatus}
         />
 
-        <input type="submit" className="btn btn-primary" value="Salvar" />
+        <input type='submit' className='btn btn-primary' value='Salvar' />
       </form>
     )
   }
@@ -296,26 +298,26 @@ class UserEditPerson extends Component {
     )
 
     return (
-      <div className="user-edit-person">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='user-edit-person'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to="/users" className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to='/users' className='breadcrumb-link'>
               Usuários
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/users/${this.props.match.params.id}`} className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to={`/users/${this.props.match.params.id}`} className='breadcrumb-link'>
               Usuário X
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <span>Editar dados pessoais</span>
+            <i className='fas fa-greater-than' />
+            <span>Atualizar dados pessoais</span>
           </div>
-          <div className="form-container" id="main">
-            <h1>Editar dados pessoais</h1>
+          <div className='form-container' id='main'>
+            <h1>Atualizar dados pessoais</h1>
             {this.renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions)}
           </div>
         </div>
@@ -339,9 +341,12 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(mapStateToProps, {
-  clearErrors,
-  getUser,
-  updatePerson,
-  getUserPeopleOptions
-})(withRouter(UserEditPerson))
+export default connect(
+  mapStateToProps,
+  {
+    clearErrors,
+    getUser,
+    updatePerson,
+    getUserPeopleOptions
+  }
+)(withRouter(UserEditPerson))

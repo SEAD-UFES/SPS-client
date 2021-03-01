@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -173,39 +175,39 @@ class UserEditUser extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <TextFieldGroup
-          label="Email"
-          type="email"
-          name="email"
+          label='Email'
+          type='email'
+          name='email'
           value={this.state.email}
           onChange={this.onChange}
           error={errors.email}
-          info="Email principal para comunicação e acesso a plataforma"
+          info='Email principal para comunicação e acesso a plataforma'
         />
 
         <CheckBoxFieldGroup
-          id="active"
-          name="active"
-          text="Ativo"
-          value="Este usuário está ativo."
+          id='active'
+          name='active'
+          text='Ativo'
+          value='Este usuário está ativo.'
           checked={this.state.active}
           error={errors.active}
           onChange={this.onCheck}
         />
 
         <CheckBoxFieldGroup
-          id="changePassword"
-          name="changePassword"
-          text="Alterar senha"
-          value="Desejo alterar a senha de acesso."
+          id='changePassword'
+          name='changePassword'
+          text='Alterar senha'
+          value='Desejo alterar a senha de acesso.'
           checked={this.state.changePassword}
           error={errors.changePassword}
           onChange={this.onCheck}
         />
 
         <TextFieldGroup
-          label="Senha"
-          type="password"
-          name="password"
+          label='Senha'
+          type='password'
+          name='password'
           value={this.state.password}
           onChange={this.onChange}
           error={errors.password}
@@ -213,16 +215,16 @@ class UserEditUser extends Component {
         />
 
         <TextFieldGroup
-          label="Repita a senha"
-          type="password"
-          name="password2"
+          label='Repita a senha'
+          type='password'
+          name='password2'
           value={this.state.password2}
           onChange={this.onChange}
           error={errors.password2}
           disabled={!this.state.changePassword}
         />
 
-        <input type="submit" className="btn btn-primary" value="Salvar" />
+        <input type='submit' className='btn btn-primary' value='Salvar' />
       </form>
     )
   }
@@ -231,27 +233,27 @@ class UserEditUser extends Component {
     const { errors } = this.state
 
     return (
-      <div className="user-edit-user">
-        <div className="container">
-          <div className="breadcrumb">
+      <div className='user-edit-user'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to="/users" className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to='/users' className='breadcrumb-link'>
               Usuários
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <Link to={`/users/${this.props.match.params.id}`} className="breadcrumb-link">
+            <i className='fas fa-greater-than' />
+            <Link to={`/users/${this.props.match.params.id}`} className='breadcrumb-link'>
               Usuário X
             </Link>
-            <i className="fas fa-greater-than"></i>
-            <span>Editar dados de acesso</span>
+            <i className='fas fa-greater-than' />
+            <span>Atualizar dados de acesso</span>
           </div>
 
-          <div className="form-container" id="main">
-            <h1>Editar dados de acesso</h1>
+          <div className='form-container' id='main'>
+            <h1>Atualizar dados de acesso</h1>
             {this.renderEditUser(errors)}
           </div>
         </div>
@@ -273,4 +275,7 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(mapStateToProps, { getUser, updateUser, clearErrors })(withRouter(UserEditUser))
+export default connect(
+  mapStateToProps,
+  { getUser, updateUser, clearErrors }
+)(withRouter(UserEditUser))

@@ -55,7 +55,7 @@ const ProcessRead = props => {
               pathname: `/processes/${process ? process.id : null}/edit`,
               prevLocation: location
             }}>
-            <i className='fas fa-cog' /> Editar
+            <i className='fas fa-cog' /> Atualizar
           </Link>
         </DrawFilter>
       </div>

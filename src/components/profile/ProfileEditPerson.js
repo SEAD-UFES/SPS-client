@@ -188,7 +188,7 @@ class ProfileEditPerson extends Component {
     return (
       <div className='card mb-4'>
         <div className='card-header'>
-          <h4 className='mb-0'>Editar dados pessoais</h4>
+          <h4 className='mb-0'>Atualizar dados pessoais</h4>
         </div>
         <div className='card-body'>
           <form noValidate onSubmit={this.onSubmit}>
@@ -313,7 +313,7 @@ class ProfileEditPerson extends Component {
             />
 
             <input
-              value='Enviar'
+              value='Atualizar'
               type='submit'
               title='Atulizar dados pessoais'
               className='btn btn-primary btn-block mt-4'
