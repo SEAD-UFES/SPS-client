@@ -178,7 +178,7 @@ class RoleTypeCreateUpdate extends Component {
           type='submit'
           title={this.state.mode === 'update' ? 'Atualizar papel' : 'Criar papel'}
           className='btn btn-primary'
-          title={this.state.mode === 'update' ? 'Atualizar' : 'Criar'}
+          value={this.state.mode === 'update' ? 'Atualizar' : 'Criar'}
         />
       </form>
     )
@@ -196,11 +196,11 @@ class RoleTypeCreateUpdate extends Component {
               Tipos de papel
             </Link>
             <i className='fas fa-greater-than' />
-            <span>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</span>
+            <span>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Atualizar tipo de papel'}</span>
           </div>
 
           <div className='form-container' id='main'>
-            <h1>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Editar tipo de papel'}</h1>
+            <h1>{this.state.mode === 'create' ? 'Novo tipo de papel' : 'Atualizar tipo de papel'}</h1>
             {/* <p className="lead text-center">
               {this.state.mode === 'create' ? 'Dê entrada nos dados básicos' : 'Altere os dados básicos'}
             </p> */}

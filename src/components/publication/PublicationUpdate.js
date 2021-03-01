@@ -415,11 +415,11 @@ class PublicationUpdate extends Component {
                 : 'Edital 000/0000'}
             </Link>
             <i className='fas fa-greater-than' />
-            <span>Editar publicação</span>
+            <span>Atualizar publicação</span>
           </div>
 
           <div className='form-container' id='main'>
-            <h1>Editar publicação</h1>
+            <h1>Atualizar publicação</h1>
             <AlertError errors={this.props.errorStore} />
             {this.renderForm(errors, processOptions, callOptions, stepOptions, processPublicationTypeOptions)}
           </div>

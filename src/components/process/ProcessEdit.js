@@ -187,7 +187,7 @@ class ProcessEdit extends Component {
           onChange={this.onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' title='Atualizar processo seletivo' value='Editar' />
+        <input type='submit' className='btn btn-primary' title='Atualizar processo seletivo' value='Atualizar' />
       </form>
     )
   }
@@ -222,11 +222,11 @@ class ProcessEdit extends Component {
                 : 'Edital 000/0000'}
             </Link>
             <i className='fas fa-greater-than' />
-            <span>Editar</span>
+            <span>Atualizar</span>
           </div>
 
           <div className='form-container' id='main'>
-            <h1>Editar processo</h1>
+            <h1>Atualizar processo</h1>
             <AlertError errors={this.props.errorStore} />
             {this.renderForm(this.state, errors, courseOptions)}
           </div>

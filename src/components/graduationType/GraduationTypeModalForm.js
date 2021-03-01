@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -117,32 +119,32 @@ class GraduationTypeModalForm extends Component {
     const { errors } = this.state
     return (
       <div
-        className="modal fade"
+        className='modal fade'
         id={this.props.targetName}
-        tabIndex="-1"
-        role="dialog"
+        tabIndex='-1'
+        role='dialog'
         aria-labelledby={`${this.props.targetName}-ModalLabel`}
-        aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id={`${this.props.targetName}-ModalLabel`}>
-                {this.props.mode === 'edit' ? 'Editar tipo de publicação' : 'Adicionar tipo de publicação'}
+        aria-hidden='true'>
+        <div className='modal-dialog' role='document'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <h5 className='modal-title' id={`${this.props.targetName}-ModalLabel`}>
+                {this.props.mode === 'edit' ? 'Atualizar tipo de publicação' : 'Adicionar tipo de publicação'}
               </h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+              <button type='button' className='close' data-dismiss='modal' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
               </button>
             </div>
-            <div className="modal-body">
+            <div className='modal-body'>
               <AlertError errors={errors} />
 
-              <form className="">
-                <div className="">
-                  <div className="form-group">
+              <form className=''>
+                <div className=''>
+                  <div className='form-group'>
                     <TextFieldGroup
-                      type="text"
-                      name="name"
-                      label="Nome"
+                      type='text'
+                      name='name'
+                      label='Nome'
                       value={this.state.name}
                       onChange={this.onChange}
                       error={errors.name}
@@ -159,15 +161,15 @@ class GraduationTypeModalForm extends Component {
                 </div>
               </form>
             </div>
-            <div className="modal-footer">
+            <div className='modal-footer'>
               <input
-                type="submit"
-                className="btn btn-primary"
+                type='submit'
+                className='btn btn-primary'
                 onClick={this.onSubmit}
                 value={this.props.mode === 'edit' ? 'Atualizar' : 'Adicionar'}
               />
 
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">
+              <button type='button' className='btn btn-secondary' data-dismiss='modal'>
                 Cancelar
               </button>
             </div>
@@ -187,4 +189,7 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(mapStateToProps, { clearErrors })(GraduationTypeModalForm)
+export default connect(
+  mapStateToProps,
+  { clearErrors }
+)(GraduationTypeModalForm)

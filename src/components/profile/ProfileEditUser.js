@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -168,38 +170,38 @@ class ProfileEditUser extends Component {
 
   renderEditUser(errors) {
     return (
-      <div className="card mb-4">
-        <div className="card-header">
-          <h4 className="mb-0">Editar dados de usuário</h4>
+      <div className='card mb-4'>
+        <div className='card-header'>
+          <h4 className='mb-0'>Atualizar dados de usuário</h4>
         </div>
-        <div className="card-body">
+        <div className='card-body'>
           <form onSubmit={this.onSubmit}>
             <TextFieldGroup
-              label="Email: *"
-              placeholder="* Endereço de email"
-              type="email"
-              name="email"
+              label='Email: *'
+              placeholder='* Endereço de email'
+              type='email'
+              name='email'
               value={this.state.email}
               onChange={this.onChange}
               error={errors.email}
-              info="Email principal para comunicação e acesso a plataforma"
+              info='Email principal para comunicação e acesso a plataforma'
             />
 
             <CheckBoxFieldGroup
-              id="changePassword"
-              name="changePassword"
-              text="Editar senha:"
-              value="Altere a senha do usuário"
+              id='changePassword'
+              name='changePassword'
+              text='Atualizar senha:'
+              value='Altere a senha do usuário'
               checked={this.state.changePassword}
               error={errors.changePassword}
               onChange={this.onCheck}
             />
 
             <TextFieldGroup
-              label="Senha: *"
-              placeholder="* Senha"
-              type="password"
-              name="password"
+              label='Senha: *'
+              placeholder='* Senha'
+              type='password'
+              name='password'
               value={this.state.password}
               onChange={this.onChange}
               error={errors.password}
@@ -207,17 +209,17 @@ class ProfileEditUser extends Component {
             />
 
             <TextFieldGroup
-              label="Repita a senha: *"
-              placeholder="* Repita a senha"
-              type="password"
-              name="password2"
+              label='Repita a senha: *'
+              placeholder='* Repita a senha'
+              type='password'
+              name='password2'
               value={this.state.password2}
               onChange={this.onChange}
               error={errors.password2}
               disabled={!this.state.changePassword}
             />
 
-            <input value="Enviar" type="submit" className="btn btn-primary btn-block mt-4" />
+            <input value='Atualizar' type='submit' className='btn btn-primary btn-block mt-4' />
           </form>
         </div>
       </div>
@@ -227,14 +229,14 @@ class ProfileEditUser extends Component {
   render() {
     const { errors } = this.state
     return (
-      <div className="profile-edit-user">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to="/profile" className="btn btn-light">
+      <div className='profile-edit-user'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <Link to='/profile' className='btn btn-light'>
                 Voltar
               </Link>
-              <h1 className="display-4">Perfil</h1>
+              <h1 className='display-4'>Perfil</h1>
               {this.renderEditUser(errors)}
             </div>
           </div>
@@ -257,6 +259,7 @@ const mapStateToProps = state => ({
   errors: state.errorStore
 })
 
-export default connect(mapStateToProps, { getCurrentProfile, updateProfileUser, clearErrors })(
-  withRouter(ProfileEditUser)
-)
+export default connect(
+  mapStateToProps,
+  { getCurrentProfile, updateProfileUser, clearErrors }
+)(withRouter(ProfileEditUser))

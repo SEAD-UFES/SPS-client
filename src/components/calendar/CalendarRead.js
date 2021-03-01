@@ -55,7 +55,7 @@ const CalendarRead = props => {
               pathname: `/calendar/update/${calendar ? calendar.id : null}`,
               prevLocation: location
             }}>
-            <i className='fas fa-cog' /> Editar
+            <i className='fas fa-cog' /> Atualizar
           </Link>
         </DrawFilter>
       </div>

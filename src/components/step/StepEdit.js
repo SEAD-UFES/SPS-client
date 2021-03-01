@@ -269,7 +269,7 @@ class StepEdit extends Component {
               <Link to={`/processes/read/${this.props.match.params.process_id}`} className='btn btn-light'>
                 Voltar para o processo
               </Link>
-              <h1 className='display-4 text-center'>Editar etapa</h1>
+              <h1 className='display-4 text-center'>Atualizar etapa</h1>
               <p className='lead text-center'>Altere os dados básicos</p>
               {stepForm}
               {deleteButton}
