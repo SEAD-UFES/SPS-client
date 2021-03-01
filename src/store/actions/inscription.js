@@ -47,8 +47,9 @@ export const readInscription = (id, options = {}) => (dispatch, getState) => {
 
       //include vacancy if needed
       if (options.withVacancy) {
+        const opt_vac = typeof options.withVacancy === 'object' ? options.withVacancy : {}
         const vacancy_id = res.data.vacancy_id
-        dispatch(readVacancy(vacancy_id, newOptions))
+        dispatch(readVacancy(vacancy_id, opt_vac))
       }
 
       //include person if needed
@@ -117,8 +118,7 @@ export const readListInscription = (options = {}) => dispatch => {
 
       //include vacancy if needed
       if (options.withVacancy) {
-        const opt_vac =
-          typeof options.withVacancy === 'object' ? { ...newOptions, ...options.withVacancy } : { ...newOptions }
+        const opt_vac = typeof options.withVacancy === 'object' ? options.withVacancy : {}
         const vacancyIds = [...new Set(res.data.map(ins => ins.vacancy_id))]
         vacancyIds.map(id => {
           return dispatch(readVacancy(id, opt_vac))
