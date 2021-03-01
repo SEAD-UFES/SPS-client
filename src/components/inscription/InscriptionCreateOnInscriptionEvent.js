@@ -67,7 +67,7 @@ const InscriptionCreateOnInscriptionEvent = props => {
           <p>Para efetuar inscrições no sistema, é necessário preencher a sessão de dados pessoais.</p>
           <hr />
           <p className='mb-0'>
-            Clique <Link to={`/profile/edit-person`}>aqui</Link> para editar seus dados pessoais.
+            Clique <Link to={`/profile/edit-person`}>aqui</Link> para atualizar seus dados pessoais.
           </p>
         </div>
       )
