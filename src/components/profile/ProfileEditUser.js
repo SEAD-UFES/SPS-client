@@ -229,7 +229,7 @@ class ProfileEditUser extends Component {
   render() {
     const { errors } = this.state
     return (
-      <div className='profile-edit-user'>
+      <div className='profile-update-user'>
         <div className='container'>
           <div className='row'>
             <div className='col-md-12'>

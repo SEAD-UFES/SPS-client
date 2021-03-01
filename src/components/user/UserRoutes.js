@@ -24,7 +24,7 @@ export default class UsersRoutes extends Component {
 
         <PrivateRoute
           exact
-          path={`${this.props.match.path}/:id/edit-user`}
+          path={`${this.props.match.path}/:id/update-user`}
           component={UserEditUser}
           permission='user_update'
         />

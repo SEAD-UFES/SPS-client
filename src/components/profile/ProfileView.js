@@ -26,7 +26,7 @@ class Profile extends Component {
           <Link
             className='btn btn-terciary'
             title='Atualizar dados de usuário'
-            to={{ pathname: `/profile/edit-user`, prevLocation: this.props.location }}>
+            to={{ pathname: `/profile/update-user`, prevLocation: this.props.location }}>
             <i className='fas fa-plus-circle' /> Atualizar
           </Link>
         </div>

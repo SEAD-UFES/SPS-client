@@ -16,7 +16,7 @@ export default class ProfileRoutes extends Component {
       <Switch>
         <PrivateRoute exact path={`${this.props.match.path}`} component={Profile} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/edit-user`} component={ProfileEditUser} />
+        <PrivateRoute exact path={`${this.props.match.path}/update-user`} component={ProfileEditUser} />
 
         <PrivateRoute exact path={`${this.props.match.path}/edit-person`} component={ProfileEditPerson} />
 
