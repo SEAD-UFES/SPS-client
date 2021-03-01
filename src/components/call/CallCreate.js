@@ -65,7 +65,13 @@ const CallCreate = props => {
           />
         </div>
 
-        <input type='submit' className='btn btn-primary' title='Criar chamada' value='Cadastrar' />
+        <input
+          type='submit'
+          title='Criar chamada'
+          className='btn btn-primary'
+          title='Criar chamada'
+          value='Cadastrar'
+        />
       </form>
     )
   }

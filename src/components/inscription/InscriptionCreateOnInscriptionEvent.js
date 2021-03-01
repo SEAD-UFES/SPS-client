@@ -104,7 +104,7 @@ const InscriptionCreateOnInscriptionEvent = props => {
           onChange={onChange}
           error={errors.vacancy_id}
         />
-        <input type='submit' className='btn btn-primary' value='Criar' />
+        <input type='submit' title='Criar inscrição' className='btn btn-primary' value='Criar' />
       </form>
     )
   }

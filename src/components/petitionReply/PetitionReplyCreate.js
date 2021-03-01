@@ -123,7 +123,7 @@ const PetitionReplyCreate = props => {
             info='Inserir justificativa para status do recurso.'
           />
 
-          <input type='submit' className='btn btn-primary' value='Criar' />
+          <input type='submit' title='Excluir evento de recurso' className='btn btn-primary' value='Criar' />
         </form>
       </div>
     )

@@ -66,7 +66,7 @@ const PetitionEventCreate = props => {
           error={errors.inscriptionEvent_id}
         />
 
-        <input type='submit' className='btn btn-primary' value='Criar' />
+        <input type='submit' title='Criar evento de recurso' className='btn btn-primary' value='Criar' />
       </form>
     )
   }

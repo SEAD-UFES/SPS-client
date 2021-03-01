@@ -92,7 +92,7 @@ const InscriptionEventUpdate = props => {
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Atualizar' />
+        <input type='submit' title='Atualizar evento de inscrição' className='btn btn-primary' value='Atualizar' />
       </form>
     )
   }

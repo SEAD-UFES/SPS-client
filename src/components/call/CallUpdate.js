@@ -68,7 +68,13 @@ const CallUpdate = props => {
           />
         </div>
 
-        <input type='submit' className='btn btn-primary' title='Atualizar chamada' value='Salvar' />
+        <input
+          type='submit'
+          title='Atualizar chamada'
+          className='btn btn-primary'
+          title='Atualizar chamada'
+          value='Salvar'
+        />
       </form>
     )
   }

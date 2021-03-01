@@ -312,7 +312,12 @@ class ProfileEditPerson extends Component {
               error={errors.motherName}
             />
 
-            <input value='Enviar' type='submit' className='btn btn-primary btn-block mt-4' />
+            <input
+              value='Enviar'
+              type='submit'
+              title='Atulizar dados pessoais'
+              className='btn btn-primary btn-block mt-4'
+            />
           </form>
         </div>
       </div>

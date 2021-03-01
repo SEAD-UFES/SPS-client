@@ -230,7 +230,7 @@ class StepCreate extends Component {
                   error={errors.resultAfterAppealDate}
                 />
 
-                <input type='submit' className='btn btn-primary btn-block mt-4' />
+                <input type='submit' value='Salvar' title='Criar etapa' className='btn btn-primary btn-block mt-4' />
               </form>
             </div>
           </div>

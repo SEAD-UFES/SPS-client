@@ -219,7 +219,7 @@ class Register extends Component {
           />
         </div>
 
-        <input type='submit' className='btn btn-primary' value='Cadastrar' />
+        <input type='submit' title='Efetuar registro' className='btn btn-primary' value='Cadastrar' />
       </form>
     )
   }

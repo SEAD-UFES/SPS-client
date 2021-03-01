@@ -93,7 +93,7 @@ const CalendarUpdate = props => {
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Salvar' />
+        <input type='submit' title='Atualizar evento de calendário' className='btn btn-primary' value='Salvar' />
       </form>
     )
   }
