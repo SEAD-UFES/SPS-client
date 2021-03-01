@@ -41,7 +41,7 @@ class UserList extends Component {
     return (
       <div className='btn-right'>
         <DrawFilter permission='user_create'>
-          <Link className='btn btn-primary' to={`${this.props.match.url}/create`}>
+          <Link className='btn btn-primary' title='Novo usuário' to={`${this.props.match.url}/create`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
@@ -75,7 +75,7 @@ class UserList extends Component {
             return (
               <li key={user.id}>
                 <h3>
-                  <Link to={`${this.props.match.url}/${user.id}`}>
+                  <Link title='Acessar usuário' to={`${this.props.match.url}/${user.id}`}>
                     {user.Person ? `${user.Person.name} ${user.Person.surname}` : `Sem nome`}
                   </Link>
                 </h3>

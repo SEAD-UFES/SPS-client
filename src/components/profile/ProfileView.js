@@ -31,6 +31,7 @@ class Profile extends Component {
               <div className='text-right'>
                 <Link
                   className='text-primary'
+                  title='Atualizar dados de usuário'
                   to={{
                     pathname: '/profile/edit-user',
                     prevLocation: this.props.location
@@ -74,6 +75,7 @@ class Profile extends Component {
                 <div className='text-right'>
                   <Link
                     className='text-primary'
+                    title='Atualizar dados pessoais'
                     to={{
                       pathname: '/profile/edit-person',
                       prevLocation: this.props.location
@@ -102,6 +104,7 @@ class Profile extends Component {
               <div className='text-right'>
                 <Link
                   className='text-primary'
+                  title='Atualizar dados pessoais'
                   to={{
                     pathname: '/profile/edit-person',
                     prevLocation: this.props.location

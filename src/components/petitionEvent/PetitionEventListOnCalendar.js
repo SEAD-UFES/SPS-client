@@ -25,12 +25,18 @@ const PetitionEventListOnCalendar = props => {
             </p>
             <p>
               <DrawFilter permission='petitionevent_read' course_id={course_id}>
-                <Link className='btn-icon laranja' to={`/petition-event/read/${calendar.petitionEvents[0].id}`}>
+                <Link
+                  className='btn-icon laranja'
+                  title='Acessar evento de recurso'
+                  to={`/petition-event/read/${calendar.petitionEvents[0].id}`}>
                   <i className='fas fa-eye' />
                 </Link>
               </DrawFilter>{' '}
               <DrawFilter permission='petitionevent_delete' course_id={course_id}>
-                <Link className='btn-icon' to={`/petition-event/delete/${calendar.petitionEvents[0].id}`}>
+                <Link
+                  className='btn-icon'
+                  title='Excluir evento de recurso'
+                  to={`/petition-event/delete/${calendar.petitionEvents[0].id}`}>
                   <i className='fas fa-trash' />
                 </Link>
               </DrawFilter>

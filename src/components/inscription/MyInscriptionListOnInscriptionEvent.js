@@ -15,6 +15,7 @@ const MyInscriptionListOnInscriptionEvent = props => {
         <div className='btn-right'>
           <Link
             className='btn btn-terciary'
+            title='Nova inscrição'
             to={`/inscription/create?inscriptionEvent_id=${iEvent ? iEvent.id : null}`}>
             <i className='fas fa-plus-circle' /> Inscrever-se
           </Link>
@@ -50,7 +51,7 @@ const MyInscriptionListOnInscriptionEvent = props => {
                   </p>
                   <p className='text-right'>
                     {eventInProgress ? (
-                      <Link className='btn-icon' to={`/inscription/delete/${ins.id}`}>
+                      <Link className='btn-icon' title='Excluir inscrição' to={`/inscription/delete/${ins.id}`}>
                         <i className='fas fa-trash' />
                       </Link>
                     ) : (
@@ -76,11 +77,15 @@ const MyInscriptionListOnInscriptionEvent = props => {
           <p>É preciso estar autenticado no sistema para ver suas inscrições ou inscrever-se.</p>
           <hr />
           <p>
-            Se você não possui cadastro: <Link to='/register'>Registre-se</Link>
+            Se você não possui cadastro:{' '}
+            <Link title='Registro' to='/register'>
+              Registre-se
+            </Link>
           </p>
           <p>
             Se você possui cadastro:{' '}
             <Link
+              title='Login'
               to={{
                 pathname: `/login`,
                 prevLocation: location

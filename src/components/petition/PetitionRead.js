@@ -104,7 +104,9 @@ const PetitionRead = props => {
           <h4>Resposta</h4>
           <p>Este recurso ainda não foi respondido.</p>
           <DrawFilter permission='petitionreply_create' course_id={course_id}>
-            <Link to={`/petition-reply/create/?petition_id=${petition ? petition.id : null}`}>Responder</Link>
+            <Link title='Responder recurso' to={`/petition-reply/create/?petition_id=${petition ? petition.id : null}`}>
+              Responder
+            </Link>
           </DrawFilter>
         </>
       )

@@ -250,6 +250,7 @@ class StepEdit extends Component {
       <div className='text-right mt-2 mb-2'>
         <Link
           className='text-danger'
+          title='Excluir etapa'
           to={{
             pathname: `/processes/read/${this.props.match.params.process_id}/call/${
               this.props.match.params.call_id

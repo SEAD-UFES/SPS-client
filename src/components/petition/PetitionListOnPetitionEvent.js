@@ -54,12 +54,15 @@ const PetitionListOnPetitionEvent = props => {
                       : 'Pedente'}
                   </p>
                   <p className='text-right'>
-                    <Link className='btn-icon' to={`/petition/read/${pet ? pet.id : ''}`}>
+                    <Link className='btn-icon' title='Acessar recurso' to={`/petition/read/${pet ? pet.id : ''}`}>
                       <i className='fas fa-eye' />
                     </Link>
                     {!checkNested(pet, 'petitionReply') ? (
                       <DrawFilter permission='petitionreply_create' course_id={course_id}>
-                        <Link className='btn-icon' to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
+                        <Link
+                          className='btn-icon'
+                          title='Responder recurso'
+                          to={`/petition-reply/create?petition_id=${pet ? pet.id : ''}`}>
                           <i className='fas fa-reply' />
                         </Link>
                       </DrawFilter>

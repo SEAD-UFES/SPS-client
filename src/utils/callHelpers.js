@@ -26,7 +26,7 @@ export function getCallStatus(call) {
     if (openInscriptionEvents.length > 0) {
       const link = `/inscription-event/read/${openInscriptionEvents[0].id}`
       statusMessage = (
-        <Link className='btn btn-primary' to={link}>
+        <Link className='btn btn-primary' title='Acessar envento de inscrição' to={link}>
           <i className='fas fa-cog' /> Inscrições abertas. Acesse
         </Link>
       )

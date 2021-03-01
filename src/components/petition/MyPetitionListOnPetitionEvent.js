@@ -14,7 +14,10 @@ const MyPetitionListOnPetitionEvent = props => {
     if (eventInProgress) {
       return (
         <div className='btn-right'>
-          <Link className='btn btn-terciary' to={`/petition/create?petitionEvent_id=${pEvent ? pEvent.id : null}`}>
+          <Link
+            className='btn btn-terciary'
+            title='Novo recurso'
+            to={`/petition/create?petitionEvent_id=${pEvent ? pEvent.id : null}`}>
             <i className='fas fa-plus-circle' /> Novo recurso
           </Link>
         </div>
@@ -64,11 +67,11 @@ const MyPetitionListOnPetitionEvent = props => {
                       : 'Pedente'}
                   </p>
                   <p className='text-right'>
-                    <Link className='btn-icon' to={`/petition/read/${pet.id}`}>
+                    <Link className='btn-icon' title='Acessar recurso' to={`/petition/read/${pet.id}`}>
                       <i className='fas fa-eye' />
                     </Link>
                     {eventInProgress ? (
-                      <Link className='btn-icon' to={`/petition/delete/${pet.id}`}>
+                      <Link className='btn-icon' title='Excluir recurso' to={`/petition/delete/${pet.id}`}>
                         <i className='fas fa-trash' />
                       </Link>
                     ) : (
