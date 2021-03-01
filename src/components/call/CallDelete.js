@@ -69,7 +69,13 @@ const CallDelete = props => {
     return (
       <div className='row'>
         <div className='col'>
-          <input type='button' value='Excluir' className='btn btn-primary btn-block mt-4' onClick={onSubmit} />
+          <input
+            type='button'
+            value='Excluir'
+            className='btn btn-primary btn-block mt-4'
+            title='Excluir chamada'
+            onClick={onSubmit}
+          />
         </div>
         <div className='col'>
           <input

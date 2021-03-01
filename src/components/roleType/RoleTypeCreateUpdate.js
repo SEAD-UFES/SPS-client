@@ -174,7 +174,12 @@ class RoleTypeCreateUpdate extends Component {
           onChange={this.onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Salvar' />
+        <input
+          type='submit'
+          title={this.state.mode === 'update' ? 'Atualizar papel' : 'Criar papel'}
+          className='btn btn-primary'
+          title={this.state.mode === 'update' ? 'Atualizar' : 'Criar'}
+        />
       </form>
     )
 

@@ -25,7 +25,10 @@ class Dashboard extends Component {
         dashboardContent = (
           <div>
             <p className='lead text-muted'>
-              Bem-vindo <Link to={'/profile'}>{profile.Person ? profile.Person.name : profile.login}</Link>
+              Bem-vindo{' '}
+              <Link tile='Acessar perfil' to={'/profile'}>
+                {profile.Person ? profile.Person.name : profile.login}
+              </Link>
             </p>
           </div>
         )
@@ -35,8 +38,8 @@ class Dashboard extends Component {
           <div>
             <p className='lead text-muted'>Bem-vindo</p>
             <p>Erro estranho...</p>
-            <Link to='/create-profile' className='btn btn-lg btn-primary'>
-              Create Profile
+            <Link title='Criar profile?' to='/create-profile' className='btn btn-lg btn-primary'>
+              Criar profile?
             </Link>
           </div>
         )

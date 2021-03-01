@@ -34,17 +34,26 @@ const InscriptionEventListOnCalendar = props => {
                   <p>{IE.allowMultipleRestrictions ? 'Múltiplas restrições' : 'Apenas uma restrição'}</p>
                   <p className='text-right'>
                     <DrawFilter permission='inscriptionevent_read' course_id={course_id}>
-                      <Link className='btn-icon laranja' to={`/inscription-event/read/${IE.id}`}>
+                      <Link
+                        className='btn-icon laranja'
+                        title='Acessar evento de inscrição'
+                        to={`/inscription-event/read/${IE.id}`}>
                         <i className='fas fa-eye' />
                       </Link>
                     </DrawFilter>{' '}
                     <DrawFilter permission='inscriptionevent_update' course_id={course_id}>
-                      <Link className='btn-icon' to={`/inscription-event/update/${IE.id}`}>
+                      <Link
+                        className='btn-icon'
+                        title='Atualizar evento de inscrição'
+                        to={`/inscription-event/update/${IE.id}`}>
                         <i className='fas fa-pencil-alt' />
                       </Link>
                     </DrawFilter>{' '}
                     <DrawFilter permission='inscriptionevent_delete' course_id={course_id}>
-                      <Link className='btn-icon' to={`/inscription-event/delete/${IE.id}`}>
+                      <Link
+                        className='btn-icon'
+                        title='Excluir evento de inscrição'
+                        to={`/inscription-event/delete/${IE.id}`}>
                         <i className='fas fa-trash' />
                       </Link>
                     </DrawFilter>

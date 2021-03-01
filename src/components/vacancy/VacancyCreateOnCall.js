@@ -91,7 +91,7 @@ const VacancyCreateOnCall = props => {
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Criar' />
+        <input type='submit' className='btn btn-primary' title='Criar oferta de vaga' value='Criar' />
       </form>
     )
   }

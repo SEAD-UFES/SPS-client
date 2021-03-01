@@ -91,7 +91,7 @@ const VacancyUpdate = props => {
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Salvar' />
+        <input type='submit' className='btn btn-primary' title='Atualizar oferta de vaga' value='Salvar' />
       </form>
     )
   }

@@ -12,7 +12,10 @@ export default class CallListOnProcess extends Component {
     return (
       <div className='btn-right'>
         <DrawFilter permission='call_create' course_id={this.props.process.Course.id}>
-          <Link className='btn btn-terciary' to={`/call/create?process_id=${this.props.process.id}`}>
+          <Link
+            title='Nova chamada'
+            className='btn btn-terciary'
+            to={`/call/create?process_id=${this.props.process.id}`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
@@ -37,7 +40,9 @@ export default class CallListOnProcess extends Component {
             <li key={call.id}>
               <h3>
                 <span>Chamada </span>
-                {call.number}
+                <Link className='btn-icon laranja' title='Acessar chamada' to={`/call/read/${call.id}`}>
+                  {call.number}
+                </Link>
               </h3>
               <p>
                 {moment(call.openingDate, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY')}
@@ -46,14 +51,17 @@ export default class CallListOnProcess extends Component {
               </p>
               <p>{storeCall ? getCallStatus(storeCall) : getCallStatus(call)}</p>
               <p className='text-right'>
-                <Link className='btn-icon laranja' to={`/call/read/${call.id}`}>
+                <Link className='btn-icon laranja' title='Acessar chamada' to={`/call/read/${call.id}`}>
                   <i className='fas fa-eye' />
                 </Link>
-                <Link className='btn-icon laranja' to={`/inscription-event/list?call_id=${call.id}`}>
+                <Link
+                  className='btn-icon laranja'
+                  title='Eventos de inscrição'
+                  to={`/inscription-event/list?call_id=${call.id}`}>
                   <i className='fas fa-calendar-check' />
                 </Link>
                 <DrawFilter permission='call_delete' course_id={process.Course.id}>
-                  <Link className='btn-icon' to={`/call/delete/${call.id}`}>
+                  <Link className='btn-icon' title='Excluir chamada' to={`/call/delete/${call.id}`}>
                     <i className='fas fa-trash' />
                   </Link>
                 </DrawFilter>

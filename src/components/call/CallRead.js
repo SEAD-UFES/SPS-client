@@ -45,6 +45,7 @@ const CallRead = props => {
         <DrawFilter permission='call_update' course_id={process ? process.course_id : null}>
           <Link
             className='btn btn-primary'
+            title='Atualizar chamada'
             to={{
               pathname: `/call/update/${call ? call.id : null}`,
               prevLocation: location

@@ -71,7 +71,10 @@ const InscriptionEventList = props => {
                         {cld.end ? ` - ${moment(cld.end, 'YYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm:ss')}` : null}
                       </p>
                       <p className='text-right'>
-                        <Link className='btn-icon laranja' to={`/inscription-event/read/${iE.id}`}>
+                        <Link
+                          className='btn-icon laranja'
+                          title='Excluir evento de inscrição'
+                          to={`/inscription-event/read/${iE.id}`}>
                           <i className='fas fa-eye' />
                         </Link>
                       </p>

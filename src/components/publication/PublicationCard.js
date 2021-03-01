@@ -56,6 +56,7 @@ export default class PublicationCard extends Component {
           <DrawFilter permission='publication_update' course_id={process.Course.id}>
             <Link
               className='btn-icon'
+              title='Atualizar publicação'
               to={{
                 pathname: `/processes/${process.id}/publications/${publication.id}/update`,
                 state: { publication: publication }
@@ -65,6 +66,7 @@ export default class PublicationCard extends Component {
           </DrawFilter>{' '}
           <DrawFilter permission='publication_delete' course_id={process.Course.id}>
             <Link
+              title='Excluir publicação'
               className='btn-icon'
               to={{
                 pathname: `/processes/${process.id}/publications/${publication.id}/delete`,
@@ -97,6 +99,7 @@ export default class PublicationCard extends Component {
           <DrawFilter permission='publication_create' course_id={this.props.process.Course.id}>
             <Link
               className='btn btn-terciary'
+              title='Nova publicação'
               to={{
                 pathname: `/processes/${this.props.process.id}/publications/create`,
                 state: { selectiveProcess: this.props.process }

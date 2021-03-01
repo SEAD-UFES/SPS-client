@@ -115,7 +115,7 @@ const InscriptionDelete = props => {
 
         <div className='row'>
           <div className='col'>
-            <input type='submit' value='Excluir' className='btn btn-primary btn-block mt-4' />
+            <input type='submit' title='Excluir inscrição' value='Excluir' className='btn btn-primary btn-block mt-4' />
           </div>
           <div className='col'>
             <input

@@ -200,7 +200,7 @@ class ProcessList extends Component {
     return (
       <React.Fragment>
         <DrawFilter permission='selectiveprocess_create' anyCourse={true}>
-          <Link className='btn btn-primary' to={`${this.props.match.url}/create`}>
+          <Link className='btn btn-primary' title='Novo processo seletivo' to={`${this.props.match.url}/create`}>
             <i className='fas fa-plus-circle' /> Adicionar
           </Link>
         </DrawFilter>
@@ -226,7 +226,7 @@ class ProcessList extends Component {
                 key={process.id}
                 className={process.visible ? 'edital edital-item' : 'edital edital-item text-black-50'}>
                 <h3>
-                  <Link to={`${this.props.match.url}/read/${process.id}`}>
+                  <Link title='Acessar processo seletivo' to={`${this.props.match.url}/read/${process.id}`}>
                     {process.number}/{process.year}
                   </Link>
                 </h3>

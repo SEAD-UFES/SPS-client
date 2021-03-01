@@ -1,3 +1,5 @@
+/** @format */
+
 import React from 'react'
 // import classnames from "classnames";
 import PropTypes from 'prop-types'
@@ -17,23 +19,24 @@ class FilterFieldGroup extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="btn-group seletor">
+        <div className='btn-group seletor'>
           <button
-            className="btn exibe-filtros"
-            type="button"
+            className='btn exibe-filtros'
+            title='Exibir filtros'
+            type='button'
             id={`btndropdown-${this.props.id}`}
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="true">
+            data-toggle='dropdown'
+            aria-haspopup='true'
+            aria-expanded='true'>
             {label}
           </button>
-          <ul className="dropdown-menu" aria-labelledby={`btndropdown-${this.props.id}`}>
+          <ul className='dropdown-menu' aria-labelledby={`btndropdown-${this.props.id}`}>
             {items.length > 0
               ? items.map((item, key) => {
                   return (
-                    <li className="" key={key}>
-                      <label className="radio-btn">
-                        <input type="checkbox" name={item.value} checked={item.marked} onChange={this.onCheck} />
+                    <li className='' key={key}>
+                      <label className='radio-btn'>
+                        <input type='checkbox' name={item.value} checked={item.marked} onChange={this.onCheck} />
                         <span>{item.label}</span>
                       </label>
                     </li>

@@ -177,6 +177,7 @@ class AssignmentModalForm extends Component {
             <div className='modal-footer'>
               <input
                 type='submit'
+                title={this.props.mode === 'edit' ? 'Atualizar cargo' : 'Adicionar cargo'}
                 className='btn btn-primary'
                 onClick={this.onSubmit}
                 value={this.props.mode === 'edit' ? 'Atualizar' : 'Adicionar'}

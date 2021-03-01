@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -96,9 +98,9 @@ class RestrictionList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -110,15 +112,20 @@ class RestrictionList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="btn-right">
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-          <i className="fas fa-plus-circle" /> Adicionar
+        <div className='btn-right'>
+          <button
+            type='button'
+            title='Nova restrição'
+            className='btn btn-primary'
+            data-toggle='modal'
+            data-target='#addModal'>
+            <i className='fas fa-plus-circle' /> Adicionar
           </button>
         </div>
 
         <RestrictionModalForm
-          mode="add"
-          targetName="addModal"
+          mode='add'
+          targetName='addModal'
           addFunction={this.props.createRestriction}
           reloadFunction={this.props.getRestrictions}
         />
@@ -129,62 +136,64 @@ class RestrictionList extends Component {
     const restrictionsTable = (
       <div>
         {RestrictionList ? (
-          <ul className="table-list">
-            <div className="titulos">
-                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
-                {/* <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th> */}
-                <span>Descrição</span>
-                <span></span>
+          <ul className='table-list'>
+            <div className='titulos'>
+              <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+              {/* <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th> */}
+              <span>Descrição</span>
+              <span />
             </div>
-              {restrictionsList.length > 0 ? (
-                restrictionsList.map(restriction => {
-                  return (
-                    <li key={restriction.id}>
-                      <h3>{restriction.name}</h3>
-                      <p>
-                        {restriction.description ? (
-                          restriction.description
-                        ) : (
-                          <span className="text-muted">Sem descrição.</span>
-                        )}
-                      </p>
-                      <p className="text-right">
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#editModal-${restriction.id}`}>
-                          <i className="fas fa-pencil-alt" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${restriction.id}`}>
-                          <i className="fas fa-trash" />
-                        </button>
-                      </p>
-                      <RestrictionModalForm
-                          targetName={`editModal-${restriction.id}`}
-                          mode="edit"
-                          item={restriction}
-                          editFunction={this.props.updateRestriction}
-                          reloadFunction={this.props.getRestrictions}
-                        />{' '}
-                        <RestrictionModalDelete
-                          targetName={`deleteModal-${restriction.id}`}
-                          item={restriction}
-                          deleteFunction={this.props.deleteRestriction}
-                          reloadFunction={this.props.getRestrictions}
-                        />
-                    </li>
-                  )
-                })
-              ) : (
-                <li>
-                  <p>Sem itens para exibir</p>
-                </li>
-              )}
+            {restrictionsList.length > 0 ? (
+              restrictionsList.map(restriction => {
+                return (
+                  <li key={restriction.id}>
+                    <h3>{restriction.name}</h3>
+                    <p>
+                      {restriction.description ? (
+                        restriction.description
+                      ) : (
+                        <span className='text-muted'>Sem descrição.</span>
+                      )}
+                    </p>
+                    <p className='text-right'>
+                      <button
+                        type='button'
+                        title='Atualizar restrição'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#editModal-${restriction.id}`}>
+                        <i className='fas fa-pencil-alt' />
+                      </button>
+                      <button
+                        type='button'
+                        title='Excluir restrição'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#deleteModal-${restriction.id}`}>
+                        <i className='fas fa-trash' />
+                      </button>
+                    </p>
+                    <RestrictionModalForm
+                      targetName={`editModal-${restriction.id}`}
+                      mode='edit'
+                      item={restriction}
+                      editFunction={this.props.updateRestriction}
+                      reloadFunction={this.props.getRestrictions}
+                    />{' '}
+                    <RestrictionModalDelete
+                      targetName={`deleteModal-${restriction.id}`}
+                      item={restriction}
+                      deleteFunction={this.props.deleteRestriction}
+                      reloadFunction={this.props.getRestrictions}
+                    />
+                  </li>
+                )
+              })
+            ) : (
+              <li>
+                <p>Sem itens para exibir</p>
+              </li>
+            )}
           </ul>
         ) : (
           <p>Sem itens para exibir</p>
@@ -193,22 +202,22 @@ class RestrictionList extends Component {
     )
 
     return (
-      <div className="restrictions">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='restrictions'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Restrições</span>
           </div>
 
-          <div id="main">
-              <h1>Restrições</h1>
-              {addItemTool}
-              {/* <p className="lead text-muted">Restrições que serão ofertadas pelo sistema</p> */}
-              {restrictionsTable}
+          <div id='main'>
+            <h1>Restrições</h1>
+            {addItemTool}
+            {/* <p className="lead text-muted">Restrições que serão ofertadas pelo sistema</p> */}
+            {restrictionsTable}
           </div>
         </div>
       </div>
@@ -228,10 +237,13 @@ const mapStateToProps = state => ({
   restrictionStore: state.restrictionStore
 })
 
-export default connect(mapStateToProps, {
-  clearErrors,
-  getRestrictions,
-  createRestriction,
-  updateRestriction,
-  deleteRestriction
-})(RestrictionList)
+export default connect(
+  mapStateToProps,
+  {
+    clearErrors,
+    getRestrictions,
+    createRestriction,
+    updateRestriction,
+    deleteRestriction
+  }
+)(RestrictionList)

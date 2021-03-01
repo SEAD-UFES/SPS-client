@@ -242,7 +242,7 @@ class StepEdit extends Component {
           error={errors.resultAfterAppealDate}
         />
 
-        <input type='submit' className='btn btn-primary btn-block mt-4' />
+        <input type='submit' value='Salvar' title='Atualizar etapa' className='btn btn-primary btn-block mt-4' />
       </form>
     )
 
@@ -250,6 +250,7 @@ class StepEdit extends Component {
       <div className='text-right mt-2 mb-2'>
         <Link
           className='text-danger'
+          title='Excluir etapa'
           to={{
             pathname: `/processes/read/${this.props.match.params.process_id}/call/${
               this.props.match.params.call_id

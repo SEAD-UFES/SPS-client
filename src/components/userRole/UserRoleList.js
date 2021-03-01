@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -104,9 +106,9 @@ class UserRoleList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -121,47 +123,54 @@ class UserRoleList extends Component {
         <Spinner />
       ) : userRoleList.length > 0 ? (
         <div>
-          <ul className="table-list">
-            <div className="titulos">
-                <span onClick={() => this.sortBy('user')}>Usuário {this.orderIcon('user')}</span>
-                <span onClick={() => this.sortBy('role')}>Atribuição {this.orderIcon('role')}</span>
-                <span onClick={() => this.sortBy('course')}>Curso {this.orderIcon('course')}</span>
-                <span></span>
+          <ul className='table-list'>
+            <div className='titulos'>
+              <span onClick={() => this.sortBy('user')}>Usuário {this.orderIcon('user')}</span>
+              <span onClick={() => this.sortBy('role')}>Atribuição {this.orderIcon('role')}</span>
+              <span onClick={() => this.sortBy('course')}>Curso {this.orderIcon('course')}</span>
+              <span />
             </div>
-              {userRoleList.map(userRole => {
-                return (
-                  <li key={userRole.id}>
-                    <h3>
-                      <Link to={`/users/${userRole.User.id}`}>{userRole.User.login}</Link>
-                    </h3>
-                    <p>
-                      <Link to={`/parameters/roletypes/${userRole.RoleType.id}`}>{userRole.RoleType.name}</Link>
-                    </p>
-                    <p>
-                      {userRole.RoleType.global ? (
-                        'Papel global'
-                      ) : userRole.Course ? (
-                        userRole.Course.name
-                      ) : (
-                        <span className="text-muted">n/a</span>
-                      )}
-                    </p>
-                    <p className="text-right">
-                      <Link className="btn-icon" to={`${this.props.match.url}/${userRole.id}/delete`}>
-                        <i className="fas fa-trash" />
-                      </Link>
-                    </p>
-                  </li>
-                )
-              })}
+            {userRoleList.map(userRole => {
+              return (
+                <li key={userRole.id}>
+                  <h3>
+                    <Link title='Acessar usuário' to={`/users/${userRole.User.id}`}>
+                      {userRole.User.login}
+                    </Link>
+                  </h3>
+                  <p>
+                    <Link title='Acessar papel' to={`/parameters/roletypes/${userRole.RoleType.id}`}>
+                      {userRole.RoleType.name}
+                    </Link>
+                  </p>
+                  <p>
+                    {userRole.RoleType.global ? (
+                      'Papel global'
+                    ) : userRole.Course ? (
+                      userRole.Course.name
+                    ) : (
+                      <span className='text-muted'>n/a</span>
+                    )}
+                  </p>
+                  <p className='text-right'>
+                    <Link
+                      className='btn-icon'
+                      title='Excluir atribuição de papel'
+                      to={`${this.props.match.url}/${userRole.id}/delete`}>
+                      <i className='fas fa-trash' />
+                    </Link>
+                  </p>
+                </li>
+              )
+            })}
           </ul>
         </div>
       ) : (
         <div>
           <p>
             Sem atribuições de papel cadastrados.{' '}
-            <Link className="text-success" to={`${this.props.match.url}/create`}>
-              <i className="fas fa-plus-circle" />
+            <Link className='text-success' title='Nova atribuição de papel' to={`${this.props.match.url}/create`}>
+              <i className='fas fa-plus-circle' />
               Adicionar
             </Link>
           </p>
@@ -169,31 +178,31 @@ class UserRoleList extends Component {
       )
 
     const addButton = (
-      <div className="btn-right" role="group">
-        <Link to={`${this.props.match.url}/create`} className="btn btn-primary">
-          <i className="fas fa-plus-circle" /> Adicionar
+      <div className='btn-right' role='group'>
+        <Link title='Nova atribuição de papel' to={`${this.props.match.url}/create`} className='btn btn-primary'>
+          <i className='fas fa-plus-circle' /> Adicionar
         </Link>
       </div>
     )
 
     return (
-      <div className="userRole-list">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='userRole-list'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Atribuições de papel</span>
           </div>
 
-            <div id="main">
-              <h1>Atribuições de papel</h1>
-              {addButton}
-              {/* <p className="lead text-muted">Atribuições de papel a usuários do sistema</p> */}
-              {userRolesTable}
-            </div>
+          <div id='main'>
+            <h1>Atribuições de papel</h1>
+            {addButton}
+            {/* <p className="lead text-muted">Atribuições de papel a usuários do sistema</p> */}
+            {userRolesTable}
+          </div>
         </div>
       </div>
     )
@@ -208,6 +217,9 @@ const mapStateToProps = state => ({
   userRoleStore: state.userRoleStore
 })
 
-export default connect(mapStateToProps, {
-  getUserRoles
-})(UserRoleList)
+export default connect(
+  mapStateToProps,
+  {
+    getUserRoles
+  }
+)(UserRoleList)

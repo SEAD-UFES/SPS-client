@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -85,9 +87,9 @@ class RoleTypesList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -102,43 +104,49 @@ class RoleTypesList extends Component {
         <Spinner />
       ) : roleTypesList.length > 0 ? (
         <div>
-          <ul className="table-list">
-            <div className="titulos">
+          <ul className='table-list'>
+            <div className='titulos'>
               <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
               {/* <th onClick={() => this.sortBy('description')}>Descrição {this.orderIcon('description')}</th> */}
               {/* <th onClick={() => this.sortBy('scope')}>Escopo {this.orderIcon('scope')}</th> */}
               <span>Escopo</span>
               <span>Descrição</span>
-              <span></span>
+              <span />
             </div>
-              {roleTypesList.map(roleType => {
-                return (
-                  <li key={roleType.id}>
-                    <h3>{roleType.name}</h3>
-                    <p>{roleType.global ? 'Global' : 'Curso'}</p>
-                    <p>{roleType.description}</p>
-                    <p className="text-right">
-                      {/* <Link className="btn-icon laranja" to={`/parameters/roletypes/${roleType.id}`}>
+            {roleTypesList.map(roleType => {
+              return (
+                <li key={roleType.id}>
+                  <h3>{roleType.name}</h3>
+                  <p>{roleType.global ? 'Global' : 'Curso'}</p>
+                  <p>{roleType.description}</p>
+                  <p className='text-right'>
+                    {/* <Link className="btn-icon laranja" title='Acessar tipo de papel' to={`/parameters/roletypes/${roleType.id}`}>
                         <i className="fas fa-eye" />
                       </Link>{' '} */}
-                      <Link className="btn-icon" to={`/parameters/roletypes/${roleType.id}/update`}>
-                        <i className="fas fa-pencil-alt" />
-                      </Link>{' '}
-                      <Link className="btn-icon" to={`/parameters/roletypes/${roleType.id}/delete`}>
-                        <i className="fas fa-trash" />
-                      </Link>
-                    </p>
-                  </li>
-                )
-              })}
+                    <Link
+                      className='btn-icon'
+                      title='Atualizar tipo de papel'
+                      to={`/parameters/roletypes/${roleType.id}/update`}>
+                      <i className='fas fa-pencil-alt' />
+                    </Link>{' '}
+                    <Link
+                      className='btn-icon'
+                      title='Excluir tipo de papel'
+                      to={`/parameters/roletypes/${roleType.id}/delete`}>
+                      <i className='fas fa-trash' />
+                    </Link>
+                  </p>
+                </li>
+              )
+            })}
           </ul>
         </div>
       ) : (
         <div>
           <p>
             Sem tipos de papel cadastrados.{' '}
-            <Link className="text-success" to={`${this.props.match.url}/create`}>
-              <i className="fas fa-plus-circle" />
+            <Link className='text-success' title='Novo tipo de papel' to={`${this.props.match.url}/create`}>
+              <i className='fas fa-plus-circle' />
               Adicionar
             </Link>
           </p>
@@ -146,26 +154,26 @@ class RoleTypesList extends Component {
       )
 
     const addButton = (
-      <div className="btn-right">
-        <Link to={`${this.props.match.url}/create`} className="btn btn-primary">
-          <i className="fas fa-plus-circle" /> Adicionar
+      <div className='btn-right'>
+        <Link title='Adicionar tipo de papel' to={`${this.props.match.url}/create`} className='btn btn-primary'>
+          <i className='fas fa-plus-circle' /> Adicionar
         </Link>
       </div>
     )
 
     return (
-      <div className="assignments">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='assignments'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Tipos de papel</span>
           </div>
 
-          <div id="main">
+          <div id='main'>
             <h1>Tipos de papel</h1>
             {addButton}
             {/* <p className="lead text-muted">Papéis que podem ser atribuidos a usuários dentro do sistema</p> */}
@@ -185,6 +193,9 @@ const mapStateToProps = state => ({
   roleTypeStore: state.roleTypeStore
 })
 
-export default connect(mapStateToProps, {
-  getRoleTypes
-})(RoleTypesList)
+export default connect(
+  mapStateToProps,
+  {
+    getRoleTypes
+  }
+)(RoleTypesList)

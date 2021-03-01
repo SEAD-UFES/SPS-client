@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -37,8 +39,8 @@ class RoleTypeView extends Component {
         <Spinner />
       ) : (
         <div>
-          <h4 className="mb-2">Informações</h4>
-          <table className="table">
+          <h4 className='mb-2'>Informações</h4>
+          <table className='table'>
             <tbody>
               <tr>
                 <td>
@@ -68,22 +70,23 @@ class RoleTypeView extends Component {
         <Spinner />
       ) : (
         <div>
-          <h4 className="mb-2">Lista de permissões atribuidas</h4>
+          <h4 className='mb-2'>Lista de permissões atribuidas</h4>
           {roleTypeStore.roleType.name === 'Administrador' ? (
             <p>Administradores podem tudo.</p>
           ) : roleTypeStore.roleType.Permissions.length > 0 ? (
-            <table className="table">
+            <table className='table'>
               <thead>
                 <tr>
                   <th>Nome</th>
                   <th>
                     <Link
-                      className="text-success"
+                      className='text-success'
+                      title='Nova atribuição de permissão'
                       to={{
                         pathname: `${this.props.match.url}/create-permassig`,
                         state: { roleType: roleTypeStore.roleType }
                       }}>
-                      <i className="fas fa-plus-circle" />
+                      <i className='fas fa-plus-circle' />
                     </Link>
                   </th>
                 </tr>
@@ -95,15 +98,18 @@ class RoleTypeView extends Component {
                       <td>{permission.name}</td>
                       <td>
                         <Link
-                          className="text-danger"
+                          className='text-danger'
+                          title='Excluir atribuição de permissão'
                           to={{
-                            pathname: `/parameters/roletypes/${roleTypeStore.roleType.id}/delete-permassig/${permission.RolePermission.id}`,
+                            pathname: `/parameters/roletypes/${roleTypeStore.roleType.id}/delete-permassig/${
+                              permission.RolePermission.id
+                            }`,
                             state: {
                               roleType: roleTypeStore.roleType,
                               rolePermission: this.buildPermissionAssignment(roleTypeStore.roleType, permission)
                             }
                           }}>
-                          <i className="fas fa-times-circle" />
+                          <i className='fas fa-times-circle' />
                         </Link>
                       </td>
                     </tr>
@@ -116,12 +122,13 @@ class RoleTypeView extends Component {
               <p>
                 Não existem permissões associadas a esse papel.{' '}
                 <Link
-                  className="text-success"
+                  className='text-success'
+                  title='Nova atribuição de permissão'
                   to={{
                     pathname: `${this.props.match.url}/create-permassig`,
                     state: { roleType: roleTypeStore.roleType }
                   }}>
-                  <i className="fas fa-plus-circle" /> Adicionar
+                  <i className='fas fa-plus-circle' /> Adicionar
                 </Link>
               </p>
             </div>
@@ -130,14 +137,14 @@ class RoleTypeView extends Component {
       )
 
     return (
-      <div className="roletypes">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to="/parameters/roletypes" className="btn btn-light">
+      <div className='roletypes'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <Link to='/parameters/roletypes' className='btn btn-light'>
                 Voltar para lista de tipos de papel
               </Link>
-              <h1 className="display-4 mb-4">Tipo de Papel</h1>
+              <h1 className='display-4 mb-4'>Tipo de Papel</h1>
               {infoTable}
               {permissionsTable}
             </div>

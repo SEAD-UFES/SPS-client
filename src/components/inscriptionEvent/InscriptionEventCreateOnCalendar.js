@@ -85,7 +85,7 @@ const InscriptionEventCreateOnCalendar = props => {
           onChange={onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Criar' />
+        <input type='submit' title='Criar evento de inscrição' className='btn btn-primary' value='Criar' />
       </form>
     )
   }

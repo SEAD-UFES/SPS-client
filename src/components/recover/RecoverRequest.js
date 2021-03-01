@@ -77,7 +77,7 @@ function RecoverRequest(props) {
               onChange={onChange}
               error={errors.email || errors.login || errors.message}
             />
-            <input type='submit' className='btn btn-primary' />
+            <input type='submit' value='Solicitar' title='Solicitar recuperação de senha' className='btn btn-primary' />
           </form>
         </div>
       </React.Fragment>

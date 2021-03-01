@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -78,9 +80,9 @@ class GraduationTypeList extends Component {
   orderIcon(key) {
     if (this.state.sortMethod === key) {
       if (this.state.sortReverse === false) {
-        return <i className="fas fa-arrow-up" />
+        return <i className='fas fa-arrow-up' />
       } else {
-        return <i className="fas fa-arrow-down" />
+        return <i className='fas fa-arrow-down' />
       }
     }
     return null
@@ -92,15 +94,20 @@ class GraduationTypeList extends Component {
     //Add item - form
     const addItemTool = (
       <div>
-        <div className="btn-right">
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal">
-            <i className="fas fa-plus-circle" /> Adicionar
+        <div className='btn-right'>
+          <button
+            type='button'
+            title='Adicionar tipo de graduação'
+            className='btn btn-primary'
+            data-toggle='modal'
+            data-target='#addModal'>
+            <i className='fas fa-plus-circle' /> Adicionar
           </button>
         </div>
 
         <GraduationTypeModalForm
-          mode="add"
-          targetName="addModal"
+          mode='add'
+          targetName='addModal'
           addFunction={this.props.createGraduationType}
           reloadFunction={this.props.getGraduationTypes}
         />
@@ -111,79 +118,79 @@ class GraduationTypeList extends Component {
     const graduationTypesTable = (
       <div>
         {graduationTypeList ? (
-          <ul className="table-list">
-              <div className="titulos">
-                <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
-                {/* <th>Descrição</th> */}
-                <span></span>
-              </div>
-              {graduationTypeList.length > 0 ? (
-                graduationTypeList.map(graduationType => {
-                  return (
-                    <li key={graduationType.id}>
-                      <h3>{graduationType.name}</h3>
-                      {/* <td>{graduationType.description ? graduationType.description : ""}</td> */}
-                      <p className="text-right">
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#editModal-${graduationType.id}`}>
-                          <i className="fas fa-pencil-alt" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-icon"
-                          data-toggle="modal"
-                          data-target={`#deleteModal-${graduationType.id}`}>
-                          <i className="fas fa-trash" />
-                        </button>
-                      </p>
-                      <GraduationTypeModalForm
-                          targetName={`editModal-${graduationType.id}`}
-                          mode="edit"
-                          item={graduationType}
-                          editFunction={this.props.updateGraduationType}
-                          reloadFunction={this.props.getGraduationTypes}
-                        />{' '}
-                        <GraduationTypeModalDelete
-                          targetName={`deleteModal-${graduationType.id}`}
-                          item={graduationType}
-                          deleteFunction={this.props.deleteGraduationType}
-                          reloadFunction={this.props.getGraduationTypes}
-                        />
-                    </li>
-                  )
-                })
-              ) : (
-                <li>
-                  Sem itens para exibir
-                </li>
-              )}
+          <ul className='table-list'>
+            <div className='titulos'>
+              <span onClick={() => this.sortBy('name')}>Nome {this.orderIcon('name')}</span>
+              {/* <th>Descrição</th> */}
+              <span />
+            </div>
+            {graduationTypeList.length > 0 ? (
+              graduationTypeList.map(graduationType => {
+                return (
+                  <li key={graduationType.id}>
+                    <h3>{graduationType.name}</h3>
+                    {/* <td>{graduationType.description ? graduationType.description : ""}</td> */}
+                    <p className='text-right'>
+                      <button
+                        type='button'
+                        title='Atualizar tipo de graduação'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#editModal-${graduationType.id}`}>
+                        <i className='fas fa-pencil-alt' />
+                      </button>
+                      <button
+                        type='button'
+                        title='Excluir tipo de graduação'
+                        className='btn btn-icon'
+                        data-toggle='modal'
+                        data-target={`#deleteModal-${graduationType.id}`}>
+                        <i className='fas fa-trash' />
+                      </button>
+                    </p>
+                    <GraduationTypeModalForm
+                      targetName={`editModal-${graduationType.id}`}
+                      mode='edit'
+                      item={graduationType}
+                      editFunction={this.props.updateGraduationType}
+                      reloadFunction={this.props.getGraduationTypes}
+                    />{' '}
+                    <GraduationTypeModalDelete
+                      targetName={`deleteModal-${graduationType.id}`}
+                      item={graduationType}
+                      deleteFunction={this.props.deleteGraduationType}
+                      reloadFunction={this.props.getGraduationTypes}
+                    />
+                  </li>
+                )
+              })
+            ) : (
+              <li>Sem itens para exibir</li>
+            )}
           </ul>
         ) : (
-            <p colSpan="3">Sem itens para exibir</p>
+          <p colSpan='3'>Sem itens para exibir</p>
         )}
       </div>
     )
 
     return (
-      <div className="graduationTypes">
-        <div className="container">
-          <div className="breadcrumb">              
+      <div className='graduationTypes'>
+        <div className='container'>
+          <div className='breadcrumb'>
             <span>Você está em:</span>
-            <Link to="/parameters" className="breadcrumb-link">
+            <Link to='/parameters' className='breadcrumb-link'>
               Parâmetros
             </Link>
-            <i className="fas fa-greater-than"></i>
+            <i className='fas fa-greater-than' />
             <span>Níveis de formação</span>
           </div>
 
-          <div id="main">
-              <h1>Níveis de formação</h1>
-              {/* <p className="lead text-muted">Níveis de formação disponíveis dentro do sistema</p> */}
-              {addItemTool}
-              {graduationTypesTable}
+          <div id='main'>
+            <h1>Níveis de formação</h1>
+            {/* <p className="lead text-muted">Níveis de formação disponíveis dentro do sistema</p> */}
+            {addItemTool}
+            {graduationTypesTable}
           </div>
         </div>
       </div>
@@ -203,10 +210,13 @@ const mapStateToProps = state => ({
   graduationTypeStore: state.graduationTypeStore
 })
 
-export default connect(mapStateToProps, {
-  getGraduationTypes,
-  createGraduationType,
-  updateGraduationType,
-  deleteGraduationType,
-  clearErrors
-})(GraduationTypeList)
+export default connect(
+  mapStateToProps,
+  {
+    getGraduationTypes,
+    createGraduationType,
+    updateGraduationType,
+    deleteGraduationType,
+    clearErrors
+  }
+)(GraduationTypeList)

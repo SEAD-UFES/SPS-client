@@ -88,7 +88,7 @@ const PetitionCreate = props => {
           info='Inserir motivo do recurso e argumentação'
         />
 
-        <input type='submit' className='btn btn-primary' value='Criar' />
+        <input type='submit' title='Criar recurso' className='btn btn-primary' value='Criar' />
       </form>
     )
   }
