@@ -187,7 +187,7 @@ class ProcessEdit extends Component {
           onChange={this.onCheck}
         />
 
-        <input type='submit' className='btn btn-primary' value='Editar' />
+        <input type='submit' className='btn btn-primary' title='Atualizar processo seletivo' value='Editar' />
       </form>
     )
   }
