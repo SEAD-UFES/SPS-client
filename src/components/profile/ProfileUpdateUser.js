@@ -13,7 +13,7 @@ import { validateProfileEditUserForm } from './validateProfileEditUserForm'
 import { getCurrentProfile, updateProfileUser } from './profileActions'
 import { clearErrors } from '../../actions/errorActions'
 
-class ProfileEditUser extends Component {
+class ProfileUpdateUser extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -256,7 +256,7 @@ class ProfileEditUser extends Component {
   }
 }
 
-ProfileEditUser.propTypes = {
+ProfileUpdateUser.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   updateProfileUser: PropTypes.func.isRequired,
@@ -272,4 +272,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCurrentProfile, updateProfileUser, clearErrors }
-)(withRouter(ProfileEditUser))
+)(withRouter(ProfileUpdateUser))

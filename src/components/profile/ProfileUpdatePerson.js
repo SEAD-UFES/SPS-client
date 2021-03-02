@@ -15,7 +15,7 @@ import { clearErrors } from '../../actions/errorActions'
 import { cpfEventMask } from '../../utils/eventMasks'
 import { validateMotherName } from '../../validation/person'
 
-class ProfileEditPerson extends Component {
+class ProfileUpdatePerson extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -184,143 +184,131 @@ class ProfileEditPerson extends Component {
     }
   }
 
-  renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions) {
+  renderUpdatePersonForm(errors, colorOptions, genderOptions, civilStateOptions) {
     return (
-      <div className='card mb-4'>
-        <div className='card-header'>
-          <h4 className='mb-0'>Atualizar dados pessoais</h4>
-        </div>
-        <div className='card-body'>
-          <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup
-              label='Nome: *'
-              placeholder='* Nome'
-              type='text'
-              name='name'
-              value={this.state.name}
-              onChange={this.onChange}
-              error={errors.name}
-            />
+      <form noValidate onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          label='Nome: *'
+          placeholder='* Nome'
+          type='text'
+          name='name'
+          value={this.state.name}
+          onChange={this.onChange}
+          error={errors.name}
+        />
 
-            <TextFieldGroup
-              label='Sobrenome: *'
-              placeholder='* Sobrenome'
-              type='text'
-              name='surname'
-              value={this.state.surname}
-              onChange={this.onChange}
-              error={errors.surname}
-            />
+        <TextFieldGroup
+          label='Sobrenome: *'
+          placeholder='* Sobrenome'
+          type='text'
+          name='surname'
+          value={this.state.surname}
+          onChange={this.onChange}
+          error={errors.surname}
+        />
 
-            <TextFieldGroup
-              label='Nascimento: *'
-              placeholder='Data de nascimento'
-              type='date'
-              name='birthdate'
-              value={this.state.birthdate}
-              onChange={this.onChange}
-              error={errors.birthdate}
-            />
+        <TextFieldGroup
+          label='Nascimento: *'
+          placeholder='Data de nascimento'
+          type='date'
+          name='birthdate'
+          value={this.state.birthdate}
+          onChange={this.onChange}
+          error={errors.birthdate}
+        />
 
-            <TextFieldGroup
-              label='C.P.F.: *'
-              placeholder='* C.P.F.'
-              type='text'
-              name='cpf'
-              value={this.state.cpf}
-              onChange={this.onChange}
-              error={errors.cpf}
-            />
+        <TextFieldGroup
+          label='C.P.F.: *'
+          placeholder='* C.P.F.'
+          type='text'
+          name='cpf'
+          value={this.state.cpf}
+          onChange={this.onChange}
+          error={errors.cpf}
+        />
 
-            <TextFieldGroup
-              label='Nascionalidade: *'
-              placeholder='Nacionalidade'
-              type='text'
-              name='nationality'
-              value={this.state.nationality}
-              onChange={this.onChange}
-              error={errors.nationality}
-            />
+        <TextFieldGroup
+          label='Nascionalidade: *'
+          placeholder='Nacionalidade'
+          type='text'
+          name='nationality'
+          value={this.state.nationality}
+          onChange={this.onChange}
+          error={errors.nationality}
+        />
 
-            <TextFieldGroup
-              label='RG - Número:'
-              placeholder='Número do RG'
-              type='text'
-              name='rgNumber'
-              value={this.state.rgNumber}
-              onChange={this.onChange}
-              error={errors.rgNumber}
-            />
+        <TextFieldGroup
+          label='RG - Número:'
+          placeholder='Número do RG'
+          type='text'
+          name='rgNumber'
+          value={this.state.rgNumber}
+          onChange={this.onChange}
+          error={errors.rgNumber}
+        />
 
-            <TextFieldGroup
-              label='RG - Expeditor:'
-              placeholder='Expeditor do RG'
-              type='text'
-              name='rgDispatcher'
-              value={this.state.rgDispatcher}
-              onChange={this.onChange}
-              error={errors.rgDispatcher}
-            />
+        <TextFieldGroup
+          label='RG - Expeditor:'
+          placeholder='Expeditor do RG'
+          type='text'
+          name='rgDispatcher'
+          value={this.state.rgDispatcher}
+          onChange={this.onChange}
+          error={errors.rgDispatcher}
+        />
 
-            <SelectListGroup
-              label='Etnia:'
-              placeholder='Escolha cor/etnia'
-              name='ethnicity'
-              value={this.state.ethnicity}
-              options={colorOptions}
-              onChange={this.onChange}
-              error={errors.ethnicity}
-            />
+        <SelectListGroup
+          label='Etnia:'
+          placeholder='Escolha cor/etnia'
+          name='ethnicity'
+          value={this.state.ethnicity}
+          options={colorOptions}
+          onChange={this.onChange}
+          error={errors.ethnicity}
+        />
 
-            <SelectListGroup
-              label='Gênero:'
-              placeholder='Escolha gênero'
-              name='gender'
-              value={this.state.gender}
-              options={genderOptions}
-              onChange={this.onChange}
-              error={errors.gender}
-            />
+        <SelectListGroup
+          label='Gênero:'
+          placeholder='Escolha gênero'
+          name='gender'
+          value={this.state.gender}
+          options={genderOptions}
+          onChange={this.onChange}
+          error={errors.gender}
+        />
 
-            <SelectListGroup
-              label='Estado civil:'
-              placeholder='Escolha estado civil'
-              name='civilStatus'
-              value={this.state.civilStatus}
-              options={civilStateOptions}
-              onChange={this.onChange}
-              error={errors.civilStatus}
-            />
+        <SelectListGroup
+          label='Estado civil:'
+          placeholder='Escolha estado civil'
+          name='civilStatus'
+          value={this.state.civilStatus}
+          options={civilStateOptions}
+          onChange={this.onChange}
+          error={errors.civilStatus}
+        />
 
-            <TextFieldGroup
-              label='Nome do pai:'
-              placeholder='Nome do pai'
-              type='text'
-              name='fatherName'
-              value={this.state.fatherName}
-              onChange={this.onChange}
-              error={errors.fatherName}
-            />
+        <TextFieldGroup
+          label='Nome do pai:'
+          placeholder='Nome do pai'
+          type='text'
+          name='fatherName'
+          value={this.state.fatherName}
+          onChange={this.onChange}
+          error={errors.fatherName}
+        />
 
-            <TextFieldGroup
-              label='Nome da mãe:'
-              placeholder='Nome do mãe'
-              type='text'
-              name='motherName'
-              value={this.state.motherName}
-              onChange={this.onChange}
-              error={errors.motherName}
-            />
+        <TextFieldGroup
+          label='Nome da mãe:'
+          placeholder='Nome do mãe'
+          type='text'
+          name='motherName'
+          value={this.state.motherName}
+          onChange={this.onChange}
+          error={errors.motherName}
+        />
 
-            <input
-              value='Atualizar'
-              type='submit'
-              title='Atulizar dados pessoais'
-              className='btn btn-primary btn-block mt-4'
-            />
-          </form>
-        </div>
-      </div>
+        <input value='Atualizar' type='submit' title='Atualizar dados pessoais' className='btn btn-primary' />
+      </form>
     )
   }
 
@@ -350,6 +338,27 @@ class ProfileEditPerson extends Component {
         : []
     )
 
+    const renderBreadcrumb = () => {
+      return (
+        <>
+          <div className='breadcrumb'>
+            <span>Você está em:</span>
+            <Link to='/dashboard' className='breadcrumb-link'>
+              Área pessoal
+            </Link>
+
+            <i className='fas fa-greater-than' />
+            <Link to={`/profile`} className='breadcrumb-link'>
+              Perfil
+            </Link>
+
+            <i className='fas fa-greater-than' />
+            <span>Atualizar dados pessoais</span>
+          </div>
+        </>
+      )
+    }
+
     const civilStateOptions = [{ label: 'Escolha estado civil', value: '' }].concat(
       options
         ? options.civilStatus.values.map(color => {
@@ -362,16 +371,13 @@ class ProfileEditPerson extends Component {
     )
 
     return (
-      <div className='profile-edit-Person'>
+      <div className='profile-update-person'>
         <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-              <Link to='/profile' className='btn btn-light'>
-                Voltar
-              </Link>
-              <h1 className='display-4'>Perfil</h1>
-              {this.renderEditPerson(errors, colorOptions, genderOptions, civilStateOptions)}
-            </div>
+          {renderBreadcrumb()}
+
+          <div className='form-container' id='main'>
+            <h1 className='display-4'>Atualizar dados pessoais</h1>
+            {this.renderUpdatePersonForm(errors, colorOptions, genderOptions, civilStateOptions)}
           </div>
         </div>
       </div>
@@ -379,7 +385,7 @@ class ProfileEditPerson extends Component {
   }
 }
 
-ProfileEditPerson.propsTypes = {
+ProfileUpdatePerson.propsTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   getPeopleOptions: PropTypes.func.isRequired,
   profileStore: PropTypes.object.isRequired,
@@ -395,4 +401,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCurrentProfile, updateProfilePerson, getPeopleOptions, clearErrors }
-)(withRouter(ProfileEditPerson))
+)(withRouter(ProfileUpdatePerson))
