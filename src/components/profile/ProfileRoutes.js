@@ -6,8 +6,8 @@ import { Switch, Route } from 'react-router-dom'
 import PrivateRoute from '../common/PrivateRoute'
 
 import Profile from './ProfileView'
-import ProfileEditUser from './ProfileEditUser'
-import ProfileEditPerson from './ProfileEditPerson'
+import ProfileUpdateUser from './ProfileUpdateUser'
+import ProfileUpdatePerson from './ProfileUpdatePerson'
 import NotFound from '../common/NotFound'
 
 export default class ProfileRoutes extends Component {
@@ -16,9 +16,9 @@ export default class ProfileRoutes extends Component {
       <Switch>
         <PrivateRoute exact path={`${this.props.match.path}`} component={Profile} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/edit-user`} component={ProfileEditUser} />
+        <PrivateRoute exact path={`${this.props.match.path}/update-user`} component={ProfileUpdateUser} />
 
-        <PrivateRoute exact path={`${this.props.match.path}/edit-person`} component={ProfileEditPerson} />
+        <PrivateRoute exact path={`${this.props.match.path}/edit-person`} component={ProfileUpdatePerson} />
 
         <Route component={NotFound} />
       </Switch>

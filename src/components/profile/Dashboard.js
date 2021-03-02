@@ -16,40 +16,62 @@ class Dashboard extends Component {
   render() {
     const { profile, loading } = this.props.profileStore
 
-    let dashboardContent
-    if (profile === null || loading) {
-      dashboardContent = <Spinner />
-    } else {
-      //Check if logged in user has profile data
-      if (Object.keys(profile).length > 0) {
-        dashboardContent = (
-          <div>
-            <p className='lead text-muted'>
-              Bem-vindo{' '}
-              <Link tile='Acessar perfil' to={'/profile'}>
-                {profile.Person ? profile.Person.name : profile.login}
-              </Link>
-            </p>
-          </div>
-        )
-      } else {
-        //User login in but dont have a profile
-        dashboardContent = (
-          <div>
-            <p className='lead text-muted'>Bem-vindo</p>
-            <p>Erro estranho...</p>
-            <Link title='Criar profile?' to='/create-profile' className='btn btn-lg btn-primary'>
-              Criar profile?
+    const renderBreadcrumb = () => {
+      return (
+        <>
+          <div className='breadcrumb'>
+            <span>Você está em:</span>
+            <Link to='/dashboard' className='breadcrumb-link'>
+              Área pessoal
             </Link>
           </div>
-        )
-      }
+        </>
+      )
     }
+
+    const renderDashboard = () => {
+      let dashboardContent
+      if (profile === null || loading) {
+        dashboardContent = <Spinner />
+      } else {
+        //Check if logged in user has profile data
+        if (Object.keys(profile).length > 0) {
+          dashboardContent = (
+            <div>
+              <p className='lead text-muted'>{` Bem-vindo ${profile.Person ? profile.Person.name : profile.login}.`}</p>
+              <p>
+                Para acessar seu perfil e editar seus dados,{' '}
+                <Link tile='Acessar perfil' to={'/profile'}>
+                  clique aqui
+                </Link>
+                .
+              </p>
+            </div>
+          )
+        } else {
+          //User login in but dont have a profile
+          dashboardContent = (
+            <div>
+              <p className='lead text-muted'>Bem-vindo</p>
+              <p>Erro estranho...</p>
+              <Link title='Criar profile?' to='/create-profile' className='btn btn-lg btn-primary'>
+                Criar profile?
+              </Link>
+            </div>
+          )
+        }
+      }
+      return dashboardContent
+    }
+
     return (
-      <div className='dashboard'>
-        <div className='container' id='main'>
-          <h1>Dashboard</h1>
-          {dashboardContent}
+      <div className='view-page'>
+        <div className='container'>
+          <div className='main'>
+            {renderBreadcrumb()}
+            <h1 className='display-4'>Área pessoal</h1>
+            {renderDashboard()}
+          </div>
         </div>
       </div>
     )

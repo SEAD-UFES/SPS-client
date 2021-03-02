@@ -233,7 +233,7 @@ class UserEditUser extends Component {
     const { errors } = this.state
 
     return (
-      <div className='user-edit-user'>
+      <div className='user-update-user'>
         <div className='container'>
           <div className='breadcrumb'>
             <span>Você está em:</span>

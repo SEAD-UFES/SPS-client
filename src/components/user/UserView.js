@@ -29,7 +29,7 @@ class UserView extends Component {
             className='btn-terciary'
             title='Atualizar dados de usuário'
             to={{
-              pathname: `/users/${user.id}/edit-user`,
+              pathname: `/users/${user.id}/update-user`,
               prevLocation: this.props.location
             }}>
             <i className='fas fa-pencil-alt' /> Atualizar
