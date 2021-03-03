@@ -1120,6 +1120,17 @@ footer #copyright p span a:hover {
   color: #c75000;
 }
 
+/*Fernando*/
+.hidden-process {
+  color: #e3a880;
+}
+
+/*Fernando*/
+.hidden-process:hover {
+  color: #e3a880;
+  border-bottom-color: #e3a880;
+}
+
 .table-list li p {
   margin: 0.3rem 0 !important;
 }
