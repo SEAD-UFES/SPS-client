@@ -27,7 +27,7 @@ class Profile extends Component {
             className='btn btn-terciary'
             title='Atualizar dados de usuário'
             to={{ pathname: `/profile/update-user`, prevLocation: this.props.location }}>
-            <i className='fas fa-plus-circle' /> Atualizar
+            <i className='fas fa-cog' /> Atualizar
           </Link>
         </div>
       )
@@ -66,7 +66,7 @@ class Profile extends Component {
             className='btn btn-terciary'
             title='Atualizar dados pessoais'
             to={{ pathname: `/profile/edit-person`, prevLocation: this.props.location }}>
-            <i className='fas fa-plus-circle' /> Atualizar
+            <i className='fas fa-cog' /> Atualizar
           </Link>
         </div>
       )

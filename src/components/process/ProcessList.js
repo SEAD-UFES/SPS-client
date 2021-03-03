@@ -222,11 +222,12 @@ class ProcessList extends Component {
 
           {processes.selectiveProcesses.map(process => {
             return (
-              <li
-                key={process.id}
-                className={process.visible ? 'edital edital-item' : 'edital edital-item text-black-50'}>
+              <li key={process.id}>
                 <h3>
-                  <Link title='Acessar processo seletivo' to={`${this.props.match.url}/read/${process.id}`}>
+                  <Link
+                    className={process.visible ? '' : 'hidden-process'}
+                    title='Acessar processo seletivo'
+                    to={`${this.props.match.url}/read/${process.id}`}>
                     {process.number}/{process.year}
                   </Link>
                 </h3>
