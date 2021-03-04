@@ -29,7 +29,7 @@ class Login extends Component {
       if (this.props.location.prevLocation) {
         this.props.history.push(this.props.location.prevLocation.pathname)
       } else {
-        this.props.history.push('/dashboard')
+        this.props.history.push('/processes')
       }
     }
   }
@@ -40,7 +40,7 @@ class Login extends Component {
       if (this.props.location.prevLocation) {
         this.props.history.push(this.props.location.prevLocation.pathname)
       } else {
-        this.props.history.push('/dashboard')
+        this.props.history.push('/processes')
       }
     }
 
