@@ -374,7 +374,6 @@ class ProfileUpdatePerson extends Component {
       <div className='profile-update-person'>
         <div className='container'>
           {renderBreadcrumb()}
-
           <div className='form-container' id='main'>
             <h1 className='display-4'>Atualizar dados pessoais</h1>
             {this.renderUpdatePersonForm(errors, colorOptions, genderOptions, civilStateOptions)}

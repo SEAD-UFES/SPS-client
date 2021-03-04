@@ -38,7 +38,7 @@ class Dashboard extends Component {
         if (Object.keys(profile).length > 0) {
           dashboardContent = (
             <div>
-              <p className='lead text-muted'>{` Bem-vindo ${profile.Person ? profile.Person.name : profile.login}.`}</p>
+              <p>{` Bem-vindo ${profile.Person ? profile.Person.name : profile.login}.`}</p>
               <p>
                 Para acessar seu perfil e editar seus dados,{' '}
                 <Link tile='Acessar perfil' to={'/profile'}>
@@ -67,7 +67,7 @@ class Dashboard extends Component {
     return (
       <div className='view-page'>
         <div className='container'>
-          <div className='main'>
+          <div className='main mb-4'>
             {renderBreadcrumb()}
             <h1 className='display-4'>Área pessoal</h1>
             {renderDashboard()}

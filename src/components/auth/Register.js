@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 import TextFieldGroup from '../common/TextFieldGroup'
 import { cpfEventMask } from '../../utils/eventMasks'
@@ -34,7 +34,8 @@ class Register extends Component {
       email: '',
       password: '',
       password2: '',
-      errors: {}
+      errors: {},
+      registerOK: false
     }
 
     this.onChange = this.onChange.bind(this)
@@ -143,7 +144,13 @@ class Register extends Component {
             motherName: this.state.motherName
           }
         }
-        this.props.registerUser(newUserData, this.props.history)
+
+        this.props.registerUser(newUserData, {
+          callbackOk: () => {
+            this.setState({ registerOK: true })
+            //this.props.history.push('/login')
+          }
+        })
       }
     }
   }
@@ -224,19 +231,70 @@ class Register extends Component {
     )
   }
 
+  renderRegisterOkMessage() {
+    return (
+      <>
+        {this.renderBreadcrumb()}
+        <h1 className='display-4'>Cadastro efetuado com sucesso!</h1>
+        <div>
+          <p>
+            Para acessar efetuar login na plataforma{' '}
+            <Link tile='Acessar perfil' to={'/login'}>
+              clique aqui
+            </Link>
+            .
+          </p>
+        </div>
+      </>
+    )
+  }
+
+  renderBreadcrumb() {
+    return (
+      <>
+        <div className='breadcrumb'>
+          <span>Você está em:</span>
+          <span>Cadastro</span>
+
+          {this.state.registerOK ? (
+            <>
+              <i className='fas fa-greater-than' /> <span>Sucesso</span>
+            </>
+          ) : (
+            ''
+          )}
+        </div>
+      </>
+    )
+  }
+
+  //true render method
   render() {
     const { errors } = this.state
 
-    return (
-      <div className='register' id='main'>
-        <div className='container'>
-          <div className='form-container'>
-            <h1>Cadastro</h1>
-            {this.renderRegister(errors)}
+    if (!this.state.registerOK) {
+      return (
+        <div className='register' id='main'>
+          <div className='container'>
+            {this.renderBreadcrumb()}
+            <div className='form-container'>
+              <h1>Cadastro</h1>
+              {this.renderRegister(errors)}
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
+
+    if (this.state.registerOK) {
+      return (
+        <div className='view-page'>
+          <div className='container'>
+            <div className='main mb-4'>{this.renderRegisterOkMessage()}</div>
+          </div>
+        </div>
+      )
+    }
   }
 }
 

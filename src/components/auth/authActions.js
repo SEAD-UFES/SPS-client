@@ -10,10 +10,13 @@ import { SET_CURRENT_USER } from './authActionTypes'
 import { clearCurrentProfile } from 'components/profile/profileActions'
 
 //Register
-export const registerUser = (userData, history) => dispatch => {
+export const registerUser = (userData, options = {}) => dispatch => {
   spsApi
     .post('/v1/register', userData)
-    .then(res => history.push('/login'))
+    .then(res => {
+      //run callbackOk
+      if (options.callbackOk) options.callbackOk()
+    })
     .catch(err => handleErrors(err, dispatch))
 }
 
