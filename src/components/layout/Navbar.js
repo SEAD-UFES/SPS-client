@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -7,9 +9,27 @@ import { logoutUser } from '../auth/authActions'
 import { getCurrentProfile, clearCurrentProfile } from '../profile/profileActions'
 import marca_ufes from '../../img/marca-ufes.svg'
 import DrawFilter from 'components/profile/DrawFilter'
+import history from '../../utils/history'
 
 class Navbar extends Component {
+  constructor() {
+    super()
+    this.state = {
+      unListenHistory: () => {},
+      prevLoc: history.location
+    }
+  }
+
   componentDidMount() {
+    //ratreando mudanaças no history.
+    const unListenHistory = history.listen(() => {
+      this.setState({ prevLoc: history.location })
+    })
+
+    //storing unlistener to remove after
+    this.setState({ unListenHistory: unListenHistory })
+
+    //Buscando profile se necessário
     if (this.props.authStore.isAuthenticated) {
       if (this.props.profileStore.profile === null) {
         this.props.getCurrentProfile()
@@ -25,6 +45,11 @@ class Navbar extends Component {
     }
   }
 
+  componentWillUnmount() {
+    //removeListener
+    this.state.unListenHistory()
+  }
+
   onLogoutClick(e) {
     e.preventDefault()
     this.props.clearCurrentProfile()
@@ -36,14 +61,14 @@ class Navbar extends Component {
     const { loading, profile } = this.props.profileStore
 
     const guestLinks = (
-      <div className="not-logged">
-        <li className="nav-item">
-          <Link className="nav-link" to="/register">
+      <div className='not-logged'>
+        <li className='nav-item'>
+          <Link className='nav-link' to='/register'>
             Cadastre-se
           </Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/login">
+        <li className='nav-item'>
+          <Link className='nav-link' to={{ pathname: '/login', prevLocation: this.state.prevLoc }}>
             Entrar
           </Link>
         </li>
@@ -51,51 +76,51 @@ class Navbar extends Component {
     )
 
     const authLinks = !(profile === null || loading) ? (
-      <div className="logged">
-        <li className="nav-item">
-          <Link className="nav-link" to="/dashboard">
+      <div className='logged'>
+        <li className='nav-item'>
+          <Link className='nav-link' to='/dashboard'>
             {profile.Person ? profile.Person.name : profile.login}
           </Link>
         </li>
-        <li className="nav-item">
-          <button type="button" onClick={this.onLogoutClick.bind(this)} className="btn btn-link nav-link">
+        <li className='nav-item'>
+          <button type='button' onClick={this.onLogoutClick.bind(this)} className='btn btn-link nav-link'>
             Sair
           </button>
         </li>
       </div>
     ) : (
-      <span className="text-white">Carregando...</span>
+      <span className='text-white'>Carregando...</span>
     )
 
     return (
       <header>
-        <div id="barra-ufes">
-          <div className="container">
+        <div id='barra-ufes'>
+          <div className='container'>
             <a
-              href="http://www.ufes.br"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Abrir portal da Ufes em nova aba">
-              <img src={marca_ufes} alt="" />
+              href='http://www.ufes.br'
+              target='_blank'
+              rel='noopener noreferrer'
+              title='Abrir portal da Ufes em nova aba'>
+              <img src={marca_ufes} alt='' />
               <span>Universidade Federal do Espírito Santo</span>
             </a>
 
-            <ul className="links-externos">
+            <ul className='links-externos'>
               <li>
                 <a
-                  href="http://www.ufes.br"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Abrir portal da Ufes em nova aba">
+                  href='http://www.ufes.br'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  title='Abrir portal da Ufes em nova aba'>
                   <span>Portal Ufes</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="http://www.sead.ufes.br"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Abrir portal da Ufes em nova aba">
+                  href='http://www.sead.ufes.br'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  title='Abrir portal da Ufes em nova aba'>
                   <span>Portal Sead</span>
                 </a>
               </li>
@@ -103,22 +128,22 @@ class Navbar extends Component {
           </div>
         </div>
 
-        <nav className="navbar navbar-expand-sm">
-          <div className="container">
-            <Link className="navbar-brand" to="/processes">
+        <nav className='navbar navbar-expand-sm'>
+          <div className='container'>
+            <Link className='navbar-brand' to='/processes'>
               Sistema de Seleção
               <span>Processos Seletivos EaD</span>
             </Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
-              <i className="fas fa-bars"></i>
+            <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#mobile-nav'>
+              <i className='fas fa-bars' />
             </button>
 
-            <div className="collapse navbar-collapse" id="mobile-nav">
-              <ul className="navbar-nav mr-auto">
+            <div className='collapse navbar-collapse' id='mobile-nav'>
+              <ul className='navbar-nav mr-auto'>
                 <div>
-                  <DrawFilter permission="parameter_list">
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/parameters">
+                  <DrawFilter permission='parameter_list'>
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/parameters'>
                         {' '}
                         Parâmetros
                       </Link>
@@ -150,4 +175,7 @@ const mapStateToProps = state => ({
   profileStore: state.profileStore
 })
 
-export default connect(mapStateToProps, { logoutUser, getCurrentProfile, clearCurrentProfile })(Navbar)
+export default connect(
+  mapStateToProps,
+  { logoutUser, getCurrentProfile, clearCurrentProfile }
+)(Navbar)

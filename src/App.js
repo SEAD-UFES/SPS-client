@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import './style.css'
 
 //Library imports
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import jwt_decode from 'jwt-decode'
 
@@ -16,6 +16,7 @@ import { setCurrentUser, logoutUser } from './components/auth/authActions'
 import { clearCurrentProfile } from './components/profile/profileActions'
 import PrivateRoute from './components/common/PrivateRoute'
 import spsApi, { setAuthTokenV2 } from 'apis/spsServer'
+import history from './utils/history'
 
 //Components
 import Navbar from './components/layout/Navbar'
@@ -72,7 +73,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router history={history}>
           <div className='App'>
             <Navbar />
 
