@@ -208,7 +208,7 @@ class ProfileUpdatePerson extends Component {
         />
 
         <TextFieldGroup
-          label='Nascimento: *'
+          label='Nacimento: *'
           placeholder='Data de nascimento'
           type='date'
           name='birthdate'
@@ -248,8 +248,8 @@ class ProfileUpdatePerson extends Component {
         />
 
         <TextFieldGroup
-          label='RG - Expeditor:'
-          placeholder='Expeditor do RG'
+          label='RG - Expedidor:'
+          placeholder='Expedidor do RG'
           type='text'
           name='rgDispatcher'
           value={this.state.rgDispatcher}

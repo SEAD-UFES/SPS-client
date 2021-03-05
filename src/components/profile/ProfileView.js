@@ -94,12 +94,12 @@ class Profile extends Component {
             <dt className='col-sm-3'>CPF:</dt>
             <dd className='col-sm-9'>{profile.Person.cpf}</dd>
 
-            <dt className='col-sm-3'>Nascionalidade:</dt>
+            <dt className='col-sm-3'>Nacionalidade:</dt>
             <dd className='col-sm-9'>
               {profile.Person.nationality ? profile.Person.nationality : <span className='text-muted'>...</span>}
             </dd>
 
-            <dt className='col-sm-3'>RG (Número / Expeditor):</dt>
+            <dt className='col-sm-3'>RG (Número / Expedidor):</dt>
             <dd className='col-sm-9'>
               {checkNested(profile, 'Person') ? (
                 `${profile.Person.rgNumber} - ${profile.Person.rgDispatcher}`
