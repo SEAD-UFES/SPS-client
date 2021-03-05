@@ -208,7 +208,7 @@ class ProfileUpdatePerson extends Component {
         />
 
         <TextFieldGroup
-          label='Nacimento: *'
+          label='Nascimento: *'
           placeholder='Data de nascimento'
           type='date'
           name='birthdate'
@@ -228,7 +228,7 @@ class ProfileUpdatePerson extends Component {
         />
 
         <TextFieldGroup
-          label='Nascionalidade: *'
+          label='Nacionalidade: *'
           placeholder='Nacionalidade'
           type='text'
           name='nationality'

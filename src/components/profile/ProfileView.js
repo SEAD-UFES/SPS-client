@@ -81,7 +81,7 @@ class Profile extends Component {
               {profile.Person.name} {profile.Person.surname}
             </dd>
 
-            <dt className='col-sm-3'>Data de Nascimento:</dt>
+            <dt className='col-sm-3'>Data de nascimento:</dt>
             <dd className='col-sm-9'>
               {' '}
               {profile.Person.birthdate ? (
