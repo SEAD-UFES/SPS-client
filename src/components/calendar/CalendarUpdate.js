@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import TextFieldGroup from '../../components/common/TextFieldGroup'
@@ -11,8 +11,22 @@ import AlertError from '../../components/common/AlertError'
 
 const CalendarUpdate = props => {
   const { process, call } = props
-  const { updateData, calendarOptions, errors, errorStore } = props
+  const { updateData, setUpdateData, calendarOptions, errors, errorStore } = props
   const { onChange, onCheck, onSubmit } = props
+  const [haveEnd, setHaveEnd] = useState(false)
+
+  //Exibir uma data de encerramento se ela existir
+  useEffect(
+    () => {
+      if (updateData.end !== '') setHaveEnd(true)
+    },
+    [updateData.end]
+  )
+
+  const onChangeShowEnd = e => {
+    setUpdateData({ ...updateData, end: '' })
+    setHaveEnd(!haveEnd)
+  }
 
   const renderBreadcrumb = (process, call) => {
     return (
@@ -50,6 +64,25 @@ const CalendarUpdate = props => {
           error={errors.name}
         />
 
+        {/* Determina se o evento de encerramento aparece */}
+        <div className='form-check show-check-option'>
+          <input
+            className='form-check-input'
+            type='checkbox'
+            name='haveEnd'
+            id='have-end-check'
+            checked={haveEnd}
+            onChange={onChangeShowEnd}
+          />
+          <label className='form-check-label' htmlFor='id'>
+            Este evento possui abertura e encerramento{' '}
+            <i
+              title='Habilite para cadastrar etapas que &#013;possuem prazo de conclusão, como &#013;período de inscrições ou recursos.'
+              className='fas fa-question-circle'
+            />
+          </label>
+        </div>
+
         <div className='form-lateral'>
           <TextFieldGroup
             placeholder='__/__/__'
@@ -61,15 +94,19 @@ const CalendarUpdate = props => {
             error={errors.start}
           />
 
-          <TextFieldGroup
-            placeholder='__/__/__'
-            type='date'
-            label='Data de encerramento'
-            name='end'
-            value={updateData.end}
-            onChange={onChange}
-            error={errors.end}
-          />
+          {haveEnd ? (
+            <TextFieldGroup
+              placeholder='__/__/__'
+              type='date'
+              label='Data de encerramento'
+              name='end'
+              value={updateData.end}
+              onChange={onChange}
+              error={errors.end}
+            />
+          ) : (
+            ''
+          )}
         </div>
 
         <SelectListGroup

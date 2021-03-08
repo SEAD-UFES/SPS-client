@@ -185,6 +185,7 @@ const CalendarUpdateContainer = props => {
   const allProps = {
     ...props,
     updateData: updateData,
+    setUpdateData: setUpdateData,
     calendarOptions: calendarOptions,
     errors: errors,
     onChange: onChange,
