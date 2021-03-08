@@ -153,6 +153,7 @@ const CalendarCreateContainer = props => {
   const allProps = {
     ...props,
     createData: createData,
+    setCreateData: setCreateData,
     errors: errors,
     calendarOptions: calendarOptions,
     onChange: onChange,
