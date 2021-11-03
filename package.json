@@ -24,7 +24,7 @@
     "reselect": "^4.0.0",
     "sequelize": "^5.15.1",
     "tinymce": "^5.0.15",
-    "validator": "^10.9.0"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
